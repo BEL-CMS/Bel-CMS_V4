@@ -9,6 +9,10 @@
  * @author as Stive - stive@determe.be
 */
 
+use BelCMS\Core\BelCMS;
+use BelCMS\Core\config;
+use BelCMS\Core\Route;
+use Belcms\Administration\Administration;
 #######################################################
 # Demarre une $_SESSION
 #######################################################
@@ -26,9 +30,9 @@ date_default_timezone_set('Europe/Brussels');
 define('CHECK_INDEX', true);
 define('VERSION_CMS', '4.0.0');
 define('DS', DIRECTORY_SEPARATOR);
-define('ROOT', __DIR__.DS);
-define('CORE',ROOT.'core'.DS);
-define('SPDO', __DIR__.'spdo'.DS );
+define('ROOT', __DIR__);
+define('CORE',ROOT.DS.'core'.DS);
+define('SPDO', __DIR__.DS.'spdo'.DS );
 define('SHOW_ALL_REQUEST_SQL', false);
 #######################################################
 # Function debug
@@ -37,8 +41,8 @@ require_once 'debug.php';
 #######################################################
 # MicroTime loading
 #######################################################
-$_SESSION['SESSION_START']  = microtime(true);
-#######################################################
+$_SESSION['SESSION_START'] = microtime(true);
+#########################################
 $_SESSION['NB_REQUEST_SQL'] = 0;
 $_SESSION['CMS_DEBUG']      = true;
 #######################################################
@@ -55,7 +59,23 @@ require_once ROOT.DS.'requires'.DS.'requires.all.php';
 #######################################################
 # Inclusion de la config de base du cms
 #######################################################
-
+$config = new config();
+$config->getconfig();
 #######################################################
-
+new Ban;
+#######################################################
+if (Route::isManagement() == true) {
+    new Administration();
+} else {
+    $belcms = new BelCMS();
+    if (Route::IsEcho()) {
+        echo $belcms->page();
+    } elseif (Route::IsJson()) {
+		header('Content-Type: application/json; charset=UTF-8');
+        echo json_encode($belcms->page());
+    } else {
+        header('Cache-Control: no-cache, must-revalidate');
+        echo $belcms->template();
+    }
+}
 #######################################################

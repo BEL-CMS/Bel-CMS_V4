@@ -1,0 +1,66 @@
+#belcms_downloads_index * {
+    text-decoration: none;
+}
+#belcms_downloads_index > h1 {
+    display: block;
+    margin: 5px auto;
+    margin-bottom: 15px;
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    border-bottom: 3px solid;
+    border-color: var(--bs-border-color);
+}
+.belcms_donwloads_center {
+    display: block;
+    margin: 15px auto;
+    text-align: center;
+}
+.belcms_img_downloads_index {
+    width: 120px;
+    height: 120px;
+}
+.belcms_like_downloads_index {
+    display: block;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+}
+.belcms_dls_downloads_index {
+    display: block;
+    position: absolute;
+    right: 15px;
+    bottom: 15px;  
+}
+h4.belcms_h4_downloads_index {
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+}
+.belcms_tooltip_left > div {
+    width: 100% !important;
+}
+.tippy-tooltip {
+    overflow-wrap: normal !important;
+    overflow: none;
+}
+.belcms_cat_img {
+    display: block;
+    width: 100%;
+    max-width: 728px;
+    height: 90px;
+    margin: 0 auto;
+}
+.belcms_cat_aera {
+    text-align: justify;
+    max-height: 111px;
+    width: 100%;
+    overflow-y: scroll;
+    margin: 15px auto;
+    padding: 0 45px;
+}
+.belcms_groups_float_right span {
+    display: block;
+    text-align: right;
+    float: right;
+}
