@@ -16,7 +16,7 @@ require 'administration\intern\menu.php';
 $menu = new Menu();
 ?>
 <!doctype html>
-<html lang="fr" dir="ltr" data-nav-layout="horizontal" data-theme-mode="dark" data-toggled="detached-close" data-card-style="style1" data-card-background="background2" loader="enable" style="--primary-rgb: 255, 255, 255;" data-nav-style="menu-hover" data-width="boxed" data-bg-img="bgimg2" data-pattern-img="bgpattern5" data-menu-position="scrollable">
+<html lang="en" dir="ltr" data-nav-layout="horizontal" data-theme-mode="dark" data-card-style="style1" data-card-background="background2" loader="enable" style="--primary-rgb: 255, 255, 255; --theme-bg-gradient: #01041a;" data-width="fullwidth" data-header-position="scrollable" data-menu-position="scrollable" data-bg-img="bgimg2" data-pattern-img="bgpattern5" data-nav-style="menu-hover">
 
 <head>
     <base href="<?= GetHost::getBaseUrl(); ?>">

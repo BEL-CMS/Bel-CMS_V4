@@ -36,7 +36,7 @@ Common::constant(array(
 	'DEL_BDD_ERROR'               => 'Erreur lors du transfert en base de données',
 	'SEND_BDD_PARTIEL'            => 'Envoie en base de données partiellement',
 	'NO_CATEGORY'                 => 'Aucune catégorie',
-	'NO_ACCESS_ADMIN'             => 'La page demander n\'est accesible qu\'aux administrateur de niveau 1',
+	'NO_ACCESS_ADMIN'             => 'Cette page n\'est accessible qu\'aux administrateurs de premier niveau.',
 	'EDITING_SUCCESS'             => 'Édition effectue avec succès',
 	'EDIT_ERROR'                  => 'Erreur lors de la sauvegarde ou rien à changer dans le formulaire.',
 	'ID_ERROR'                    => 'ID Incorrecte, un message sera transmis aux administrateurs',
@@ -168,6 +168,6 @@ Common::constant(array(
 	'MEMBERS'                             => 'Membres',
 	'CMS_VALIDATION'                      => '',
 	'GROUP_NAME_RESERVED'                 => 'Le nom est réservé.',
-	'NO_ACCESS_GROUP_PAGE'                => 'Vous ne pouvez pas accéder à cette page.',
+	'NO_ACCESS_GROUP_PAGE'                => 'Vous n\'avez pas les autorisations nécessaires pour consulter cette page .',
 	'ADD'                                 => 'Ajouter',
 ));
