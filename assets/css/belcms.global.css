@@ -1,73 +1,3 @@
-#endloading {
-	display: none;
-}
-/*-------------------------------------------------------------------------------------------------*/
-/*	Custom couleur, de la balise code ou pre
----------------------------------------------------------------------------------------------------*/
-pre, code {
-	color: #333; border-radius: 3px; background: #ccc;
-	border-left: 8px solid #1ABC9C; padding: 14px 20px;
-	margin: 5px 0 20px 0; overflow: auto; font-size: 12px;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-ms-box-sizing: border-box;
-	-o-box-sizing: border-box;
-	box-sizing: border-box;
-	text-align: left !important;
-}
-@media print {
-	pre, code {
-		overflow-x: auto;
-		white-space: pre-wrap;
-		white-space: -moz-pre-wrap !important;
-		white-space: -pre-wrap;
-		white-space: -o-pre-wrap;
-		word-wrap: break-word;
-	}
-}
-/*-------------------------------------------------------------------------------------------------*/
-/*	Alert en haut de page, comme message bien envoyé ou bien enregistrer etc
----------------------------------------------------------------------------------------------------*/
-#siteloader,
-#alrt_bel_cms {
-	background: rgba(0, 0, 0, 0.8);
-	text-align: center;
-	position: fixed;
-	border-bottom: 2px;
-	border-color: #21a9ec;
-	width: 100%;
-	display: block;
-	z-index: 2147483647;
-	line-height: 35px;
-	color: rgba(255, 255, 255, .95);
-	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.2);
-	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset, 0 1px 2px rgba(0, 0, 0, 0.1);
-	color: rgba(255, 255, 255, .95);
-	font-size: 12px;
-	transition: background-color 0.2s ease 0s;
-	top: -35px;
-}
-#alrt_bel_cms.danger {
-	background-color: #db3325;
-	background-image: linear-gradient(rgba(219, 51, 37, 0), rgba(1, 0, 0, 0.1));
-	border-color: rgba(0, 0, 0, 0.05) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.15);
-	color: white;
-	text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.15);
-}
-#alrt_bel_cms.warning {
-	background-color: #f5a732;
-	background-image: linear-gradient(rgba(245, 167, 50, 0), rgba(38, 24, 2, 0.1));
-	border-color: rgba(0, 0, 0, 0.05) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.15);
-	color: white;
-	text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.15);
-}
-#alrt_bel_cms.success {
-	background-color: #7eb216;
-	background-image: linear-gradient(rgba(126, 178, 22, 0), rgba(0, 0, 0, 0.1));
-	border-color: rgba(0, 0, 0, 0.05) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.15);
-	color: white;
-	text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.15);
-}
 /*-------------------------------------------------------------------------------------------------*/
 /*	Commentaires styles
 ---------------------------------------------------------------------------------------------------*/
@@ -192,6 +122,7 @@ nav#bel_cms_comment {
 	color: rgba(209, 207, 207, 1);
 	padding: 8px 16px;
 	border-left: 1px solid rgba(209, 207, 207, .5);
+	text-decoration: none;
 }
 .belcms_pagination_item.active a {
 	background-color: green;

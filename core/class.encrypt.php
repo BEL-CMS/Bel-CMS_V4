@@ -1,15 +1,16 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.4]
+ * @version 4.0.0 [PHP8.3]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
  * @copyright 2015-2025 Bel-CMS
  * @author as Stive - stive@determe.be
- */
+*/
 
 namespace BelCMS\Core;
+use BelCMS\Requires\Common;
 
 if (!defined('CHECK_INDEX')):
 	header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
@@ -32,25 +33,25 @@ class encrypt
 	}
 
 	function encrypt() {
-		$key         = $this->key;
-		$plaintext   = $this->string;
-		$ivlen       = openssl_cipher_iv_length($cipher = $this->method);
-		$iv          = openssl_random_pseudo_bytes($ivlen);
+		$key = $this->key;
+		$plaintext = $this->string;
+		$ivlen = openssl_cipher_iv_length($cipher = $this->method);
+		$iv = openssl_random_pseudo_bytes($ivlen);
 		$ciphertext_raw = openssl_encrypt($plaintext, $cipher, $key, $options = OPENSSL_RAW_DATA, $iv);
-		$hmac        = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary = true);
-		$ciphertext  = base64_encode($iv . $hmac . $ciphertext_raw);
+		$hmac = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary = true);
+		$ciphertext = base64_encode($iv . $hmac . $ciphertext_raw);
 		return $ciphertext;
 	}
 			
 	function decrypt() {
-		$key      = $this->key;
-		$c        = base64_decode($this->string);
-		$ivlen    = openssl_cipher_iv_length($cipher = $this->method);
-		$iv       = substr($c, 0, $ivlen);
-		$hmac     = substr($c, $ivlen, $sha2len = 32);
+		$key = $this->key;
+		$c = base64_decode($this->string);
+		$ivlen = openssl_cipher_iv_length($cipher = $this->method);
+		$iv = substr($c, 0, $ivlen);
+		$hmac = substr($c, $ivlen, $sha2len = 32);
 		$ciphertext_raw = substr($c, $ivlen + $sha2len);
 		$original_plaintext = openssl_decrypt($ciphertext_raw, $cipher, $key, OPENSSL_RAW_DATA, $iv);
-		$calcmac  = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary = true);
+		$calcmac = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary = true);
 		if (hash_equals($hmac, $calcmac)) {
 			return $original_plaintext;
 		}

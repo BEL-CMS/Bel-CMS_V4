@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.4]
+ * @version 4.0.0 [PHP8.3]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -9,16 +9,18 @@
  * @author as Stive - stive@determe.be
 */
 
-use BelCMS\Core\BelCMS;
-use BelCMS\Core\config;
-use BelCMS\Core\Route;
-use Belcms\Administration\Administration;
 #######################################################
-# Demarre une $_SESSION
+# Demarre une $_SESSION                               #
 #######################################################
 if(!isset($_SESSION)) {
     session_start();
 }
+#######################################################
+use Belcms\Administration\Administration;
+use BelCMS\Core\BelCMS;
+use BelCMS\Core\Dispatcher;
+use BelCMS\Core\Ban;
+use BelCMS\Core\Landing;
 #######################################################
 # TimeZone et charset
 #######################################################
@@ -31,9 +33,8 @@ define('CHECK_INDEX', true);
 define('VERSION_CMS', '4.0.0');
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', __DIR__);
-define('CORE',ROOT.DS.'core'.DS);
-define('SPDO', __DIR__.DS.'spdo'.DS );
 define('SHOW_ALL_REQUEST_SQL', false);
+define('ERROR_INDEX', '<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
 #######################################################
 # Function debug
 #######################################################
@@ -41,7 +42,7 @@ require_once 'debug.php';
 #######################################################
 # MicroTime loading
 #######################################################
-$_SESSION['SESSION_START'] = microtime(true);
+$_SESSION['SESSION_START']  = microtime(true);
 #########################################
 $_SESSION['NB_REQUEST_SQL'] = 0;
 $_SESSION['CMS_DEBUG']      = true;
@@ -56,26 +57,36 @@ if (is_file(ROOT.DS.'INSTALL'.DS.'index.php')) {
 # Fichier requis
 #######################################################
 require_once ROOT.DS.'requires'.DS.'requires.all.php';
-#######################################################
-# Inclusion de la config de base du cms
-#######################################################
-$config = new config();
-$config->getconfig();
-#######################################################
-new Ban;
-#######################################################
-if (Route::isManagement() == true) {
-    new Administration();
+#########################################
+# Bannissement
+#########################################
+new Ban();
+#########################################
+# Landing page
+#########################################
+new Landing;
+#########################################
+# Initialise le C.M.S
+#########################################
+if (Dispatcher::isManagement() === true) {
+	header('Content-Type: text/html');
+	require_once ROOT.DS.'administration'.DS.'index.php';
+	new Administration ();
 } else {
-    $belcms = new BelCMS();
-    if (Route::IsEcho()) {
-        echo $belcms->page();
-    } elseif (Route::IsJson()) {
+	$belcms = new BelCMS;
+	if (isset($_GET['echo'])) {
+		header('Content-Type: text/html; charset=UTF-8');
+		echo $belcms->page;
+	} else if (isset($_GET['img'])) {
+		header('Content-Type: image/png');
+		echo $belcms->page;
+	} else if (isset($_GET['json'])) {
 		header('Content-Type: application/json; charset=UTF-8');
-        echo json_encode($belcms->page());
-    } else {
-        header('Cache-Control: no-cache, must-revalidate');
-        echo $belcms->template();
-    }
+		echo json_encode($belcms->page);
+	} else if (isset($_GET['text'])) {
+		echo $belcms->page;
+	} else {
+		header('Content-Type: text/html; charset=UTF-8');
+		echo $belcms->templates;
+	}
 }
-#######################################################

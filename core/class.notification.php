@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.4]
+ * @version 4.0.0 [PHP8.3]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -11,9 +11,11 @@
 
 namespace BelCMS\Core;
 
-################################################
-# Class Template
-################################################
+if (!defined('CHECK_INDEX')):
+	header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
+	exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
+endif;
+
 #########################################
 # Notification Alert (red, blue, green, orange, grey)
 # alert error infos success warning
@@ -97,9 +99,9 @@ final class Notification
 				$bg = 'background-color: rgba(102, 97, 90, 1) !important;';
 			break;
 		}
-		$render  = '<section style="border: 1px solid rgba(209, 207, 207, 1);background:rgba(248, 248, 248, 1);margin: 15px auto;width:99%;overflow:hidden;padding:0 !important;">'.PHP_EOL;
+		$render  = '<section style="border: 1px solid rgba(209, 207, 207, 1);background:rgba(248, 248, 248, 1);margin: 15px  auto;width:100%;overflow:hidden;padding:0 !important;">'.PHP_EOL;
 		if (!empty($title)):
-		$render .= '<header style="left:0;position: relative !important;:display: block;width:100%;padding:15px;overflow:hidden;color:rgba(255, 255, 255, 0.95);min-height:auto !important;'.$bg.'">'.PHP_EOL;
+		$render .= '<header style="display: block;width:100%;padding:15px;overflow:hidden;color:rgba(255, 255, 255, 0.95);min-height:auto !important;'.$bg.'">'.PHP_EOL;
 		$render .= '<span style="display:block;float:left;margin-left:15px;line-height:24px;font-size:16px;font-weight: bold;">'.$title.'</span>'.PHP_EOL;
 		endif;
 		$render .= '</header>'.PHP_EOL;
@@ -120,6 +122,9 @@ final class Notification
 		$render .= '<meta charset="utf-8">';
 		$render .= '<title>Error : '.$title.'</title>';
 		$render .= '<link rel="stylesheet" href="/assets/css/belcms.notification.css">';
+		$render .= '<style type="text/css">';
+		$render .= 'body {background-image: url("/assets/img/patern_1.png");}section#error {width: 100%;max-width: 700px;margin: 300px calc(50% - 350px) auto;height: 300px;}';
+		$render .= '</style>';
 		$render .= '</head>';
 		$render .= '<body>';
 		$render .= '<section id="error">';

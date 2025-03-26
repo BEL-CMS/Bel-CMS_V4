@@ -1,90 +1,112 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.4]
+ * @version 4.0.0 [PHP8.3]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
  * @copyright 2015-2025 Bel-CMS
  * @author as Stive - stive@determe.be
- */
+*/
 
 namespace BelCMS\Core;
 use BelCMS\PDO\BDD;
 use BelCMS\Requires\Common;
-use BelCMS\Core\User;
 
 if (!defined('CHECK_INDEX')):
-	header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
-	exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
+    header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
+    exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
 endif;
-
 ################################################
-# Class config
+# Class Config du CMS / ACCESS
 ################################################
-class config
+final class Config
 {
-    public function getconfig ()
+    function __construct()
+    {
+        $_SESSION['CONFIG'] = self::getSqlConfig ();
+    }
+
+    private function getSqlConfig () : array
     {
         $sql = new BDD;
         $sql->table('TABLE_CONFIG');
         $sql->queryAll();
-        foreach ($sql->data as $constant => $value) {
-            define($value->name, $value->value); unset($sql);
+        foreach ($sql->data as $key => $value) {
+            $return[$value->name] =  $value->value;
         }
+        return $return;
     }
 
-    public static function getLangs()
-    {
-        $scan = Common::ScanFiles(ROOT.DS.'langs');
-        foreach ($scan as $k => $v) {
-            require_once ROOT.DS.'langs' . DS . $v;
-        }      
-    }
+	public static function GetConfigPage ($page = null)
+	{
+		$return = null;
 
-    public static function GroupsAccess ($page)
-    {
-        $list = null;
-        $sql = new BDD;
-        $sql->table('TABLE_CONFIG_PAGES');
-        $sql->where = array('name' => 'name', 'value' => $page);
-        $sql->isObject(false);
-        $a = $sql->data;
-        return $a;
-    }
+		if ($page != null) {
+			$page = strtolower(trim($page));
+			$sql = New BDD;
+			$sql->table('TABLE_CONFIG_PAGES');
+			$sql->where(array('name' => 'name', 'value' => $page));
+			$sql->queryOne();
+			$return = $sql->data;
+			$return->access_groups = explode('|', $return->access_groups);
+			$return->access_admin  = explode('|', $return->access_admin);
+			if (!empty($return->config)) {
+				$return->config = Common::transformOpt($return->config);
+			} else {
+				$return->config = (object) array();
+			}
+		}
 
-    public static function GetAccessMembers ($page)
-    {
-        $sql = new BDD;
-        $sql->table('TABLE_CONFIG_PAGES');
-        $sql->where(array('name' => 'name', 'value' => $page));
-        $sql->queryOne();
-        if (empty($sql->data)) {
-            return false;
-        } else {
-            $data = $sql->data->access_groups;
-            $exp = explode('|',$data);
-            foreach ($exp as $key => $value) {
-                if ($value == 0) {
-                    return true;
-                }
-                if (in_array($value, $_SESSION['USER']->groups->all_groups)) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        }
-    }
+		return $return;
+	}
 
-    public static function listGroups ()
+    public static function getGroups () : array
     {
         $sql = new BDD;
         $sql->table('TABLE_GROUPS');
-        $sql->fields(array('id_group', 'name'));
         $sql->queryAll();
-        $return = $sql->data;
-        return $return;
+        return $sql->data;
     }
+
+	public static function getConfigWidgets ($name = false) : array
+	{
+		$return = (object) array();
+		$sql = new BDD;
+		$sql->table(constant('TABLE_WIDGETS'));
+		$sql->fields(array('name', 'title','groups_access','groups_admin','active','pos','orderby','pages','opttions'));
+		if ($name !== false) {
+			$where = array('name' => 'name', 'value' => $name);
+			$sql->where($where);
+			$sql->queryOne();
+		} else {
+			$sql->queryAll();
+		}
+		$return = $sql->data;
+		unset($sql);
+		return $return;
+	}
+
+	public static function getGroupsForID ($id = null)
+	{
+		if ($id == 0) {
+			return (object) array(
+				'name'     => constant('VISITORS'),
+				'id_group' => 0,
+				'image'    => '',
+				'color'    => ''
+			);
+		}
+		$id = (int) $id;
+		$return = constant('UNKNOWN');
+		$sql = New BDD;
+		$sql->where(array('name' => 'id_group', 'value' => $id));
+		$sql->table('TABLE_GROUPS');
+		$sql->fields(array('name', 'id_group', 'color', 'image'));
+		$sql->queryOne();
+		if (!empty($sql->data)) {
+			$return = $sql->data;
+		}
+		return $return;
+	}
 }
-config::getLangs();

@@ -1,36 +1,38 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.4]
+ * @version 4.0.0 [PHP8.3]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
  * @copyright 2015-2025 Bel-CMS
  * @author as Stive - stive@determe.be
-*/
+ */
+
+use BelCMS\User\User as User;
+
+if (!defined('CHECK_INDEX')):
+	header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
+	exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
+endif;
 ?>
-<div id="belcms_downloads_index">
-    <h1><?=constant('DOWNLOADS');?></h1>
-    <div class="belcms_donwloads_center">&nbsp;<b>[</b>&nbsp;<a href="Downloads" class="btn btn-info btn-wave">Accueil</a>&nbsp;|&nbsp;<a href="Downloads/New" class="btn btn-success shadow-success btn-wave">Nouveaux</a>&nbsp;|&nbsp;<a href="Downloads/Popular" class="btn btn-warning shadow-warning btn-wave">Populaires</a>&nbsp;|&nbsp;<a href="Downloads/propose" class="btn btn-secondary shadow-secondary btn-wave">Proposer</a>&nbsp;<b>]</b></div>
-    <?php
-    foreach ($data as $value):
-        if (empty($value->banniere)) {
-            $banniere = 'assets/img/1.jpg';
-        } else {
-            $banniere = $value->banniere;
-        }
-    ?>
-    <div class="card text-center mt-3">
-        <div class="card-header"><?=$value->name;?></div>
-        <div class="card-body">
-            <img class="belcms_cat_img" src="<?=$banniere;?>" alt="img_cat_<?=$value->name;?>">
-            <div class="belcms_cat_aera"><?=$value->description;?></div>
-        </div>
-        <div class="card-footer text-body-secondary">
-            <a href="Downloads/dls/<?=$value->id;?>" class="btn btn-dark">Entrer dans la catégorie : <?=$value->name;?></a>
-        </div>
-    </div>
-    <?php
-    endforeach;
-    ?>
-</div>
+<article id="section_downloads">
+	<ul id="section_download_jquery">
+		<li id="downloads_title">
+			<h2><?=constant('DOWNLOADS');?></h2>
+			<div class="downloads_title_cat"><?=constant('NB_CAT');?></div>
+			<div class="downloads_title_view"><?=constant('NB_VIEW');?></div>
+		</li>
+		<?php
+		foreach ($data as $key => $value):
+		?>
+		<li class="downloads_li_content">
+			<h3><a href="Downloads/detail/<?=$value->id;?>"><?=$value->name;?></a><span><?=$value->description;?></span></h3>
+			<div><span><?=$value->dls;?></span></div>
+			<div><span><?=$value->view;?></span></div>
+		</li>
+		<?php
+		endforeach;
+		?>
+	</ul>
+</article>

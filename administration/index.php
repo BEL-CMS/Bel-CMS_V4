@@ -12,10 +12,9 @@
 
 namespace Belcms\Administration;
 
+use BelCMS\Core\Dispatcher;
 use BelCMS\Core\encrypt;
-use BelCMS\Core\Interaction;
 use BelCMS\Core\Notification;
-use BelCMS\Core\Route;
 use BelCMS\Core\Secure;
 use BelCMS\Core\User as CoreUser;
 use BelCMS\PDO\BDD;
@@ -42,15 +41,15 @@ final class Administration
     #########################################
     function __construct()
     {
-        $this->link = Route::link();
-        $this->page = Route::page();
-        $this->view = Route::view();
+        $this->link = Dispatcher::link();
+        $this->page = Dispatcher::page();
+        $this->view = Dispatcher::view();
 
         self::getLangs();
 
         if (isset($_SESSION['USER']->user->hash_key) && strlen($_SESSION['USER']->user->hash_key) == 32) {
             if (isset($_SESSION['LOGIN_MANAGEMENT']) and $_SESSION['LOGIN_MANAGEMENT'] === true) {
-                require_once constant('DIR_ADMIN') . 'intern' . DS . 'adminpages.php';
+                require_once ROOT . DS . 'administration' . DS . 'intern' . DS . 'adminpages.php';
                 self::base();
             } else {
                 self::login();
@@ -66,7 +65,7 @@ final class Administration
     {
         $render        = self::getLinksPages();
         $menuPage      = self::menuPage();
-        require_once constant('DIR_ADMIN') . 'intern' . DS . 'layout.php';
+        require_once ROOT . DS . 'administration' . DS . 'intern' . DS . 'layout.php';
     }
     #########################################
     # Gestion des pages & widgets + le dashboard
@@ -79,15 +78,15 @@ final class Administration
 
         $groups = $_SESSION['USER']->groups->all_groups;
 
-        require_once constant('DIR_ADMIN') . 'intern' . DS . 'adminpages.php';
+        require_once ROOT . DS . 'administration' . DS . 'intern' . DS . 'adminpages.php';
         #####################################
         # Accessible Uniquement aux administrateurs de 1er niveau
         #####################################
         if (isset($_REQUEST['option']) and $_REQUEST['option'] == 'parameter') {
             if (
-                Route::view() == strtolower('parameter') or
-                Route::view() == strtolower('sendparameter') or
-                Route::page() == strtolower('parameter') or
+                Dispatcher::view() == strtolower('parameter') or
+                Dispatcher::view() == strtolower('sendparameter') or
+                Dispatcher::page() == strtolower('parameter') or
                 $_REQUEST['option'] == 'parameter' or
                 $_REQUEST['option'] == 'extras'
             ) {
@@ -140,12 +139,12 @@ final class Administration
 
                 default:
                     $requestPage = null;
-                    include constant('DIR_ADMIN') . 'intern' . DS . 'dashboard.php';
+                    include require_once ROOT . DS . 'administration' . DS . 'intern' . DS . 'dashboard.php';
                     break;
             }
             echo $requestPage;
         } else {
-            include constant('DIR_ADMIN') . 'intern' . DS . 'dashboard.php';
+            require_once ROOT . DS . 'administration' . DS . 'intern' . DS . 'dashboard.php';
         }
         #####################################
         # end requete page
