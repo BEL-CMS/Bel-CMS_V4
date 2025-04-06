@@ -23,6 +23,7 @@ class Templates
             $css,
             $js,
             $page,
+            $view,
             $widgets,
             $fullwide,
             $host;
@@ -33,6 +34,7 @@ class Templates
         $this->css          = self::cascadingStyleSheets($var->link);
         $this->js           = self::javaScript($var->link);
         $this->page         = $var->page;
+        $this->view         = Dispatcher::view();
         $this->fullwide     = self::getFullWide();
         $this->host         = GetHost::getBaseUrl();
         $this->widgets      = $var->widgets;
@@ -142,13 +144,10 @@ class Templates
         /* jQuery BEL-CMS */
         $files[] = 'assets/js/belcms.core.js';
 		/* pages js */
-		$dirPage = constant('DIR_TPL').strtolower($var).DS.'js'.DS.'javascripts.js';
-		if (is_file($dirPage)) {
-			$files[] = $dirPage;
-		}
 
-		if (is_file(ROOT.DS.'pages'.DS.strtolower($var).DS.'js'.DS.'javascripts.js')) {
-			$files[] = 'pages/'.strtolower($var).'/js/javascripts.js';
+        $dirPage = ROOT.DS.'pages'.DS.strtolower($var).DS.'js'.DS.'javascripts.js';
+		if ($dirPage) {
+			$files[] = 'pages/'.strtolower($var). '/js/javascript.js';
 		}
 
         foreach ($files as $v) {

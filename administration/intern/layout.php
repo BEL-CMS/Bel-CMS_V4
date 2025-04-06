@@ -16,7 +16,7 @@ require 'administration\intern\menu.php';
 $menu = new Menu();
 ?>
 <!doctype html>
-<html lang="en" dir="ltr" data-nav-layout="horizontal" data-theme-mode="dark" data-card-style="style1" data-card-background="background2" loader="enable" style="--primary-rgb: 255, 255, 255; --theme-bg-gradient: #01041a;" data-width="fullwidth" data-header-position="scrollable" data-menu-position="scrollable" data-bg-img="bgimg2" data-pattern-img="bgpattern5" data-nav-style="menu-hover">
+<html lang="en" dir="ltr" data-nav-layout="horizontal" data-theme-mode="dark" data-card-style="style1" data-card-background="background2" loader="enable" style="--primary-rgb: 255, 255, 255; --theme-bg-gradient: #333333;" data-width="fullwidth" data-header-position="scrollable" data-menu-position="scrollable" data-bg-img="bgimg2" data-pattern-img="bgpattern5" data-nav-style="menu-hover">
 
 <head>
     <base href="<?= GetHost::getBaseUrl(); ?>">
@@ -29,13 +29,12 @@ $menu = new Menu();
     <meta name="keywords" content="admin panel, admin, admin template, dashboard template, dashboard template bootstrap, crm dashboard, stocks dashboard, projects dashboard, sales dashboard, html template, html css templates, html dashboard, dashboard, bootstrap dashboard, template dashboard">
     <script src="/administration/intern/assets/libs/choices.js/public/assets/scripts/choices.min.js"></script>
     <script src="/administration/intern/assets/js/main.js"></script>
-    <script src="/assets/fa.all.min.js"></script>
     <link id="style" href="/administration/intern/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="/administration/intern/assets/css/styles.css" rel="stylesheet">
     <link href="/administration/intern/assets/css/icons.css" rel="stylesheet">
     <link href="/administration/intern/assets/libs/node-waves/waves.min.css" rel="stylesheet">
     <link href="/administration/intern/assets/libs/simplebar/simplebar.min.css" rel="stylesheet">
-    <link href="/assets/plugins/DataTables/datatables.min.css" rel="stylesheet">
+    <link href="/assets/plugins/DataTables-1.13.06/jquery.dataTables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/administration/intern/assets/libs/flatpickr/flatpickr.min.css">
     <link rel="stylesheet" href="/administration/intern/assets/libs/@simonwep/pickr/themes/nano.min.css">
     <link rel="stylesheet" href="/administration/intern/assets/libs/choices.js/public/assets/styles/choices.min.css">
@@ -189,14 +188,13 @@ $menu = new Menu();
             <p> Chargement de la page en <span style="margin: auto;margin-left: 10px;" id="belcms_genered"></span></p>
         </footer>
 
-
         <div class="scrollToTop">
             <span class="arrow"><i class="ti ti-arrow-narrow-up fs-20"></i></span>
         </div>
         <div id="responsive-overlay"></div>
-        <script src="/assets/jquery-3.7.1.min.js"></script>
-        <script src="/assets/plugins/DataTables/datatables.min.js"></script>
-        <script src="/assets/plugins/datatable.fr.js"></script>
+        <script src="/assets/plugins/jQuery/jquery-3.7.1.min.js"></script>
+        <script src="/assets/plugins/DataTables-1.13.06/datatable.fr.js"></script>
+        <script src="/assets/plugins/DataTables-1.13.06/datatables.min.js"></script>
         <script src="/administration/intern/assets/libs/@popperjs/core/umd/popper.min.js"></script>
         <script src="/administration/intern/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="/administration/intern/assets/js/defaultmenu.min.js"></script>

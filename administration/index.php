@@ -168,7 +168,8 @@ final class Administration
     #########################################
     private function request($request, $page)
     {
-        $scan  = Common::ScanDirectory(constant('DIR_ADMIN') . $request);
+        $scan  = Common::ScanDirectory(ROOT.DS.'administration'.DS . $request);
+
         if (in_array($page, $scan)) {
             if (self::getAccessPage($page) === false) {
 ?>
@@ -192,7 +193,7 @@ final class Administration
                 <?php
                 $page = defined(strtoupper($page)) ? constant(strtoupper($page)) : $page;
             } else {
-                $require = constant('DIR_ADMIN') . $request . DS . $page . DS . 'controller.php';
+                $require = ROOT.DS.'administration'.DS . $request . DS . $page . DS . 'controller.php';
                 if (!is_file($require)) {
                     Notification::error(constant('ACCESS_TO_CONTROLLER_IMPOSSIBLE') . '<br> ' . $require, 'Page', true);
                     die();
@@ -262,8 +263,7 @@ final class Administration
                         die();
                     }
 
-
-                    $passwordCrypt =  new encrypt($data->password, constant('CMS_API_CLEF'));
+                    $passwordCrypt =  new encrypt($data->password, $_SESSION['CONFIG']['CMS_KEY_ADMIN']);
                     $passwordSQL = $passwordCrypt->decrypt();
 
                     if ($passwordSQL == $_REQUEST['password']) {
@@ -282,7 +282,7 @@ final class Administration
                     echo json_encode($return);
                 }
             } else {
-                include constant('DIR_ADMIN') . 'intern/login.php';
+                include ROOT . DS . 'administration' . DS . 'intern'.DS.'login.php';
             }
         } else {
             $return['ajax'] = 'vous devez etre logué';
@@ -298,7 +298,7 @@ final class Administration
         $return = array();
 
         foreach ($pages as $k => $v) {
-            $return['/' . $v . '?management&option=pages'] = defined(strtoupper($v)) ? constant(strtoupper($v)) : $v;
+            $return['/' . $v . '?admin&option=pages'] = defined(strtoupper($v)) ? constant(strtoupper($v)) : $v;
         }
         return $return;
     }
@@ -311,7 +311,7 @@ final class Administration
         $return   = array();
 
         foreach ($widgets as $k => $v) {
-            $return['/' . $v . '?management&option=widgets'] = defined(strtoupper($v)) ? constant(strtoupper($v)) : $v;
+            $return['/' . $v . '?admin&option=widgets'] = defined(strtoupper($v)) ? constant(strtoupper($v)) : $v;
         }
         return $return;
     }
@@ -324,7 +324,7 @@ final class Administration
         $return    = array();
 
         foreach ($templates as $k => $v) {
-            $return['/' . $v . '?management&option=templates'] = defined(strtoupper($v)) ? constant(strtoupper($v)) : $v;
+            $return['/' . $v . '?admin&option=templates'] = defined(strtoupper($v)) ? constant(strtoupper($v)) : $v;
         }
         return $return;
     }
@@ -337,7 +337,7 @@ final class Administration
         $return = array();
 
         foreach ($users as $k => $v) {
-            $return['/' . $v . '?management&option=users'] = defined(strtoupper($v)) ? constant(strtoupper($v)) : $v;
+            $return['/' . $v . '?admin&option=users'] = defined(strtoupper($v)) ? constant(strtoupper($v)) : $v;
         }
         return $return;
     }
@@ -350,7 +350,7 @@ final class Administration
         $return  = array();
 
         foreach ($gaming as $k => $v) {
-            $return['/' . $v . '?management&option=gaming'] = defined(strtoupper($v)) ? constant(strtoupper($v)) : $v;
+            $return['/' . $v . '?admin&option=gaming'] = defined(strtoupper($v)) ? constant(strtoupper($v)) : $v;
         }
         return $return;
     }
@@ -363,7 +363,7 @@ final class Administration
         $return     = array();
 
         foreach ($parameter as $k => $v) {
-            $return['/' . $v . '?management&option=parameter'] = defined(strtoupper($v)) ? constant(strtoupper($v)) : $v;
+            $return['/' . $v . '?admin&option=parameter'] = defined(strtoupper($v)) ? constant(strtoupper($v)) : $v;
         }
         return $return;
     }
@@ -376,7 +376,7 @@ final class Administration
         $return     = array();
 
         foreach ($parameter as $k => $v) {
-            $return['/' . $v . '?management&option=extras'] = defined(strtoupper($v)) ? constant(strtoupper($v)) : $v;
+            $return['/' . $v . '?admin&option=extras'] = defined(strtoupper($v)) ? constant(strtoupper($v)) : $v;
         }
         return $return;
     }
@@ -385,7 +385,7 @@ final class Administration
     #########################################
     private function getPages()
     {
-        $scan = Common::ScanDirectory(constant('DIR_ADMIN') . 'pages', true);
+        $scan = Common::ScanDirectory(ROOT.DS.'administration'.DS . 'pages', true);
         asort($scan);
         return $scan;
     }
@@ -394,7 +394,7 @@ final class Administration
     #########################################
     private function getWidgets()
     {
-        $scan = Common::ScanDirectory(constant('DIR_ADMIN') . 'widgets', true);
+        $scan = Common::ScanDirectory(ROOT.DS.'administration'.DS . 'widgets', true);
         asort($scan);
         return $scan;
     }
@@ -403,7 +403,7 @@ final class Administration
     #########################################
     private function getUsers()
     {
-        $scan = Common::ScanDirectory(constant('DIR_ADMIN') . 'users', true);
+        $scan = Common::ScanDirectory(ROOT.DS.'administration'.DS . 'users', true);
         asort($scan);
         return $scan;
     }
@@ -412,7 +412,7 @@ final class Administration
     #########################################
     private function getTemplates()
     {
-        $scan = Common::ScanDirectory(constant('DIR_ADMIN') . 'templates', true);
+        $scan = Common::ScanDirectory(ROOT.DS.'administration'.DS . 'templates', true);
         asort($scan);
         return $scan;
     }
@@ -421,7 +421,7 @@ final class Administration
     #########################################
     private function getGaming()
     {
-        $scan = Common::ScanDirectory(constant('DIR_ADMIN') . 'gaming', true);
+        $scan = Common::ScanDirectory(ROOT.DS.'administration'.DS . 'gaming', true);
         asort($scan);
         return $scan;
     }
@@ -430,7 +430,7 @@ final class Administration
     #########################################
     private function getParameter()
     {
-        $scan = Common::ScanDirectory(constant('DIR_ADMIN') . 'parameter', true);
+        $scan = Common::ScanDirectory(ROOT.DS.'administration'.DS . 'parameter', true);
         asort($scan);
         return $scan;
     }
@@ -439,7 +439,7 @@ final class Administration
     #########################################
     private function getExtras()
     {
-        $scan = Common::ScanDirectory(constant('DIR_ADMIN') . 'extras', true);
+        $scan = Common::ScanDirectory(ROOT.DS.'administration'.DS . 'extras', true);
         asort($scan);
         return $scan;
     }
@@ -519,9 +519,9 @@ final class Administration
     #########################################
     private function getLangs()
     {
-        $scan = Common::ScanFiles(constant('DIR_ADMIN') . 'langs');
+        $scan = Common::ScanFiles(ROOT.DS.'administration'.DS . 'langs');
         foreach ($scan as $k => $v) {
-            require_once constant('DIR_ADMIN') . 'langs' . DS . $v;
+            require_once ROOT.DS.'administration'.DS . 'langs' . DS . $v;
         }
     }
 }

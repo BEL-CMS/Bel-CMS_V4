@@ -76,9 +76,9 @@ class Pages
         // Démarre la mémoire tampon
         ob_start();
         // Si il y a un template 
-        if (!empty($_SESSION['CONFIG_CMS']['CMS_TPL_WEBSITE'])) {
-            // Si il y a un template avec une page custom
-            $dir = constant('DIR_TPL').$_SESSION['CONFIG_CMS']['CMS_TPL_WEBSITE'].DS.'custom'.DS.strtolower($this->pageName).'.'.strtolower($filename).'.php';
+        if (!empty($_SESSION)) {
+            // S'il y a un template avec une page custom
+            $dir = constant('DIR_TPL'). $_SESSION['CONFIG']['CMS_TEMPLATE'].DS.'custom'.DS.strtolower($this->pageName).'.'.strtolower($filename).'.php';
             // Si le fichier existe, on inclut
             if (is_file($dir)) {
                 include $dir;

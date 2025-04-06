@@ -1,15 +1,16 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.4]
+ * @version 3.0.0 [PHP8.2]
  * @link https://bel-cms.dev
  * @link https://determe.be
- * @license MIT License
- * @copyright 2015-2025 Bel-CMS
+ * @license http://opensource.org/licenses/GPL-3.-copyleft
+ * @copyright 2015-2023 Bel-CMS
  * @author as Stive - stive@determe.be
  */
 
-use BelCMS\Requires\Common;
+namespace BELCMS\LANG;
+use BelCMS\Requires\Common as Common;
 
 if (!defined('CHECK_INDEX')):
     header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
@@ -17,5 +18,5 @@ if (!defined('CHECK_INDEX')):
 endif;
 
 Common::constant(array(
-	
+    
 ));

@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.3]
+ * @version 4.0.0 [PHP8.4]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -52,7 +52,7 @@ final class Comment
 			$user = User::getInfosUserAll($hash_key);
 			if ($user) {
 				$return['username'] = $user->user->username;
-				$return['avatar']   = is_file($user->profils->avatar) ? $user->profils->avatar : constant('DEFAULT_AVATAR');
+				$return['avatar']   = $user->profils->avatar;
 			} else {
 				$return['username'] = constant('MEMBER_DELETE');
 				$return['avatar']   = constant('DEFAULT_AVATAR');
@@ -89,7 +89,7 @@ final class Comment
 			$dispatcher->link;
 			$links = $dispatcher->link[0].'/'.$dispatcher->link[1].'/'.$dispatcher->link[2];
 			if ($_SESSION['USER']->user->hash_key !== false) {
-				$html .= '<form action="Comments/Send" method="post" enctype="multipart/form-data"><input name="url" type="hidden" value="'.$links.'"><textarea name="text"></textarea><button type="submit" class="belcms_btn belcms_bg_black">Envoyer</button></form>';
+				$html .= '<form action="Comments/Send" method="post"><input name="url" type="hidden" value="'.$links.'"><textarea name="text"></textarea><button type="submit" class="belcms_btn belcms_bg_black">Envoyer</button></form>';
 			}
 		}
 		$html .= '</nav>';

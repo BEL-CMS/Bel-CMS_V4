@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.3]
+ * @version 4.0.0 [PHP8.4]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -12,62 +12,63 @@
 #######################################################
 # Demarre une $_SESSION                               #
 #######################################################
-if(!isset($_SESSION)) {
-    session_start();
-}
+if(!isset($_SESSION)) {                               #
+    session_start();                                  #
+}                                                     #
 #######################################################
-use Belcms\Administration\Administration;
-use BelCMS\Core\BelCMS;
-use BelCMS\Core\Dispatcher;
-use BelCMS\Core\Ban;
-use BelCMS\Core\Landing;
+use Belcms\Administration\Administration;             #
+use BelCMS\Core\BelCMS;                               #
+use BelCMS\Core\Dispatcher;                           #
+use BelCMS\Core\Ban;                                  #
+use BelCMS\Core\Landing;                              #
 #######################################################
-# TimeZone et charset
+# TimeZone et charset                                 #
 #######################################################
-ini_set('default_charset', 'utf-8');
-date_default_timezone_set('Europe/Brussels');
+ini_set('default_charset', 'utf-8');                  #
+date_default_timezone_set('Europe/Brussels');         #
 #######################################################
-# Définit comme l'index
+# Définit comme l'index                               #
 #######################################################
-define('CHECK_INDEX', true);
-define('VERSION_CMS', '4.0.0');
-define('DS', DIRECTORY_SEPARATOR);
-define('ROOT', __DIR__);
-define('SHOW_ALL_REQUEST_SQL', false);
-define('ERROR_INDEX', '<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
+define('CHECK_INDEX', true);                          #
+define('VERSION_CMS', '4.0.0');                       #
+define('DS', DIRECTORY_SEPARATOR);                    #
+define('ROOT', __DIR__);                              #
+define('SHOW_ALL_REQUEST_SQL', false);                #
+define('ERROR_INDEX', '<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');         #
 #######################################################
-# Function debug
+# Function debug                                      #
 #######################################################
-require_once 'debug.php';
+require_once 'debug.php';                             #
 #######################################################
-# MicroTime loading
+# MicroTime loading                                   #
 #######################################################
-$_SESSION['SESSION_START']  = microtime(true);
-#########################################
-$_SESSION['NB_REQUEST_SQL'] = 0;
-$_SESSION['CMS_DEBUG']      = true;
+$_SESSION['SESSION_START']  = microtime(true);        #
+#########################################             #
+$_SESSION['NB_REQUEST_SQL'] = 0;                      #
+$_SESSION['CMS_DEBUG']      = true;                   #
 #######################################################
-# Install
+# Install                                             #
 #######################################################
-if (is_file(ROOT.DS.'INSTALL'.DS.'index.php')) {
-    header('Location: INSTALL/index.php');
-    die();
-}
+if (is_file(ROOT.DS.'INSTALL'.DS.'index.php')) {      #
+	header('Location: INSTALL/index.php');            #
+	die();                                            #
+}                                                     #
 #######################################################
-# Fichier requis
+# Fichier requis                                      #
 #######################################################
-require_once ROOT.DS.'requires'.DS.'requires.all.php';
-#########################################
-# Bannissement
-#########################################
-new Ban();
-#########################################
-# Landing page
-#########################################
-new Landing;
-#########################################
-# Initialise le C.M.S
-#########################################
+require_once ROOT.DS.'requires'.DS.'requires.all.php';#
+#######################################################
+# Fichier requis                                      #
+# Bannissement                                        #
+#######################################################
+new Ban;                                              #
+#######################################################
+# Landing page                                        #
+#######################################################
+new Landing;                                          #
+#######################################################
+# Initialise le C.M.S                                 #
+#######################################################
 if (Dispatcher::isManagement() === true) {
 	header('Content-Type: text/html');
 	require_once ROOT.DS.'administration'.DS.'index.php';

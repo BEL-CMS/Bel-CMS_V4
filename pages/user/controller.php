@@ -10,6 +10,7 @@
 */
 
 namespace Belcms\Pages\Controller;
+
 use BelCMS\Core\Pages;
 use BelCMS\Core\Secure;
 use BelCMS\Core\User as CoreUser;
@@ -67,7 +68,7 @@ class User extends Pages
         if ($_SESSION['USER']->user->username != $data['username']) {
             $checkName = $this->models->checkUser($data['username']);
             if ($checkName >= 1) {
-                $this->notification('warning', constant('THIS_NAME_OR_PSEUDO_RESERVED'), constant('INFO'));
+                $this->message('warning', constant('THIS_NAME_OR_PSEUDO_RESERVED'), constant('INFO'));
             } else {
                 $data['username']   = str_replace(' ', '_', $data['username']);
                 $update['username'] = $data['username'];
@@ -87,11 +88,11 @@ class User extends Pages
         }
         $checkMail = $this->models->checkMail($data['mail']);
         if (in_array($tmpNdd[0], $arrayBlackList)) {
-            $this->notification('warning', constant('NO_MAIL_ALLOWED'), constant('INFO'));
+            $this->message('warning', constant('NO_MAIL_ALLOWED'), constant('INFO'));
         }
         if ($_SESSION['USER']->user->mail != $data['mail']) {
             if ($checkMail >= 1) {
-                $this->notification('warning', constant('THIS_MAIL_IS_ALREADY_RESERVED'), constant('INFO'));
+                $this->message('warning', constant('THIS_MAIL_IS_ALREADY_RESERVED'), constant('INFO'));
             } else {
                 $update['mail'] = $data['mail'];
             }
@@ -110,7 +111,7 @@ class User extends Pages
         $result = array_merge($update, $profils);
         #-----------------------------------------------------------#
         $return = $this->models->updateUser ($result);
-        $this->notification($return['type'], $return['msg'], constant('INFO'));
+        $this->message($return['type'], $return['msg'], constant('INFO'));
         $this->redirect('user', 2);
     }
 	#########################################
@@ -131,7 +132,7 @@ class User extends Pages
         $user     = $_POST['user'];
         $password = $_POST['password'];
         $return = $this->models->login($user, $password);
-        $this->notification($return['type'], $return['msg'], constant('INFO'));
+        $this->message($return['type'], $return['msg'], constant('INFO'));
         $this->redirect('/user/login&echo', 2);
     }
 	#########################################
@@ -172,25 +173,25 @@ class User extends Pages
         $checkMail = $this->models->checkMail($array['mail']);
 
         if (empty($array['username']) or empty($array['mail']) or empty($array['password'])) {
-            $this->notification('warning', constant('UNKNOW_USER_MAIL_PASS'), constant('INFO'));
+            $this->message('warning', constant('UNKNOW_USER_MAIL_PASS'), constant('INFO'));
         } else if (in_array($tmpNdd[0], $arrayBlackList)) {
-            $this->notification('warning', constant('NO_MAIL_ALLOWED'), constant('INFO'));
+            $this->message('warning', constant('NO_MAIL_ALLOWED'), constant('INFO'));
         } else if (strlen($array['username']) < 3) {
-            $this->notification('warning', constant('MIN_THREE_CARACTER'), constant('INFO'));
+            $this->message('warning', constant('MIN_THREE_CARACTER'), constant('INFO'));
         } else if (strlen($array['password']) < 6) {
             $return['msg']   = constant('MIN_SIX_CARACTER');
             $error++;
-            $this->notification('warning', constant('MIN_SIX_CARACTER'), constant('INFO'));
+            $this->message('warning', constant('MIN_SIX_CARACTER'), constant('INFO'));
         } else if (strlen($array['username']) > 32) {
-            $this->notification('warning', constant('MAX_CARACTER'), constant('INFO'));
+            $this->message('warning', constant('MAX_CARACTER'), constant('INFO'));
         } else if ($checkName >= 1) {
-            $this->notification('warning', constant('THIS_NAME_OR_PSEUDO_RESERVED'), constant('INFO'));
+            $this->message('warning', constant('THIS_NAME_OR_PSEUDO_RESERVED'), constant('INFO'));
         } elseif ($checkMail >= 1) {
-            $this->notification('warning', constant('THIS_MAIL_IS_ALREADY_RESERVED'), constant('INFO'));
+            $this->message('warning', constant('THIS_MAIL_IS_ALREADY_RESERVED'), constant('INFO'));
         } else {
             $return = $this->models->sendRegistration($array);
             CoreUser::login($array['username'], $array['password']);
-            $this->notification('success', $return['msg'], constant('INFO'));
+            $this->message('success', $return['msg'], constant('INFO'));
             $this->redirect('user', 2);
         }
     }
@@ -201,10 +202,10 @@ class User extends Pages
     {
         if (CoreUser::isLogged()) {
             $return = $this->models->deleteAccount ();
-            $this->notification($return['type'], $return['msg'], constant('INFO'));
+            $this->message($return['type'], $return['msg'], constant('INFO'));
             $this->redirect('/index.php', 2);
         } else {
-            $this->notification('warning', constant('REQUESTED_PAGE_NOT_ACCESSIBLE'), constant('INFO'));
+            $this->message('warning', constant('REQUESTED_PAGE_NOT_ACCESSIBLE'), constant('INFO'));
             $this->redirect('/user', 2);
         }
     }
@@ -216,7 +217,7 @@ class User extends Pages
         $user   = Common::VarSecure($_POST['user'], null);
         $mdp    = Common::VarSecure($_POST['password'], null);
         $return = CoreUser::login($user, $mdp);
-        $this->notification($return['type'], $return['msg'], constant('INFO'));
+        $this->message($return['type'], $return['msg'], constant('INFO'));
         $this->redirect('user', 2);
     }
 	#########################################
@@ -229,7 +230,7 @@ class User extends Pages
             $this->set($d);
             $this->render('login');
         } else {
-            $this->notification('warning', constant('REQUESTED_PAGE_NOT_ACCESSIBLE'), constant('INFO'));
+            $this->message('warning', constant('REQUESTED_PAGE_NOT_ACCESSIBLE'), constant('INFO'));
             $this->redirect('/user/login&echo', 0);
         }
     }
@@ -241,7 +242,7 @@ class User extends Pages
         if (CoreUser::isLogged()) {
             $this->render('material');
         } else {
-            $this->notification('warning', constant('REQUESTED_PAGE_NOT_ACCESSIBLE'), constant('INFO'));          
+            $this->message('warning', constant('REQUESTED_PAGE_NOT_ACCESSIBLE'), constant('INFO'));          
             $this->redirect('/user/login&echo', 0);
         }
     }
@@ -252,10 +253,10 @@ class User extends Pages
                 $array[$key] = Common::VarSecure($value, null);
             }
             $return = $this->models->updateMaterial ($array);
-            $this->notification('success', $return['msg'], constant('INFO'));
+            $this->message('success', $return['msg'], constant('INFO'));
             $this->redirect('/user/Material', 2);
         } else {
-            $this->notification('warning', constant('REQUESTED_PAGE_NOT_ACCESSIBLE'), constant('INFO'));
+            $this->message('warning', constant('REQUESTED_PAGE_NOT_ACCESSIBLE'), constant('INFO'));
             $this->redirect('/user/login&echo', 0);
         }
     }
@@ -267,7 +268,7 @@ class User extends Pages
         if (CoreUser::isLogged()) {
             $this->render('social');
         } else {
-            $this->notification('warning', constant('REQUESTED_PAGE_NOT_ACCESSIBLE'), constant('INFO'));
+            $this->message('warning', constant('REQUESTED_PAGE_NOT_ACCESSIBLE'), constant('INFO'));
             $this->redirect('/user/login&echo', 0);
         }
     }
@@ -278,10 +279,10 @@ class User extends Pages
                 $array[$key] = Common::VarSecure($value, null);
             }
             $return = $this->models->updateSocial ($array);
-            $this->notification('success', $return['msg'], constant('INFO'));
+            $this->message('success', $return['msg'], constant('INFO'));
             $this->redirect('/user/Social', 2);
         } else {
-            $this->notification('warning', constant('REQUESTED_PAGE_NOT_ACCESSIBLE'), constant('INFO'));
+            $this->message('warning', constant('REQUESTED_PAGE_NOT_ACCESSIBLE'), constant('INFO'));
             $this->redirect('/user/login&echo', 0);
         }
     }
@@ -293,7 +294,7 @@ class User extends Pages
         if (CoreUser::isLogged()) {
             $this->render('mdp');
         } else {
-            $this->notification('warning', constant('REQUESTED_PAGE_NOT_ACCESSIBLE'), constant('INFO'));
+            $this->message('warning', constant('REQUESTED_PAGE_NOT_ACCESSIBLE'), constant('INFO'));
             $this->redirect('/user/login&echo', 0);
         }
     }
@@ -308,10 +309,10 @@ class User extends Pages
                 $_SESSION['USER'] = CoreUser::getInfosUserAll();
             }
             
-            $this->notification($return['type'], $return['msg'], constant('INFO'));
+            $this->message($return['type'], $return['msg'], constant('INFO'));
             $this->redirect('/user/mdp', 2);
         } else {
-            $this->notification('warning', constant('REQUESTED_PAGE_NOT_ACCESSIBLE'), constant('INFO'));
+            $this->message('warning', constant('REQUESTED_PAGE_NOT_ACCESSIBLE'), constant('INFO'));
             $this->redirect('/user/login&echo', 0);
         }
     }
@@ -321,7 +322,7 @@ class User extends Pages
 	public function logout ()
 	{
 		$return = CoreUser::logout();
-        $this->notification($return['type'], $return['msg'], constant('INFO'));
+        $this->message($return['type'], $return['msg'], constant('INFO'));
 		$this->redirect('User', 3);
 	}
     #########################################
@@ -336,7 +337,7 @@ class User extends Pages
         $id = Common::VarSecure(ROOT.$_POST['avatar']);
         $return = $this->models->DeleteAvatar($id);
         unlink($id);
-        $this->notification($return['type'], $return['msg'], constant('INFO'));
+        $this->message($return['type'], $return['msg'], constant('INFO'));
         $this->redirect('/User/profils', 2);
     }
     public function ActiveAvatar()
@@ -344,7 +345,7 @@ class User extends Pages
         $id = Common::VarSecure($_POST['avatar']);
         $return = $this->models->ChangeAvatar($id);
         $_SESSION['USER'] = CoreUser::getInfosUserAll();
-        $this->notification($return['type'], $return['msg'], constant('INFO'));
+        $this->message($return['type'], $return['msg'], constant('INFO'));
         $this->redirect('/User/profils', 2);
     }
  
@@ -361,12 +362,12 @@ class User extends Pages
                 $return['msg']    = 'Vous devez uploader un fichier de type png, gif, jpg, jpeg, webp';
                 $return['type']   = 'error';
                 $return['title']  = 'Extention';
-                $this->notification($return['type'], $return['msg'], $return['title']);
+                $this->message($return['type'], $return['msg'], $return['title']);
              } else if (move_uploaded_file($_FILES['avatar']['tmp_name'], $dir.$_FILES['avatar']['name'])) {
                 $return['msg']    = 'Upload effectué avec succès';
                 $return['type']   = 'success';
                 $return['title']  = 'Avatar';
-                $this->notification($return['type'], $return['msg'], $return['title']);
+                $this->message($return['type'], $return['msg'], $return['title']);
             } else {
                 $return['msg']    = 'Echec de l\'upload !';
                 $return['type']   = 'warning';
@@ -376,7 +377,7 @@ class User extends Pages
             $return['msg']    = 'Aucun upload d\'image en cours...';
             $return['type']   = 'error';
             $return['title']  = 'Aucune image';
-            $this->notification($return['type'], $return['msg'], $return['title']);
+            $this->message($return['type'], $return['msg'], $return['title']);
         }
         $this->redirect('/User/profils', 2);
     }
@@ -385,7 +386,7 @@ class User extends Pages
     {
        $num = isset($_POST['gravatar']) ? 1 : 0;
        $return = $this->models->changeGravatar ($num);
-       $this->notification($return['type'], $return['msg'], constant('INFO'));
+       $this->message($return['type'], $return['msg'], constant('INFO'));
        $this->redirect('/User/profils', 2);
     }
 }

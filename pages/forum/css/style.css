@@ -1,0 +1,136 @@
+#belcms_forum {
+    margin: 15px 0;
+}
+    .belcms_forum_title {
+        display: block;
+        align-items: left;
+        font-size: 18px;
+        font-weight: 600;
+        background: transparent;
+        border-bottom-width: 0;
+        border-bottom-style: solid;
+        line-height: 1;
+        margin: 10px auto;
+        padding-left: 15px;
+    }
+        .belcms_forum_title a {
+            display: block;
+            width: 100%;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .belcms_forum_title span {
+            font-size: 1rem;
+            color: #76818d;
+            font-weight: 400;
+            padding-top: 4px;
+            line-height: 1.5;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            text-transform: none;
+        }
+    .belcms_forum_cat {
+        width: 100%;
+        border-radius: 4px;
+        border: 1px solid var(--gray-50-color);
+    }
+    .belcms_forum_cat:nth-child(odd) {
+        background: var(--gray-10-color);
+    }
+        .belcms_forum_body {
+            display: flex;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+        }
+            .belcms_forum_ico {
+                display: table-cell;
+                vertical-align: middle;
+                text-align: center;
+                width: 46px;
+                padding: 20px 0 20px 15px;
+            }
+                .belcms_forum_ico i,
+                .belcms_forum_ico svg {
+                    font-size: 34px;
+                    line-height: 40px;
+                }
+            .belcms_forum_main_title {
+                display: inline-block;
+                flex-grow: 1;
+                width: calc(100% - 61px);
+                padding: 15px;
+            }
+                .belcms_forum_main_title a {
+                    display: block;
+                    line-height: 20px;
+                }
+                .belcms_forum_main_title span {
+                    display: block;
+                    color: #76818d;
+                    line-height: 20px;
+                }
+            .belcms_forum_subject {
+                display: inline-flex;
+                align-items: center;
+                width: 180px;
+                min-width: 180px;
+                vertical-align: middle;
+                text-align: center;
+                padding: 15px 0;
+            }
+                .belcms_forum_subject_pairs {
+                    width: 50%;
+                    float: left;
+                    margin: 0;
+                    padding: 0 5px;
+                    padding-left: 5px;
+                    border-right: 1px solid #e0e0e0;
+                    text-align: center;
+                }
+                    .belcms_forum_subject_pairs dl,
+                    .belcms_forum_subject_pairs dd {
+                        display: block;
+                        font-size: 68%;
+                        margin: 0 !important;
+                        text-align: center;
+                    }
+                .belcms_last_msg {
+                    display: flex;
+                    vertical-align: middle;
+                    min-width: 230px;
+                    padding: 15px;
+                    display: inline-flex;
+                    align-items: center;
+                    width: 320px;
+                }
+                        .belcms_forum_avatar {
+                            width: 36px;
+                            height: 36px;
+                            font-size: 22px;
+                        }
+                .belcms_forum_avatar img {
+                    text-indent: 100%;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    word-wrap: normal;
+                    display: block;
+                    border-radius: inherit;
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 45px;
+                }
+                .belcms_last_msg > ul {
+                    display: block;
+                    float: left;
+                    list-style: none;
+                    margin:  0 !important;
+                }
+                .belcms_last_msg > ul li {
+                    display: block;
+                    width: 100%;
+                    white-space: nowrap;
+                    overflow: hidden;
+                }
+                    .belcms_last_msg > ul li a {
+                        white-space: nowrap;
+                        overflow: hidden;
+                    }

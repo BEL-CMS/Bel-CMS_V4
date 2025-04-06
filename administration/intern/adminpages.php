@@ -14,8 +14,8 @@ if (!defined('CHECK_INDEX')):
     exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
 endif;
 
+use BelCMS\Core\Dispatcher;
 use BelCMS\Core\Notification;
-use BelCMS\Core\Route;
 use BelCMS\Requires\Common;
 
 class AdminPages
@@ -245,31 +245,31 @@ class AdminPages
         if (isset($_REQUEST['option'])) {
             switch ($_REQUEST['option']) {
                 case 'pages':
-                    $dir = ROOT . DS . 'administration' . DS . 'pages' . DS . strtolower(get_class($this)) . DS . 'langs' . DS . 'lang.' . constant('CMS_LANGS') . '.php';
+                    $dir = ROOT . DS . 'administration' . DS . 'pages' . DS . strtolower(get_class($this)) . DS . 'langs' . DS . 'lang.' . $_SESSION['CONFIG']['CMS_LANG'] . '.php';
                     break;
 
                 case 'widgets':
-                    $dir = ROOT . DS . 'administration' . DS . 'widgets' . DS . strtolower(get_class($this)) . DS . 'langs' . DS . 'lang.' . constant('CMS_LANGS') . '.php';
+                    $dir = ROOT . DS . 'administration' . DS . 'widgets' . DS . strtolower(get_class($this)) . DS . 'langs' . DS . 'lang.' . $_SESSION['CONFIG']['CMS_LANG'] . '.php';
                     break;
 
                 case 'gaming':
-                    $dir = ROOT . DS . 'administration' . DS . 'gaming' . DS . strtolower(get_class($this)) . DS . 'langs' . DS . 'lang.' . constant('CMS_LANGS') . '.php';
+                    $dir = ROOT . DS . 'administration' . DS . 'gaming' . DS . strtolower(get_class($this)) . DS . 'langs' . DS . 'lang.' . $_SESSION['CONFIG']['CMS_LANG'] . '.php';
                     break;
 
                 case 'templates':
-                    $dir = ROOT . DS . 'administration' . DS . 'templates' . DS . strtolower(get_class($this)) . DS . 'langs' . DS . 'lang.' . constant('CMS_LANGS') . '.php';
+                    $dir = ROOT . DS . 'administration' . DS . 'templates' . DS . strtolower(get_class($this)) . DS . 'langs' . DS . 'lang.' . $_SESSION['CONFIG']['CMS_LANG'] . '.php';
                     break;
 
                 case 'parameter':
-                    $dir = ROOT . DS . 'administration' . DS . 'parameter' . DS . strtolower(get_class($this)) . DS . 'langs' . DS . 'lang.' . constant('CMS_LANGS') . '.php';
+                    $dir = ROOT . DS . 'administration' . DS . 'parameter' . DS . strtolower(get_class($this)) . DS . 'langs' . DS . 'lang.' . $_SESSION['CONFIG']['CMS_LANG'] . '.php';
                     break;
 
                 case 'users':
-                    $dir = ROOT . DS . 'administration' . DS . 'users' . DS . strtolower(get_class($this)) . DS . 'langs' . DS . 'lang.' . constant('CMS_LANGS') . '.php';
+                    $dir = ROOT . DS . 'administration' . DS . 'users' . DS . strtolower(get_class($this)) . DS . 'langs' . DS . 'lang.' . $_SESSION['CONFIG']['CMS_LANG'] . '.php';
                     break;
 
                 case 'extras':
-                    $dir = ROOT . DS . 'administration' . DS . 'extras' . DS . strtolower(get_class($this)) . DS . 'langs' . DS . 'lang.' . constant('CMS_LANGS') . '.php';
+                    $dir = ROOT . DS . 'administration' . DS . 'extras' . DS . strtolower(get_class($this)) . DS . 'langs' . DS . 'lang.' . $_SESSION['CONFIG']['CMS_LANG'] . '.php';
                     break;
 
                 default:
@@ -286,8 +286,8 @@ class AdminPages
             }
         }
 
-        if (is_file(ROOT . DS . 'administration' . DS . 'langs' . DS . 'lang.' . constant('CMS_LANGS') . '.php')) {
-            require ROOT . DS . 'administration' . DS . 'langs' . DS . 'lang.' . constant('CMS_LANGS') . '.php';
+        if (is_file(ROOT . DS . 'administration' . DS . 'langs' . DS . 'lang.' . $_SESSION['CONFIG']['CMS_LANG'] . '.php')) {
+            require ROOT . DS . 'administration' . DS . 'langs' . DS . 'lang.' . $_SESSION['CONFIG']['CMS_LANG'] . '.php';
         }
 
         self::getLangs();
@@ -336,7 +336,7 @@ class AdminPages
             $return = $_POST;
             $this->id = null;
         } else if ($request == 'GET') {
-            $return = new Route;
+            $return = new Dispatcher;
             $return = $return->link;
             if (isset($return[2])) {
                 $this->id = $return[2];

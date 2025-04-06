@@ -13,6 +13,7 @@ namespace BelCMS\Core;
 use BelCMS\PDO\BDD;
 use BelCMS\Core\Templates;
 use BelCMS\Requires\Common;
+use Dom\Notation;
 
 if (!defined('CHECK_INDEX')):
     header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
@@ -35,8 +36,9 @@ final class BelCMS
         self::getLangs();
 		$this->link      = Dispatcher::page($_SESSION['CONFIG']['CMS_DEFAULT_PAGE']);
         $this->widgets   = self::WidgetsContent ();
-        $this->page      = $this->PageContent();
+        $this->page      = self::PageContent();
         $this->templates = self::Templates ();
+        self::statsPages();
     }
     #########################################
     # inclus le contenu de la page
@@ -59,11 +61,11 @@ final class BelCMS
                     echo $newPage->page;
                 }
             } else {
-                self::error('error', 'La page demandée n\'existe pas !', 'ERREUR 404', true);
+                self::error('error', 'La page sollicitée ne peut pas être trouvée !', 'ERREUR 404', true);
                 die();
             }
         } else {
-           self::error404('ERREUR 404', 'La page que vous demander est inexistante !', true);
+           self::error404('ERREUR 404', 'La page que vous souhaitez consulter est introuvable.', true);
         }
         $content = ob_get_contents();
         echo $content;

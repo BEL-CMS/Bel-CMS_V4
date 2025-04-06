@@ -46,4 +46,5 @@ Common::constant(array(
     'INSERT_CAT_OK'           => 'Insertion de la catégorie avec succès',
     'EDIT_CAT_OK'             => 'Edition de la catégorie avec succès',
     'SUBJECT'                 => 'News',
+    'USER_UNKNOW'             => 'Aucun utilisateur',
 ));
