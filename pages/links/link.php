@@ -22,12 +22,15 @@ if (User::ifUserExist($links->author)) {
 }
 ?>
 <section id="belcms_links_link">
+    <div id="belcms_links_menu">
+        [ <a href="Links" title="Lien">Index</a> | <a href="Links/new" title="Nouveau liens">Nouveaux lien</a> | <a href="Links/popular" title="les plus Populaire">Les liens les plus fréquentés.</a> | <a href="Links/propose" title="Proposé un lien">Proposé un lien</a> ]
+    </div>
     <h2 id="belcms_links_title"><?= $links->name; ?></h2>
     <ul id="belcms_links_content_ul">
         <li><span>Nom :</span><span><?= $links->name; ?></span></li>
         <li><span>Utilisateur :</span><span><?= $user; ?></span></li>
         <li><span>Ajouté le :</span><span><?= Common::TransformDate($links->date_insert, 'MEDIUM', 'MEDIUM'); ?></span></li>
-        <li><span>Visité :</span><span><?= $links->view; ?></span></li>
+        <li><span>Page Visité :</span><span><?= $links->view; ?></span></li>
         <li><span>Cliqué :</span><span><?= $links->click; ?></span></li>
     </ul>
     <div id="belcms_links_content_desc"><?= $links->description; ?></div>

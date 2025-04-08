@@ -3,6 +3,9 @@
     margin: auto;
     text-align: center;
 }
+.active {
+    border-bottom: 2px solid var(--gray-50-color);
+}
 #belcms_links_menu {
     margin: auto;
     text-align: center;
@@ -96,6 +99,8 @@
     width: 100%;
     max-height: 200px;
     border: 1px solid var(--gray-50-color);
+    border-left: 0;
+    border-right: 0;
     background-color: var(--gray-10-color);
     padding: 10px 15px;
 }

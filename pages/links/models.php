@@ -10,7 +10,12 @@
  */
 
 namespace Belcms\Pages\Models;
+
+use BelCMS\Core\Config;
+use BelCMS\Core\Dispatcher;
+use BelCMS\Core\User;
 use BelCMS\PDO\BDD;
+use BelCMS\Requires\Common;
 
 if (!defined('CHECK_INDEX')):
     header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
@@ -60,11 +65,23 @@ final class Links
         return $return;
     }
 
+    public function getLinksForNumberCat($id)
+    {
+        $where[] = array('name' => 'valid', 'value' => 1);
+        $where[] = array('name' => 'cat', 'value' => $id);
+        $sql = new BDD;
+        $sql->table('TABLE_LINKS');
+        $sql->where($where);
+        $sql->queryAll();
+        $return = $sql->data;
+        return $return;
+    }
+
     public function getLinksForNumber($id)
     {
         $sql = new BDD;
         $sql->table('TABLE_LINKS');
-        $sql->where(array('name' => 'cat', 'value' => $id));
+        $sql->where(array('name' => 'id', 'value' => $id));
         $sql->queryAll();
         $return = $sql->data;
         return $return;
@@ -88,5 +105,78 @@ final class Links
         $update->update($plus);
 
         return $link;
+    }
+
+    public function addCount($id)
+    {
+        $where[] = array('name' => 'id', 'value' => $id);
+        $sql = new BDD;
+        $sql->table('TABLE_LINKS');
+        $sql->where($where);
+        $sql->queryOne();
+        $return = $sql->data;
+        $link = $return->view;
+
+        $plus['view'] = $return->view + 1;
+
+        $update = new BDD;
+        $update->table('TABLE_LINKS');
+        $update->where($where);
+        $update->update($plus);
+
+        return $link;
+    }
+
+    public function insertTmp($data)
+    {
+        $insert['name'] = $data['name'];
+        $insert['link'] = $data['link'];
+        $insert['author'] = $_SESSION['USER']->user->hash_key;
+        $insert['description'] = $data['description'];
+        $insert['valid'] = 0;
+        $insert['img'] = $data['image'];
+        if (User::isLogged()) {
+            $sql = new BDD;
+            $sql->table('TABLE_LINKS');
+            $sql->insert($insert);
+        }
+    }
+
+    public function getNew ()
+    {
+        $config = Config::GetConfigPage('links');
+        if (isset($config->config['MAX_PAGE'])) {
+            $nbpp = (int) $config->config['MAX_PAGE'];
+        } else {
+            $nbpp = (int) 3;
+        }
+        $page = (Dispatcher::RequestPages() * $nbpp) - $nbpp;
+        $sql = new BDD;
+        $sql->table('TABLE_LINKS');
+        $sql->where(array('name' => 'valid', 'value' => 1));
+        $sql->limit(array(0 => $page, 1 => $nbpp), true);
+        $sql->orderby(array(array('name' => 'id', 'type' => 'DESC')));
+        $sql->queryAll();
+        $return = $sql->data;
+        return $return;
+    }
+
+    public function getPopular ()
+    {
+        $config = Config::GetConfigPage('links');
+        if (isset($config->config['MAX_PAGE'])) {
+            $nbpp = (int) $config->config['MAX_PAGE'];
+        } else {
+            $nbpp = (int) 3;
+        }
+        $page = (Dispatcher::RequestPages() * $nbpp) - $nbpp;
+        $sql = new BDD;
+        $sql->table('TABLE_LINKS');
+        $sql->where(array('name' => 'valid', 'value' => 1));
+        $sql->limit(array(0 => $page, 1 => $nbpp), true);
+        $sql->orderby(array(array('name' => 'view', 'type' => 'DESC')));
+        $sql->queryAll();
+        $return = $sql->data;
+        return $return;
     }
 }
