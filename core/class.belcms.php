@@ -198,23 +198,24 @@ final class BelCMS
     ##################################################
     private function statsPages ()
     {
-        $sql = new BDD;
-        $sql->table('TABLE_STATS');
-        $sql->where(array(
-            'name' => 'page',
-            'value' => $this->link
-
-        ));
-        $sql->queryOne();
-        if (!empty($sql->data)) {
-            $update['nb_view'] = $sql->data->nb_view +1;
-            $insert = new BDD;
-            $insert->table('TABLE_STATS');
-            $insert->where(array(
+        if (Common::isBot() === false) {
+            $sql = new BDD;
+            $sql->table('TABLE_STATS');
+            $sql->where(array(
                 'name' => 'page',
                 'value' => $this->link
             ));
-            $insert->update($update);
+            $sql->queryOne();
+            if (!empty($sql->data)) {
+                $update['nb_view'] = $sql->data->nb_view +1;
+                $insert = new BDD;
+                $insert->table('TABLE_STATS');
+                $insert->where(array(
+                    'name' => 'page',
+                    'value' => $this->link
+                ));
+                $insert->update($update);
+            }
         }
     }
     ##################################################
