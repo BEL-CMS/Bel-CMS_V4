@@ -1,0 +1,8 @@
+section#belcms_articles {
+    display: block;
+    width: 100%;
+    position: relative;
+}
+#belcms_articles table {
+    border: 1px solid var(--gray-50-color) !important;
+}

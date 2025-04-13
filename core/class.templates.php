@@ -92,18 +92,24 @@ class Templates
     public function cascadingStyleSheets ($var) : string
     {
         $return         = '';
+        $link           = strtolower($var);
         /* GLOBAL STYLE */
         $files[] = 'assets/css/belcms.global.css';
         $files[] = 'assets/css/color.css';
         /* jQuery ui 1.13.2 */
+        $files[] = 'assets/plugins/jquery-ui-1.13.2/jquery-ui.structure.min.css';
         $files[] = 'assets/plugins/jquery-ui-1.13.2/themes/base/jquery-ui.min.css';
-        $files[] = 'assets/plugins/jquery-ui-1.13.2/themes/base/theme.css';
         /* bootstrap v5.3.3 */
         $files[] = 'assets/plugins/bootstrap-5.3.3/css/bootstrap.min.css';
         /* FONTAWASOME 6.5.1 ALL */
         $files[] = 'assets/plugins/fontawesome-6.5.1/css/all.min.css';
 
         $files[] = 'assets/plugins/lightbox/lightbox.css';
+
+        if ($link == 'articles') {
+            $files[] = 'assets/plugins/highlight/styles/default.min.css';
+            $files[] = 'assets/plugins/highlight/default.min.css';
+        }
 
         /* pages css */
         $dirPage = constant('DIR_PAGES').strtolower($var).DS.'css'.DS.'style.css';
@@ -128,7 +134,7 @@ class Templates
         /* jQuery 3.7.1 */
         $files[] = 'assets/plugins/jQuery/jquery-3.7.1.min.js';
         /* jQuery UI 1.13.2 */
-        $files[] = 'assets/plugins/jQuery/jquery-ui-1.13.2/jquery-ui.min.js';
+        $files[] = 'assets/plugins/jquery-ui-1.13.2/jquery-ui.min.js';
         /* bootstrap v5.3.3 */
         $files[] = 'assets/plugins/bootstrap-5.3.3/js/bootstrap.min.js';
         /* FONTAWASOME 6.5.1 ALL */
@@ -143,7 +149,14 @@ class Templates
         $files[] = 'assets/plugins/tooltip/tooltip.js';
         /* jQuery BEL-CMS */
         $files[] = 'assets/js/belcms.core.js';
-		/* pages js */
+        /* pages js */
+
+        if ($link == 'articles') {
+            $files[] = 'assets/plugins/highlight/highlight.min.js';
+            $files[] = 'assets/plugins/highlight/languages/php.min.js';
+            $files[] = 'assets/plugins/highlight/languages/javascript.min.js';
+            $files[] = 'assets/plugins/highlight/languages/css.min.js';
+        }
 
         $dirPage = ROOT.DS.'pages'.DS.strtolower($var).DS.'js'.DS.'javascripts.js';
 		if ($dirPage) {
