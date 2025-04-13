@@ -96,5 +96,25 @@ class Downloads extends Pages
         $a['cat'] = $this->models->getCat();
         $this->set($a);
         $this->render('search');
-    } 
+    }
+
+    public function view ()
+    {
+        $id = (int) $this->data[2];
+        $a['view'] = $this->models->view ($id);
+        $this->models->viewAdd ($id);
+        $this->set($a);
+        $this->render('view');
+    }
+
+    public function getDownload ()
+    {
+        $id = is_numeric($this->data[2]) ? $this->data[2] : false;
+        if ($id !== false) {
+			if ($this->models->ifAccess($id) == true) {
+				$download = $this->models->getDownloads($id);
+				$this->linkHeader($download);
+			}
+		}
+	}
 }

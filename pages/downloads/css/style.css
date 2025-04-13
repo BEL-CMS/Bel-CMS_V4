@@ -60,3 +60,17 @@
     right: 10px;
     bottom: 10px;
 }
+#belcms_downloads_menu picture img {
+    display: block;
+    max-width: 98% !important;
+    margin: auto;
+}
+ul#belcms_downloads_menu_ul {
+    list-style-type: circle;
+}
+ul#belcms_downloads_menu_ul li span:first-child {
+    font-weight: bold;
+}
+ul#belcms_downloads_menu_ul li span:nth-child(2) {
+    float: right;
+}
