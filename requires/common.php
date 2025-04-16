@@ -12,9 +12,10 @@
 
 namespace BelCMS\Requires;
 use \DateTime as DateTime;
+use BelCMS\Core\GetHost;
 use \IntlDateFormatter as IntlDateFormatter;
-use BelCMS\PDO\BDD;
-use BelCMS\Core\Secure;
+use BelCMS\PDO\BDD as BDD;
+use BelCMS\Core\Secure as Secure;
 
 if (!defined('CHECK_INDEX')):
     header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
@@ -111,6 +112,12 @@ final class Common
     {
         return strtr($chaine, "ÀÁÂàÄÅàáâàäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏ" ."ìíîïÙÚÛÜùúûüÿÑñ", "aaaaaaaaaaaaooooooooooooeeeeeeeecciiiiiiiiuuuuuuuuynn");
     }
+
+    public static function ConvertUrl ($url)
+    {
+        $return = preg_replace(' ', '%20de%', $url);
+        return $return;
+    } 
     #########################################
     # Redirect
     #########################################
@@ -235,11 +242,11 @@ final class Common
         }
         return $return;
     }
-    */
     #########################################
     # Module [...] Apache disponible ou non
     # Return true or false
     #########################################
+    /*
     public static function getModuleApache ($name)
     {
         if (!empty($name)) {
@@ -254,6 +261,7 @@ final class Common
         }
         return $return;
     }
+    */
     #########################################
     # Date & DATETIME SQL
     #########################################
@@ -582,6 +590,17 @@ final class Common
     public static function hash_key ($data) {
         return (strlen($data) == 32) ? true : false;
     }
+    public static function translate ($data, $ucfirst = true) {
+        $str  = $data;
+        $data = self::makeConstant($data);
+        $data = strtoupper($data);
+        if (defined($data)) {
+            $return = $ucfirst === true ? ucfirst(constant($data)) : $str;
+        } else {
+            $return = $ucfirst === true ? ucfirst($str) : $str;
+        }
+        return $return;
+    }
     public static function transformOpt ($data, $reverse = false, $bool = false) {
         $return = array();
         if (!empty($data)) {
@@ -842,15 +861,51 @@ final class Common
 
     public static function truncate ($string, $length = 25, $append="&hellip;")
     {
-        $string = trim($string);
-      
-        if (strlen($string) > $length) {
-          $string = wordwrap($string, $length);
-          $string = explode("\n", $string, 2);
-          $string = $string[0] . $append;
+        if (!empty($string)) {
+            $string = trim($string);
+            if (strlen($string) > $length) {
+            $string = wordwrap($string, $length);
+            $string = explode("\n", $string, 2);
+            $string = $string[0] . $append;
+            }
+        } else {
+            $string = null;
         }
       
         return $string;
+    }
+
+    public static function truncate_2($string, $limit)
+    {
+        $oneWord = explode(' ', $string);
+        if (count($oneWord) < 2)
+            return $oneWord[0];
+        $string = substr($string, 0, $limit + 2);
+
+        $endchar =  substr($string, $limit, $limit + 1);
+
+        $postendchar = substr($string, $limit + 1, $limit + 2);
+
+        $arrAccetpEndChar = array(' ', '!', '?', ',', '.', ';', ':');
+
+        if (in_array($postendchar, $arrAccetpEndChar) || in_array($endchar, $arrAccetpEndChar)) {
+            return $string;
+        } else {
+            return preg_replace('/[A-Za-z0-9]+$/', '', $string);
+        }
+    }
+
+    public static function truncate_3($string, $limit, $break=' ', $pad= '…') {
+        
+        if (mb_strlen($string) <= $limit + mb_strlen($pad))
+            return $string;
+        
+        $string = mb_substr($string, 0, $limit);
+
+        if (false !== ($breakpoint = mb_strrpos($string, $break)))
+            $string = mb_substr($string, 0, $breakpoint);
+
+        return trim($string, "\t\n\r\0\x0B ':;,!?.«’").$pad;
     }
 
     public static function cesureHref($d) 
@@ -1978,5 +2033,69 @@ final class Common
         else {
             return 'application/octet-stream';
         }
+    }
+
+    public static function parseMediaType(string $path): string
+    {
+        $extension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+
+        $media_types = [
+
+            'txt' => 'text/plain',
+            'htm' => 'text/html',
+            'html' => 'text/html',
+            'php' => 'text/html',
+            'css' => 'text/css',
+            'js' => 'application/javascript',
+            'json' => 'application/json',
+            'xml' => 'application/xml',
+            'swf' => 'application/x-shockwave-flash',
+            'flv' => 'video/x-flv',
+
+            // images
+            'png' => 'image/png',
+            'jpe' => 'image/jpeg',
+            'jpeg' => 'image/jpeg',
+            'jpg' => 'image/jpeg',
+            'gif' => 'image/gif',
+            'bmp' => 'image/bmp',
+            'ico' => 'image/vnd.microsoft.icon',
+            'tiff' => 'image/tiff',
+            'tif' => 'image/tiff',
+            'svg' => 'image/svg+xml',
+            'svgz' => 'image/svg+xml',
+
+            // archives
+            'zip' => 'application/zip',
+            'rar' => 'application/x-rar-compressed',
+            'exe' => 'application/x-msdownload',
+            'msi' => 'application/x-msdownload',
+            'cab' => 'application/vnd.ms-cab-compressed',
+            'apk' => 'application/Android',
+
+            // audio/video
+            'mp3' => 'audio/mpeg',
+            'qt' => 'video/quicktime',
+            'mov' => 'video/quicktime',
+
+            // adobe
+            'pdf' => 'application/pdf',
+            'psd' => 'image/vnd.adobe.photoshop',
+            'ai' => 'application/postscript',
+            'eps' => 'application/postscript',
+            'ps' => 'application/postscript',
+
+            // ms office
+            'doc' => 'application/msword',
+            'rtf' => 'application/rtf',
+            'xls' => 'application/vnd.ms-excel',
+            'ppt' => 'application/vnd.ms-powerpoint',
+
+            // open office
+            'odt' => 'application/vnd.oasis.opendocument.text',
+            'ods' => 'application/vnd.oasis.opendocument.spreadsheet',
+        ];
+    
+        return $media_types[$extension] ?? 'application/octet-stream';
     }
 }
