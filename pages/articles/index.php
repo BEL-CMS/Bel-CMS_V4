@@ -23,6 +23,7 @@ endif;
             <tr>
                 <th>Nom de la page :</th>
                 <th>Date de mise en ligne de ce contenu :</th>
+                <th>Courte description</th>
             </tr>
         </thead>
         <tbody>
@@ -32,6 +33,7 @@ endif;
                 <tr>
                     <td><a href="articles/category/<?= $content->id_articles; ?>/<?= Common::MakeConstant($content->name); ?>"><?= $content->name; ?></a></td>
                     <td><?= Common::TransformDate($content->publish, 'FULL', 'MEDIUM'); ?></td>
+                    <td><?= Common::truncate_3($content->description, 95); ?></td>
                 </tr>
             <?php
             endforeach;

@@ -21,7 +21,6 @@ endif;
     <table class="table table-striped table-hover">
         <thead>
             <tr>
-                <th width="80px">Page n°</th>
                 <th>Nom de la page :</th>
                 <th>Date de mise en ligne de ce contenu :</th>
             </tr>
@@ -31,7 +30,6 @@ endif;
             foreach ($category as $content):
             ?>
                 <tr>
-                    <td align="center"><?= $content->pagenumber; ?></td>
                     <td><a href="articles/view/<?= $content->id_articles; ?>/<?=$content->pagenumber;?>/<?= Common::MakeConstant($content->name); ?>"><?= $content->name; ?></a></td>
                     <td><?= Common::TransformDate($content->publish, 'FULL', 'MEDIUM'); ?></td>
                 </tr>
