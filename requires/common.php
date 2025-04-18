@@ -670,13 +670,13 @@ final class Common
                     $random = Common::randomString(32);
                     
                     if (move_uploaded_file($_FILES[$name]["tmp_name"], $dir.'/'.$random.$extension)) {
-                        $return = $dir.'/'.$random.$extension;
+                        $return = '/'.$random.$extension;
                     } else {
                         $return = constant('UPLOAD_ERROR');
                     }
                 } else {
                     if (move_uploaded_file($_FILES[$name]['tmp_name'], $dir .'/'. ($file))):
-                        $return = $dir .'/'. ($file);
+                        $return = '/'. ($file);
                     else:
                         $return = constant('UPLOAD_ERROR');
                     endif;
