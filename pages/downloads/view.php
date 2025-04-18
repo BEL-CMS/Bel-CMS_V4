@@ -51,7 +51,7 @@ if (is_file($view->screen) == true) {
             <div class=" col-lg-9 col-sm-12 col-xsm-12">
                 <div class="card">
                     <div class="card-header title"><?= $view->name; ?></div>
-                    <div>
+                    <div id="belcms_view_desc">
                         <?= $view->description; ?>
                     </div>
                 </div>
