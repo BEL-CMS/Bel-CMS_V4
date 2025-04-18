@@ -34,6 +34,16 @@ final class ModelsGallery
         return $return;
     }
 
+    public function getGalleryValid()
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_GALLERY');
+        $sql->where(array('name' => 'valid', 'value' => 0));
+        $sql->queryAll();
+        $return = $sql->data;
+        return $return;
+    }
+
     public function cat ()
     {
         $sql = new BDD;

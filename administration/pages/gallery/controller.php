@@ -28,13 +28,27 @@ class Gallery extends AdminPages
     {
         $menu[] = array('title' => 'Accueil', 'href' => 'gallery?Admin&option=pages', 'ico'  => 'fa-solid fa-igloo');
         $menu[] = array('title' => 'Ajouté une image', 'href' => 'gallery/addImg/?Admin&option=pages', 'ico'  => 'fa-solid fa-pen-to-square');
+        $menu[] = array('title' => 'Validation', 'href' => 'gallery/valid/?Admin&option=pages', 'ico'  => 'fa-solid fa-pen-to-square');
         $menu[] = array('title' => 'Liste de(s) catégorie(s)', 'href' => 'gallery/categories/?Admin&option=pages', 'ico'  => 'fa-solid fa-pen-to-square');
-        $a['gallery'] = $this->models->getGallery();
+        $a['gallery'] = $this->models->getGalleryValid();
         foreach ($a['gallery'] as $key => $v) {
             $a['gallery'][$key]->id_cat = $this->models->getcat($v->id_cat);
         }
         $this->set($a);
         $this->render ('index', $menu);
+    }
+
+    public function valid ()
+    {
+        $menu[] = array('title' => 'Accueil', 'href' => 'gallery?Admin&option=pages', 'ico'  => 'fa-solid fa-igloo');
+        $menu[] = array('title' => 'Ajouté une image', 'href' => 'gallery/addImg/?Admin&option=pages', 'ico'  => 'fa-solid fa-pen-to-square');
+        $menu[] = array('title' => 'Liste de(s) catégorie(s)', 'href' => 'gallery/categories/?Admin&option=pages', 'ico'  => 'fa-solid fa-pen-to-square');
+        $a['gallery'] = $this->models->getGalleryValid();
+        foreach ($a['gallery'] as $key => $v) {
+            $a['gallery'][$key]->id_cat = $this->models->getcat($v->id_cat);
+        }
+        $this->set($a);
+        $this->render ('valid', $menu);
     }
 
     public function addImg ()

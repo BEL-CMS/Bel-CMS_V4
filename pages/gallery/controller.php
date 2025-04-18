@@ -83,11 +83,14 @@ class Gallery extends Pages
                 $post['description'] = Common::VarSecure($_POST['description'], 'html');
             }
             if (isset($_FILES['image'])) {
-                $image = Common::Upload('image', 'uploads/gallery/tmp/', array('.png', '.gif', '.jpg', '.jpeg', '.ico', '.tif', '.eps', '.svg', '.webp'), true);
-                if ($image) {
-                    $post['image'] = $image;
-                    $this->models->insertTmp($post);
+                $dirWeb = 'uploads/gallery/tmp/';
+                $dir = ROOT . DS . 'uploads' . DS . 'gallery' . DS . 'tmp' . DS;
+                $extensions = array('.png', '.gif', '.jpg', '.ico', '.jpeg', '.svg', '.webp');
+                if (isset($_FILES['image']['name']) and !empty($_FILES['image']['name'])) {
+                    $post['image'] = Common::Upload('image', $dir, $extensions, true);
+                    $post['image'] = $dirWeb . $post['image'];
                 }
+                $this->models->insertTmp($post);
             } else {
                 Notification::error('Aucune image n\'a été envoyée.', 'Image');
                 return;

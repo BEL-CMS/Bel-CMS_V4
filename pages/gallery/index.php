@@ -20,11 +20,11 @@
             <div class="belcms_main_gallery_box">
                 <div class="belcms_main_gallery_bg">
                     <div style="background: <?= $v->color; ?>">
-                        <a href="Gallery/subcat/<?= $v->id_cat; ?>" title="<?= $v->name; ?>">
+                        <a href="Gallery/subcat/<?= $v->id; ?>" title="<?= $v->name; ?>">
                             <img class="belcms_main_gallery_img" src="<?= $bg; ?>">
                         </a>
                     </div>
-                    <a href="Gallery/subcat/<?= $v->id_cat; ?>" title="lien - <?= $v->name; ?>"><?= $v->name; ?></a>
+                    <a href="Gallery/subcat/<?= $v->id; ?>" title="lien - <?= $v->name; ?>"><?= $v->name; ?></a>
                 </div>
             </div>
         <?php
