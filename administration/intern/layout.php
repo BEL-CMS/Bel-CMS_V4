@@ -12,7 +12,7 @@
 
 use BelCMS\Core\GetHost;
 
-require 'administration\intern\menu.php';
+require 'administration/intern/menu.php';
 $menu = new Menu();
 ?>
 <!doctype html>
@@ -35,6 +35,7 @@ $menu = new Menu();
     <link href="/administration/intern/assets/libs/node-waves/waves.min.css" rel="stylesheet">
     <link href="/administration/intern/assets/libs/simplebar/simplebar.min.css" rel="stylesheet">
     <link href="/assets/plugins/DataTables-1.13.06/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="/assets/plugins/glightbox/glightbox.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/administration/intern/assets/libs/flatpickr/flatpickr.min.css">
     <link rel="stylesheet" href="/administration/intern/assets/libs/@simonwep/pickr/themes/nano.min.css">
     <link rel="stylesheet" href="/administration/intern/assets/libs/choices.js/public/assets/styles/choices.min.css">
@@ -193,6 +194,7 @@ $menu = new Menu();
         </div>
         <div id="responsive-overlay"></div>
         <script src="/assets/plugins/jQuery/jquery-3.7.1.min.js"></script>
+        <script src="/assets/plugins/glightbox/glightbox.min.js"></script>
         <script src="/assets/plugins/DataTables-1.13.06/datatable.fr.js"></script>
         <script src="/assets/plugins/DataTables-1.13.06/datatables.min.js"></script>
         <script src="/administration/intern/assets/libs/@popperjs/core/umd/popper.min.js"></script>
@@ -205,6 +207,7 @@ $menu = new Menu();
         <script src="/administration/intern/assets/libs/@simonwep/pickr/pickr.es5.min.js"></script>
         <script src="/administration/intern/assets/js/custom-switcher.min.js"></script>
         <script src="/assets/plugins/tinymce/tinymce.min.js"></script>
+        <script src="/assets/plugins/lightbox/lightbox.js"></script>
         <script src="/assets/belcms.core.js"></script>
         <script src="/administration/intern/assets/js/custom.js"></script>
         <div id="endloading" style="display: none;">

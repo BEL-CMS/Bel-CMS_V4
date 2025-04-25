@@ -26,4 +26,44 @@ final class UsersModels
         $return = $sql->data;
         return $return;
     }
+
+    public function getUser ($hash_key)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_USERS');
+        $sql->where(array('name' => 'hash_key', 'value' => $hash_key));
+        $sql->fields(array('hash_key'));
+        $sql->queryOne();
+        $return = $sql->data;
+        return $return;
+    }
+
+    public function checkUser($name)
+    {
+        $sql = new BDD();
+        $sql->table('TABLE_USERS');
+        $sql->where(array('name' => 'username', 'value' => $name));
+        $sql->count();
+        $returnCheckName = (int) $sql->data;
+        return $returnCheckName;
+    }
+
+    public function blackListEmail()
+    {
+        $sql = new BDD();
+        $sql->table('TABLE_MAIL_BLACKLIST');
+        $sql->isObject(false);
+        $sql->queryAll();
+        $results = $sql->data;
+        return $results;
+    }
+
+    public function addCountry ($country = null, $id = false)
+    {
+        $a['country'] = $country;
+        $insertProfils = new BDD();
+        $insertProfils->table('TABLE_USERS_PROFILS');
+        $insertProfils->where(array('name' => 'hash_key', 'value' => $id));
+        $insertProfils->update($a);
+    }
 }

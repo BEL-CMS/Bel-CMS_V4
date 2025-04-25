@@ -182,7 +182,7 @@ final class BDD
 
 		$this->where = $return;
 	}
-	public function whereLike($data = array())
+	public function whereLike($data = array(), $dta = array())
 	{
 		$return = " WHERE 1 ";
 

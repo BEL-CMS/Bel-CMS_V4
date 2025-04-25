@@ -23,6 +23,10 @@
     display: block;
     margin-bottom: 5px;
 }
+#belcms_links_menu a:hover {
+    border-bottom: 1px solid var(--gray-50-color);
+    transition: all 500ms linear;
+}
 #belcms_links_stats {
     display: block;
     margin: 10px auto;

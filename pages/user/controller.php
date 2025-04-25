@@ -316,21 +316,28 @@ class User extends Pages
             $this->redirect('/user/login&echo', 0);
         }
     }
-	#########################################
-	# Deconnexion
-	#########################################
-	public function logout ()
+    #########################################
+    # Deconnexion                           #
+    #########################################
+    public function logout ()
 	{
 		$return = CoreUser::logout();
         $this->message($return['type'], $return['msg'], constant('INFO'));
 		$this->redirect('User', 3);
 	}
     #########################################
-    #   Page principal profil
+    #   Page principal profil               #
     #########################################
     public function profils ()
     {
         $this->render('profils');
+    }
+    #########################################
+    #   Page principal profil               #
+    #########################################
+    public function avatar ()
+    {
+        $this->render('avatar');
     }
     public function deleteAvatar()
     {
@@ -338,7 +345,7 @@ class User extends Pages
         $return = $this->models->DeleteAvatar($id);
         unlink($id);
         $this->message($return['type'], $return['msg'], constant('INFO'));
-        $this->redirect('/User/profils', 2);
+        $this->redirect('User', 2);
     }
     public function ActiveAvatar()
     {
@@ -346,7 +353,7 @@ class User extends Pages
         $return = $this->models->ChangeAvatar($id);
         $_SESSION['USER'] = CoreUser::getInfosUserAll();
         $this->message($return['type'], $return['msg'], constant('INFO'));
-        $this->redirect('/User/profils', 2);
+        $this->redirect('User', 2);
     }
  
     public function sendNewAvatar ()
@@ -379,7 +386,7 @@ class User extends Pages
             $return['title']  = 'Aucune image';
             $this->message($return['type'], $return['msg'], $return['title']);
         }
-        $this->redirect('/User/profils', 2);
+        $this->redirect('user', 2);
     }
 
     public function changeGravatar ()
@@ -387,6 +394,18 @@ class User extends Pages
        $num = isset($_POST['gravatar']) ? 1 : 0;
        $return = $this->models->changeGravatar ($num);
        $this->message($return['type'], $return['msg'], constant('INFO'));
-       $this->redirect('/User/profils', 2);
+       $this->redirect('User', 2);
+    }
+
+    public function Grp()
+    {
+        $this->render('groups');
+    }
+
+    public function sendProfils ()
+    {
+        $data = Secure::isMail($_POST['mail']);
+        $this->models->sendProfils($data);
+        $this->redirect('/User/profils', 2);
     }
 }

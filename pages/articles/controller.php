@@ -44,6 +44,6 @@ class Articles extends Pages
         $number = is_numeric($this->data[3]) ? $this->data[3] : 1; 
         $a['article'] = $this->models->getArticlesContent ($hash, $number);
         $this->set($a);
-        $this->render('renderView');
+        $this->render('renderview');
     }
 }

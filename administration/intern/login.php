@@ -55,7 +55,7 @@
             </div>
         </div>
     </div>
-    <script src="/assets/jquery-3.7.1.min.js"></script>
+    <script src="/assets/plugins/jQuery/jquery-3.7.1.min.js"></script>
     <script src="/administration/intern/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="/administration/intern/assets/js/show-password.js"></script>
     <script src="/administration/intern/login.js"></script>

@@ -35,6 +35,7 @@
     }
     .belcms_forum_cat:nth-child(odd) {
         background: var(--gray-10-color);
+        margin-top: -1px;
     }
         .belcms_forum_body {
             display: flex;
@@ -47,6 +48,7 @@
                 text-align: center;
                 width: 46px;
                 padding: 20px 0 20px 15px;
+                margin-right: 5px;
             }
                 .belcms_forum_ico i,
                 .belcms_forum_ico svg {

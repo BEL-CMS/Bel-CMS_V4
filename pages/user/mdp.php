@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Bel-CMS [Content management system]
  * @version 4.0.0 [PHP8.4]
@@ -7,18 +8,19 @@
  * @license MIT License
  * @copyright 2015-2025 Bel-CMS
  * @author as Stive - stive@determe.be
-*/
+ */
 $social = $_SESSION['USER']->social;
 ?>
 <div class="row">
     <div class="col-sm-4">
         <div id="belcms_user" class="card">
             <div class="card-header">
-                <img style="max-width: 100%;" src="<?=$_SESSION['USER']->profils->avatar;?>" class="rounded float-start" alt="Avatar User">
+                <img style="max-width: 100%;" src="<?= $_SESSION['USER']->profils->avatar; ?>" class="rounded float-start" alt="Avatar User">
             </div>
             <ul id="belcms_user_ul" class="list-group list-group-flush">
                 <li class="list-group-item"><a href="/User">Accueil</a></li>
                 <li class="list-group-item"><a href="/User/profils">Profils</a></li>
+                <li class="list-group-item"><a href="/User/avatar">Avatar</a></li>
                 <li class="list-group-item active"><a href="/User/mdp">Mot de passe</a></li>
                 <li class="list-group-item"><a href="/User/Social">Social</a></li>
                 <li class="list-group-item"><a href="/User/Material">Matériels</a></li>
@@ -41,7 +43,7 @@ $social = $_SESSION['USER']->social;
                     <div class="form-group">
                         <label class="text-muted">Utilisation des jeux de caractères a-z et A-Z et @#*/ <i style="color: red;">* 6 caractères min</i></label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="password_new" id="password_new" minlength="6" data-size="32" data-character-set="data-character-set="a-z,A-Z,0-9,#" required="required">
+                            <input type="text" class="form-control" name="password_new" id="password_new" minlength="6" data-size="32" data-character-set="data-character-set=" a-z,A-Z,0-9,#" required="required">
                             <span class="input-group-btn">
                                 <button onclick="javascript:generer_password('password_new');" type="button" class="btn btn-default getNewPass">
                                     <span class="fa fa-refresh"></span>

@@ -116,6 +116,7 @@ nav#bel_cms_comment {
 .belcms_pagination_item {
 	float: left;
 	text-decoration: none;
+	margin: 0 !important;
 }
 .belcms_pagination_item a {
 	display: block;

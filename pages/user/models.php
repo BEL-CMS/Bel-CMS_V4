@@ -327,4 +327,18 @@ final class ModelsUser
         $return['type'] = 'success';
         return $return;
     }
+
+    public function sendProfils ($data)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_USERS_PROFILS');
+        $sql->where(array('name' => 'hash_key', 'value' => $_SESSION['USER']->user->hash_key));
+        $sql->update($data);
+        #-----------------------------------------------------------#
+        $_SESSION['USER'] = User::getInfosUserAll($_SESSION['USER']->user->hash_key);
+        #-----------------------------------------------------------#
+        $return['msg']  = 'Profil mise à jour';
+        $return['type'] = 'success';
+        return $return;
+    }
 }

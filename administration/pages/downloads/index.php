@@ -46,8 +46,8 @@ endif;
                             <tbody>
                                 <?php
                                 foreach ($downloads as $value):
-                                    if (!is_file($value->screen)) {
-                                        $file = '/pages/downloads/no_image.jpg';
+                                    if (!is_file(ROOT.$value->screen)) {
+                                        $file = '/assets/img/no-image-png.png';
                                     } else {
                                         $file = $value->screen;
                                     }

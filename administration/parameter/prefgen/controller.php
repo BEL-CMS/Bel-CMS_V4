@@ -39,7 +39,7 @@ class prefgen extends AdminPages
         $update['CMS_CHARTE']           = Common::VarSecure($_POST['CMS_CHARTE']);
         $update['CMS_MAIL']             = Secure::isMail($_POST['CMS_MAIL']) ? $_POST['CMS_MAIL'] : $_SERVER['SERVER_ADMIN'];
         $update['CMS_VALIDATION_TIME']  = Secure::isString($_POST['CMS_VALIDATION_TIME']);
-        $update['CMS_API_CLEF']         = Common::VarSecure($_POST['CMS_API_CLEF'], 'null');
+        $update['CMS_KEY_ADMIN']        = Common::VarSecure($_POST['CMS_KEY_ADMIN'], 'null');
         $update['CMS_JQUERY'] 	        = isset($_POST['CMS_JQUERY']) ? 1 : 0;
         $update['CMS_HIGHLIGHT']        = isset($_POST['CMS_HIGHLIGHT']) ? 1 : 0;
         $update['CMS_FONTAWSOME']       = isset($_POST['CMS_FONTAWSOME']) ? 1 : 0;

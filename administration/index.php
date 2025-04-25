@@ -139,7 +139,6 @@ final class Administration
 
                 default:
                     $requestPage = null;
-                    include require_once ROOT . DS . 'administration' . DS . 'intern' . DS . 'dashboard.php';
                     break;
             }
             echo $requestPage;
@@ -523,5 +522,10 @@ final class Administration
         foreach ($scan as $k => $v) {
             require_once ROOT.DS.'administration'.DS . 'langs' . DS . $v;
         }
+        $lang = Common::ScanFiles(ROOT . DS . 'assets' . DS . 'langs' . DS);
+        foreach ($lang as $v) {
+            require_once ROOT . DS . 'assets' . DS . 'langs' . DS . $v;
+        }
+
     }
 }

@@ -42,7 +42,7 @@ class Gallery extends Pages
             $d['img'][$key]->vote = $this->models->getVote ($value->id);
         }
         $config = Config::GetConfigPage('gallery');
-        $d['pagination'] = $this->pagination($config->config['MAX_PAGE'], 'gallery/subcat', constant('TABLE_GALLERY'));
+        $d['pagination'] = $this->pagination($config->config['MAX_PAGE'], 'gallery/subcat', constant('TABLE_GALLERY'), array('name' => 'id_cat', 'value' => $id));
         if ($d['img'] == null) {
             Notification::error('Pas d\'images disponibles dans cette catégorie.', 'Images');
         } else {

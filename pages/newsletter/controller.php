@@ -10,7 +10,6 @@
 */
 
 namespace Belcms\Pages\Controller;
-
 use BelCMS\Core\Pages;
 use BelCMS\Core\Secure;
 use BelCMS\Core\User;

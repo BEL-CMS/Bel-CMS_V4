@@ -70,7 +70,7 @@ function _initTinymceSimple () {
 			{title: 'Bel-CMS', value: 'https://bel-cms.dev'},
 			{title: 'Determe', value: 'https://determe.be'}
   		],
-		toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image'
+		toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code | emoticons"'
 	});
 }
 function _initTinymceFull () {
@@ -91,7 +91,7 @@ function _initTinymceFull () {
 			{title: 'Determe', value: 'https://determe.be'}
   		],
 		toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-		toolbar2: 'print preview media | forecolor backcolor emoticons | codesample',
+		toolbar2: 'print preview media | forecolor backcolor emoticons | codesample | code',
 		image_advtab: true,
 		content_css: [
 		]

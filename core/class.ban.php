@@ -14,7 +14,6 @@ use BelCMS\PDO\BDD;
 use BelCMS\Requires\Common;
 use BelCMS\Core\Secure;
 use BelCMS\Core\User as CoreUser;
-use GetHost;
 include constant('DIR_ASSETS').'langs'.DS.'langs.fr.php';
 
 if (!defined('CHECK_INDEX')) {
@@ -22,6 +21,11 @@ if (!defined('CHECK_INDEX')) {
 	exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
 }
 
+################################
+################################
+# Aide pour bannir             #
+# Ban::addBan('auteur', 'IP', 'email', 'PT15M'', 'Message du ban');
+################################
 final class Ban
 {
 	var     $currentDate,
@@ -185,7 +189,7 @@ final class Ban
 	#########################################
 	# add ban
 	#########################################
-	public static function addBan ($author = null,$ip = null, $email = null, $endban = null, $timeban = null, $reason = null)
+	public static function addBan ($author = null,$ip = null, $email = null, $endban = null, $reason = null)
 	{
 		$dateNow = new \DateTimeImmutable('now');
 		switch ($endban) {
@@ -228,6 +232,11 @@ final class Ban
 				$insert['timeban'] = 'P99Y';
 				$insert['endban']  = $dateNow->add(new \DateInterval('P99Y'));
 			break;
+
+			default:
+				$insert['timeban'] = 'P99Y';
+				$insert['endban']  = $dateNow->add(new \DateInterval('P99Y'));
+			break;
 		}
 
 		$currentDate  =  new \DateTimeImmutable('now');
@@ -238,7 +247,7 @@ final class Ban
 		$insert['ip']       = empty($ip) ? Common::GetIp() : Secure::isIp($ip);
 		$insert['email']    = $email;
 		$insert['date']     = $currentDate;
-		$insert['reason']   = empty($reason) ? constant('Vous avez ete banni') : $reason;
+		$insert['reason']   = empty($reason) ? constant('Votre compte a été suspendu.') : $reason;
 
 		$sql = New BDD;
 		$sql->table('TABLE_BAN');

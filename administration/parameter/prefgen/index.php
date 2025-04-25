@@ -109,7 +109,7 @@ $valid    = empty($datas['CMS_VALIDATION_TIME']) ? 1 : $datas['CMS_VALIDATION_TI
                         </div>
                         <div class="mb-3">
                             <span class="input-group-text">Langue de votre site</span>
-                            <input type="text" class="form-control" value="<?= $datas['CMS_LANGS']; ?>" readonly>
+                            <input type="text" class="form-control" value="<?= $datas['CMS_LANG']; ?>" readonly>
                         </div>
                         <div class="mb-3">
                             <span class="input-group-text">Version du C.M.S</span>
@@ -144,7 +144,7 @@ $valid    = empty($datas['CMS_VALIDATION_TIME']) ? 1 : $datas['CMS_VALIDATION_TI
                                             <div class="fs-12 op-8 mb-1">À changer si vraiment, il y a besoin<br>
                                                 Tous les comptes devront se devront être recréé, ID sert à coder tout le site pour les informations important.
                                             </div>
-                                            <input type="text" class="form-control" name="CMS_API_CLEF" value="<?= $datas['CMS_API_CLEF']; ?>">
+                                            <input type="text" class="form-control" name="CMS_KEY_ADMIN" value="<?= $datas['CMS_KEY_ADMIN']; ?>">
                                         </div>
                                     </div>
                                 </div>

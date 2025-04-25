@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Bel-CMS [Content management system]
  * @version 4.0.0 [PHP8.4]
@@ -7,18 +8,19 @@
  * @license MIT License
  * @copyright 2015-2025 Bel-CMS
  * @author as Stive - stive@determe.be
-*/
+ */
 $hardware = $_SESSION['USER']->hardware;
 ?>
 <div class="row">
     <div class="col-sm-4">
         <div id="belcms_user" class="card">
             <div class="card-header">
-                <img style="max-width: 100%;" src="<?=$_SESSION['USER']->profils->avatar;?>" class="rounded float-start" alt="Avatar User">
+                <img style="max-width: 100%;" src="<?= $_SESSION['USER']->profils->avatar; ?>" class="rounded float-start" alt="Avatar User">
             </div>
             <ul id="belcms_user_ul" class="list-group list-group-flush">
                 <li class="list-group-item"><a href="/User">Accueil</a></li>
                 <li class="list-group-item"><a href="/User/profils">Profils</a></li>
+                <li class="list-group-item"><a href="/User/avatar">Avatar</a></li>
                 <li class="list-group-item"><a href="/User/mdp">Mot de passe</a></li>
                 <li class="list-group-item"><a href="/User/Social">Social</a></li>
                 <li class="list-group-item active"><a href="/User/Material">Matériels</a></li>
@@ -37,7 +39,7 @@ $hardware = $_SESSION['USER']->hardware;
                             <div class="input-group mb-2">
                                 <div class="form-floating">
                                     <select name="internet_connection" class="form-select" id="input_inputgenre">
-                                        <option selected value="<?=$hardware->internet_connection;?>"><?=$hardware->internet_connection;?></option>
+                                        <option selected value="<?= $hardware->internet_connection; ?>"><?= $hardware->internet_connection; ?></option>
                                         <option value="Modem 56K">Modem 56K</option>
                                         <option value="Modem 128">Modem 128K</option>
                                         <option value="ADSL 128K">ADSL 128K</option>
@@ -69,7 +71,7 @@ $hardware = $_SESSION['USER']->hardware;
                             <div class="input-group mb-2">
                                 <div class="form-floating">
                                     <select id="tower" name="tower" class="form-select">
-                                        <option selected value="<?=$hardware->tower;?>"><?=$hardware->tower;?></option>
+                                        <option selected value="<?= $hardware->tower; ?>"><?= $hardware->tower; ?></option>
                                         <option value="Génerique">Génerique</option>
                                         <option value="Aerocool">Aerocool</option>
                                         <option value="Asus">Asus</option>
@@ -100,7 +102,7 @@ $hardware = $_SESSION['USER']->hardware;
                             <div class="input-group mb-2">
                                 <div class="form-floating">
                                     <select id="keyboard" name="keyboard" class="form-select">
-                                        <option selected value="<?=$hardware->keyboard;?>"><?=$hardware->keyboard;?></option>
+                                        <option selected value="<?= $hardware->keyboard; ?>"><?= $hardware->keyboard; ?></option>
                                         <option value="Génerique">Génerique</option>
                                         <option value="The G-Lab">The G-Lab</option>
                                         <option value="Logitech">Logitech</option>
@@ -176,7 +178,7 @@ $hardware = $_SESSION['USER']->hardware;
                             <div class="input-group mb-2">
                                 <div class="form-floating">
                                     <select id="cooling" name="cooling" class="form-select">
-                                        <option selected value="<?=$hardware->cooling;?>"><?=$hardware->cooling;?></option>
+                                        <option selected value="<?= $hardware->cooling; ?>"><?= $hardware->cooling; ?></option>
                                         <option value="Origine">Origine</option>
                                         <option value="Asus">Asus</option>
                                         <option value="Be Quiet">Be Quiet</option>
@@ -207,7 +209,7 @@ $hardware = $_SESSION['USER']->hardware;
                             <div class="input-group mb-2">
                                 <div class="form-floating">
                                     <select id="cpu" name="cpu" class="form-select">
-                                        <option selected value="<?=$hardware->cpu;?>"><?=$hardware->cpu;?></option>
+                                        <option selected value="<?= $hardware->cpu; ?>"><?= $hardware->cpu; ?></option>
                                         <option value="AMD Athlon">AMD Athlon</option>
                                         <option value="AMD FX">AMD FX</option>
                                         <option value="AMD Phenom">AMD Phenom</option>
@@ -233,7 +235,7 @@ $hardware = $_SESSION['USER']->hardware;
                             <div class="input-group mb-2">
                                 <div class="form-floating">
                                     <select id="motherboard" name="motherboard" class="form-select">
-                                        <option selected value="<?=$hardware->motherboard;?>"><?=$hardware->motherboard;?></option>
+                                        <option selected value="<?= $hardware->motherboard; ?>"><?= $hardware->motherboard; ?></option>
                                         <option value="Aorus">Aorus</option>
                                         <option value="Aorus">Aorus</option>
                                         <option value="Asrock">Asrock</option>
@@ -254,7 +256,7 @@ $hardware = $_SESSION['USER']->hardware;
                             <div class="input-group mb-2">
                                 <div class="form-floating">
                                     <select id="memory" name="ram" class="form-select">
-                                        <option selected value="<?=$hardware->ram;?>"><?=$hardware->ram;?></option>
+                                        <option selected value="<?= $hardware->ram; ?>"><?= $hardware->ram; ?></option>
                                         <option value="Adata">Adata</option>
                                         <option value="Aorus">Aorus</option>
                                         <option value="Apple">Apple</option>
@@ -279,7 +281,7 @@ $hardware = $_SESSION['USER']->hardware;
                             <div class="input-group mb-2">
                                 <div class="form-floating">
                                     <select id="graphics_card" name="graphics_card" class="form-select">
-                                        <option selected value="<?=$hardware->graphics_card;?>"><?=$hardware->graphics_card;?></option>
+                                        <option selected value="<?= $hardware->graphics_card; ?>"><?= $hardware->graphics_card; ?></option>
                                         <option value="Aorus">Aorus</option>
                                         <option value="Asrock">Asrock</option>
                                         <option value="Asus">Asus</option>
@@ -306,7 +308,7 @@ $hardware = $_SESSION['USER']->hardware;
                             <div class="input-group mb-2">
                                 <div class="form-floating">
                                     <select id="ssd_m2" name="ssd_m2" class="form-select">
-                                        <option selected value="<?=$hardware->ssd_m2;?>"><?=$hardware->ssd_m2;?></option>
+                                        <option selected value="<?= $hardware->ssd_m2; ?>"><?= $hardware->ssd_m2; ?></option>
                                         <option value="SSD">SSD</option>
                                         <option value="HDD">HDD</option>
                                         <option value="M2">M2</option>
@@ -317,7 +319,7 @@ $hardware = $_SESSION['USER']->hardware;
                             <div class="input-group mb-2">
                                 <div class="form-floating">
                                     <select id="psu" name="psu" class="form-select">
-                                        <option selected value="<?=$hardware->psu;?>"><?=$hardware->psu;?></option>
+                                        <option selected value="<?= $hardware->psu; ?>"><?= $hardware->psu; ?></option>
                                         <option value="be quiet">be quiet</option>
                                         <option value="Fox Spirit">Fox Spirit</option>
                                         <option value="Textorm">Textorm</option>
@@ -347,7 +349,7 @@ $hardware = $_SESSION['USER']->hardware;
                             <div class="input-group mb-2">
                                 <div class="form-floating">
                                     <select id="screen" name="screen" class="form-select">
-                                        <option selected value="<?=$hardware->screen;?>"><?=$hardware->screen;?></option>
+                                        <option selected value="<?= $hardware->screen; ?>"><?= $hardware->screen; ?></option>
                                         <option value="ASUS">ASUS</option>
                                         <option value="Alienware">Alienware</option>
                                         <option value="KOORUI">KOORUI</option>
@@ -389,7 +391,7 @@ $hardware = $_SESSION['USER']->hardware;
                             <div class="input-group mb-2">
                                 <div class="form-floating">
                                     <select id="os" name="OS" class="form-select">
-                                        <option selected value="<?=$hardware->OS;?>"><?=$hardware->OS;?></option>
+                                        <option selected value="<?= $hardware->OS; ?>"><?= $hardware->OS; ?></option>
                                         <option value="Windows XP">Windows XP</option>
                                         <option value="Windows 7">Windows 7</option>
                                         <option value="Windows 8">Windows 8</option>
@@ -414,14 +416,14 @@ $hardware = $_SESSION['USER']->hardware;
                             </div>
                             <div class="input-group mb-2">
                                 <div class="form-floating">
-                                    <input name="model_motherboard" type="text" class="form-control" value="<?=$hardware->model_motherboard;?>">
+                                    <input name="model_motherboard" type="text" class="form-control" value="<?= $hardware->model_motherboard; ?>">
                                     <label>Modèle de boîtier</label>
                                 </div>
                             </div>
                             <div class="input-group mb-2">
                                 <div class="form-floating">
                                     <select id="mouse" name="mouse" class="form-select">
-                                        <option selected value="<?=$hardware->mouse;?>"><?=$hardware->mouse;?></option>
+                                        <option selected value="<?= $hardware->mouse; ?>"><?= $hardware->mouse; ?></option>
                                         <option value="Logitech">Logitech</option>
                                         <option value="Logitech G">Logitech G</option>
                                         <option value="Logitech">Logitech</option>
@@ -468,26 +470,26 @@ $hardware = $_SESSION['USER']->hardware;
                             </div>
                             <div class="input-group mb-2">
                                 <div class="form-floating">
-                                    <input id="model_cooling" type="text" name="model_cooling" class="form-control" value="<?=$hardware->model_cooling;?>">
+                                    <input id="model_cooling" type="text" name="model_cooling" class="form-control" value="<?= $hardware->model_cooling; ?>">
                                     <label for="model_cooling">Modèle de refroidissement</label>
                                 </div>
                             </div>
                             <div class="input-group mb-2">
                                 <div class="form-floating">
-                                    <input id="model_cpu" type="text" name="model_cpu" class="form-control" value="<?=$hardware->model_cpu;?>">
+                                    <input id="model_cpu" type="text" name="model_cpu" class="form-control" value="<?= $hardware->model_cpu; ?>">
                                     <label for="model_cpu">Modèle processeur</label>
                                 </div>
                             </div>
                             <div class="input-group mb-2">
                                 <div class="form-floating">
-                                    <input id="model_motherboard" type="text" name="model_motherboard" class="form-control" value="<?=$hardware->model_motherboard;?>">
+                                    <input id="model_motherboard" type="text" name="model_motherboard" class="form-control" value="<?= $hardware->model_motherboard; ?>">
                                     <label for="model_motherboard">Modèle carte mère</label>
                                 </div>
                             </div>
                             <div class="input-group mb-2">
                                 <div class="form-floating">
                                     <select id="qty_ram" name="qty_ram" class="form-select">
-                                        <option selected value="<?=$hardware->qty_ram;?>"><?=$hardware->qty_ram;?></option>
+                                        <option selected value="<?= $hardware->qty_ram; ?>"><?= $hardware->qty_ram; ?></option>
                                         <option selected="" value="16 GB">16 GB</option>
                                         <option value="256 Mo">256 Mo</option>
                                         <option value="512 Mo">512 Mo</option>
@@ -505,14 +507,14 @@ $hardware = $_SESSION['USER']->hardware;
                             </div>
                             <div class="input-group mb-2">
                                 <div class="form-floating">
-                                    <input id="model_graphics_card" type="text" name="model_graphics_card" value="<?=$hardware->model_graphics_card;?>" class="form-control">
+                                    <input id="model_graphics_card" type="text" name="model_graphics_card" value="<?= $hardware->model_graphics_card; ?>" class="form-control">
                                     <label for="model_graphics_card">Modèle carte graphique</label>
                                 </div>
                             </div>
                             <div class="input-group mb-2">
                                 <div class="form-floating">
                                     <select name="size_hdd" class="form-select">
-                                        <option selected value="<?=$hardware->size_hdd;?>"><?=$hardware->size_hdd;?></option>
+                                        <option selected value="<?= $hardware->size_hdd; ?>"><?= $hardware->size_hdd; ?></option>
                                         <option value="1 TO">1 TO</option>
                                         <option value="2 TO">2 TO</option>
                                         <option value="3 TO">3 TO</option>
@@ -534,14 +536,14 @@ $hardware = $_SESSION['USER']->hardware;
                             </div>
                             <div class="input-group mb-2">
                                 <div class="form-floating">
-                                    <input id="watt" type="text" name="watt" class="form-control" value="<?=$hardware->watt;?>">
+                                    <input id="watt" type="text" name="watt" class="form-control" value="<?= $hardware->watt; ?>">
                                     <label for="watt">Detail du PSU</label>
                                 </div>
                             </div>
                             <div class="input-group mb-2">
                                 <div class="form-floating">
                                     <select id="screen_resolution" name="screen_resolution" class="form-select">
-                                        <option selected value="<?=$hardware->screen_resolution;?>"><?=$hardware->screen_resolution;?></option>
+                                        <option selected value="<?= $hardware->screen_resolution; ?>"><?= $hardware->screen_resolution; ?></option>
                                         <option value="352 x 240 pixels">352 x 240 pixels</option>
                                         <option value="480 x 360 pixels">480 x 360 pixels</option>
                                         <option value="858 x 480 pixels">858 x 480 pixels</option>

@@ -11,6 +11,7 @@
 
 namespace BelCMS\Core;
 use BelCMS\PDO\BDD;
+use BelCMS\Requires\Common;
 
 if (!defined('CHECK_INDEX')):
     header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
@@ -26,7 +27,8 @@ class Templates
             $view,
             $widgets,
             $fullwide,
-            $host;
+            $host,
+            $description;
 
     public function __construct($var = null)
     {
@@ -38,6 +40,7 @@ class Templates
         $this->fullwide     = self::getFullWide();
         $this->host         = GetHost::getBaseUrl();
         $this->widgets      = $var->widgets;
+        $this->description  = self::getDescription(Dispatcher::page());
         $fileLoadTpl        = constant('DIR_TPL').self::getNameTpl().DS.'template.php';
         $fileLoadTplDefault = ROOT.DS.'assets'.DS.'templates'.DS.'default'.DS.'template.php';
         if (is_file($fileLoadTpl) === true) {
@@ -65,6 +68,21 @@ class Templates
             $return = $sql->data->value;
         }
         return $return;
+    }
+    protected function getDescription ($page)
+    {
+        $page = Common::VarSecure($page, null);
+        if ($page != '') {
+            $sql = new BDD;
+            $sql->table('TABLE_CONFIG_PAGES');
+            $sql->where(array('name' => 'name', 'value' => $page));
+            $sql->queryOne();
+            $data = $sql->data;
+            $return = $data->description;
+            return $return;
+        } else {
+            return '';
+        }
     }
     #########################################
     # Récupère les page en fullwide

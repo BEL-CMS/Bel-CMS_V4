@@ -47,7 +47,7 @@ class User
 			$sql = New BDD();
 			$sql->table('TABLE_USERS_PAGE');
 			$sql->where(array('name' => 'hash_key', 'value' => $_SESSION['USER']->user->hash_key));
-			$sql->update(array('namepage' => Dispatcher::name() ,'last_visit' => date('Y-m-d H:i:s')));
+			$sql->update(array('namepage' => Dispatcher::page() ,'last_visit' => date('Y-m-d H:i:s')));
 			unset($sql);
 		}
 	}
@@ -386,7 +386,7 @@ class User
 				'name'  => 'hash_key',
 				'value' => $hash_key
 			));
-			$user->fields(array('username','hash_key', 'password', 'mail', 'ip', 'valid', 'expire', 'token', 'number_valid'));
+			$user->fields(array('username','hash_key', 'password', 'mail', 'ip', 'valid', 'expire', 'token', 'number_valid', '2FA'));
 			$user->isObject(false);
 			$user->queryOne();
 			if (!empty($user->data)) {

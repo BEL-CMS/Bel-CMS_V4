@@ -22,6 +22,7 @@ Common::constant(array(
     #####################################
 	# Nom Administration
 	#####################################
-	'ADMINISTRATORS' => 'Administrateur',
-	'MEMBERS'        => 'Membres',
+	'ADMINISTRATORS'      => 'Administrateur',
+	'MEMBERS'             => 'Membres',
+	'ADMIN_TEXT_FALSE_ID' => 'Un administrateur a reçu des informations sur une situation alarmante relative à l\'ID.'
 ));

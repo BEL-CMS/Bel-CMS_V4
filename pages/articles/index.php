@@ -23,7 +23,7 @@ endif;
             <tr>
                 <th>Nom de la page :</th>
                 <th>Date de mise en ligne de ce contenu :</th>
-                <th>Courte description</th>
+                <th>Description brève :</th>
             </tr>
         </thead>
         <tbody>
