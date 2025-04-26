@@ -34,6 +34,16 @@ final class Tickets
         return $return;
     }
 
+    public function getSubjectOne($id)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_TICKET_CAT');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->queryOne();
+        $return = $sql->data;
+        return $return;
+    }
+
     public function send ($data)
     {
         $sql = new BDD;
@@ -45,5 +55,35 @@ final class Tickets
         } else {
             return false;
         }
+    }
+
+    public function origin ($hash)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_TICKET');
+        $sql->where(array('name' => 'hash', 'value' => $hash));
+        $sql->queryOne();
+        $return = $sql->data;
+        return $return;
+    }
+
+    public function msg ($hash)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_TICKET_REP');
+        $sql->where(array('name' => 'id_tickets', 'value' => $hash));
+        $sql->queryAll();
+        $return = $sql->data;
+        return $return;
+    }
+
+    public function getAllTickets ()
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_TICKET');
+        $sql->where(array('name'=> 'author', 'value' => $_SESSION['USER']->user->hash_key));
+        $sql->queryAll();
+        $return = $sql->data;
+        return $return;
     }
 }

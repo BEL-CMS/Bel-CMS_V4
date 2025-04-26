@@ -14,7 +14,6 @@ namespace Belcms\Pages\Controller;
 use BelCMS\Core\Captcha;
 use BelCMS\Core\Notification;
 use BelCMS\Core\Pages;
-use BelCMS\Core\Secure;
 use BelCMS\Core\User;
 use BelCMS\Requires\Common;
 
@@ -29,12 +28,48 @@ class Tickets extends Pages
 
     function index ()
     {
+        if (User::isLogged()) {
+            $tickets = $this->models->getAllTickets();
+            foreach ($tickets as $key => $value) {
+                $tickets[$key]->subject = $this->models->getSubjectOne($value->subject);
+            }
+            $get['tickets'] = $tickets;
+            $this->set($get);
+            $this->render('index');
+        } else {
+            $return['type'] = 'warning';
+            $return['msg']  = 'Il est nécessaire d\'être identifié pour pouvoir consulter cette page.';
+            $this->message($return['type'], $return['msg'], constant('INFO'));
+            $this->redirect('user/login&echo', 2);
+        }
+    }
+
+    public function read ()
+    {
+        if (User::isLogged()) { 
+            $hash = $this->data[2];
+            if (strlen($hash) == 16 and is_string($hash)) {
+                $get['origin'] = $this->models->origin ($hash);
+                $get['msg'] = $this->models->msg ($hash);
+                $this->set($get);
+                $this->render('read');
+            }
+        } else {
+            $return['type'] = 'warning';
+            $return['msg']  = 'Il est nécessaire d\'être identifié pour pouvoir consulter cette page.';
+            $this->message($return['type'], $return['msg'], constant('INFO'));
+            $this->redirect('user/login&echo', 2);
+        }
+    }
+
+    public function send ()
+    {
         $captcha = new Captcha();
         $d['captcha'] = $captcha->createCaptcha();
         $d['cat']     = $this->models->getSubject();
         $this->set($d);
         if (User::isLogged()) {
-            $this->render('index');
+            $this->render('send');
         } else {
             $return['type'] = 'warning';
             $return['msg']  = 'Il est nécessaire d\'être identifié pour pouvoir consulter cette page.';
