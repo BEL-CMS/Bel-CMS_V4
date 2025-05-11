@@ -386,7 +386,7 @@ class User
 				'name'  => 'hash_key',
 				'value' => $hash_key
 			));
-			$user->fields(array('username','hash_key', 'password', 'mail', 'ip', 'valid', 'expire', 'token', 'number_valid', '2FA'));
+			$user->fields(array('username','hash_key', 'password', 'mail', 'ip', 'valid', 'expire', 'token', 'number_valid', '2FA', 'admin', 'root'));
 			$user->isObject(false);
 			$user->queryOne();
 			if (!empty($user->data)) {
@@ -543,5 +543,19 @@ class User
 		}
 
 		return $return;
+	}
+
+	public static function getNameForHash ($hash)
+	{
+		if ($hash !== null && strlen($hash) == 32) {
+			$sql = new BDD();
+			$sql->table('TABLE_USERS');
+			$sql->where(array('name' => 'hash_key', 'value' => $hash));
+			$sql->fields(array('username'));
+			$sql->queryOne();
+			$return = $sql->data;
+			$return = $return->username;
+			return $return;
+		}
 	}
 }

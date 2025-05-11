@@ -1,23 +1,19 @@
 (function () {
     'use strict';
 
-    function loadFile(event) {
-        const reader = new FileReader();
-        const file = event.target.files[0];
-
-        if (file && file.type.match('image.*')) {
-            reader.onload = function () {
-                const output = document.querySelectorAll('.profile-img'); // Selecting all elements with class
-                output.forEach(function(element) {
-                    element.src = reader.result;
-                });
-            };
-            reader.readAsDataURL(file);
-        } else {
-            event.target.value = '';
-            alert('Please select a valid image.');
-        }
-    }
+    let loadFile = function (event) {
+        var reader = new FileReader();
+        reader.onload = function () {
+            var output = document.getElementById('profile-img');
+            if (event.target.files[0].type.match('image.*')) {
+                output.src = reader.result;
+            } else {
+                event.target.value = '';
+                alert('please select a valid image');
+            }
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    };
 
     // for personal information language
     const multipleCancelButton = new Choices(
@@ -37,14 +33,8 @@
         }
     );
 
-     // Selecting all input elements with the class
-     const ProfileChanges = document.querySelectorAll('.profile-change');
-     if (ProfileChanges.length > 0) { // Ensuring at least one element is found
-         ProfileChanges.forEach(function(element) {
-             element.addEventListener('change', loadFile);
-         });
-     } else {
-         console.error('No element with class "profile-change" found.');
-     }
+    // for profile photo update
+    let ProfileChange = document.querySelector('#profile-change');
+    ProfileChange.addEventListener('change', loadFile);
 
 })();

@@ -25,6 +25,11 @@ final class Config
     function __construct()
     {
         $_SESSION['CONFIG'] = self::getSqlConfig ();
+		foreach ($_SESSION['CONFIG'] as $name => $value) {
+			if (!defined(strtoupper($name))) {
+				define($name, $value);
+			}
+		}
     }
 
     private function getSqlConfig () : array

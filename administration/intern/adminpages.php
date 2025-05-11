@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Bel-CMS [Content management system]
  * @version 4.0.0 [PHP8.4]
@@ -20,15 +21,15 @@ use BelCMS\Requires\Common;
 
 class AdminPages
 {
-    var		$active;
-    var		$vars  = array();
-    var		$admin = false;
+    var        $active;
+    var        $vars  = array();
+    var        $admin = false;
 
-    public 	$render = null,
-            $bdd,
-            $models,
-            $data,
-            $id;
+    public     $render = null,
+        $bdd,
+        $models,
+        $data,
+        $id;
 
     function __construct()
     {
@@ -128,15 +129,11 @@ class AdminPages
     private function superAdmin()
     {
         ob_start();
-?>
-        <?php
         Notification::error(constant('NO_ACCESS_ADMIN'), 'Page');
         $this->render = ob_get_contents();
         if (ob_get_length() != 0) {
             ob_end_clean();
         }
-        ?>
-        <?php
         return;
     }
     #########################################
@@ -162,30 +159,30 @@ class AdminPages
         }
         ?>
         <div class="row mb-2">
-        <?php
-        if (!empty($menu)):
-            foreach ($menu as $key => $value):
-        ?>
-            <div class="col-xxl-2 col-xl-6 col-lg-6 col-md-6">
-                <div class="card custom-card">
-                    <div class="top-left"></div>
-                    <div class="top-right"></div>
-                    <div class="bottom-left"></div>
-                    <div class="bottom-right"></div>
-                    <div class="card-body p-3 hovermenu">
-                        <a href="<?=$value['href'];?>">
-                            <div class="text-center">
-                                <div class="file-format-icon text-primary"> <i class="<?=$value['ico'];?>"></i></div>
-                                <div> <span class="fw-medium mb-1"><?=$value['title'];?></span></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
             <?php
-            endforeach;
-        endif;
-        ?>
+            if (!empty($menu)):
+                foreach ($menu as $key => $value):
+            ?>
+                    <div class="col-xxl-2 col-xl-6 col-lg-6 col-md-6">
+                        <div class="card custom-card">
+                            <div class="top-left"></div>
+                            <div class="top-right"></div>
+                            <div class="bottom-left"></div>
+                            <div class="bottom-right"></div>
+                            <div class="card-body p-3 hovermenu">
+                                <a href="<?= $value['href']; ?>">
+                                    <div class="text-center">
+                                        <div class="file-format-icon text-primary"> <i class="<?= $value['ico']; ?>"></i></div>
+                                        <div> <span class="fw-medium mb-1"><?= $value['title']; ?></span></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+            <?php
+                endforeach;
+            endif;
+            ?>
         </div>
         <?php
 
@@ -228,7 +225,6 @@ class AdminPages
         }
 
         $this->render = ob_get_contents();
-
         ?>
         </div>
 

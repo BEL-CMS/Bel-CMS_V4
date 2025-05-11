@@ -2,6 +2,7 @@
   "use strict";
 
   /* page loader */
+  
   function hideLoader() {
     const loader = document.getElementById("loader");
     loader.classList.add("d-none")
@@ -17,7 +18,6 @@
   const tooltipList = [...tooltipTriggerList].map(
     (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
   );
-
   /* popover  */
   const popoverTriggerList = document.querySelectorAll(
     '[data-bs-toggle="popover"]'
@@ -32,6 +32,12 @@
   );
   const themeContainerPrimary = document.querySelector(
     ".theme-container-primary"
+  );
+  const pickrContainerBackground = document.querySelector(
+    ".pickr-container-background"
+  );
+  const themeContainerBackground = document.querySelector(
+    ".theme-container-background"
   );
 
   /* for theme primary */
@@ -84,7 +90,7 @@
           {
             el,
             theme,
-            default: "#00fefc",
+            default: "#6259ca",
           },
           config
         )
@@ -107,14 +113,7 @@
             color[2]
           )}`
         );
-        html.style.setProperty(
-          "--theme-bg-gradient",
-          "#01041a"
-        );
-        localStorage.setItem(
-          "--theme-bg-gradient",
-          "#01041a"
-        );
+        updateColors();
       });
     });
 
@@ -122,6 +121,177 @@
   }
   nanoButtons[0].click();
   /* for theme primary */
+
+  /* for theme background */
+  const nanoThemes1 = [
+    [
+      "nano",
+      {
+        defaultRepresentation: "RGB",
+        components: {
+          preview: true,
+          opacity: false,
+          hue: true,
+
+          interaction: {
+            hex: false,
+            rgba: true,
+            hsva: false,
+            input: true,
+            clear: false,
+            save: false,
+          },
+        },
+      },
+    ],
+  ];
+  const nanoButtons1 = [];
+  let nanoPickr1 = null;
+  for (const [theme, config] of nanoThemes) {
+    const button = document.createElement("button");
+    button.innerHTML = theme;
+    nanoButtons1.push(button);
+
+    button.addEventListener("click", () => {
+      const el = document.createElement("p");
+      pickrContainerBackground.appendChild(el);
+
+      /* Delete previous instance */
+      if (nanoPickr1) {
+        nanoPickr1.destroyAndRemove();
+      }
+
+      /* Apply active class */
+      for (const btn of nanoButtons) {
+        btn.classList[btn === button ? "add" : "remove"]("active");
+      }
+
+      /* Create fresh instance */
+      nanoPickr1 = new Pickr(
+        Object.assign(
+          {
+            el,
+            theme,
+            default: "#6259ca",
+          },
+          config
+        )
+      );
+
+      /* Set events */
+      nanoPickr1.on("changestop", (source, instance) => {
+        let color = instance.getColor().toRGBA();
+        let html = document.querySelector("html");
+        html.style.setProperty(
+          "--body-bg-rgb",
+          `${color[0]}, ${color[1]}, ${color[2]}`
+        );
+        document
+          .querySelector("html")
+          .style.setProperty(
+            "--body-bg-rgb2",
+            `${color[0] + 14}, ${color[1] + 14}, ${color[2] + 14}`
+          );
+        document
+          .querySelector("html")
+          .style.setProperty(
+            "--light-rgb",
+            `${color[0] + 14}, ${color[1] + 14}, ${color[2] + 14}`
+          );
+        document
+          .querySelector("html")
+          .style.setProperty(
+            "--form-control-bg",
+            `rgb(${color[0] + 14}, ${color[1] + 14}, ${color[2] + 14})`
+          );
+        localStorage.removeItem("bgtheme");
+        updateColors();
+        html.setAttribute("data-theme-mode", "dark");
+        html.setAttribute("data-menu-styles", "dark");
+        html.setAttribute("data-header-styles", "dark");
+        document.querySelector("#switcher-dark-theme").checked = true;
+        localStorage.setItem(
+          "bodyBgRGB",
+          `${color[0]}, ${color[1]}, ${color[2]}`
+        );
+        localStorage.setItem(
+          "bodylightRGB",
+          `${color[0] + 14}, ${color[1] + 14}, ${color[2] + 14}`
+        );
+      });
+    });
+    themeContainerBackground.appendChild(button);
+  }
+  nanoButtons1[0].click();
+  /* for theme background */
+
+  /* header theme toggle */
+  function toggleTheme() {
+    let html = document.querySelector("html");
+    if (html.getAttribute("data-theme-mode") === "dark") {
+      html.setAttribute("data-theme-mode", "light");
+      html.setAttribute("data-header-styles", "light");
+      html.setAttribute("data-menu-styles", "light");
+      if (!localStorage.getItem("primaryRGB")) {
+        html.setAttribute("style", "");
+      }
+      html.removeAttribute("data-bg-theme");
+      document.querySelector("#switcher-light-theme").checked = true;
+      document.querySelector("#switcher-menu-light").checked = true;
+      document.querySelector("html") .style.removeProperty("--body-bg-rgb", localStorage.bodyBgRGB);
+      checkOptions();
+      html.style.removeProperty('--body-bg-rgb2');
+      html.style.removeProperty("--light-rgb");
+      html.style.removeProperty("--form-control-bg");
+      html.style.removeProperty("--input-border");
+      html.style.removeProperty('--body-bg-rgb');
+      
+      document.querySelector("#switcher-header-light").checked = true;
+      document.querySelector("#switcher-menu-light").checked = true;
+      document.querySelector("#switcher-light-theme").checked = true;
+      document.querySelector("#switcher-background4").checked = false;
+      document.querySelector("#switcher-background3").checked = false;
+      document.querySelector("#switcher-background2").checked = false;
+      document.querySelector("#switcher-background1").checked = false;
+      document.querySelector("#switcher-background").checked = false;
+      localStorage.removeItem("Hogodarktheme");
+      localStorage.removeItem("HogoMenu");
+      localStorage.removeItem("HogoHeader");
+      localStorage.removeItem("bodylightRGB");
+      localStorage.removeItem("bodyBgRGB");
+      if (localStorage.getItem("Hogolayout") != "horizontal") {
+        html.setAttribute("data-menu-styles", "light");
+      }
+      html.setAttribute("data-header-styles", "light");
+    } else {
+      html.setAttribute("data-theme-mode", "dark");
+      html.setAttribute("data-header-styles", "dark");
+      if (!localStorage.getItem("primaryRGB")) {
+        html.setAttribute("style", "");
+      }
+      html.setAttribute("data-menu-styles", "dark");
+      document.querySelector("#switcher-dark-theme").checked = true;
+      document.querySelector("#switcher-menu-dark").checked = true;
+      document.querySelector("#switcher-header-dark").checked = true;
+      checkOptions();
+      document.querySelector("#switcher-menu-dark").checked = true;
+      document.querySelector("#switcher-header-dark").checked = true;
+      document.querySelector("#switcher-dark-theme").checked = true;
+      document.querySelector("#switcher-background4").checked = false;
+      document.querySelector("#switcher-background3").checked = false;
+      document.querySelector("#switcher-background2").checked = false;
+      document.querySelector("#switcher-background1").checked = false;
+      document.querySelector("#switcher-background").checked = false;
+      localStorage.setItem("Hogodarktheme", "true");
+      localStorage.setItem("HogoMenu", "dark");
+      localStorage.setItem("HogoHeader", "dark");
+      localStorage.removeItem("bodylightRGB");
+      localStorage.removeItem("bodyBgRGB");
+    }
+  }
+  let layoutSetting = document.querySelector(".layout-setting");
+  layoutSetting.addEventListener("click", toggleTheme);
+  /* header theme toggle */
 
   /* Choices JS */
   document.addEventListener("DOMContentLoaded", function () {
@@ -164,10 +334,10 @@
 
   /* card with fullscreen */
   let cardFullscreenBtn = document.querySelectorAll(
-    '[data-bs-toggle="card-fullscreen"]'
-  );
-  cardFullscreenBtn.forEach((ele) => {
-    ele.addEventListener("click", function (e) {
+    '[data-bs-toggle="card-fullscreen"]',
+    );
+    cardFullscreenBtn.forEach((ele) => {
+      ele.addEventListener("click", function (e) {
       let $this = this;
       let card = $this.closest(DIV_CARD);
       card.classList.toggle("card-fullscreen");
@@ -208,10 +378,6 @@
   };
   /* back to top */
 
-  /* header dropdowns scroll */
-  var myHeadernotification = document.getElementById("header-notification-scroll");
-  new SimpleBar(myHeadernotification, { autoHide: true });
-
 })();
 
 /* full screen */
@@ -219,13 +385,13 @@ var elem = document.documentElement;
 function openFullscreen() {
   let open = document.querySelector(".full-screen-open");
   let close = document.querySelector(".full-screen-close");
-
+  
   if (
     !document.fullscreenElement &&
     !document.webkitFullscreenElement &&
     !document.msFullscreenElement
-  ) {
-    if (elem.requestFullscreen) {
+    ) {
+      if (elem.requestFullscreen) {
       elem.requestFullscreen();
     } else if (elem.webkitRequestFullscreen) {
       /* Safari */
@@ -243,6 +409,7 @@ function openFullscreen() {
     } else if (document.webkitExitFullscreen) {
       /* Safari */
       document.webkitExitFullscreen();
+      console.log("working");
     } else if (document.msExitFullscreen) {
       /* IE11 */
       document.msExitFullscreen();
@@ -266,6 +433,52 @@ customSwitch.forEach((e) =>
 
 /* header dropdown close button */
 
+
+/* for notifications dropdown */
+const headerbtn1 = document.querySelectorAll(".dropdown-item-close2");
+headerbtn1.forEach((button) => {
+  button.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    button.parentNode.parentNode.parentNode.parentNode.remove();
+    document.getElementById("notifiation-data").innerText = `${
+      document.querySelectorAll(".dropdown-item-close2").length
+    }`;
+    // document.getElementById("notifiation-badge").innerText = `${
+    //   document.querySelectorAll(".dropdown-item-close2").length
+    // }`;
+    if (document.querySelectorAll(".dropdown-item-close2").length == 0) {
+      let elementHide1 = document.querySelector(".empty-header-item2");
+      let elementShow1 = document.querySelector(".empty-item2");
+      elementHide1.classList.add("d-none");
+      elementShow1.classList.remove("d-none");
+    }
+  });
+});
+/* for notifications dropdown */
+
+/* for message dropdown */
+const headerbtn2 = document.querySelectorAll(".dropdown-item-close3");
+headerbtn2.forEach((button) => {
+  button.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    button.parentNode.parentNode.parentNode.parentNode.remove();
+    document.getElementById("message-data").innerText = `${
+      document.querySelectorAll(".dropdown-item-close3").length
+    } `;
+    // document.getElementById("notification-icon-badge").innerText = `${
+    //   document.querySelectorAll(".dropdown-item-close3").length
+    // }`;
+    if (document.querySelectorAll(".dropdown-item-close3").length == 0) {
+      let elementHide2 = document.querySelector(".empty-header-item1");
+      let elementShow2 = document.querySelector(".empty-item1");
+      elementHide2.classList.add("d-none");
+      elementShow2.classList.remove("d-none");
+    }
+  });
+});
+/* for notifications dropdown */
 /* for cart dropdown */
 const headerbtn = document.querySelectorAll(".dropdown-item-close");
 headerbtn.forEach((button) => {
@@ -275,13 +488,10 @@ headerbtn.forEach((button) => {
     button.parentNode.parentNode.parentNode.parentNode.parentNode.remove();
     document.getElementById("cart-data").innerText = `${
       document.querySelectorAll(".dropdown-item-close").length
-    } `;
-    document.getElementById("cart-icon-badge").innerText = `${
+    }`;
+    document.getElementById("cart-badge").innerText = `${
       document.querySelectorAll(".dropdown-item-close").length
     }`;
-    console.log(
-      document.getElementById("header-cart-items-scroll").children.length
-    );
     if (document.querySelectorAll(".dropdown-item-close").length == 0) {
       let elementHide = document.querySelector(".empty-header-item");
       let elementShow = document.querySelector(".empty-item");
@@ -292,22 +502,22 @@ headerbtn.forEach((button) => {
 });
 /* for cart dropdown */
 
-/* for notifications dropdown */
-const headerbtn1 = document.querySelectorAll(".dropdown-item-close1");
-headerbtn1.forEach((button) => {
-  button.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    button.parentNode.parentNode.parentNode.parentNode.remove();
-    document.getElementById("notifiation-data").innerText = `${
-      document.querySelectorAll(".dropdown-item-close1").length
-    } Unread`;
-    if (document.querySelectorAll(".dropdown-item-close1").length == 0) {
-      let elementHide1 = document.querySelector(".empty-header-item1");
-      let elementShow1 = document.querySelector(".empty-item1");
-      elementHide1.classList.add("d-none");
-      elementShow1.classList.remove("d-none");
-    }
-  });
+  /* sidebar modal  scroll */
+  var myHeaderShortcut = document.getElementById("msg_card_body");
+  new SimpleBar(myHeaderShortcut, { autoHide: true });
+
+  /* sidebar modal scroll */
+
+  document.addEventListener('DOMContentLoaded', function () {
+    // Add click event to the search button
+    document.getElementById('searchButton').addEventListener('click', function () {
+        // Toggle active class on the navbar-form
+        document.getElementById('myNavbarForm').classList.toggle('active');
+    });
+
+    // Add click event to the close button
+    document.querySelector('.close-btn').addEventListener('click', function () {
+        // Remove active class from the navbar-form
+        document.getElementById('myNavbarForm').classList.remove('active');
+    });
 });
-/* for notifications dropdown */

@@ -20,7 +20,7 @@
                 color: '#8c9097'
             },
         },
-        colors: ["#00ffbe"],
+        colors: ["#6259ca"],
         xaxis: {
             categories: ['January', 'February', 'March', 'April', 'May', 'June']
         }
@@ -59,7 +59,7 @@
                 color: '#8c9097'
             },
         },
-        colors: ["#00ffbe", "#45d65b", "#f39c12"],
+        colors: ["#6259ca", "#fb6b25", "#f5b849"],
         stroke: {
             width: 2
         },
@@ -106,11 +106,11 @@
                 color: '#8c9097'
             },
         },
-        colors: ['#45d65b'],
+        colors: ['#fb6b25'],
         markers: {
             size: 4,
             colors: ['#fff'],
-            strokeColor: '#45d65b',
+            strokeColor: '#fb6b25',
             strokeWidth: 2,
         },
         tooltip: {

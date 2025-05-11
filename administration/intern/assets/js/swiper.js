@@ -227,7 +227,7 @@
     // swiper flip
     var swiper = new Swiper(".swiper-flip", {
         effect: "flip",
-        // grabCursor: true,
+        grabCursor: true,
         pagination: {
             el: ".swiper-pagination",
         },
@@ -235,10 +235,10 @@
             nextEl: ".swiper-button-next",
             prevEl: ".swiper-button-prev",
         },
-        // loop: true,
+        loop: true,
         autoplay: {
-            // delay: 1500,
-            // disableOnInteraction: false
+            delay: 1500,
+            disableOnInteraction: false
         }
     });
 

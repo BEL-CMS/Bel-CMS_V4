@@ -30,7 +30,7 @@
         dataLabels: {
             enabled: false
         },
-        colors: ["#00ffbe", "#45d65b", "#f39c12"],
+        colors: ["#6259ca", "#fb6b25", "#f5b849"],
         stroke: {
             show: true,
             width: 2,
@@ -111,7 +111,7 @@
                 colors: ["#8c9097"]
             }
         },
-        colors: ["#00ffbe"],
+        colors: ["#6259ca"],
         xaxis: {
             categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
             position: 'top',
@@ -203,7 +203,7 @@
         grid: {
             borderColor: '#f2f5f7',
         },
-        colors: ["#00ffbe", "#45d65b", "#f39c12", "#e74c3c"],
+        colors: ["#6259ca", "#fb6b25", "#f5b849", "#e6533c"],
         responsive: [{
             breakpoint: 480,
             options: {
@@ -287,7 +287,7 @@
                 }
             }
         }],
-        colors: ["#00ffbe", "#45d65b", "#f39c12"],
+        colors: ["#6259ca", "#fb6b25", "#f5b849"],
         xaxis: {
             categories: ['2011 Q1', '2011 Q2', '2011 Q3', '2011 Q4', '2012 Q1', '2012 Q2',
                 '2012 Q3', '2012 Q4'
@@ -442,7 +442,7 @@
                 columnWidth: '60%'
             }
         },
-        colors: ['#45d65b'],
+        colors: ['#fb6b25'],
         dataLabels: {
             enabled: false
         },
@@ -454,7 +454,7 @@
             showForSingleSeries: true,
             customLegendItems: ['Actual', 'Expected'],
             markers: {
-                fillColors: ['#45d65b', '#775DD0']
+                fillColors: ['#fb6b25', '#775DD0']
             }
         },
         xaxis: {
@@ -517,7 +517,7 @@
         dataLabels: {
             enabled: false
         },
-        colors: ["#00ffbe"],
+        colors: ["#6259ca"],
         stroke: {
             width: 2
         },
@@ -592,7 +592,7 @@
                     ranges: [{
                         from: -100,
                         to: -46,
-                        color: '#e74c3c'
+                        color: '#e6533c'
                     }, {
                         from: -45,
                         to: 0,
@@ -605,7 +605,7 @@
         grid: {
             borderColor: '#f2f5f7',
         },
-        colors: ["#00ffbe"],
+        colors: ["#6259ca"],
         dataLabels: {
             enabled: false,
         },
@@ -693,7 +693,7 @@
         grid: {
             borderColor: '#f2f5f7',
         },
-        colors: ["#00ffbe", "#45d65b"],
+        colors: ["#6259ca", "#fb6b25"],
         plotOptions: {
             bar: {
                 horizontal: false
@@ -742,7 +742,7 @@
             show: false
         }
     }
-    var colors = ['#00ffbe', '#45d65b', '#f39c12', '#3498db', '#e74c3c', '#2ecc71', '#8f00ff'];
+    var colors = ['#6259ca', '#fb6b25', '#f5b849', '#49b6f5', '#e6533c', '#26bf94', '#5b67c7'];
     function shuffleArray(array) {
         for (var i = array.length - 1; i > 0; i--) {
             var j = Math.floor(Math.random() * (i + 1));
@@ -1151,7 +1151,7 @@
                 }
             }
         },
-        colors: ['#00ffbe', '#45d65b', '#f39c12', '#3498db', '#e74c3c', '#2ecc71', '#8f00ff', '#fc6c85'],
+        colors: ['#6259ca', '#fb6b25', '#f5b849', '#49b6f5', '#e6533c', '#26bf94', '#5b67c7', '#a65e76'],
         plotOptions: {
             bar: {
                 columnWidth: '45%',
@@ -1171,7 +1171,7 @@
             categories: [
                 ['John', 'Doe'],
                 ['Joe', 'Smith'],
-                ['Jake', 'Jacksons'],
+                ['Jake', 'Williams'],
                 'Amber',
                 ['Peter', 'Brown'],
                 ['Mary', 'Evans'],
@@ -1199,92 +1199,5 @@
     };
     var chart = new ApexCharts(document.querySelector("#columns-distributed"), options);
     chart.render();
-
-    /* distributed columns chart */
-    var options = {
-        series: [
-        {
-          data: [
-            {
-              x: '2008',
-              y: [2800, 4500]
-            },
-            {
-              x: '2009',
-              y: [3200, 4100]
-            },
-            {
-              x: '2010',
-              y: [2950, 7800]
-            },
-            {
-              x: '2011',
-              y: [3000, 4600]
-            },
-            {
-              x: '2012',
-              y: [3500, 4100]
-            },
-            {
-              x: '2013',
-              y: [4500, 6500]
-            },
-            {
-              x: '2014',
-              y: [4100, 5600]
-            }
-          ]
-        }
-      ],
-        chart: {
-        height: 350,
-        type: 'rangeBar',
-        zoom: {
-          enabled: false
-        }
-      },
-      plotOptions: {
-        bar: {
-          isDumbbell: true,
-          columnWidth: 3,
-          dumbbellColors: [['#008FFB', '#00E396']]
-        }
-      },
-      legend: {
-        show: true,
-        showForSingleSeries: true,
-        position: 'top',
-        horizontalAlign: 'left',
-        customLegendItems: ['Product A', 'Product B']
-      },
-      fill: {
-        type: 'gradient',
-        gradient: {
-          type: 'vertical',
-          gradientToColors: ['#00E396'],
-          inverseColors: true,
-          stops: [0, 100]
-        }
-      },
-      grid: {
-        xaxis: {
-          lines: {
-            show: true
-          }
-        },
-        yaxis: {
-          lines: {
-            show: false
-          }
-        }
-      },
-      xaxis: {
-        tickPlacement: 'on'
-      }
-      };
-    var chart = new ApexCharts(document.querySelector("#columns-dumbbell"), options);
-    chart.render();
-
-
 
 })();

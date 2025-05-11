@@ -67,7 +67,7 @@
                 color: '#8c9097'
             },
         },
-        colors: ["#00ffbe", "#45d65b", "#f39c12"],
+        colors: ["#6259ca", "#fb6b25", "#f5b849"],
         xaxis: {
             tickAmount: 12,
             type: 'category',
@@ -140,7 +140,7 @@
         grid: {
             borderColor: '#f2f5f7',
         },
-        colors: ["#00ffbe", "#45d65b", "#f39c12"],
+        colors: ["#6259ca", "#fb6b25", "#f5b849"],
         title: {
             text: '3D Bubble Chart',
             align: 'left',

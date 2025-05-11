@@ -28,7 +28,7 @@ final class Tickets
     public function getSubject ()
     {
         $sql = new BDD;
-        $sql->table('TABLE_TICKET_CAT');
+        $sql->table('TABLE_TICKET');
         $sql->queryAll();
         $return = $sql->data;
         return $return;

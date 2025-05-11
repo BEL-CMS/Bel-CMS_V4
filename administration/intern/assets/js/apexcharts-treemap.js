@@ -68,7 +68,7 @@
             height: 350,
             type: 'treemap'
         },
-        colors: ["#00ffbe"],
+        colors: ["#6259ca"],
         title: {
             text: 'Basic Treemap',
             align: 'left',
@@ -132,7 +132,7 @@
                 ]
             }
         ],
-        colors: ["#00ffbe", "#45d65b"],
+        colors: ["#6259ca", "#fb6b25"],
         legend: {
             show: false
         },
@@ -230,15 +230,15 @@
             },
         },
         colors: [
-            '#00ffbe',
-            '#fc6c85',
-            '#f39c12',
+            '#6259ca',
+            '#a65e76',
+            '#f5b849',
             '#a66a5e',
             '#a65e9a',
-            '#2ecc71',
-            '#e74c3c',
-            '#3498db',
-            '#8f00ff',
+            '#26bf94',
+            '#e6533c',
+            '#49b6f5',
+            '#5b67c7',
             '#2dce89',
             '#EF6537',
             '#8c9097'
@@ -349,12 +349,12 @@
                         {
                             from: -6,
                             to: 0,
-                            color: '#00ffbe'
+                            color: '#6259ca'
                         },
                         {
                             from: 0.001,
                             to: 6,
-                            color: '#45d65b'
+                            color: '#fb6b25'
                         }
                     ]
                 }

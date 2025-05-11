@@ -66,12 +66,9 @@
             curve: 'straight'
         },
         title: {
-            text: 'New York Temperature',
-            style: {
-                fontSize:  '11px',
-            }
+            text: 'New York Temperature (all year round)'
         },
-        colors: ["#00ffbe"],
+        colors: ["#6259ca"],
         markers: {
             hover: {
                 sizeOffset: 5
@@ -273,7 +270,7 @@
                 speed: 500
             }
         },
-        colors: ['#00ffbe', '#45d65b', '#00ffbe', '#45d65b'],
+        colors: ['#6259ca', '#fb6b25', '#6259ca', '#fb6b25'],
         dataLabels: {
             enabled: false
         },
@@ -293,10 +290,7 @@
             inverseOrder: true
         },
         title: {
-            text: 'Range Area with Forecast Line',
-            style: {
-                fontSize:  '11px',
-            }
+            text: 'Range Area with Forecast Line (Combo)'
         },
         markers: {
             hover: {

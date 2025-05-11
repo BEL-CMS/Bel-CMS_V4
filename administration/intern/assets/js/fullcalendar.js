@@ -13,49 +13,56 @@
         start: curYear + '-' + curMonth + '-02',
         end: curYear + '-' + curMonth + '-03',
         title: 'Spruko Meetup',
-        className: "bg-secondary-transparent",
+        backgroundColor: '#6259ca',
+        borderColor: '#6259ca',
         description: 'All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary'
       }, {
         id: '2',
         start: curYear + '-' + curMonth + '-17',
         end: curYear + '-' + curMonth + '-17',
         title: 'Design Review',
-        className: "bg-info-transparent",
+        backgroundColor: '#fb6b25',
+        borderColor: '#fb6b25',
         description: 'All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary'
       }, {
         id: '3',
         start: curYear + '-' + curMonth + '-13',
         end: curYear + '-' + curMonth + '-13',
         title: 'Lifestyle Conference',
-        className: "bg-primary-transparent",
+        backgroundColor: '#6259ca',
+        borderColor: '#6259ca',
         description: 'All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary'
       }, {
         id: '4',
         start: curYear + '-' + curMonth + '-21',
         end: curYear + '-' + curMonth + '-21',
         title: 'Team Weekly Brownbag',
-        className: "bg-warning-transparent",
+        backgroundColor: '#f5b849',
+        borderColor: '#f5b849',
         description: 'All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary'
       }, {
         id: '5',
         start: curYear + '-' + curMonth + '-04T10:00:00',
         end: curYear + '-' + curMonth + '-06T15:00:00',
         title: 'Music Festival',
-        className: "bg-success-transparent",
+        backgroundColor: '#26bf94',
+        borderColor: '#26bf94',
         description: 'All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary'
       }, {
         id: '6',
         start: curYear + '-' + curMonth + '-23T13:00:00',
         end: curYear + '-' + curMonth + '-25T18:30:00',
         title: 'Attend Lea\'s Wedding',
-        className: "bg-success-transparent",
+        backgroundColor: '#26bf94',
+        borderColor: '#26bf94',
         description: 'All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary'
       }]
     };
     // Birthday Events Source
     var sptBirthdayEvents = {
       id: 2,
-      className: "bg-info-transparent",
+      backgroundColor: '#49b6f5',
+      borderColor: '#49b6f5',
       textColor: '#fff',
       events: [{
         id: '7',
@@ -85,7 +92,8 @@
     };
     var sptHolidayEvents = {
       id: 3,
-      className: "bg-danger-transparent",
+      backgroundColor: '#e6533c',
+      borderColor: '#e6533c',
       textColor: '#fff',
       events: [{
         id: '10',
@@ -106,7 +114,8 @@
     };
     var sptOtherEvents = {
       id: 4,
-      className: "bg-info-transparent",
+      backgroundColor: '#fb6b25',
+      borderColor: '#fb6b25',
       textColor: '#fff',
       events: [{
         id: '13',
@@ -174,6 +183,7 @@
   
     });
     calendar.render();
+
   
   
   })();

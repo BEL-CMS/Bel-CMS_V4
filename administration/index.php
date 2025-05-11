@@ -41,21 +41,26 @@ final class Administration
     #########################################
     function __construct()
     {
-        $this->link = Dispatcher::link();
-        $this->page = Dispatcher::page();
-        $this->view = Dispatcher::view();
+        if ($_SESSION['USER']->user->admin == 1) {
 
-        self::getLangs();
+            $this->link = Dispatcher::link();
+            $this->page = Dispatcher::page();
+            $this->view = Dispatcher::view();
 
-        if (isset($_SESSION['USER']->user->hash_key) && strlen($_SESSION['USER']->user->hash_key) == 32) {
-            if (isset($_SESSION['LOGIN_MANAGEMENT']) and $_SESSION['LOGIN_MANAGEMENT'] === true) {
-                require_once ROOT . DS . 'administration' . DS . 'intern' . DS . 'adminpages.php';
-                self::base();
+            self::getLangs();
+
+            if (isset($_SESSION['USER']->user->hash_key) && strlen($_SESSION['USER']->user->hash_key) == 32) {
+                if (isset($_SESSION['LOGIN_MANAGEMENT']) and $_SESSION['LOGIN_MANAGEMENT'] === true) {
+                    require_once ROOT . DS . 'administration' . DS . 'intern' . DS . 'adminpages.php';
+                    self::base();
+                } else {
+                    self::login();
+                }
             } else {
-                self::login();
+                Common::Redirect('User/Login');
             }
         } else {
-            Common::Redirect('User/Login');
+            Notification::error('L\'accès à l\'administration vous est interdit.');
         }
     }
     #########################################

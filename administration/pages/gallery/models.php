@@ -190,4 +190,20 @@ final class ModelsGallery
         }
         return $return;
     }
+
+    public function read ($hash)
+    {
+        $upd['status'] = 1;
+        $sql = new BDD;
+        $sql->table('TABLE_GALLERY');
+        $sql->where(array('name' => 'hash', 'value' => $hash));
+        $sql->update($upd);
+        $return = $sql->rowCount;
+        if ($return == 1) {
+            $return = true;
+        } else {
+            $return = false;
+        }
+        return $return;
+    }
 }

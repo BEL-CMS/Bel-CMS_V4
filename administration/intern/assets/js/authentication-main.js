@@ -1,15 +1,17 @@
 (function () {
     'use strict';
-    if (localStorage.getItem("scifidarktheme")) {
+    if (localStorage.getItem("Hogodarktheme")) {
         document.querySelector("html").setAttribute("data-theme-mode", "dark")
+        document.querySelector("html").setAttribute("data-menu-styles", "dark")
+        document.querySelector("html").setAttribute("data-header-styles", "dark")
     }
-    if (localStorage.scifirtl) {
+    if (localStorage.Hogortl) {
         let html = document.querySelector('html');
         html.setAttribute("dir", "rtl");
         document.querySelector("#style")?.setAttribute("href", "../assets/libs/bootstrap/css/bootstrap.rtl.min.css");
             // rtlFn();
     }
-    if (localStorage.getItem("scifilayout") == "horizontal") {
+    if (localStorage.getItem("Hogolayout") == "horizontal") {
         document.querySelector("html").setAttribute("data-nav-layout", "horizontal") 
     }
     function localStorageBackup() {
@@ -22,32 +24,33 @@
             }
             document.querySelector('html').style.setProperty('--primary-rgb', localStorage.primaryRGB);
         }
-        if (localStorage.scifidarktheme) {
+        if (localStorage.bodyBgRGB && localStorage.bodylightRGB) {
+            if (document.querySelector('.theme-container-background')) {
+                document.querySelector('.theme-container-background').value = localStorage.bodyBgRGB;
+            }
+            document.querySelector('html').style.setProperty('--body-bg-rgb', localStorage.bodyBgRGB);
+            document.querySelector('html').style.setProperty('--body-bg-rgb2', localStorage.bodylightRGB);
+            document.querySelector('html').style.setProperty('--light-rgb', localStorage.bodylightRGB);
+            // document.querySelector('html').style.setProperty('--form-control-bg', `rgb(${localStorage.bodylightRGB})`);
+            document.querySelector('html').style.setProperty('--input-border', "rgba(255,255,255,0.1)");
+            let html = document.querySelector('html');
+            html.setAttribute('data-theme-mode', 'dark');
+            html.setAttribute('data-menu-styles', 'dark');
+            html.setAttribute('data-header-styles', 'dark');
+
+
+        }
+        if (localStorage.Hogodarktheme) {
             let html = document.querySelector('html');
             html.setAttribute('data-theme-mode', 'dark');
         }
-        if (localStorage.scifirtl) {
+        if (localStorage.Hogortl) {
             let html = document.querySelector('html');
             html.setAttribute('dir', 'rtl');
             document.querySelector("#style")?.setAttribute("href", "../assets/libs/bootstrap/css/bootstrap.rtl.min.css");
             setTimeout(() => {
                 rtlFn();
             }, 10);
-        }
-        if (localStorage.bgpattern) {
-          let html = document.querySelector("html");
-          let patternvalue = localStorage.getItem("bgpattern");
-          html.setAttribute("data-pattern-img", patternvalue);
-        }
-        if (localStorage.cardStyle) {
-          let html = document.querySelector("html");
-          let cardstylevalue = localStorage.getItem("cardStyle");
-          html.setAttribute("data-card-style", cardstylevalue);
-        }
-        if (localStorage.cardBackground) {
-          let html = document.querySelector("html");
-          let cardbgvalue = localStorage.getItem("cardBackground");
-          html.setAttribute("data-card-background", cardbgvalue);
         }
     }
     localStorageBackup()

@@ -66,4 +66,32 @@ final class UsersModels
         $insertProfils->where(array('name' => 'hash_key', 'value' => $id));
         $insertProfils->update($a);
     }
+
+    public function adminOn ($hash_key)
+    {
+        $a['admin'] = 1;
+        $sql = new BDD;
+        $sql->table('TABLE_USERS');
+        $sql->where(array('name' => 'hash_key', 'value' => $hash_key));
+        $sql->update($a);
+        if ($sql->rowCount == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function adminOff($hash_key)
+    {
+        $a['admin'] = 0;
+        $sql = new BDD;
+        $sql->table('TABLE_USERS');
+        $sql->where(array('name' => 'hash_key', 'value' => $hash_key));
+        $sql->update($a);
+        if ($sql->rowCount == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

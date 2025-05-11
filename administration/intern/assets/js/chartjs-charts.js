@@ -15,8 +15,8 @@
         labels: labels,
         datasets: [{
             label: 'My First dataset',
-            backgroundColor: 'rgb(0, 255, 190)',
-            borderColor: 'rgb(0, 255, 190)',
+            backgroundColor: 'rgb(98, 89, 202)',
+            borderColor: 'rgb(98, 89, 202)',
             data: [0, 10, 5, 2, 20, 30, 45],
         }]
     };
@@ -46,22 +46,22 @@
             label: 'My First Dataset',
             data: [65, 59, 80, 81, 56, 55, 40],
             backgroundColor: [
-                'rgba(0, 255, 190, 0.2)',
-                'rgba(69, 214, 91, 0.2)',
-                'rgba(243, 156, 18, 0.2)',
-                'rgba(52, 152, 219, 0.2)',
-                'rgba(231, 76, 60, 0.2)',
-                'rgba(46, 204, 113, 0.2)',
-                'rgba(44, 62, 80, 0.2)'
+                'rgba(98, 89, 202, 0.2)',
+                'rgba(35, 183, 229, 0.2)',
+                'rgba(245, 184, 73, 0.2)',
+                'rgba(73, 182, 245, 0.2)',
+                'rgba(230, 83, 60, 0.2)',
+                'rgba(38, 191, 148, 0.2)',
+                'rgba(35, 35, 35, 0.2)'
             ],
-            borderColor: [ 
-                'rgb(0, 255, 190)',
-                'rgb(69, 214, 91)',
-                'rgb(243, 156, 18)',
-                'rgb(52, 152, 219)',
-                'rgb(231, 76, 60)',
-                'rgb(46, 204, 113)',
-                'rgb(44, 62, 80)'
+            borderColor: [
+                'rgb(98, 89, 202)',
+                'rgb(35, 183, 229)',
+                'rgb(245, 184, 73)',
+                'rgb(73, 182, 245)',
+                'rgb(230, 83, 60)',
+                'rgb(38, 191, 148)',
+                'rgb(35, 35, 35)'
             ],
             borderWidth: 1
         }]
@@ -93,9 +93,9 @@
             label: 'My First Dataset',
             data: [300, 50, 100],
             backgroundColor: [
-                'rgb(0, 255, 190)',
-                'rgb(69, 214, 91)',
-                'rgb(243, 156, 18)'
+                'rgb(98, 89, 202)',
+                'rgb(35, 183, 229)',
+                'rgb(245, 184, 73)'
             ],
             hoverOffset: 4
         }]
@@ -120,9 +120,9 @@
             label: 'My First Dataset',
             data: [300, 50, 100],
             backgroundColor: [
-                'rgb(0, 255, 190)',
-                'rgb(69, 214, 91)',
-                'rgb(243, 156, 18)'
+                'rgb(98, 89, 202)',
+                'rgb(35, 183, 229)',
+                'rgb(245, 184, 73)'
             ],
             hoverOffset: 4
         }]
@@ -148,14 +148,14 @@
             type: 'bar',
             label: 'Bar Dataset',
             data: [10, 20, 30, 40],
-            borderColor: 'rgb(0, 255, 190)',
-            backgroundColor: 'rgba(0, 255, 190, 0.2)'
+            borderColor: 'rgb(98, 89, 202)',
+            backgroundColor: 'rgba(98, 89, 202, 0.2)'
         }, {
             type: 'line',
             label: 'Line Dataset',
             data: [50, 50, 50, 50],
             fill: false,
-            borderColor: 'rgb(69, 214, 91)'
+            borderColor: 'rgb(35, 183, 229)'
         }]
     };
     const config5 = {
@@ -187,11 +187,11 @@
             label: 'My First Dataset',
             data: [11, 16, 7, 3, 14],
             backgroundColor: [
-                'rgb(0, 255, 190)',
+                'rgb(98, 89, 202)',
                 'rgb(75, 192, 192)',
-                'rgb(243, 156, 18)',
+                'rgb(245, 184, 73)',
                 'rgb(201, 203, 207)',
-                'rgb(69, 214, 91)'
+                'rgb(35, 183, 229)'
             ]
         }]
     };
@@ -220,22 +220,22 @@
             label: 'My First Dataset',
             data: [65, 59, 90, 81, 56, 55, 40],
             fill: true,
-            backgroundColor: 'rgba(0, 255, 190, 0.2)',
-            borderColor: 'rgb(0, 255, 190)',
-            pointBackgroundColor: 'rgb(0, 255, 190)',
+            backgroundColor: 'rgba(98, 89, 202, 0.2)',
+            borderColor: 'rgb(98, 89, 202)',
+            pointBackgroundColor: 'rgb(98, 89, 202)',
             pointBorderColor: '#fff',
             pointHoverBackgroundColor: '#fff',
-            pointHoverBorderColor: 'rgb(0, 255, 190)'
+            pointHoverBorderColor: 'rgb(98, 89, 202)'
         }, {
             label: 'My Second Dataset',
             data: [28, 48, 40, 19, 96, 27, 100],
             fill: true,
-            backgroundColor: 'rgba(69, 214, 91, 0.2)',
-            borderColor: 'rgb(69, 214, 91)',
-            pointBackgroundColor: 'rgb(69, 214, 91)',
+            backgroundColor: 'rgba(35, 183, 229, 0.2)',
+            borderColor: 'rgb(35, 183, 229)',
+            pointBackgroundColor: 'rgb(35, 183, 229)',
             pointBorderColor: '#fff',
             pointHoverBackgroundColor: '#fff',
-            pointHoverBorderColor: 'rgb(69, 214, 91)'
+            pointHoverBorderColor: 'rgb(35, 183, 229)'
         }]
     };
     const config7 = {
@@ -271,7 +271,7 @@
                 x: 0.5,
                 y: 5.5
             }],
-            backgroundColor: 'rgb(0, 255, 190)'
+            backgroundColor: 'rgb(98, 89, 202)'
         }],
     };
     const config8 = {
@@ -304,7 +304,7 @@
                 y: 10,
                 r: 10
             }],
-            backgroundColor: 'rgb(0, 255, 190)'
+            backgroundColor: 'rgb(98, 89, 202)'
         }]
     };
     const config9 = {

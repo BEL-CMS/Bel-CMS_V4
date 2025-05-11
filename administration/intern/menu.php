@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Bel-CMS [Content management system]
  * @version 4.0.0 [PHP8.4]
@@ -7,7 +8,7 @@
  * @license MIT License
  * @copyright 2015-2025 Bel-CMS
  * @author as Stive - stive@determe.be
-*/
+ */
 
 if (!defined('CHECK_INDEX')):
     header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
@@ -16,36 +17,35 @@ endif;
 
 final class Menu
 {
-
-    private function getLayout ($array)
+    private function getLayout($array)
     {
-    ?>
-        <ul aria-expanded="false" class="mm-collapse left">
+?>
             <?php
             foreach ($array as $key => $value):
             ?>
-            <li class="slide"><a href="<?=$value;?>" class="side-menu__item"><?=$key;?></a></li>
+                <li class="slide">
+                    <a href="<?= $value; ?>" class="side-menu__item"><?= $key; ?></a>
+                </li>
             <?php
             endforeach;
             ?>
-        </ul>
-    <?php
+<?php
     }
 
-    public function settings ()
+    public function settings()
     {
         $array = array(
-            'Préférences Générales' => 'prefgen?admin&option=parameter',
-            'Contact'               => 'contact?admin&option=parameter',
-            'e-mail'                => 'mail?admin&option=parameter',
-            'Maintenance'           => 'unavailable?admin&option=parameter',
+            'Préférences Générales'   => 'prefgen?admin&option=parameter',
+            'Contact'                 => 'contact?admin&option=parameter',
+            'e-mail'                  => 'mail?admin&option=parameter',
+            'Maintenance'             => 'unavailable?admin&option=parameter',
             'Configuration des pages' => 'config?admin&option=parameter'
         );
         ksort($array);
         self::getLayout($array);
     }
 
-    public function template ()
+    public function template()
     {
         $array = array(
             'Styles'              => 'styles?admin&option=templates',
@@ -55,7 +55,7 @@ final class Menu
         self::getLayout($array);
     }
 
-    public function user ()
+    public function user()
     {
         $array = array(
             'Bannissement'   => 'banishment?admin&option=users',
@@ -66,7 +66,7 @@ final class Menu
         self::getLayout($array);
     }
 
-    public function pages ()
+    public function pages()
     {
         $array = array(
             'Articles'            => 'articles?admin&amp;option=pages',
@@ -90,7 +90,7 @@ final class Menu
         self::getLayout($array);
     }
 
-    public function  Widgets ()
+    public function  Widgets()
     {
         $array = array(
             'Newsletter'     => 'newsletter?management&option=widgets',
@@ -102,7 +102,7 @@ final class Menu
         self::getLayout($array);
     }
 
-    private function divers ()
+    private function divers()
     {
         $array = array(
             'Upload Fichier'   => 'files?management&option=extras',
@@ -113,7 +113,7 @@ final class Menu
         self::getLayout($array);
     }
 
-    public function fast ()
+    public function fast()
     {
         $array = array(
             'Créer une actualité' => 'news/add?Admin&option=pages',

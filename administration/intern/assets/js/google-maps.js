@@ -90,20 +90,20 @@
   ];
   var polygon = map4.drawPolygon({
     paths: path,
-    strokeColor: '#e74c3c',
+    strokeColor: '#e6533c',
     strokeOpacity: 1,
     strokeWeight: 3,
-    fillColor: '#e74c3c',
+    fillColor: '#e6533c',
     fillOpacity: 0.5
   });/*  */
   var circle = map4.drawCircle({
     lat: -12.040504866577001,
     lng: -77.02024422636042,
     radius: 350,
-    strokeColor: 'rgba(var(--warning-rgb))',
+    strokeColor: '#f5b849',
     strokeOpacity: 1,
     strokeWeight: 3,
-    fillColor: 'rgba(var(--warning-rgb))',
+    fillColor: '#f5b849',
     fillOpacity: 0.5
   });
 

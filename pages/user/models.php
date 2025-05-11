@@ -59,7 +59,7 @@ final class ModelsUser
     {
         if ($data) {
             $hash_key = md5(uniqid(rand(), true));
-            $passwordCrypt =  new encrypt($data['password'], constant('CMS_API_CLEF'));
+            $passwordCrypt =  new encrypt($data['password'], $_SESSION['CONFIG']['CMS_KEY_ADMIN']);
             $password = $passwordCrypt->encrypt();
             $pass_key = Common::randomString(32);
 
@@ -71,7 +71,11 @@ final class ModelsUser
                 'mail'              => $data['mail'],
                 'ip'                => Common::getIp(),
                 'expire'            => (int) 0,
-                'token'             => ''
+                'token'             => '',
+                'number_valid'      => '',
+                '2FA'               => 0,
+                'admin'             => 0,
+                'root'              => 0
             );
 
             if (constant('CMS_VALIDATION') == 'mail') {
@@ -95,14 +99,14 @@ final class ModelsUser
                     'id'                => null,
                     'hash_key'          => $hash_key,
                     'user_group'        => 1,
-                    'user_groups'       => 1
+                    'user_groups'       => 1,
                 );
             } else {
                 $insertGroups = array(
                     'id'                => null,
                     'hash_key'          => $hash_key,
                     'user_group'        => 2,
-                    'user_groups'       => 2
+                    'user_groups'       => 2,
                 );
             }
 
@@ -134,6 +138,11 @@ final class ModelsUser
             $hardware = New BDD();
             $hardware->table('TABLE_USERS_HARDWARE');
             $hardware->insert(array('hash_key'=> $hash_key));
+
+
+            $stats = new BDD();
+            $stats->table('TABLE_USERS_PAGE');
+            $stats->insert(array('hash_key' => $hash_key));
 
             if (constant('CMS_VALIDATION') == 'mail') {
                 require ROOT.DS.'core'.DS.'class.mail.php';

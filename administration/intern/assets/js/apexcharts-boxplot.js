@@ -57,8 +57,8 @@
         plotOptions: {
             boxPlot: {
                 colors: {
-                    upper: '#00ffbe',
-                    lower: '#45d65b'
+                    upper: '#6259ca',
+                    lower: '#fb6b25'
                 }
             }
         },
@@ -152,7 +152,7 @@
             type: 'boxPlot',
             height: 320
         },
-        colors: ['#00ffbe', '#45d65b'],
+        colors: ['#6259ca', '#fb6b25'],
         grid: {
             borderColor: '#f2f5f7',
         },
@@ -168,8 +168,8 @@
         plotOptions: {
             boxPlot: {
                 colors: {
-                    upper: '#00ffbe',
-                    lower: '#45d65b'
+                    upper: '#6259ca',
+                    lower: '#fb6b25'
                 }
             }
         },

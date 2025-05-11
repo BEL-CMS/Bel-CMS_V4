@@ -89,7 +89,7 @@
         dataLabels: {
             enabled: false
         },
-        colors: ["#00ffbe"],
+        colors: ["#6259ca"],
         grid: {
             borderColor: '#f2f5f7',
         },
@@ -252,7 +252,7 @@
         }
     ]
     data.reverse()
-    var colors = ["#00ffbe", "#F27036", "#663F59", "#6A6E94", "#4E88B4", "#00A7C6", "#18D8D8", '#A9D794', '#46AF78', '#A93F55', '#8C5E58', '#2176FF', '#33A1FD', '#7A918D', '#BAFF29']
+    var colors = ["#6259ca", "#F27036", "#663F59", "#6A6E94", "#4E88B4", "#00A7C6", "#18D8D8", '#A9D794', '#46AF78', '#A93F55', '#8C5E58', '#2176FF', '#33A1FD', '#7A918D', '#BAFF29']
     colors.reverse()
     var options = {
         series: data,
@@ -404,25 +404,25 @@
                         from: -30,
                         to: 5,
                         name: 'low',
-                        color: '#00ffbe'
+                        color: '#6259ca'
                     },
                     {
                         from: 6,
                         to: 20,
                         name: 'medium',
-                        color: '#45d65b'
+                        color: '#fb6b25'
                     },
                     {
                         from: 21,
                         to: 45,
                         name: 'high',
-                        color: '#f39c12'
+                        color: '#f5b849'
                     },
                     {
                         from: 46,
                         to: 55,
                         name: 'extreme',
-                        color: '#3498db'
+                        color: '#49b6f5'
                     }
                     ]
                 }
@@ -553,12 +553,12 @@
                     ranges: [{
                         from: 0,
                         to: 50,
-                        color: '#00ffbe'
+                        color: '#6259ca'
                     },
                     {
                         from: 51,
                         to: 100,
-                        color: '#45d65b'
+                        color: '#fb6b25'
                     },
                     ],
                 },

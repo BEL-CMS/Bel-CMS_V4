@@ -22,10 +22,6 @@ endif;
     <div class="row">
         <div class="col-xl-12">
             <div class="card custom-card">
-                <div class="top-left"></div>
-                <div class="top-right"></div>
-                <div class="bottom-left"></div>
-                <div class="bottom-right"></div>
                 <div class="card-header">
                     <div class="card-title">
                         Liste des membres
@@ -63,6 +59,9 @@ endif;
                                     <td style="text-align:center !important;"><?=Common::TransformDate($value->profils->profils->date_registration, 'FULL', 'MEDIUM');?></td>
                                     <td style="text-align:center !important;"><?=Common::TransformDate($value->profils->page->last_visit, 'FULL', 'MEDIUM');?></td>
                                     <td style="text-align:center !important;"><?=$nameGroup;?></td>
+                                    <?php
+                                    if ($value->root == 0):
+                                    ?>
                                     <td>
                                         <button class="btn btn-info label-btn rounded-pill" onclick="location.href='registration/edit/<?=$value->hash_key;?>?admin&option=users'">
                                             <i class="ri-settings-4-line label-btn-icon me-2"></i>Edition
@@ -70,6 +69,13 @@ endif;
                                         <button class="btn btn-danger label-btn label-end rounded-pill" onclick="location.href='registration/del/<?=$value->hash_key;?>?admin&option=users'">Supprimer
                                             <i class="ri-close-line label-btn-icon ms-2 rounded-pill"></i>
                                     </td>
+                                    <?php
+                                    else:
+                                    ?>
+                                    <td></td>
+                                    <?php
+                                    endif;
+                                    ?>
                                 </tr>
                             <?php
                             endforeach;

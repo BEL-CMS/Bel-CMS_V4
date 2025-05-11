@@ -120,4 +120,41 @@ class Registration extends AdminPages
             $this->redirect('registration?admin&option=users', 2);
         }
     }
+
+    public function admin ()
+    {
+        $root = ($_SESSION['USER']->user->root == '1') ? true : false;
+        $id = Common::hash_key($this->id) ? true : false;
+        if ($id === true and $root === true) {
+            if ($_REQUEST['admin'] == 'on') {
+                $return = $this->models->adminOn($this->id);
+            } else {
+                $return = $this->models->adminOff($this->id);
+            }
+            if ($return == true) {
+                $array = array(
+                    'type' => 'success',
+                    'text' => constant('EDIT_PARAM_SUCCESS')
+                );
+            } else {
+                $array = array(
+                    'type' => 'error',
+                    'text' => constant('EDIT_ERROR')
+                );
+            }
+            $this->error('Utilisateur', $array['text'], $array['type']);
+            $this->redirect('registration?admin&option=users', 2);
+        } else {
+            Notification::error('Un administrateur a reçu des informations sur une situation alarmante relative à l\'ID.', get_class($this));
+            #######################################################
+            $interaction = new Interaction();
+            $interaction->status('red');
+            $interaction->message(constant('ID_ERROR_MSG'));
+            $interaction->title('ID invalide ou interdiction ROOT');
+            $interaction->author($_SESSION['USER']->user->hash_key);
+            $interaction->setAdmin();
+            #######################################################
+            $this->redirect('registration?admin&option=users', 2);
+        }
+    }
 }

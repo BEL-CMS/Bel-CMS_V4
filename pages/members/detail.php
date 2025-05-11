@@ -37,7 +37,13 @@ endif;
                     </tr>
                     <tr>
                         <td>La derniere visite sur le site</td>
-                        <td><?= Common::TransformDate($user->page->last_visit, 'FULL', 'MEDIUM'); ?></td>
+                        <?php if (isset($user->page->last_visit)) {
+                            $date = Common::TransformDate($user->page->last_visit, 'FULL', 'MEDIUM');
+                        } else {
+                            $date = '';
+                        }
+                        ?>
+                        <td><?= $date ?></td>
                     </tr>
                     <tr>
                         <td>La date à laquelle vous êtes né</td>

@@ -16,8 +16,8 @@
     }).addTo(shapesmap);
     var marker = L.marker([51.5, -0.09]).addTo(shapesmap);
     var circle = L.circle([51.508, -0.11], {
-        color: '#45d65b',
-        fillColor: '#45d65b',
+        color: '#fb6b25',
+        fillColor: '#fb6b25',
         fillOpacity: 0.5,
         radius: 500
     }).addTo(shapesmap);
@@ -26,8 +26,8 @@
         [51.503, -0.06],
         [51.51, -0.047]
     ], {
-        color: "#e74c3c",
-        fillColor: "#e74c3c"
+        color: "#e6533c",
+        fillColor: "#e6533c"
     }).addTo(shapesmap);
 
     /* maps with popup */
@@ -48,8 +48,8 @@
         [51.503, -0.06],
         [51.51, -0.047]
     ], {
-        color: "#8f00ff",
-        fillColor: "#8f00ff"
+        color: "#5b67c7",
+        fillColor: "#5b67c7"
     }).addTo(popupmap);
     marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
     circle.bindPopup("I am a circle.");

@@ -6,25 +6,25 @@
         resizable: true,
         columns: [{
             name: "Date",
-            // width: "150px",
+            width: "150px",
         }, {
             name: "Name",
-            // width: "150px",
+            width: "150px",
         }, {
             name: "Email",
-            // width: "200px",
+            width: "200px",
         }, {
             name: "ID",
-            // width: "150px",
+            width: "150px",
         }, {
             name: "Price",
-            // width: "100px",
+            width: "100px",
         }, {
             name: "Quantity",
-            // width: "100px",
+            width: "100px",
         }, {
             name: "Total",
-            // width: "100px",
+            width: "100px",
         }],
         data: [
             ["24-10-2022 12:47", "john", "john123@gmail.com", "#12012", "$1799", "1", "$1799"],
