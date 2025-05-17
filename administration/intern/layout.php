@@ -41,7 +41,7 @@ $menu = new Menu();
 
 <body>
     <div id="loader">
-        <img src="administration/intern/assets/images/media/loader.svg" alt="">
+        <img src="assets/img/infinite-spinner.svg" alt="loader">
     </div>
     <div class="page">
         <header class="app-header">
@@ -79,9 +79,7 @@ $menu = new Menu();
                 <a href="/?admin" class="header-logo">
                     <img src="administration/intern/assets/images/brand-logos/desktop-logo.png" alt="logo" class="desktop-logo">
                     <img src="administration/intern/assets/images/brand-logos/toggle-logo.png" alt="logo" class="toggle-logo">
-                    <img src="administration/intern/assets/images/brand-logos/desktop-white.png" alt="logo" class="desktop-dark">
                     <img src="administration/intern/assets/images/brand-logos/toggle-dark.png" alt="logo" class="toggle-dark">
-                    <img src="administration/intern/assets/images/brand-logos/desktop-white.png" alt="logo" class="desktop-white">
                     <img src="administration/intern/assets/images/brand-logos/toggle-white.png" alt="logo" class="toggle-white">
                 </a>
             </div>
@@ -171,8 +169,6 @@ $menu = new Menu();
                 </span>
             </div>
         </footer>
-    </div>
-
     <div class="scrollToTop" id="back-to-top">
         <i class="ri-arrow-up-s-fill fs-20"></i>
     </div>

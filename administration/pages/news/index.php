@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Bel-CMS [Content management system]
  * @version 4.0.0 [PHP8.4]
@@ -35,6 +36,7 @@ endif;
                         <table class="table table-bordered text-nowrap w-100 DataTableBelCMS">
                             <thead>
                                 <tr>
+                                    <th>#ID</th>
                                     <th>Nom</th>
                                     <th>Date de création</th>
                                     <th>Auteur</th>
@@ -48,6 +50,7 @@ endif;
                                 foreach ($data as $value):
                                 ?>
                                     <tr>
+                                        <td><?=$value->id;?></td>
                                         <td><?= $value->name; ?></td>
                                         <td><?= Common::TransformDate($value->date_create, 'MEDIUM', 'MEDIUM'); ?></td>
                                         <td>

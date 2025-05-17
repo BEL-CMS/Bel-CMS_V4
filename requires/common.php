@@ -784,7 +784,7 @@ final class Common
         }
         return $r;
     }
-    public static function size($size, array $options=null) {
+    public static function size($size, $options=null) {
 
         $o = [
             'binary' => false,

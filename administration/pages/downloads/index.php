@@ -20,10 +20,6 @@ endif;
     <div class="row">
         <div class="col-xl-12">
             <div class="card custom-card">
-                <div class="top-left"></div>
-                <div class="top-right"></div>
-                <div class="bottom-left"></div>
-                <div class="bottom-right"></div>
                 <div class="card-header">
                     <div class="card-title">
                         Liste des téléchargements

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Bel-CMS [Content management system]
  * @version 4.0.0 [PHP8.4]
@@ -9,35 +10,50 @@
  * @author as Stive - stive@determe.be
  */
 
-namespace Belcms\Pages\Models;
+namespace BelCMS\Core;
+
 use BelCMS\PDO\BDD;
+use BelCMS\Requires\Common;
 
 if (!defined('CHECK_INDEX')):
     header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
     exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
 endif;
-
-############################################
-#  GUESTBOOK                               #
-############################################
-final class Guestbook
+#####################################
+# Infos tables
+#####################################
+# TABLE_FORBIDEN_WORD
+#####################################
+final class forbidden
 {
-    public function getGuest ()
+    public function getforbidden ()
     {
         $sql = new BDD;
-        $sql->table('TABLE_GUESTBOOK');
+        $sql->table('TABLE_FORBIDEN_WORD');
         $sql->queryAll();
         $return = $sql->data;
         return $return;
     }
-
-    public function addnew ($data)
+    public static function replaceWordForbiden ($word)
     {
+        $word = Common::RemoveAccents($word);
+        $word = strtolower($word);
+        $forbidden = self::getforbidden();
+        foreach ($forbidden as $key => $value) {
+            $word = str_replace($word, $value->word, $value->wordgood);
+        }
+        return $word;
+    }
+
+    public static function addWordReplace ($word, $replace)
+    {
+        $data['word']     = Common::VarSecure($word);
+        $data['wordgood'] = Common::VarSecure($replace);
         $sql = new BDD;
-        $sql->table('TABLE_GUESTBOOK');
+        $sql->table('TABLE_FORBIDEN_WORD');
         $sql->insert($data);
         if ($sql->rowCount == 1) {
-            return array('type'=> 'success', 'msg' => 'Le message a été ajouté avec succès à la base de données.');
+            return true;
         } else {
             return false;
         }
