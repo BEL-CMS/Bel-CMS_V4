@@ -1,5 +1,4 @@
 <?php
-##RRPPHHMM86SSFF*
 /**
  * Bel-CMS [Content management system]
  * @version 4.0.0 [PHP8.4]
