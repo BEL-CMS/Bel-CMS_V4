@@ -146,6 +146,20 @@ $menu = new Menu();
                                 <?php echo $menu->user(); ?>
                             </ul>
                         </li>
+                        <li class="slide has-sub">
+                            <a href="javascript:void(0);" class="side-menu__item">
+                                <i class="fa-regular fa-font-awesome side-menu__icon"></i>
+                                <span class="side-menu__label">Extras</span>
+                                <i class="fe fe-chevron-down side-menu__angle"></i>
+                            </a>
+                            <ul class="slide-menu child1">
+                                <li class="slide side-menu__label1">
+                                    <a href="javascript:void(0)">Extras</a>
+                                </li>
+                                <?php echo $menu->extras(); ?>
+                            </ul>
+                        </li>
+
                     </ul>
                 </nav>
             </div>
@@ -169,38 +183,38 @@ $menu = new Menu();
                 </span>
             </div>
         </footer>
-    <div class="scrollToTop" id="back-to-top">
-        <i class="ri-arrow-up-s-fill fs-20"></i>
-    </div>
-    <div id="responsive-overlay"></div>
-    <script src="/assets/plugins/jQuery/jquery-3.7.1.min.js"></script>
-    <script src="/assets/plugins/DataTables-1.13.06/datatable.fr.js"></script>
-    <script src="/assets/plugins/DataTables-1.13.06/datatables.min.js"></script>
-    <script src="administration/intern/assets/libs/@popperjs/core/umd/popper.min.js"></script>
-    <script src="administration/intern/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="administration/intern/assets/js/defaultmenu.min.js"></script>
-    <script src="administration/intern/assets/libs/node-waves/waves.min.js"></script>
-    <script src="administration/intern/assets/js/sticky.js"></script>
-    <script src="administration/intern/assets/libs/simplebar/simplebar.min.js"></script>
-    <script src="administration/intern/assets/js/simplebar.js"></script>
-    <script src="administration/intern/assets/libs/@simonwep/pickr/pickr.es5.min.js"></script>
-    <script src="administration/intern/assets/libs/flatpickr/flatpickr.min.js"></script>
-    <script src="administration/intern/assets/js/date-range.js"></script>
-    <script src="administration/intern/assets/js/custom-switcher.min.js"></script>
-    <script src="/assets/plugins/tinymce/tinymce.min.js"></script>
-    <script src="/assets/plugins/lightbox/lightbox.js"></script>
-    <script src="/assets/belcms.core.js"></script>
-    <script src="administration/intern/assets/js/custom.js"></script>
-    <div id="endloading" style="display: none;">
-        <?php usleep(500000); /* 1/2s permet de ne pas surcharger le serveur et lui laissez le temps d'une demi seconde */
-        $time = (microtime(true) - $_SESSION['SESSION_START']);
-        echo round($time, 3); ?> secondes </div>
-    <script>
-        $(window).on('load', function() {
-            var endloading = $('#endloading').text();
-            $('#belcms_genered').append(endloading);
-        });
-    </script>
+        <div class="scrollToTop" id="back-to-top">
+            <i class="ri-arrow-up-s-fill fs-20"></i>
+        </div>
+        <div id="responsive-overlay"></div>
+        <script src="/assets/plugins/jQuery/jquery-3.7.1.min.js"></script>
+        <script src="/assets/plugins/DataTables-1.13.06/datatable.fr.js"></script>
+        <script src="/assets/plugins/DataTables-1.13.06/datatables.min.js"></script>
+        <script src="administration/intern/assets/libs/@popperjs/core/umd/popper.min.js"></script>
+        <script src="administration/intern/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="administration/intern/assets/js/defaultmenu.min.js"></script>
+        <script src="administration/intern/assets/libs/node-waves/waves.min.js"></script>
+        <script src="administration/intern/assets/js/sticky.js"></script>
+        <script src="administration/intern/assets/libs/simplebar/simplebar.min.js"></script>
+        <script src="administration/intern/assets/js/simplebar.js"></script>
+        <script src="administration/intern/assets/libs/@simonwep/pickr/pickr.es5.min.js"></script>
+        <script src="administration/intern/assets/libs/flatpickr/flatpickr.min.js"></script>
+        <script src="administration/intern/assets/js/date-range.js"></script>
+        <script src="administration/intern/assets/js/custom-switcher.min.js"></script>
+        <script src="/assets/plugins/tinymce/tinymce.min.js"></script>
+        <script src="/assets/plugins/lightbox/lightbox.js"></script>
+        <script src="/assets/belcms.core.js"></script>
+        <script src="administration/intern/assets/js/custom.js"></script>
+        <div id="endloading" style="display: none;">
+            <?php usleep(500000); /* 1/2s permet de ne pas surcharger le serveur et lui laissez le temps d'une demi seconde */
+            $time = (microtime(true) - $_SESSION['SESSION_START']);
+            echo round($time, 3); ?> secondes </div>
+        <script>
+            $(window).on(' load', function() {
+                var endloading = $('#endloading').text();
+                $('#belcms_genered').append(endloading);
+            });
+        </script>
 </body>
 
 </html>

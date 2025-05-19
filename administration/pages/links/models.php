@@ -24,5 +24,12 @@ use BelCMS\PDO\BDD;
 ############################################
 final class ModelsLinks 
 {
-
+    public function getLinks ()
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_LINKS');
+        $sql->queryAll();
+        $return = $sql->data;
+        return $return;
+    }
 }

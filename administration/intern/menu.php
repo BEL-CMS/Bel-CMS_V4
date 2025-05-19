@@ -1,4 +1,5 @@
 <?php
+##RRPPHHMM86SSFF*
 /**
  * Bel-CMS [Content management system]
  * @version 4.0.0 [PHP8.4]
@@ -18,17 +19,13 @@ final class Menu
 {
     private function getLayout($array)
     {
-?>
-            <?php
-            foreach ($array as $key => $value):
-            ?>
-                <li class="slide">
-                    <a href="<?= $value; ?>" class="side-menu__item"><?= $key; ?></a>
-                </li>
-            <?php
-            endforeach;
-            ?>
-<?php
+        foreach ($array as $key => $value):
+        ?>
+            <li class="slide">
+                <a href="<?= $value; ?>" class="side-menu__item"><?= $key; ?></a>
+            </li>
+        <?php
+        endforeach;
     }
 
     public function settings()
@@ -101,21 +98,13 @@ final class Menu
         self::getLayout($array);
     }
 
-    private function divers()
+    public function extras()
     {
         $array = array(
             'Upload Fichier'   => 'files?management&option=extras',
             'Backup'           => 'file_manager?management&option=extras',
-            'Serveur'          => 'server?management&option=extras'
-        );
-        ksort($array);
-        self::getLayout($array);
-    }
-
-    public function fast()
-    {
-        $array = array(
-            'Créer une actualité' => 'news/add?Admin&option=pages',
+            'Serveur'          => 'server?management&option=extras',
+            'Mot interdit'     => 'forbidden?management&option=extras'
         );
         ksort($array);
         self::getLayout($array);

@@ -24,6 +24,14 @@ class Links extends AdminPages
 
     public function index ()
     {
-        $this->render('index');
+        $menu[] = array('title' => 'Ajouté un lien', 'href' => 'links?Admin&option=pages', 'ico'  => 'fa-solid fa-plus');
+        $menu[] = array('title' => 'Liste de(s) catégorie(s)', 'href' => 'links/cat?Admin&option=pages', 'ico'  => 'fa-solid fa-table');
+        $menu[] = array('title' => 'Validation', 'href' => 'links/valid?Admin&option=pages', 'ico'  => 'fa-solid fa-pen-to-square');
+
+        $links = $this->models->getLinks ();
+        $d['links'] = $links;
+        $this->set($d);
+
+        $this->render('index', $menu);
     }
 }
