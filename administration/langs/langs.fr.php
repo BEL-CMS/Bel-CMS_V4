@@ -171,4 +171,5 @@ Common::constant(array(
 	'GROUP_NAME_RESERVED'                 => 'Le nom est réservé.',
 	'NO_ACCESS_GROUP_PAGE'                => 'Vous n\'avez pas les autorisations nécessaires pour consulter cette page .',
 	'ADD'                                 => 'Ajouter',
+	'VALID_SUCCESS'                       => 'Validation du lien effectué avec succès',
 ));

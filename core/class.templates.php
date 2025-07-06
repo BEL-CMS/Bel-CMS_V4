@@ -28,6 +28,7 @@ class Templates
             $widgets,
             $fullwide,
             $host,
+            $keywords,
             $description;
 
     public function __construct($var = null)
@@ -41,6 +42,7 @@ class Templates
         $this->host         = GetHost::getBaseUrl();
         $this->widgets      = $var->widgets;
         $this->description  = self::getDescription(Dispatcher::page());
+        $this->keywords     = self::keywords(Dispatcher::page());
         $fileLoadTpl        = constant('DIR_TPL').self::getNameTpl().DS.'template.php';
         $fileLoadTplDefault = ROOT.DS.'assets'.DS.'templates'.DS.'default'.DS.'template.php';
         if (is_file($fileLoadTpl) === true) {
@@ -185,5 +187,21 @@ class Templates
             $return .= '	<script type="text/javascript" src="'.$v.'"></script>'.PHP_EOL;
         }
         return $return;
+    }
+
+    protected function keywords ($page)
+    {
+        $page = Common::VarSecure($page, null);
+        if ($page != '') {
+            $sql = new BDD;
+            $sql->table('TABLE_CONFIG_PAGES');
+            $sql->where(array('name' => 'name', 'value' => $page));
+            $sql->queryOne();
+            $data = $sql->data;
+            $return = $data->keywords;
+            return $return;
+        } else {
+            return '';
+        }
     }
 }

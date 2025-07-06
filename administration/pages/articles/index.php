@@ -18,7 +18,7 @@ if (!defined('CHECK_INDEX')):
     exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
 endif;
 ?>
-<div class="SciFi-kanban-board">
+<div class="row">
     <?php
     foreach ($cat as $v):
         if (User::ifUserExist($v->author)) {
@@ -31,7 +31,7 @@ endif;
         }
         $description = empty($v->description) ? '<p></p>' : $v->description;
     ?>
-        <div class="kanban-tasks-type todo" style="max-width: 580px;">
+        <div class="col-12 col-sm-4 col-xl-4;">
             <div class="kanban-tasks" id="todo-tasks">
                 <div id="todo-tasks-draggable" data-view-btn="todo-tasks">
                     <div class="card custom-card" style="height: 195px;">

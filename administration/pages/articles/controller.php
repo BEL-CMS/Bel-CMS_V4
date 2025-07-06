@@ -204,4 +204,9 @@ class Articles extends AdminPages
             }
         }
     }
+
+    public function editdls ()
+    {
+        
+    }
 }

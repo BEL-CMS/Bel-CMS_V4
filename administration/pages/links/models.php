@@ -28,8 +28,159 @@ final class ModelsLinks
     {
         $sql = new BDD;
         $sql->table('TABLE_LINKS');
+        $sql->where(array('name' => 'valid', 'value' => 1));
         $sql->queryAll();
         $return = $sql->data;
         return $return;
+    }
+
+    public function getLink ($id)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_LINKS');
+        $sql->queryOne();
+        $return = $sql->data;
+        return $return;
+    }
+
+    public function sendEdit ($d, $id) : bool
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_LINKS');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->update($d);
+        if ($sql->rowCount == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function senddelete ($id) : bool
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_LINKS');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->delete();
+        if ($sql->rowCount == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getCat ()
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_LINKS_CAT');
+        $sql->queryAll();
+        $return = $sql->data;
+        return $return;
+    }
+
+    public function send ($data) : bool
+    {
+        $sql = new BDD;
+        $sql->table ('TABLE_LINKS');
+        $sql->insert($data);
+        if ($sql->rowCount == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getUrlValid ()
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_LINKS');
+        $sql->where(array('name' => 'valid', 'value' => 0));
+        $sql->queryAll();
+        $return = $sql->data;
+        return $return;
+    }
+
+    public function valide ($id) : bool
+    {
+        $upd['valid'] = 1;
+        $sql = new BDD;
+        $sql->table('TABLE_LINKS');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->update($upd);
+        $return = $sql->rowCount;
+        if ($return == 1) {
+            $return = true;
+        } else {
+            $return = false;
+        }
+        return $return;
+    }
+
+    public function senddeletecat ($id) : bool
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_LINKS_CAT');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->delete();
+        $return = $sql->rowCount;
+        if ($return == 1) {
+            $return = true;
+        } else {
+            $return = false;
+        }
+        return $return;
+    }
+
+    public function editcat ($id)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_LINKS_CAT');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->queryOne();
+        $return = $sql->data;
+        $return = $sql->rowCount;
+        if ($return == 1) {
+            $return = $sql->data;
+        } else {
+            $return = false;
+        }
+        return $return;
+    }
+
+    public function sendeditcat ($data, $id) : bool
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_LINKS_CAT');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->update($data);
+        $return = $sql->rowCount;
+        if ($return == 1) {
+            $return = $sql->data;
+        } else {
+            $return = false;
+        }
+        return $return;
+    }
+
+    public function addcat ()
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_LINKS_CAT');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->querAll();
+        $return = $sql->data;
+        return $return;
+    }
+
+    public function addNewCat($data)
+    {
+        $sql = new BDD;
+        $sql->table ('TABLE_LINKS_CAT');
+        $sql->insert($data);
+        if ($sql->rowCount == 1) {
+            return true;
+        } else {
+            return false;
+        } 
     }
 }

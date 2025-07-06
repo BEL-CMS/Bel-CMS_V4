@@ -86,6 +86,7 @@ class Links extends Pages
                 $post['name'] = Common::VarSecure($_POST['name']);
                 $post['link'] = Secure::isUrl($_POST['link']);
                 $post['description'] = Common::VarSecure($_POST['description'], 'html');
+                $post['description'] = $post['description'];
             }
             if (isset($_FILES['image'])) {
                 $image = Common::Upload('image', 'uploads/links/tmp/', array('.png', '.gif', '.jpg', '.jpeg', '.ico', '.tif', '.eps', '.svg', '.webp'), true);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Bel-CMS [Content management system]
  * @version 4.0.0 [PHP8.4]
@@ -9,7 +10,6 @@
  * @author as Stive - stive@determe.be
  */
 
-use BelCMS\Core\Groups;
 use BelCMS\Core\User;
 use BelCMS\Requires\Common;
 
@@ -24,7 +24,7 @@ endif;
             <div class="card custom-card">
                 <div class="card-header">
                     <div class="card-title">
-                        Liste des page(s) de l'article
+                        Liste de(s) lien(s) à validé
                     </div>
                 </div>
                 <div class="card-body">
@@ -32,44 +32,45 @@ endif;
                         <table class="table table-bordered text-nowrap w-100 DataTableBelCMS">
                             <thead>
                                 <tr>
-                                    <th style="text-align:center !important;">ID</th>
                                     <th>Nom</th>
-                                    <th>Date de publication</th>
-                                    <th style="text-align:center !important;">Vu</th>
+                                    <th>Lien</th>
                                     <th>Auteur</th>
+                                    <th>Date de l'ajout</th>
                                     <th>Options</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                foreach ($view as $v):
-                                    if (User::ifUserExist($v->author)):
-                                        $user = User::getInfosUserAll($v->author);
+                                foreach ($links as $key => $value):
+                                    if (User::ifUserExist($value->author)) {
+                                        $user = User::getInfosUserAll($value->author);
                                         $user = $user;
                                         $author = $user->user->username;
-                                        $color  = $user->user->color;
-                                    else:
+                                    } elseif (!empty($value->author)) {
+                                        $author = $value->author;
+                                    } else {
                                         $author = 'Utilisateur inconnu';
-                                        $color  = 'color-mix';
-                                    endif;
+                                    }
                                 ?>
                                     <tr>
-                                        <td><?= $v->id_articles; ?></td>
-                                        <td><?= $v->name; ?></td>
-                                        <td><?= Common::TransformDate($v->publish, 'FULL', 'MEDIUM'); ?></td>
-                                        <td style="text-align:center !important;"><?= $v->view; ?></td>
-                                        <td style="color: <?= $color; ?>;"><?= $author; ?></td>
+                                        <td><?= $value->name; ?></td>
+                                        <td><a target="_blank" href="<?= $value->link; ?>"><?= $value->link; ?></a></td>
+                                        <td><?= $author; ?></td>
+                                        <td><?= Common::TransformDate($value->date_insert, 'FULL', 'MEDIUM'); ?></td>
                                         <td align="center">
-                                            <a href="Articles/deletePage/<?= $v->id; ?>?admin&option=pages" class="btn btn-danger label-end rounded-pill">
+                                            <a href="links/delete/<?= $value->id; ?>?admin&option=pages" class="btn btn-danger label-end rounded-pill">
                                                 Supprimer
                                             </a>&emsp;
-                                            <a href="Articles/editdls/<?= $v->id; ?>?admin&option=pages" class="btn btn-warning rounded-pill">
+                                            <a href="links/editdls/<?= $value->id; ?>?admin&option=pages" class="btn btn-warning rounded-pill">
                                                 Editer
+                                            </a>&emsp;
+                                            <a href="links/valide/<?= $value->id; ?>?admin&option=pages" class="btn btn-success rounded-pill">
+                                                Valider
                                             </a>
                                         </td>
                                     </tr>
                                 <?php
-                                endforeach;
+                                endforeach
                                 ?>
                             </tbody>
                         </table>

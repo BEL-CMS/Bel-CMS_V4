@@ -3,19 +3,20 @@
     dir="ltr"
     data-pattern-img="bgpattern14"
     data-nav-layout="horizontal"
-    data-theme-mode="dark"
+    data-theme-mode="light"
     data-toggled="close"
     data-card-style="style15"
     data-card-background="background12"
     data-lt-installed="true">
+
 <head>
     <meta charset=" UTF-8">
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title><?=$_SESSION['CONFIG']['CMS_NAME'];?> - Administration Login</title>
+    <title><?= $_SESSION['CONFIG']['CMS_NAME']; ?> - Administration Login</title>
     <meta name="Author" content="https://bel-cms.dev">
     <link id="style" href="/administration/intern/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/administration/intern/assets/css/styles.css" rel="stylesheet">
+    <link href="/administration/intern/assets/css/styles.min.css" rel="stylesheet">
     <link href="/administration/intern/assets/css/icons.css" rel="stylesheet">
 </head>
 

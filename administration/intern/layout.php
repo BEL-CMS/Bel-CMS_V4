@@ -16,7 +16,7 @@ require 'administration/intern/menu.php';
 $menu = new Menu();
 ?>
 <!DOCTYPE html>
-<html lang="en" dir="ltr" data-nav-layout="horizontal" data-theme-mode="light" data-header-styles="color" data-menu-styles="gradient" loader="enable" data-nav-style="menu-hover" data-page-style="classic" data-width="fullwidth" data-menu-position="fixed" data-header-position="scrollable" style="--primary-rgb: 58, 88, 146;">
+<html lang="fr" dir="ltr" data-nav-layout="horizontal" data-theme-mode="light" data-header-styles="color" data-menu-styles="gradient" loader="enable" data-nav-style="menu-hover" data-page-style="classic" data-width="fullwidth" data-menu-position="fixed" data-header-position="scrollable" style="--primary-rgb: 58, 88, 146;">
 
 <head>
     <base href="<?= GetHost::getBaseUrl(); ?>">
@@ -66,7 +66,7 @@ $menu = new Menu();
                     </div>
                     <div class="header-element dropdown-element">
                         <div class="dropdown my-auto mx-2">
-                            <button class="btn btn-outline-light dropdown-toggle fs-14" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button OnClick="location.href='index.php'" class="btn btn-outline-light dropdown-toggle fs-14" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fe fe-grid me-2 align-middle"></i>Accueil<i class="ri-arrow-down-s-line  align-bottom"></i>
                             </button>
                         </div>
@@ -87,24 +87,25 @@ $menu = new Menu();
                 <nav class="main-menu-container nav nav-pills flex-column sub-open">
                     <ul class="main-menu">
                         <li class="slide__category"><span class="category-name">Menu</span></li>
+
                         <li class="slide has-sub">
                             <a href="javascript:void(0);" class="side-menu__item">
                                 <i class="bx bx-doughnut-chart side-menu__icon"></i>
                                 <span class="side-menu__label">Home</span>
                                 <i class="fe fe-chevron-down side-menu__angle"></i>
                             </a>
+                            
                             <ul class="slide-menu child1">
                                 <li class="slide side-menu__label1">
                                     <a href="javascript:void(0)">Home</a>
                                 </li>
+                                
                                 <li class="slide">
                                     <a href="/?admin" class="side-menu__item">Retour à l'accueil</a>
                                 </li>
-                                <li class="slide">
-                                    <a href="index.php" class="side-menu__item">Retour au site</a>
-                                </li>
                             </ul>
                         </li>
+                        
                         <li class="slide__category"><span class="category-name">Pages</span></li>
                         <li class="slide has-sub">
                             <a href="javascript:void(0);" class="side-menu__item">

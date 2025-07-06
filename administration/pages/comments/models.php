@@ -43,7 +43,7 @@ final class ModelsComments
         return $return;
     }
 
-    public function sendEdit ($comment, $id)
+    public function sendEdit ($comment, $id) : bool
     {
         $upd['comment'] = $comment;
         $sql = new BDD;
@@ -57,12 +57,16 @@ final class ModelsComments
         }
     }
 
-    public function forbidden ()
+    public function delete ($id) : bool
     {
         $sql = new BDD;
-        $sql->table('TABLE_FORBIDEN_WORD');
-        $sql->queryAll();
-        $return = $sql->data;
-        return $return;
+        $sql->table('TABLE_COMMENTS');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->delete();
+        if ($sql->rowCount == 1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

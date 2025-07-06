@@ -9570,7 +9570,7 @@ pre .tag {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 100vh;
+  min-height: 100%;
 }
 
 @media (min-width: 992px) {
@@ -22288,4 +22288,9 @@ a:hover {
 
 .fw-semibold {
   font-weight: 500 !important;
+}
+body,
+html {
+  margin: 0 !important;
+  padding: 0 !important;
 }

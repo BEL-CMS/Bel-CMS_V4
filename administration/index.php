@@ -41,26 +41,32 @@ final class Administration
     #########################################
     function __construct()
     {
-        if ($_SESSION['USER']->user->admin == 1) {
+        if (isset($_SESSION['USER'])) {
+            if ($_SESSION['USER']->user->admin == 1) {
 
-            $this->link = Dispatcher::link();
-            $this->page = Dispatcher::page();
-            $this->view = Dispatcher::view();
+                $this->link = Dispatcher::link();
+                $this->page = Dispatcher::page();
+                $this->view = Dispatcher::view();
 
-            self::getLangs();
+                self::getLangs();
 
-            if (isset($_SESSION['USER']->user->hash_key) && strlen($_SESSION['USER']->user->hash_key) == 32) {
-                if (isset($_SESSION['LOGIN_MANAGEMENT']) and $_SESSION['LOGIN_MANAGEMENT'] === true) {
-                    require_once ROOT . DS . 'administration' . DS . 'intern' . DS . 'adminpages.php';
-                    self::base();
+                if (isset($_SESSION['USER']->user->hash_key) && strlen($_SESSION['USER']->user->hash_key) == 32) {
+                    if (isset($_SESSION['LOGIN_MANAGEMENT']) and $_SESSION['LOGIN_MANAGEMENT'] === true) {
+                        require_once ROOT . DS . 'administration' . DS . 'intern' . DS . 'adminpages.php';
+                        self::base();
+                    } else {
+                        self::login();
+                    }
                 } else {
-                    self::login();
+                    Common::Redirect('User/Login&echo');
                 }
             } else {
-                Common::Redirect('User/Login');
+                Notification::error('L\'accès à l\'administration vous est interdit.');
+                Common::Redirect('User/Login&echo', 3);
             }
         } else {
-            Notification::error('L\'accès à l\'administration vous est interdit.');
+            Notification::error('Il est nécessaire d\'être connecté afin d\'accéder à l\'administration.');
+            Common::Redirect('User/Login&echo', 3);
         }
     }
     #########################################

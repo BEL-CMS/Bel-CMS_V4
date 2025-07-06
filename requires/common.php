@@ -533,6 +533,9 @@ final class Common
                     $return[$k] = trim($return[$k]);
                 }
             } else {
+                $return = $data;
+                $return = strip_tags($return);
+                $return = strip_tags($return, "<br/>");
                 $return = strip_tags($data, $authorised);
             }
         }

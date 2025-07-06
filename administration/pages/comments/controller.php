@@ -27,9 +27,7 @@ class Comments extends AdminPages
     {
         $d['comments'] = $this->models->getComments();
         $this->set($d);
-        $menu[] = array('title' => 'Accueil', 'href' => 'comments?admin&option=pages', 'ico'  => 'fa-solid fa-igloo');
-        $menu[] = array('title' => 'Mot interdit', 'href' => 'comments/forbidden?admin&option=pages', 'ico'  => 'fa-solid fa-layer-group');
-        $this->render('index', $menu);
+        $this->render('index');
     }
 
     public function editdls ()
@@ -48,7 +46,6 @@ class Comments extends AdminPages
             $this->error('Commentaire', $array['text'], $array['type']);
             $this->redirect('comments?admin&option=pages', 2);
         }
-
     }
 
     public function sendedit ()
@@ -82,13 +79,33 @@ class Comments extends AdminPages
         }
     }
 
-    public function forbidden ()
+    public function delete ()
     {
-        $menu[] = array('title' => 'Accueil', 'href' => 'comments?admin&option=pages', 'ico'  => 'fa-solid fa-igloo');
-        $menu[] = array('title' => 'Ajouter', 'href' => 'comments/forbiddenAdd?admin&option=pages', 'ico'  => 'fa-solid fa-layer-group');
-
-        $d['forbidden'] = $this->models->forbidden();
-        $this->set($d);
-        $this->render('forbidden', $menu);
+        $id = $this->data[2];
+        if (ctype_digit($id)) {
+            $return = $this->models->delete($id);
+            if ($return === true) {
+                $array = array(
+                    'type' => 'success',
+                    'text' => constant('DEL_SUCCESS')
+                );
+                $this->error('Commentaire', $array['text'], $array['type']);
+                $this->redirect('comments?admin&option=pages', 2);
+            } else {
+                $array = array(
+                    'type' => 'warning',
+                    'text' => constant('DEL_ERROR')
+                );
+                $this->error('Commentaire', $array['text'], $array['type']);
+                $this->redirect('comments?admin&option=pages', 2);
+            } 
+        } else {
+            $array = array(
+                'type' => 'error',
+                'text' => constant('ID_ERROR')
+            );
+            $this->error('Commentaire', $array['text'], $array['type']);
+            $this->redirect('comments?admin&option=pages', 2);
+        }
     }
 }
