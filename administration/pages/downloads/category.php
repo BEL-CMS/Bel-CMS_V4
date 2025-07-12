@@ -43,14 +43,13 @@ endif;
                             <tbody>
                                 <?php
                                 foreach ($data as $value):
-                                    if ($value->banniere == null) {
-                                        $file = '/assets/img/1.jpg';
+                                    if (empty($value->banniere)) {
+                                        $file = 'assets/img/no-image-png.png';
                                     } else {
-                                        if (file_exists($value->banniere) == false) {
-                                            $file = '/assets/img/1.jpg';
-                                        } else {
-                                            $file = $value->banniere;
-                                        }
+                                        $file = $value->banniere;
+                                    }
+                                    if ($value->banniere == '/uploads/downloads/cat/UPLOAD_NONE') {
+                                        $file = 'assets/img/error-file.png';
                                     }
                                 ?>
                                 <tr>

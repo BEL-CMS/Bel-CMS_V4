@@ -50,12 +50,91 @@ final class ModelsDls
         $sql->insert($data);
     }
 
-    public function getCat()
+        public function updateUpload ($data)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_DOWNLOADS');
+        $sql->update($data);
+    }
+
+    public function getCat ()
     {
         $sql = new BDD;
         $sql->table('TABLE_DOWNLOADS_CAT');
         $sql->queryAll();
         $return = $sql->data;
         return $return;
+    }
+
+    public function getCatById ($id)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_DOWNLOADS_CAT');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->queryOne();
+        $return = $sql->data;
+        return $return;
+    }
+
+    public function insertCat ($data)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_DOWNLOADS_CAT');
+        $sql->insert($data);
+
+        if ($sql->rowCount == 1) {
+            return true;
+        } else {
+            return false;
+        } 
+    }
+
+    public function sendeditcat($data, $id)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_DOWNLOADS_CAT');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->update($data);
+        if ($sql->rowCount == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function deletecat ($id)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_DOWNLOADS_CAT');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->delete();
+        if ($sql->rowCount == 1) {
+            return true;
+        } else {
+            return false;
+        }   
+    }
+
+    public function getCatOne ($id)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_DOWNLOADS_CAT');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->queryOne();
+        $return = $sql->data;
+        return $return;
+    }
+
+    public function senddelete ($id) : bool
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_DOWNLOADS');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->delete();
+        if ($sql->rowCount == 1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

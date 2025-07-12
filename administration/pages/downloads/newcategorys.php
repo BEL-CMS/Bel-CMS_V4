@@ -26,44 +26,33 @@ endif;
                 <div class="bottom-right"></div>
                 <div class="card-header">
                     <div class="card-title">
-                        Ajouter un téléchargement
+                        Ajouter une catégorie
                     </div>
                 </div>
-                <form action="Downloads/sendnew?management&option=pages" method="post" enctype="multipart/form-data">
+                <form action="Downloads/sendnewcat?management&option=pages" method="post" enctype="multipart/form-data">
                     <div class="card-body">
                         <div class="form-floating mb-3">
                             <input name="name" required="required" type="text" class="form-control" id="name" placeholder="Titre du téléchargement">
                             <label for="name">Nom</label>
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text">Fichier</span>
+                            <span class="input-group-text">Affiche</span>
                             <span class="input-group-text"><?=ini_get(option: 'upload_max_filesize');?> max</span>
-                            <input type="file" name="download" class="form-control">
+                            <input type="file" name="download" class="form-control" id="inputGroupFile01">
                         </div>
-                        <div class="mb-3">
-                            <select name="idcat" class="form-control">
-                                <option value="0">Veuillez choisir une catégorie</option>
-                                <?php
-                                foreach ($cat as $key => $value):
-                                ?>
-                                <option value="<?=$value->id;?>"><?=$value->name;?></option>
-                                <?php
-                                endforeach;
-                                ?>
-                            </select>
+                        <div class="form-floating mb-3">
+                            <input name="ico" type="text" class="form-control" id="ico" value="fa-solid fa-file" placeholder="fa-solid fa-house-flag">
+                            <label for="ico">Icône <i><span style="color: red;">*</span></label>
+                        </div>
+                            <div class="mb-3"><span style="color: red;">*</span> <a style="text-decoration: dotted;color:red" href="https://fontAwesome.com/search?o=r&ic=free&s=solid&ip=classic">icône  fontawesome</a>
                         </div>
                         <div class="mb-3">
                             <textarea class="bel_cms_textarea_full" name="description"></textarea>
                         </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">Image</span>
-                            <span class="input-group-text"><?=ini_get(option: 'upload_max_filesize');?> max</span>
-                            <input type="file" accept="image/*" name="screen" class="form-control">
-                        </div>
                     </div>
                     <div class="card-footer">
                         <div class="mb-3">
-                            <button type="submit" class="btn btn-primary">Sauvegarder</button>
+                            <button type="submit" class="btn btn-warning-gradient btn-wave">Sauvegarder</button>
                         </div>
                     </div>
                 </form>

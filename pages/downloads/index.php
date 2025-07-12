@@ -71,11 +71,11 @@ endif;
                         $color = $user->user->color;
                     ?>
                         <div class="belcms_content_search">
-                            <h2><a href="Downloads/View/<?= $v->id; ?>/<?= $v->name; ?>" <?= $v->name; ?>><?= $v->name; ?></a></h2>
+                            <h2><a href="Downloads/View/<?= $v->id; ?>/<?= Common::removeBlank($v->name); ?>" <?= Common::removeBlank($v->name); ?>><?= $v->name; ?></a></h2>
                             <?= $v->description; ?>
                             <span>Publié par : <i style="color:<?= $color;?>"><?= $username;?></i></span>
                             <div class="belcms_content_search_view"><i class="fa-regular fa-calendar-plus"></i>  <?=Common::TransformDate($v->date, 'FULL', 'MEDIUM');?></div>
-                            <a href="Downloads/View/<?= $v->id; ?>/<?= $v->name; ?>" class="btn btn-secondary">Voir +</a>
+                            <a href="Downloads/View/<?= $v->id; ?>/<?=Common::removeBlank($v->name); ?>" class="btn btn-secondary">Voir +</a>
                         </div>
                     <?php
                     endforeach;
