@@ -40,7 +40,7 @@ if (is_file($view->screen) == true) {
                         </picture>
                         <ul id="belcms_downloads_menu_ul">
                             <li><span>Taille : </span><span><?= Common::ConvertSize($view->size); ?></span></li>
-                            <li><span>Date : </span><span><?= Common::TransformDate($view->date, 'FULL', 'SHORT'); ?></span></li>
+                            <li><span>Date : </span><span><?= Common::TransformDate($view->date, 'MEDIUM', 'SHORT'); ?></span></li>
                             <li><span>Auteur : </span><span style="color:<?= $color; ?>"><?= $username; ?></span></li>
                             <li><span>Vu : </span><span><?= $view->view; ?></span>
                             <li><span>Quantité de téléchargements : </span><span><?= $view->dls; ?></span>
