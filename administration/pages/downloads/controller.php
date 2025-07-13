@@ -10,302 +10,111 @@
  * @author as Stive - stive@determe.be
  */
 
-use BelCMS\Core\config;
-use BelCMS\Core\Secure;
+namespace Belcms\Pages\Controller;
+
+use BelCMS\Core\Config;
+use BelCMS\Core\Pages;
 use BelCMS\Requires\Common;
 
 if (!defined('CHECK_INDEX')):
     header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
-    exit('<!doctype html><html><head><meta charset = "utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
+    exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
 endif;
 
-class Downloads extends AdminPages
+class Downloads extends Pages
 {
-    var $admin  = false; // Admin suprême uniquement (Groupe 1);
-    var $active = true; // Activation/désactivation par FTP
-    var $bdd    = 'ModelsDls'; // Nom du Models (récupération de données)
+    var $useModels = 'Downloads';
 
-    public function index ()
+    public function index()
     {
-        $menu[] = array('title' => 'Accueil', 'href' => 'downloads?Admin&option=pages', 'ico'  => 'fa-solid fa-igloo');
-        $menu[] = array('title' => 'Ajouter un téléchargement', 'href' => 'downloads/add?Admin&option=pages', 'ico'  => 'fa-solid fa-pen-to-square');
-        $menu[] = array('title' => 'Catégorie', 'href' => 'downloads/category?Admin&option=pages', 'ico'  => 'fa-solid fa-layer-group');
-
-        $d['downloads'] = $this->models->getAllDls();
-        $this->set($d);
-
-        $this->render('index', $menu);
+        $config = Config::GetConfigPage('downloads');
+        $a['pagination'] = $this->pagination($config->config['MAX_PPR'], 'Downloads', constant('TABLE_DOWNLOADS'));
+        $a['dls'] = $this->models->getDls ();
+        $a['cat'] = $this->models->getCat ();
+        $this->set($a);
+        $this->render ('index');
     }
 
-    public function add ()
+    public function getNameDL () 
     {
+        $name = Common::VarSecure($_GET['term'], null);
+        if (strlen($name) >= 3) {
+            $return = $this->models->getNameDls ($name);
+            $return = json_encode($return);
+            echo $return;
+        } else {
+            echo json_encode('Nom trop court');
+        }
+    }
+
+    public function Search ()
+    {
+        $name = Common::VarSecure($_POST['name']);
+        if (!empty($name) and strlen($name) >= 3) {
+            $get['name'] = $name;
+        }
+        $sorting = is_numeric($_POST['sorting']) ? $_POST['sorting'] : 1;
+        switch ($sorting) {
+            case '1':
+                $sorting = 'name';
+                $desc    = 'ASC';
+            break;
+
+            case '2':
+                $sorting = 'view';
+                $desc    = 'DESC';
+            break;
+
+            case '3':
+                $sorting = 'idcat';
+                $desc    = 'DESC';
+            break;
+
+            case '4':
+                $sorting = 'view';
+                $desc    = 'DESC';
+            break;
+
+            case '5':
+                $sorting = 'dls';
+                $desc    = 'DESC';
+                break;
+            
+            default:
+                $sorting = 'name';
+                $desc    = 'ASC';
+            break;
+        }
+        $get['sorting'] = $sorting;
+        if (isset($_POST['cat'])) {
+            $cat = is_numeric($_POST['cat']) ? $_POST['cat'] : 0;
+            if ($cat != 0) {
+                $get['cat'] = $cat;
+            }
+        }
+        $a['dls'] = $this->models->getSearch ($get, $desc);
         $a['cat'] = $this->models->getCat();
         $this->set($a);
-        $this->render('add');
+        $this->render('search');
     }
 
-    public function sendnew ()
+    public function view ()
     {
-        $send['name']        = Common::VarSecure($_POST['name'], null);
-        $send['description'] = Common::VarSecure($_POST['description'], 'html');
-        $send['uploader']    = $_SESSION['USER']->user->hash_key;
-
-        if ($_FILES['download']['error'] == 4) {
-			$array = array(
-				'type' => 'error',
-				'text' => 'Aucun fichier'
-			);
-            $this->error('Téléchargement', $array['text'], $array['type']);
-            $this->redirect('downloads?admin&option = pages', 3);
-            return false;
-        }
-
-        if (isset($_FILES['download'])) {
-            $screen           = Common::Upload('download', 'uploads/downloads','all',true);
-            $send['download'] = '/uploads/downloads/' . $screen;
-            $send['size']     = $_FILES['download']['size'];
-        }
-
-        if (isset($_FILES['screen'])) {
-            $screen         = Common::Upload('screen', 'uploads/downloads/screen','img',true);
-            $send['screen'] = '/uploads/downloads/screen/' . $screen;
-        }
-
-        $send['idcat'] = 0;
-
-        $this->models->AddNewsUpload($send);
-        $array = array(
-            'type' => 'success',
-            'text' => 'Fichier uploadé avec succès'
-        );
-        $this->error('Téléchargement', $array['text'], $array['type']);
-        $this->redirect('downloads?admin&option=pages', 3);
+        $id = (int) $this->data[2];
+        $a['view'] = $this->models->view ($id);
+        $this->models->viewAdd ($id);
+        $this->set($a);
+        $this->render('view');
     }
 
-    public function editdls ()
+    public function getDownload ()
     {
-        $id = $this->data[2];
-        if (ctype_digit($id)) {
-            $d['data']        = $this->models->getOneDls ($id);
-            $d['data']->idcat = $this->models->getCatOne ($d['data']->idcat);
-            $d['cat']         = $this->models->getCat ();
-            $this->set($d);
-            $this->render('editdls');
-        }
-    }
-
-    public function editnew ()
-    {
-        if (ctype_digit($_POST['id']) == true) {
-
-            $insert = array();
-
-            if (isset($_FILES['download']['name'])) {
-                $screen             = Common::Upload('download', 'uploads/downloads','all',true);
-                $insert['download'] = '/uploads/downloads/' . $screen;
-                $insert['size']     = $_FILES['download']['size'];
-            }
-
-            if (isset($_FILES['screen']['name'])) {
-                $screen           = Common::Upload('screen', 'uploads/downloads/screen','img',true);
-                $insert['screen'] = '/uploads/downloads/screen/' . $screen;
-            }            
-            $insert['name']        = Common::VarSecure($_POST['name']);
-            $insert['description'] = Common::VarSecure($_POST['description'], 'html');
-            $insert['idcat']       = $_POST['idcat'] == is_numeric(($_POST['idcat'])) ? $_POST['idcat'] : 0;
-            $array = array(
-                'type' => 'error',
-                'text' => constant('EDIT_PARAM_SUCCESS')
-            );
-            $this->models->updateUpload ($insert);
-            $this->error('Téléchargement', $array['text'], $array['type']);
-            $this->redirect('downloads?admin&option=pages', 3);
-        } else {
-            $array = array(
-                'type' => 'error',
-                'text' => constant('ID_ERROR')
-            );
-            $this->error('downloads', $array['text'], $array['type']);
-            $this->redirect('downloads?admin&option=pages', 3);
-        }
-    }
-
-    public function category()
-    {
-        $menu[] = array('title' => 'Accueil Téléchargement', 'href' => 'downloads?Admin&option=pages', 'ico'  => 'fa-solid fa-igloo');
-        $menu[] = array('title' => 'Accueil Catégorie', 'href' => 'downloads/newcategory?Admin&option=pages', 'ico'  => 'fa-solid fa-puzzle-piece');
-        $menu[] = array('title' => 'Ajouter une Catégorie', 'href' => 'downloads/newcategorys?Admin&option=pages', 'ico'  => 'fa-solid fa-puzzle-piece');
-
-
-        $d['data'] = $this->models->getCat ();
-        $this->set($d);
-
-        $this->render('category', $menu);
-    }
-
-    public function deletecat ()
-    {
-        $id = $this->data[2];
-        if (ctype_digit($id)) {
-            $return     = $this->models->deletecat($id);
-            if ($return == true) {
-                $array  = array(
-                    'type' => 'success',
-                    'text' => constant('DEL_SUCCESS')
-                );
-                $this->error('Lien', $array['text'], $array['type']);
-                $this->redirect('downloads?admin&option=pages', 2);
-            } else {
-                $array = array(
-                    'type' => 'error',
-                    'text' => constant('DEL_ERROR')
-                );
-                $this->error('Lien', $array['text'], $array['type']);
-                $this->redirect('downloads?admin&option=pages', 2);
-            }
-        } else {
-            $array = array(
-                'type' => 'error',
-                'text' => constant('ID_ERROR')
-            );
-            $this->error('Lien', $array['text'], $array['type']);
-            $this->redirect('downloads?admin&option=pages', 2);
-        }  
-    }
-
-     public function newcategorys ()
-    {
-        $menu[] = array('title' => 'Accueil Téléchargement', 'href' => 'downloads?Admin&option=pages', 'ico'  => 'fa-solid fa-igloo');
-        $menu[] = array('title' => 'Accueil Catégorie', 'href' => 'downloads/category?Admin&option=pages', 'ico'  => 'fa-solid fa-house-flag');
-        $this->render('newcategorys', $menu);
-    }
-
-    public function sendnewcat ()
-    {
-        $insert['name'] = Common::VarSecure($_POST['name'], null);
-
-        if (isset($_FILES['download']['name'])) {
-            $screen             = Common::Upload('download', 'uploads/downloads/cat','img',true);
-            $insert['banniere'] = '/uploads/downloads/cat/' . $screen;
-        }
-
-        if (!empty($_FILES['ico'])) {
-            $insert['ico'] = Common::VarSecure($_FILES['ico'], 'html');
-        }
-
-        if (!empty($_FILES['description'])) {
-            $insert['description'] = Common::VarSecure($_FILES['description'],'html');
-        }
-
-        $insert['id_groups'] = Common::randomString(32);
-        
-        $return = $this->models->insertCat($insert);
-
-        if ($return) {
-            $array = array(
-                'type' => 'success',
-                'text' => constant('SEND_SUCCESS')
-            );
-            $this->error('Catégorie', $array['text'], $array['type']);
-            $this->redirect('downloads?admin&option=pages', 2);
-        } else {
-            $array = array(
-                'type' => 'error',
-                'text' => constant('DEL_BDD_ERROR')
-            );
-            $this->error('Lien', $array['text'], $array['type']);
-            $this->redirect('downloads?admin&option=pages', 2);
-        }
-    }
-
-    public function editcat ()
-    {
-        $id = $this->data[2];
-        if (ctype_digit($id)) {
-            $cat['data'] = $this->models->getCatById($id);
-            if (!empty($cat)) {
-                $this->set( $cat);
-                $this->render('editcat');
-            } else {
-                $array = array(
-                    'type' => 'error',
-                    'text' => constant('NO_CATEGORY')
-                );
-                $this->error('Lien', $array['text'], $array['type']); 
-            }
-        } else {
-            $array = array(
-                'type' => 'error',
-                'text' => constant('ID_ERROR')
-            );
-            $this->error('Lien', $array['text'], $array['type']);
-            $this->redirect('downloads?admin&option=pages', 2);
-        }
-    }
-
-    public function sendeditcat ()
-    {
-        if (ctype_digit($_POST['id'])) {
-            $insert['name']         = Common::VarSecure($_POST['name'], null);
-            $insert['ico']          = Common::VarSecure($_POST['ico'], null);
-            $insert['description']  = Common::VarSecure($_POST['description'], 'html');
-            if (isset($_FILES['download']['name'])) {
-                $screen             = Common::Upload('download', 'uploads/downloads/cat','img',true);
-                $insert['banniere'] = '/uploads/downloads/cat/' . $screen;
-            }
-            $ok = $this->models->sendeditcat($insert, $_POST['id']);
-            if ($ok == true) {
-                $array = array(
-                    'type' => 'success',
-                    'text' => constant('SEND_SUCCESS')
-                );
-                $this->error('Catégorie', $array['text'], $array['type']);
-                $this->redirect('downloads/category?Admin&option=pages', 2);
-            } else {
-                $array = array(
-                    'type' => 'alert',
-                    'text' => constant('DEL_BDD_ERROR')
-                );
-                $this->error('Lien', $array['text'], $array['type']);
-                $this->redirect('downloads/category?Admin&option=pages', 2);
-            }
-        } else {
-            $array = array(
-                'type' => 'error',
-                'text' => constant('ID_ERROR')
-            );
-            $this->error('Lien', $array['text'], $array['type']);
-            $this->redirect('downloads/category?Admin&option=pages', 2);
-        }
-    }
-
-    public function delete ()
-    {
-        $id = $this->data[2];
-        if (ctype_digit($id)) {
-            $return     = $this->models->senddelete($id);
-            if ($return == true) {
-                $array  = array(
-                    'type' => 'success',
-                    'text' => constant('DEL_SUCCESS')
-                );
-                $this->error('Lien', $array['text'], $array['type']);
-                $this->redirect('downloads?admin&option=pages', 2);
-            } else {
-                $array = array(
-                    'type' => 'error',
-                    'text' => constant('DEL_ERROR')
-                );
-                $this->error('Lien', $array['text'], $array['type']);
-                $this->redirect('downloads?admin&option=pages', 2);
-            }
-        } else {
-            $array = array(
-                'type' => 'error',
-                'text' => constant('ID_ERROR')
-            );
-            $this->error('Lien', $array['text'], $array['type']);
-            $this->redirect('downloads?admin&option=pages', 2);
-        }
-    }
+        $id = is_numeric($this->data[2]) ? $this->data[2] : false;
+        if ($id !== false) {
+			if ($this->models->ifAccess($id) == true) {
+				$download = $this->models->getDownloads($id);
+				$this->linkHeader($download);
+			}
+		}
+	}
 }

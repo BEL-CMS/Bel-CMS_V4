@@ -9,190 +9,84 @@
  * @author as Stive - stive@determe.be
  */
 
+namespace Belcms\Pages\Models;
+
+use BelCMS\Core\Config;
+use BelCMS\Core\Dispatcher;
+use BelCMS\PDO\BDD;
+use BelCMS\Requires\Common;
+
 if (!defined('CHECK_INDEX')):
     header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
     exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
 endif;
 
-use BelCMS\PDO\BDD;
-
-#####################################
-# Infos tables                      #
-#####################################
-# TABLE_NEWS                        #
-# TABLE_NEWS_CAT                    #
-#####################################
-final class ModelsNews
+############################################
+#  TABLE_NEWS
+#  TABLE_NEWS_CAT
+############################################
+final class News
 {
-    public function getNews ()
+    public function getNews ($id = false)
     {
         $sql = new BDD;
         $sql->table('TABLE_NEWS');
-        $sql->queryAll();
-        return $sql->data;
+        if (is_numeric($id)) {
+            $sql->where(array('name' => 'id', 'value' => $id));
+            $sql->queryOne();
+            $sql->data->cat = self::getCat($sql->data->cat);
+            self::NewView($id);
+        } else {
+            $config = Config::GetConfigPage('news');
+            if (isset($config->config['MAX_NEWS'])) {
+                $nbpp = (int) $config->config['MAX_NEWS'];
+            } else {
+                $nbpp = (int) 3;
+            }
+            $page = (Dispatcher::RequestPages() * $nbpp) - $nbpp;
+			$sql->orderby(array(array('name' => 'id', 'type' => 'DESC')));
+			$sql->limit(array(0 => $page, 1 => $nbpp), true);
+            $sql->queryAll();
+            foreach ($sql->data as $key => $value) {
+                $sql->data[$key]->cat = self::getCat($value->cat);
+            }
+        }
+        $return = $sql->data;
+        return $return;
     }
 
-    public function getCat ()
+    private function getCat ($id)
     {
-        $sql = new BDD;
-        $sql->table('TABLE_NEWS_CAT');
-        $sql->queryAll();
-        return $sql->data;
-    }
-
-    public function getCatforID($id)
-    {
+        $id = (int) $id;
         $sql = new BDD;
         $sql->table('TABLE_NEWS_CAT');
         $sql->where(array('name' => 'id', 'value' => $id));
         $sql->queryOne();
-        return $sql->data;
-    }
-
-    public function addCat ($name)
-    {
-        $sql = new BDD;
-        $sql->table('TABLE_NEWS_CAT');
-        $sql->insert($name);
-    }
-
-    public function sendEditCat ($id, $value)
-    {
-        $update['value'] = $value;
-        $sql = new BDD;
-        $sql->table('TABLE_NEWS_CAT');
-        $sql->where(array('name' => 'id', 'value' => $id));
-        $sql->update($update);
-    }
-
-    public function deleteCat ($id)
-    {
-        $sql = new BDD;
-        $sql->table('TABLE_NEWS_CAT');
-        $sql->where(array('name' => 'id', 'value' => $id));
-        $sql->delete();
-    }
-
-    public function verifNameGroup ($name) : bool
-    {
-        $sql = new BDD;
-        $sql->table('TABLE_NEWS_CAT');
-        $sql->where(array('name' => 'value', 'value' => $name));
-        $sql->count();
-        $count = $sql->data;
-        if ($count != 0) {
-            $return = false;
-        } else {
-            $return = true;
-        }
+        $return = $sql->data;
         return $return;
     }
 
-    public function sendNew (array $data)
-    {
-        if ($data !== false) {
-            // SQL INSERT
-            $sql = New BDD();
-            $sql->table('TABLE_NEWS');
-            $sql->insert($data);
-            // SQL RETURN NB INSERT
-            if ($sql->rowCount == 1) {
-                $return = array(
-                    'type' => 'success',
-                    'text' => constant('SEND_BLOG_SUCCESS')
-                );
-            } else {
-                $return = array(
-                    'type' => 'warning',
-                    'text' => constant('SEND_BLOG_ERROR')
-                );
-            }
-        } else {
-            $return = array(
-                'type' => 'warning',
-                'text' => constant('ERROR_NO_DATA')
-            );
-        }
-
-        return $return;
-    }
-
-    public function getnewsforid ($id = false)
-    {
-        $sql = new BDD;
-        $sql->table('TABLE_NEWS');
-        $sql->where(array('name' => 'id', 'value' => $id));
-        $sql->queryOne();
-        return $sql->data;
-    }
-
-    public function sendedit ($data, $id)
-    {
-        $sql = new BDD;
-        $sql->table('TABLE_NEWS');
-        $sql->where(array('name' => 'id', 'value' => $id));
-        $sql->update($data);
-        if ($sql->rowCount == 1) {
-            $return = array(
-                'type' => 'success',
-                'text' => constant('EDIT_BLOG_SUCCESS')
-            );
-            } else {
-            $return = array(
-                'type' => 'warning',
-                'text' => constant('EDIT_BLOG_ERROR')
-            );
-            }
-            return $return;
-   }
-
-    public function delete($data = false)
-    {
-        if ($data !== false) {
-            // SECURE DATA
-            $delete = (int) $data;
-            // SQL DELETE
-            $sql = new BDD();
-            $sql->table('TABLE_NEWS');
-            $sql->where(array('name' => 'id', 'value' => $delete));
-            $sql->delete();
-            // SQL RETURN NB DELETE
-            if ($sql->rowCount == true) {
-                $return = array(
-                    'type' => 'success',
-                    'text' => constant('DEL_BLOG_SUCCESS')
-                );
-            } else {
-                $return = array(
-                    'type' => 'warning',
-                    'text' => constant('DEL_BLOG_ERROR')
-                );
-            }
-        } else {
-            $return = array(
-                'type' => 'error',
-                'text' => constant('ERROR_NO_DATA')
-            );
-        }
-        return $return;
-    }
-    public function sendparameter($data = null)
-    {
-		$sql = New BDD();
-		$sql->table('TABLE_CONFIG_PAGES');
-		$sql->where(array('name' => 'name', 'value' => 'news'));
-		$sql->update($data);
-        if ($sql->rowCount == 1) {
-            $return = array(
-                'type' => 'success',
-                'text' => constant('EDIT_BLOG_PARAM_SUCCESS')
-            );
-        } else {
-            $return = array(
-                'type' => 'warning',
-                'text' => constant('EDIT_BLOG_PARAM_ERROR')
-            );
-        }
-        return $return;
-    }
+    public function NewView ($id = false)
+	{
+		if ($id) {
+			$id = Common::secureRequest($id);
+			$get = New BDD();
+			$get->table('TABLE_NEWS');
+			$where = array(
+				'name'  => 'id',
+				'value' => (int) $id
+			);
+			$get->where($where);
+			$get->queryOne();
+			$data = $get->data;
+			if ($get->rowCount != 0) {
+				$count = (int) $data->view;
+				$count = $count +1;
+				$update = New BDD();
+				$update->table('TABLE_NEWS');
+				$update->where($where);
+				$update->update(array('view' => $count));
+			}
+		}
+	}
 }

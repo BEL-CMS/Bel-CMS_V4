@@ -1,0 +1,152 @@
+.post-thumb-style1 {
+  .media-img {
+    overflow: hidden;
+
+    img {
+      transition: all ease 0.4s;
+      transform: scale(1.001);
+    }
+  }
+
+  .vs-blog {
+    &:hover {
+      .media-img {
+        img {
+          transform: scale(1.2);
+        }
+      }
+    }
+  }
+
+  .blog-category {
+    margin-bottom: 5px;
+
+    a {
+      padding: 0 0;
+      background-image: none;
+      margin-bottom: 0px;
+      color: $theme-color;
+
+      &:hover {
+        color: $white-color;
+      }
+    }
+  }
+
+  h4.h5.blog-title.font-theme.lh-base.text-white.mb-0 {
+    a {
+      &:hover {
+        color: $theme-color;
+      }
+    }
+  }
+
+
+  &.border-light-white {
+    .vs-blog {
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #282a35;
+
+      &:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: 0;
+      }
+    }
+  }
+
+
+  .vs-blog {
+
+    &:hover {
+      h4.h5.blog-title.font-theme.lh-base.text-white.mb-0 {
+        a {
+          &:before {
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    &:nth-child(11n-1) {
+      .blog-category {
+        a {
+          --theme-color: #f07707;
+        }
+      }
+    }
+
+
+    &:nth-child(2n-1) {
+      .blog-category {
+        a {
+          --theme-color: #34ba5e;
+        }
+      }
+    }
+
+    &:nth-child(3n-1) {
+      .blog-category {
+        a {
+          --theme-color: #f07707;
+        }
+      }
+    }
+
+    &:nth-child(4n-1) {
+      .blog-category {
+        a {
+          --theme-color: #bd3eff;
+        }
+      }
+    }
+
+    &:nth-child(13n-1) {
+      .blog-category {
+        a {
+          --theme-color: #34ba5e;
+        }
+      }
+    }
+
+    &:nth-child(5n-1) {
+      .blog-category {
+        a {
+          --theme-color: #007bff;
+        }
+      }
+    }
+
+    &:nth-child(7n-1) {
+      .blog-category {
+        a {
+          --theme-color: #34ba5e;
+        }
+      }
+    }
+
+
+  }
+}
+
+
+@media (min-width: $md) and (max-width: $lg) {
+  .post-thumb-style1 {
+    .blog-category {
+      a {
+        font-size: 12px;
+      }
+    }
+
+    .h5 {
+      font-size: 15px;
+    }
+  }
+}
+
+@include xs {
+  .post-thumb-style1 .media-body {
+    margin-top: -0.4rem;
+  }
+}

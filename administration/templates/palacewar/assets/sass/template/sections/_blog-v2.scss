@@ -1,0 +1,118 @@
+.vs-blog-layout2 {
+  .vs-blog {
+    position: relative;
+  }
+
+  .overlay {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    // background-image: linear-gradient(to top, rgba($color: #2f0162, $alpha: 0.80) 0%, rgba(255,255,255,0) 100%);
+    background-image: linear-gradient(
+      to top,
+      rgba(#000, 0.8) 0%,
+      rgba(#000, 0) 70%
+    );
+    z-index: 1;
+  }
+
+  .blog-content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 25px 30px;
+    z-index: 1;
+  }
+
+  .blog-meta {
+    a {
+      font-size: 14px;
+      letter-spacing: 0.04em;
+
+      i {
+        margin-right: 10px;
+        font-size: 12px;
+        position: relative;
+        top: -1px;
+      }
+
+      &:hover {
+        color: $theme-color;
+      }
+    }
+  }
+}
+.vs-popular-news {
+  .blog-title {
+    font-size: 20px;
+    color: $white-color;
+    margin-bottom: 20px;
+  }
+  .blog-meta {
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #9b9b9b;
+    a {
+      color: #9b9b9b;
+    }
+  }
+}
+.add-banner {
+  position: relative;
+  padding: 70px 0px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  .section-position {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  .vs-btn {
+    &.style1 {
+      background-color: transparent;
+      border: 1px solid $white-color;
+      border-radius: 0px;
+      &:hover {
+        background-color: $theme-color;
+        border-color: $theme-color;
+      }
+    }
+  }
+  .banner-title {
+    margin-bottom: 5px;
+    display: inline-block;
+    color: $white-color;
+    text-transform: uppercase;
+  }
+  .section-title {
+    color: $white-color;
+    margin-bottom: 20px;
+    font-size: 26px;
+  }
+}
+
+@include xs {
+  .vs-blog-layout2 {
+    .blog-content {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+}
+@include md {
+  .section-title {
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+}
+@include sm {
+  .add-banner {
+    display: none;
+  }
+}

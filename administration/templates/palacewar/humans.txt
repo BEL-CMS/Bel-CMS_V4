@@ -1,0 +1,14 @@
+/* TEAM */
+	Bel-CMS V4
+	Contact: contact [at] bel-cms.dev
+	From: Belgium
+
+	Developper: Determe Stive
+	Contact: stive [at] determe.be
+	From: Belgium
+
+/* SITE */
+	Last update:06-07-2025
+	Language: English / French
+	Doctype:HTML5
+	IDE: Visual Studio, GitHub Desktop, FileZilla, Photoshop

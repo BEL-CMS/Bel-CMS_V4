@@ -9,60 +9,23 @@
  * @copyright 2015-2025 Bel-CMS
  * @author as Stive - stive@determe.be
  */
-
-use BelCMS\Core\User;
-use BelCMS\Requires\Common;
-
-if (!defined('CHECK_INDEX')):
-    header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
-    exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
-endif;
 ?>
-<div class="card-body">
-    <div class="row">
-        <div class="col-xl-12">
-            <div class="card custom-card">
-                <div class="card-header">
-                    <div class="card-title">
-                        Liste de(s) catégories de lien(s)
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered text-nowrap w-100 DataTableBelCMS">
-                            <thead>
-                                <tr>
-                                    <th>Nom</th>
-                                    <th>Couleur</th>
-                                    <th>Description</th>
-                                    <th>Options</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                foreach ($cat as $key => $value):
-                                ?>
-                                <tr>
-                                    <td><?= $value->name; ?></td>
-                                    <td style="background-color:<?= $value->color; ?>"><?= $value->color; ?></td>
-                                    <td><?= Common::truncate($value->description, 50); ?></td>
-                                    <td align="center">
-                                        <a href="links/deletecat/<?= $value->id; ?>?admin&option=pages" class="btn btn-danger label-end rounded-pill">
-                                            Supprimer
-                                        </a>&emsp;
-                                        <a href="links/editcat/<?= $value->id; ?>?admin&option=pages" class="btn btn-warning rounded-pill">
-                                            Editer
-                                        </a>&emsp;
-                                    </td>
-                                </tr>
-                                <?php
-                                endforeach;
-                                ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+<section id="belcms_links_cat">
+    <h2><?= $cat->name; ?></h2>
+    <div class="mb-5" id="belcms_links_menu">
+        [ <a href="Links" title="Lien">Index</a> | <a href="Links/new" title="Nouveau liens">Nouveaux lien</a> | <a href="Links/popular" title="les plus Populaire">Les liens les plus fréquentés.</a> | <a href="Links/propose" title="Proposé un lien">Proposé un lien</a> ]
+    </div>
+    <?php
+    foreach ($links as $value):
+    ?>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"><a href="<?= $value->link; ?>"> <?= $value->name; ?></a> <span class="view"><i class="fa-solid fa-eye"></i> <?= $value->view; ?></span></h5>
+                <div class="card-text"><?= $value->description; ?></div>
+                <a href="Links/link/<?= $value->id; ?>" class="btn btn-primary">Lire +</a>
             </div>
         </div>
-    </div>
-</div>
+    <?php
+    endforeach;
+    ?>
+</section>

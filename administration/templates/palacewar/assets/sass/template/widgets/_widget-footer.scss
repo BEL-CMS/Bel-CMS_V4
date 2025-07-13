@@ -1,0 +1,108 @@
+.footer-widget {
+  padding: 0;
+  border: none;
+  padding-bottom: 0;
+  background-color: transparent;
+
+  .widget_title {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    position: relative;
+    letter-spacing: 0.03em;
+
+    &:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 50px;
+      height: 3px;
+      border-radius: 4px;
+      background-image: $gradient;
+    }
+
+    &:not([class*="font-"]) {
+      font-family: $title-font;
+    }
+  }
+  .vs-widget-about {
+    p:nth-child(2) {
+      margin-bottom: 26px;
+    }
+  }
+
+  &.widget_meta,
+  &.widget_pages,
+  &.widget_archive,
+  &.widget_categories,
+  &.widget_nav_menu {
+    margin-bottom: 3px;
+    padding-bottom: 0;
+
+    li {
+      > span {
+        @include equal-size(auto);
+        position: relative;
+        background-color: transparent;
+        color: $body-color;
+        line-height: 1;
+      }
+    }
+
+    a {
+      background-color: transparent;
+      padding: 0;
+      position: relative;
+      margin-bottom: 15px;
+      display: inline-block;
+
+      &:hover {
+        background-color: transparent;
+      }
+
+      &:before {
+        content: "\f105";
+        font-family: $icon-font;
+        position: relative;
+        top: 1px;
+        margin-right: 10px;
+        color: var(--theme-color);
+      }
+    }
+  }
+}
+
+.custom-links {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    margin-bottom: 17px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  a {
+    position: relative;
+    padding-left: 12px;
+
+    &:before {
+      content: "\f105";
+      font-family: $icon-font;
+      position: absolute;
+      margin-right: 5px;
+      left: 0;
+    }
+  }
+}
+
+@include sm {
+  .vs-widget-about {
+    p:nth-child(1) {
+      margin-bottom: 26px;
+    }
+  }
+}

@@ -10,7 +10,14 @@
  * @author as Stive - stive@determe.be
  */
 
+namespace Belcms\Pages\Controller;
+
+use BelCMS\Core\Pages;
+use BelCMS\Core\Captcha;
+use BelCMS\Core\Config;
+use BelCMS\Core\Notification;
 use BelCMS\Core\Secure;
+use BelCMS\Core\User;
 use BelCMS\Requires\Common;
 
 if (!defined('CHECK_INDEX')):
@@ -18,275 +25,100 @@ if (!defined('CHECK_INDEX')):
     exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
 endif;
 
-class Links extends AdminPages
+class Links extends Pages
 {
-    var $admin  = false;
-    var $active = true;
-    var $bdd    = 'ModelsLinks';
+    var $useModels = 'Links';
 
-    public function index ()
+    public function index()
     {
-        $menu[] = array('title' => 'Ajouté un lien', 'href' => 'links/add?Admin&option=pages', 'ico'  => 'fa-solid fa-plus');
-        $menu[] = array('title' => 'Liste de(s) catégorie(s)', 'href' => 'links/cat?Admin&option=pages', 'ico'  => 'fa-solid fa-table');
-        $menu[] = array('title' => 'Validation', 'href' => 'links/valid?Admin&option=pages', 'ico'  => 'fa-solid fa-pen-to-square');
-
-        $links = $this->models->getLinks ();
-        $d['links'] = $links;
-        $this->set($d);
-
-        $this->render('index', $menu);
+        $a['cat']    = $this->models->getCat();
+        $a['nbcat']  = $this->models->getNbCat();
+        $a['nblink'] = $this->models->getNbLink();
+        $this->set($a);
+        $this->render('index');
     }
 
-    public function editdls ()
+    public function cat()
     {
-        $id = $this->data[2];
-        if (ctype_digit($id)) {
-            $menu[] = array('title' => 'Accueil', 'href' => 'links&option=pages', 'ico'  => 'fa-solid fa-house');
-            $link = $this->models->getLink ($id);
-            $d['link'] = $link;
-            $this->set($d);
-            $this->render('edit', $menu);
+        $id = (int) $this->data[2];
+        $a['cat'] = $this->models->getCatForNumber($id);
+        $a['links'] = $this->models->getLinksForNumberCat($a['cat']->id);
+        $this->set($a);
+        $this->render('cat');
+    }
+
+    public function link()
+    {
+        $id = (int) $this->data[2];
+        $this->models->addCount ($id);
+        $a['links'] = $this->models->getLinksForNumber($id);
+        $this->set($a);
+        $this->render('link');
+    }
+
+    public function click()
+    {
+        $id = (int) $this->data[2];
+        $link = $this->models->onePlus($id);
+        $a['link'] = $link;
+        $this->set($a);
+        $this->render('click');
+    }
+
+    public function propose()
+    {
+        if (User::isLogged()) {
+            $captcha = new Captcha();
+            $d['captcha'] = $captcha->createCaptcha();
+            $this->render('propose');
         } else {
-            $array = array(
-                'type' => 'error',
-                'text' => constant('ID_ERROR')
-            );
-            $this->error('Lien', $array['text'], $array['type']);
-            $this->redirect('link?admin&option=pages', 2);
+            Notification::error('Il est nécessaire d\'être connecté pour pouvoir soumettre un lien.', 'Lien');
+            return;
         }
     }
 
-    public function sendedit ()
+    public function SendNew ()
     {
-        $id = $_POST['id'];
-        if (ctype_digit($id)) {
-            $d['name']        = Common::VarSecure($_POST['name'], null);
-            $d['color']       = Common::VarSecure($_POST['color'], null);
-            $d['description'] = Common::VarSecure($_POST['description'], 'html');
-            $return = $this->models->sendeditcat ($d, $id);
-            if ($return === true) {
-                $array = array(
-                    'type' => 'success',
-                    'text' => constant('EDIT_PARAM_SUCCESS')
-                );
+        if (Captcha::verifCaptcha($_POST['captcha']) == true and empty($_POST['captcha_value'])) {
+            if (empty($_POST['name']) or empty($_POST['link'])) {
+                Notification::error('Aucun nom ou lien transmis.', 'Lien');
             } else {
-                $array = array(
-                    'type' => 'error',
-                    'text' => constant('EDIT_PARAM_ERROR')
-                );
+                $post['name'] = Common::VarSecure($_POST['name']);
+                $post['link'] = Secure::isUrl($_POST['link']);
+                $post['description'] = Common::VarSecure($_POST['description'], 'html');
+                $post['description'] = $post['description'];
             }
-            $this->error('Lien', $array['text'], $array['type']);
-            $this->redirect('links?admin&option=pages', 2);
-        } else {
-            $array = array(
-                'type' => 'error',
-                'text' => constant('ID_ERROR')
-            );
-            $this->error('Lien', $array['text'], $array['type']);
-            $this->redirect('links?admin&option=pages', 2);
-        }
-    }
-
-    public function add ()
-    {
-        $menu[] = array('title' => 'Accueil', 'href' => 'links?admin&option=pages', 'ico'  => 'fa-solid fa-house');
-        $d['cat'] = $this->models->getCat ();
-        $this->set($d);
-        $this->render('add', $menu);
-    }
-
-    public function send ()
-    {
-        $d['name']        = Common::VarSecure($_POST['name'], null);
-        $d['link']        = Secure::isUrl($_POST['link']) ? $_POST['link'] : 'https://bel-cms.dev';
-        $d['author']      = $_SESSION['USER']->user->hash_key;
-        $d['description'] = Common::VarSecure($_POST['description'], 'html');
-        $d['valid']       = 1;
-        $d['cat']         = (int) $_POST['cat'];
-        if (isset($_FILES['img'])) {
-            $screen = Common::Upload('img', 'uploads/links', false, true);
-            $d['img'] = '/uploads/links/' . $screen;
-        } else {
-            $d['img'] = '/assets/img/no-image-png.png';
-        }
-        $return = $this->models->send ($d);
-        if ($return === true) {
-            $array = array(
-                'type' => 'success',
-                'text' => constant('SEND_SUCCESS')
-            );
-            $this->error('Lien', $array['text'], $array['type']);
-            $this->redirect('links?admin&option=pages', 2);
-        } else {
-            $array = array(
-                'type' => 'error',
-                'text' => constant('DEL_BDD_ERROR')
-            );
-            $this->error('Lien', $array['text'], $array['type']);
-            $this->redirect('links?admin&option=pages', 2);
-        }
-    }
-
-    public function delete ()
-    {
-        $id = $this->data[2];
-        if (ctype_digit($id)) {
-            $return = $this->models->senddelete($id);
-            if ($return === true) {
-                $array = array(
-                    'type' => 'success',
-                    'text' => constant('DEL_SUCCESS')
-                );
-                $this->error('Lien', $array['text'], $array['type']);
-                $this->redirect('links?admin&option=pages', 2);
-            } else {
-                $array = array(
-                    'type' => 'error',
-                    'text' => constant('DEL_ERROR')
-                );
-                $this->error('Lien', $array['text'], $array['type']);
-                $this->redirect('links?admin&option=pages', 2);
+            if (isset($_FILES['image'])) {
+                $image = Common::Upload('image', 'uploads/links/tmp/', array('.png', '.gif', '.jpg', '.jpeg', '.ico', '.tif', '.eps', '.svg', '.webp'), true);
+                if ($image) {
+                    $post['image'] = $image;
+                    $this->models->insertTmp($post);
+                } else {
+                    $post['image'] = null;
+                }
             }
         } else {
-            $array = array(
-                'type' => 'error',
-                'text' => constant('ID_ERROR')
-            );
-            $this->error('Lien', $array['text'], $array['type']);
-            $this->redirect('links?admin&option=pages', 2);
+            Notification::error('Le captcha intégral ne s\'aligne pas avec nos attentes.', 'Captcha');
+            return;
         }
+        Notification::success('La validation du lien que vous avez publiée est en cours.', 'Lien');
+        $this->redirect('Links', 2);
     }
 
-    public function valid()
+    public function new ()
     {
-        $menu[] = array('title' => 'Accueil', 'href' => 'links?admin&option=pages', 'ico'  => 'fa-solid fa-house');
-        $menu[] = array('title' => 'Ajouté un lien', 'href' => 'links/add?Admin&option=pages', 'ico'  => 'fa-solid fa-plus');
-        $menu[] = array('title' => 'Liste de(s) catégorie(s)', 'href' => 'links/cat?Admin&option=pages', 'ico'  => 'fa-solid fa-table');
-
-        $d['links'] = $this->models->getUrlValid();
-        $this->set($d);
-
-        $this->render ('valid', $menu);
+        $config = Config::GetConfigPage('links');
+        $a['pagination'] = $this->pagination($config->config['MAX_PAGE'], 'links/new', constant('TABLE_LINKS'));
+        $a['links'] = $this->models->getNew ();
+        $this->set($a);
+        $this->render ('new');
     }
-
-    public function valide ()
+    public function popular ()
     {
-        $id = $this->data[2];
-        if (ctype_digit($id)) {
-            $return = $this->models->valide($id);
-            if ($return === true) {
-                $array = array(
-                    'type' => 'success',
-                    'text' => constant('VALID_SUCCESS')
-                );
-                $this->error('Lien', $array['text'], $array['type']);
-                $this->redirect('links?admin&option=pages', 2);
-            } else {
-                $array = array(
-                    'type' => 'error',
-                    'text' => constant('DEL_ERROR')
-                );
-                $this->error('Lien', $array['text'], $array['type']);
-                $this->redirect('links?admin&option=pages', 2);
-            }
-        } else {
-            $array = array(
-                'type' => 'error',
-                'text' => constant('DEL_ERROR')
-            );
-            $this->error('Lien', $array['text'], $array['type']);
-            $this->redirect('links?admin&option=pages', 2);
-        }
-    }
-
-    public function cat ()
-    {
-        $d['cat'] = $this->models->getCat ();
-        $this->set($d);
-        $menu[] = array('title' => 'Accueil', 'href' => 'links/cat?Admin&option=pages', 'ico'  => 'fa-solid fa-house');
-        $menu[] = array('title' => 'Ajouté une catégorie', 'href' => 'links/addcat?Admin&option=pages', 'ico'  => 'fa-solid fa-plus');
-        $this->render('cat', $menu);
-    }
-
-    public function deletecat ()
-    {
-        $id = $this->data[2];
-        if (ctype_digit($id)) {
-            $return = $this->models->senddeletecat($id);
-            if ($return === true) {
-                $array = array(
-                    'type' => 'success',
-                    'text' => constant('DEL_SUCCESS')
-                );
-                $this->error('Lien', $array['text'], $array['type']);
-                $this->redirect('links/cat?admin&option=pages', 2);
-            } else {
-                $array = array(
-                    'type' => 'error',
-                    'text' => constant('DEL_ERROR')
-                );
-                $this->error('Lien', $array['text'], $array['type']);
-                $this->redirect('links/cat?admin&option=pages', 2);
-            }
-        } else {
-            $array = array(
-                'type' => 'error',
-                'text' => constant('ID_ERROR')
-            );
-            $this->error('Lien', $array['text'], $array['type']);
-            $this->redirect('links/cat?admin&option=pages', 2);
-        }
-    }
-
-    public function editcat ()
-    {
-        $menu[] = array('title' => 'Accueil', 'href' => 'links/cat?Admin&option=pages', 'ico'  => 'fa-solid fa-house');
-        $menu[] = array('title' => 'Ajouté une catégorie', 'href' => 'links/addcat?Admin&option=pages', 'ico'  => 'fa-solid fa-plus');
-        $id = $this->data[2];
-        if (ctype_digit($id)) {
-            $d['cat'] = $this->models->editcat ($id);
-            $this->set($d);
-        } else {
-            $array = array(
-                'type' => 'error',
-                'text' => constant('DEL_ERROR')
-            );
-            $this->error('Lien', $array['text'], $array['type']);
-            $this->redirect('links/cat?admin&option=pages', 2);
-        }
-
-        $this->render('editcat', $menu);
-    }
-
-    public function addcat ()
-    {
-        $menu[] = array('title' => 'Accueil', 'href' => 'links/cat?Admin&option=pages', 'ico'  => 'fa-solid fa-house');
-
-        $this->render ('addcat', $menu);
-    }
-
-    public function sendeditcat ()
-    {
-        $d['name'] = Common::VarSecure($_POST['name']);
-        $d['color'] = Common::VarSecure($_POST['color']);
-        $d['description'] = Common::VarSecure($_POST['description']);
-
-        $return = $this->models->addNewCat($d);
-
-        if ($return === true) {
-            $array = array(
-                'type' => 'success',
-                'text' => constant('VALID_SUCCESS')
-            );
-            $this->error('Lien', $array['text'], $array['type']);
-            $this->redirect('links/cat?Admin&option=pages', 2);
-        } else {
-            $array = array(
-                'type' => 'error',
-                'text' => constant('DEL_ERROR')
-            );
-            $this->error('Lien', $array['text'], $array['type']);
-            $this->redirect('links/cat?Admin&option=pages', 2);
-        }
+        $config = Config::GetConfigPage('links');
+        $a['pagination'] = $this->pagination($config->config['MAX_PAGE'], 'links/popular', constant('TABLE_LINKS'));
+        $a['links'] = $this->models->getPopular();
+        $this->set($a);
+        $this->render('popular');
     }
 }
