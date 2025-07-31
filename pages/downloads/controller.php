@@ -12,9 +12,8 @@
 
 namespace Belcms\Pages\Controller;
 
-use BelCMS\Core\Config;
+use BelCMS\Core\Notification;
 use BelCMS\Core\Pages;
-use BelCMS\Requires\Common;
 
 if (!defined('CHECK_INDEX')):
     header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
@@ -27,84 +26,37 @@ class Downloads extends Pages
 
     public function index()
     {
-        $config = Config::GetConfigPage('downloads');
-        $a['pagination'] = $this->pagination($config->config['MAX_PPR'], 'Downloads', constant('TABLE_DOWNLOADS'));
-        $a['dls'] = $this->models->getDls ();
-        $a['cat'] = $this->models->getCat ();
-        $this->set($a);
-        $this->render ('index');
+        $cat['cat'] = $this->models->allGetCat ();
+        $this->set($cat);
+        $this->render('index');
     }
 
-    public function getNameDL () 
+    public function viewcat ()
     {
-        $name = Common::VarSecure($_GET['term'], null);
-        if (strlen($name) >= 3) {
-            $return = $this->models->getNameDls ($name);
-            $return = json_encode($return);
-            echo $return;
-        } else {
-            echo json_encode('Nom trop court');
-        }
-    }
-
-    public function Search ()
-    {
-        $name = Common::VarSecure($_POST['name']);
-        if (!empty($name) and strlen($name) >= 3) {
-            $get['name'] = $name;
-        }
-        $sorting = is_numeric($_POST['sorting']) ? $_POST['sorting'] : 1;
-        switch ($sorting) {
-            case '1':
-                $sorting = 'name';
-                $desc    = 'ASC';
-            break;
-
-            case '2':
-                $sorting = 'view';
-                $desc    = 'DESC';
-            break;
-
-            case '3':
-                $sorting = 'idcat';
-                $desc    = 'DESC';
-            break;
-
-            case '4':
-                $sorting = 'view';
-                $desc    = 'DESC';
-            break;
-
-            case '5':
-                $sorting = 'dls';
-                $desc    = 'DESC';
-                break;
-            
-            default:
-                $sorting = 'name';
-                $desc    = 'ASC';
-            break;
-        }
-        $get['sorting'] = $sorting;
-        if (isset($_POST['cat'])) {
-            $cat = is_numeric($_POST['cat']) ? $_POST['cat'] : 0;
-            if ($cat != 0) {
-                $get['cat'] = $cat;
+        if (ctype_digit($this->data[2])) {
+            $getdls['data'] = $this->models->getDlForID ($this->data[2]);
+            if (empty($getdls['data'])) {
+                Notification::infos('Aucune option de téléchargement n\'est présente dans la base de données.', 'information');
+                return false;
             }
+            $this->set($getdls);
+            $this->render('viewcat');
+        } else {
+            // error ID
         }
-        $a['dls'] = $this->models->getSearch ($get, $desc);
-        $a['cat'] = $this->models->getCat();
-        $this->set($a);
-        $this->render('search');
     }
 
-    public function view ()
+    public function viewdl ()
     {
-        $id = (int) $this->data[2];
-        $a['view'] = $this->models->view ($id);
-        $this->models->viewAdd ($id);
-        $this->set($a);
-        $this->render('view');
+        $id = $this->data[2];
+        if (ctype_digit($this->data[2])) {
+            $set['data'] = $this->models->getDlForID ($id);
+            $this->models->viewAdd($id);
+            $this->set($set);
+            $this->render('view');
+        } else {
+            // error ID
+        }
     }
 
     public function getDownload ()
