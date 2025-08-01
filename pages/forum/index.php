@@ -1,26 +1,16 @@
-<?php
-
-/**
- * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.4]
- * @link https://bel-cms.dev
- * @link https://determe.be
- * @license MIT License
- * @copyright 2015-2025 Bel-CMS
- * @author as Stive - stive@determe.be
- */
-
-use BelCMS\Core\User;
-use Belcms\Pages\Models\Forum;
-use BelCMS\Requires\Common;
-?>
 <section id="belcms_forum">
     <?php
+
+use BelCMS\Core\User;
+use BelCMS\Requires\Common;
+use Belcms\Pages\Models\Forum;
+
     foreach ($forum as $value):
-        echo '<div class="belcms_forum_title">
-            <a href="#" title="Titre Forum">' . $value->title . '</a>
-            <span>' . $value->subtitle . '</span>
-        </div>';
+    ?>
+    <div class="belcms_forum_cat">
+        <h3><?= $value->title; ?></h3>
+        <ul>
+        <?php
         foreach ($value->category as $v):
             $countMsg = isset($v->countMessage) ? $v->countMessage : 0;
             $countSubject = isset($v->countSubject) ? $v->countSubject : 0;
@@ -39,38 +29,31 @@ use BelCMS\Requires\Common;
                 $thread = '';
             }
         ?>
-            <div class="belcms_forum_cat">
-                <div class="belcms_forum_body">
-                    <span class="belcms_forum_ico"><i class="<?= $v->icon; ?>"></i></span>
-                    <span class="belcms_forum_main_title">
-                        <a href="#" title=""><?= $v->title; ?></a>
-                        <span><?= $v->subtitle; ?></span>
-                    </span>
-                    <span class="belcms_forum_subject">
-                        <dl class="belcms_forum_subject_pairs">
-                            <dt>Sujets</dt>
-                            <dd><?= $countSubject; ?></dd>
-                        </dl>
-                        <dl class="belcms_forum_subject_pairs">
-                            <dt>Messages</dt>
-                            <dd><?= $countMsg + $countSubject ; ?></dd>
-                        </dl>
-                    </span>
-                    <div class="belcms_last_msg">
-                        <div class="belcms_forum_avatar">
-                            <a href="Members/<?= $user; ?>" title="avatar_<?= $user; ?>">
-                                <img src="<?= $avatar; ?>" alt="avatar_<?= $user; ?>">
-                            </a>
-                        </div>
-                        <ul>
-                            <li><a href="Forum/Message/<?= $thread; ?>" title="<?= $title; ?>"><?= $title; ?></a></li>
-                            <li><?= $date; ?></li>
-                        </ul>
-                    </div>
+            <li>
+                <div class="belcms_forum_cat_logo">
+                    <i class="<?= $v->icon; ?>"></i>
                 </div>
-            </div>
-    <?php
+                <div class="belcms_forum_cat_title">
+                    <a href="#" title="#"><?= $v->title; ?></a>
+                    <span><?= $v->subtitle; ?></span>
+                </div>
+                <div class="belcms_forum_cat_infos">
+                    <span><?= $countSubject; ?> <b>sujets</b></span>
+                    <span><?= $countMsg + $countSubject ; ?> <b>réponses</b></span>
+                </div>
+                <div class="belcms_forum_cat_last_msg">
+                    <a href="#" title="#"><i class="fa-solid fa-book-open"></i> <?= $title; ?></a>
+                    <span> <a href="#" title="#"><i class="fa-solid fa-user"></i> <?= $user; ?></a>
+                        <i style="margin: 0px 3px 0px 5px;" class="fa-solid fa-clock"></i> <?= $date; ?>
+                    </span>
+                </div>
+            </li>
+        <?php
         endforeach;
+        ?>
+        </ul>
+    </div>
+    <?php 
     endforeach;
     ?>
 </section>

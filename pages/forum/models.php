@@ -60,7 +60,6 @@ final class Forum
         $sql = new BDD;
         $sql->table('TABLE_FORUM_THREAD');
         $sql->where(array('name' => 'id_cat', 'value' => $id));
-        $sql->limit(1);
         $sql->queryOne();
         $return = $sql->data;
         if (empty($return)) {
