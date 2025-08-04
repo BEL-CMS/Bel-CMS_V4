@@ -19,8 +19,7 @@
     display: block;
     width: 100%;
     overflow: hidden;
-    border: none;
-    box-shadow: 0px 2px 8px 0px #464950, 0px 0px 2px 2px #464950;
+    border: 2px solid rgb(0,0,0,.1)
 }
 .belcms_forum_cat > ul > li {
     display: block;
@@ -105,4 +104,67 @@
     line-height: 20px;
     padding: 0px 20px;
     margin-top: 8px;
+}
+.belcms_forum_cat_logo > img {
+    width: 35px;
+     margin-bottom: 10px;
+    margin-left: 7px;
+}
+#belcms_forum > button {
+    display: block;
+    float: left;
+    margin-bottom: 15px;
+}
+
+/* READ */
+
+.belcms_read {
+    width: 100%;
+    margin-bottom: 10px;
+    border: 1px solid #EBEBEB;
+    display: flex;
+    font-size: 1.1em;
+    background-color: rgba(255, 255, 255, 0.95);
+}
+.belcms_read_info {
+    width: 230px;
+    padding: 15px;
+    text-align: center;
+    border-right: 1px solid #EBEBEB;
+}
+.belcms_read_info img {
+    height: 90px;
+    width: 90px;
+    display: block;
+    margin: auto;
+    margin-bottom: 5px;
+}
+.belcms_read_info > span {
+    text-align: center;
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+}
+.belcms_read_msg {
+    float: left;
+    padding: 15px;
+    width: calc(100% - 230px);
+}
+.belcms_read_msg p {
+    display: block;
+    text-align: justify;
+    width: 100%;
+}
+.belcms_forum_title_read {
+    display: block;
+    font-weight: bold;
+    text-align: left;
+}
+.belcms_btn_read {
+    background-color: #eef2f7;
+    border: 1px solid #EBEBEB;
+    border-radius: 6px;
+    width: auto;
+    padding: 0 5px;
+    display: inline;
 }

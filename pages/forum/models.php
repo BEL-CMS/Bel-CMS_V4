@@ -12,6 +12,7 @@
 namespace Belcms\Pages\Models;
 
 use BelCMS\PDO\BDD;
+use BelCMS\Requires\Common;
 
 if (!defined('CHECK_INDEX')):
     header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
@@ -114,5 +115,96 @@ final class Forum
         $sql->count();
         $return = $sql->data;
         return $return;
+    }
+
+    public function getThreads ($id)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_FORUM_THREAD');
+        $sql->where(array('name' => 'id_cat', 'value' => $id));
+        $sql->queryAll();
+        $return = $sql->data;
+        return $return;
+    }
+
+    public static function readNbMsg($id)
+    {
+        $id = Common::VarSecure($id, null);
+        $sql = new BDD;
+        $sql->table('TABLE_FORUM_MSG');
+        $sql->where(array('name' => 'id_mdg', 'value' => $id));
+        $sql->count();
+        $return = $sql->data;
+        return $return;
+    }
+    public static function lastMsgRead ($id)
+    {
+        $sql = new BDD;
+        $sql->table ('TABLE_FORUM_MSG');
+        $sql->where(array('name' => 'id_mdg', 'value' => $id));
+        $sql->orderby(array(array('name' => 'date_post', 'type' => 'DESC')));
+        $sql->limit(1);
+        $sql->queryOne();
+        $return = $sql->data;
+        return $return;
+    }
+
+    public function getTitleMsg ($id)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_FORUM_THREAD');
+        $sql->where(array('name' => 'id_message', 'value' => $id));
+        $sql->queryOne();
+        $return = $sql->data;
+        return $return;
+    }
+
+    public function getReadMsg ($id)
+    {
+        $sql = new BDD;
+        $sql->table ('TABLE_FORUM_MSG');
+        $sql->where(array('name' => 'id_mdg', 'value' => $id));
+        $sql->orderby(array(array('name' => 'id', 'type' => 'ASC')));
+        $sql->queryAll();
+        $return = $sql->data;
+        return $return; 
+    }
+
+    public function sendReply ($data)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_FORUM_MSG');
+        $sql->insert($data);
+        if ($sql->rowCount == 1) {
+            $return['text'] = constant('SEND_SUCCESS');
+            return $return;
+        } else {
+            $return['text'] = constant('SAVE_BDD_ERROR');
+            return $return;
+        }
+    }
+
+    public function sendThread ($data)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_FORUM_THREAD');
+        $sql->insert($data); 
+        if ($sql->rowCount == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function sendMsg ($data)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_FORUM_MSG');
+        $sql->insert($data); 
+        if ($sql->rowCount == 1) {
+            return true;
+        } else {
+            return false;
+        }  
     }
 }
