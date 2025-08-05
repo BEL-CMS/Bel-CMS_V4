@@ -42,7 +42,9 @@ class Downloads extends Pages
             $this->set($getdls);
             $this->render('viewcat');
         } else {
-            // error ID
+            Notification::error('Erreur ID', 'ERREUR ID');
+		    $referer = (!empty($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : 'downloads';
+		    $this->redirect($referer, 3);
         }
     }
 
@@ -55,7 +57,9 @@ class Downloads extends Pages
             $this->set($set);
             $this->render('view');
         } else {
-            // error ID
+            Notification::error('Erreur ID', 'ERREUR ID');
+		    $referer = (!empty($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : 'downloads';
+		    $this->redirect($referer, 3);
         }
     }
 
@@ -67,6 +71,10 @@ class Downloads extends Pages
 				$download = $this->models->getDownloads($id);
 				$this->linkHeader($download);
 			}
-		}
+		} else {
+            Notification::error('Erreur ID', 'ERREUR ID');
+		    $referer = (!empty($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : 'downloads';
+		    $this->redirect($referer, 3); 
+        }
 	}
 }

@@ -53,4 +53,50 @@ final class Articles
         $return = $sql->data;
         return $return;
     }
+
+    public static function getCountView ($id)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_ARTICLES_CONTENT');
+        $sql->where(array('name' => 'id_articles', 'value' => $id));
+        $sql->count();
+        return $sql->data;
+    }
+
+    public function getAllArticles ($id)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_ARTICLES_CONTENT');
+        $sql->where(array('name' => 'id_articles', 'value' => $id));
+        $sql->orderby(array(array('name' => 'pagenumber', 'type' => 'ASC')));
+        $sql->queryAll();
+        $return = $sql->data;
+        return $return;        
+    }
+
+    public function read ($id)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_ARTICLES_CONTENT');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->queryOne();
+        $return = $sql->data;
+        return $return;
+    }
+
+    public function viewOne ($id)
+    {
+        $query = new BDD;
+        $query->table('TABLE_ARTICLES_CONTENT');
+        $query->where(array('name' => 'id', 'value' => $id));
+        $query->queryOne();
+        $count = $query->data;
+
+        $count = $count->view + 1;
+
+        $update = new BDD;
+        $update->table('TABLE_ARTICLES_CONTENT');
+        $update->where(array('name' => 'id', 'value' => $id));
+        $update->update(array('view' => $count));
+    }
 }

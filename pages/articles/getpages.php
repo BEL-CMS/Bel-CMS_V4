@@ -9,7 +9,7 @@
  * @author as Stive - stive@determe.be
  */
 
-use Belcms\Pages\Models\Articles;
+use BelCMS\Core\User;
 use BelCMS\Requires\Common;
 
 if (!defined('CHECK_INDEX')):
@@ -23,23 +23,25 @@ endif;
             <tr>
                 <th scope="col">Nom</th>
                 <th scope="col">Date de parution</th>
-                <th scope="col">Nombre de page(s)</th>
+                <th scope="col">Author</th>
                 <th scope="col">Nombre de vu</th>
+                <th scope="col">Lecture</th>
             </tr>
         </thead>
         <tbody>
         <?php
         foreach ($data as $key => $value):
-            $countView = Articles::getCountView($value->id_articles);
+        if (User::ifUserExist($value->author)) {
+            $author = User::getInfosUserAll($value->author)->user->username;
+        }
         ?>
-            <tr>
-                <th scope="row">
-                    <button onclick="location.href='articles/getpages/<?= $value->id_articles; ?>'" type="button" class="btn belcms_btn"><?= $value->name; ?></button>
-                </th>
-                <td><?= Common::TransformDate($value->publish, 'FULL', 'MEDIUM'); ?></td>
-                <td><?= $value->nbpage; ?></td>
-                <td><?= $countView; ?></td>
-            </tr>
+        <tr>
+            <th scope="row"><a href="articles/read/<?= $value->id; ?>" title="<?= $value->name; ?>"><h2> <?= $value->name; ?></h2></a></th>
+            <td><?= Common::TransformDate($value->publish, 'FULL', 'MEDIUM'); ?></td>
+            <td><?= $author; ?></td>
+            <td><?= $value->view; ?></td>
+            <td><button onclick="location.href='articles/read/<?= $value->id; ?>'" type="button" class="btn btn-info">Lire</button></td>
+        </tr>
         <?php
         endforeach;
         ?>

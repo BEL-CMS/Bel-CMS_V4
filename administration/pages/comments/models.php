@@ -1,74 +1,72 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 3.0.5 [PHP8.3]
+ * @version 4.0.0 [PHP8.4]
  * @link https://bel-cms.dev
  * @link https://determe.be
- * @license http://opensource.org/licenses/GPL-3.-copyleft
- * @copyright 2015-2024 Bel-CMS
+ * @license MIT License
+ * @copyright 2015-2025 Bel-CMS
  * @author as Stive - stive@determe.be
  */
-
-namespace Belcms\Pages\Models;
-use BelCMS\PDO\BDD as BDD;
-use BelCMS\Requires\Common;
 
 if (!defined('CHECK_INDEX')):
     header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
     exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
 endif;
 
-final class Comments
+use BelCMS\PDO\BDD;
+#####################################
+# Infos tables
+#####################################
+# TABLE_COMMENTS
+# TABLE_FORBIDEN_WORD
+#####################################
+final class ModelsComments
 {
-	public function insertComment ($data = false) : array
-	{
-		if ($data !== false) {
-			if (strlen($_SESSION['USER']->user->hash_key) != 32) {
-				$return['text'] = 'Erreur Login';
-				$return['type'] = 'error';
-				return $return;
-			} else {
-				$data['hash_key'] = $_SESSION['USER']->user->hash_key;
-				unset($data['user']);
-			}
+    public function getComments ()
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_COMMENTS');
+        $sql->orderby(array('id', 'DESC'));
+        $sql->queryAll();
+        $return = $sql->data;
+        return $return;
+    }
 
-			if (empty($data['text'])) {
-				$return['text'] = constant('COMMENT_EMPTY');
-				$return['type'] = 'error';
-				return $return;
-			} else {
-				$data['comment'] = Common::VarSecure($data['text'], '<a><b><p><strong><i>');
-				unset($data['text']);
-			}
+    public function getComment ($id)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_COMMENTS');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->queryOne();
+        $return = $sql->data;
+        return $return;
+    }
 
-			if (empty($data['url'])) {
-				$return['text'] = constant('URL_EMPTY');
-				$return['type'] = 'error';
-				return $return;
-			} else {
-				$data['url'] = Common::VarSecure($data['url'], '');
-				$data['url'] = explode('/', $data['url']);
-				$data['page'] = $data['url'][0];
-				$data['page_sub'] = $data['url'][1];
-				$data['page_id'] = (int) $data['url'][2];
-				unset($data['url']);
-			}
+    public function sendEdit ($comment, $id) : bool
+    {
+        $upd['comment'] = $comment;
+        $sql = new BDD;
+        $sql->table('TABLE_COMMENTS');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->update($upd);
+        if ($sql->rowCount == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-			$sql = New BDD();
-			$sql->table('TABLE_COMMENTS');
-			$sql->insert($data);
-
-			if ($sql->rowCount == 1) {
-				$return['text']	= constant('COMMENT_SEND_TRUE');
-				$return['type']	= 'success';
-			} else {
-				$return['text']	= constant('COMMENT_SEND_FALSE');
-				$return['type']	= 'danger';
-			}
-
-		} else {
-			$return = false;
-		}
-		return $return;
-	}
+    public function delete ($id) : bool
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_COMMENTS');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->delete();
+        if ($sql->rowCount == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

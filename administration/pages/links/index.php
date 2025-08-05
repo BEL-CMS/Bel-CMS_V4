@@ -9,30 +9,71 @@
  * @copyright 2015-2025 Bel-CMS
  * @author as Stive - stive@determe.be
  */
+
+use BelCMS\Core\User;
+use BelCMS\Requires\Common;
+
+if (!defined('CHECK_INDEX')):
+    header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
+    exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
+endif;
 ?>
-<section id="belcms_links">
-    <h2>Galerie de lien</h2>
-    <div id="belcms_links_menu" class="mb-3 mt-3">
-        [ <a class="active" href="Links" title="Lien">Index</a> | <a href="Links/new" title="Nouveau liens">Nouveaux lien</a> | <a href="Links/popular" title="les plus Populaire">Les liens les plus fréquentés.</a> | <a href="Links/propose" title="Proposé un lien">Proposé un lien</a> ]
-    </div>
-    <div id="belcms_links_cat" class="row mb-3 mt-3">
-        <?php
-        foreach ($cat as $k => $v):
-        ?>
-            <div class="col-sm-6 mb-3 mb-sm-0">
-            <div class="card shadow bg-body-tertiary rounded">
+<div class="card-body">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card custom-card">
+                <div class="card-header">
+                    <div class="card-title">
+                        Liste de(s) lien(s)
+                    </div>
+                </div>
                 <div class="card-body">
-                    <h5 class="card-title"><?= $v->name; ?></h5>
-                    <div class="card-text"><?= $v->description; ?></div>
-                    <a href="links/cat/<?= $v->id; ?>" style="background:<?= $v->color?> !important;color: #000" class="btn btn-primary">Voir le lien</a>
+                    <div class="table-responsive">
+                        <table class="table table-bordered text-nowrap w-100 DataTableBelCMS">
+                            <thead>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Lien</th>
+                                    <th>Auteur</th>
+                                    <th>Date de l'ajout</th>
+                                    <th>Options</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                foreach ($links as $key => $value):
+                                    if (User::ifUserExist($value->author)) {
+                                        $user = User::getInfosUserAll($value->author);
+                                        $user = $user;
+                                        $author = $user->user->username;
+                                    } elseif (!empty($value->author)) {
+                                        $author = $value->author;
+                                    } else {
+                                        $author = 'Utilisateur inconnu';
+                                    }
+                                ?>
+                                    <tr>
+                                        <td><?= $value->name; ?></td>
+                                        <td><a target="_blank" href="<?= $value->link; ?>"><?= $value->link; ?></a></td>
+                                        <td><?= $author; ?></td>
+                                        <td><?= Common::TransformDate($value->date_insert, 'FULL', 'MEDIUM'); ?></td>
+                                        <td align="center">
+                                            <a href="links/delete/<?= $value->id; ?>?admin&option=pages" class="btn btn-danger label-end rounded-pill">
+                                                Supprimer
+                                            </a>&emsp;
+                                            <a href="links/editdls/<?= $value->id; ?>?admin&option=pages" class="btn btn-warning rounded-pill">
+                                                Editer
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <?php
+                                endforeach
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-            </div>
-        <?php
-        endforeach;
-        ?>
+        </div>
     </div>
-    <div id="belcms_links_stats">
-        ( Il y a <i><?= $nblink; ?></i> Liens & <i><?= $nbcat; ?></i> Catégories dans la base de données )
-    </div>
-</section>
+</div>

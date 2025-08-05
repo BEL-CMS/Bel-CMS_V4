@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Bel-CMS [Content management system]
  * @version 4.0.0 [PHP8.4]
@@ -12,7 +11,11 @@
 
 namespace Belcms\Pages\Controller;
 
+use BelCMS\Core\Notification;
 use BelCMS\Core\Pages;
+use BelCMS\Core\Secure;
+use BelCMS\Core\Security;
+use Dom\Notation;
 
 if (!defined('CHECK_INDEX')):
     header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
@@ -25,25 +28,50 @@ class Articles extends Pages
 
     public function index ()
     {
-        $a['articles'] = $this->models->getArticles ();
+        $a['data'] = $this->models->getArticles ();
+        foreach ($a['data'] as $key => $value) {
+            $countPage = $this->models->getCountView($value->id_articles);
+            $a['data'][$key]->nbpage = $countPage;
+        }
         $this->set($a);
-        $this->render ('index');
+        $this->render('index');
     }
 
-    public function category ()
+    public function getpages ()
     {
-        $hash = is_string($this->data[2]) ? $this->data[2] : 'ERROR ID';
-        $a['category'] = $this->models->getCategory ($hash);
-        $this->set($a);
-        $this->render('category');
+        $id = $this->data[2];
+        if (ctype_alnum($id)) {
+            $a['data'] = $this->models->getAllArticles ($id);
+            foreach ($a['data'] as $key => $value) {
+                if (Security::IsAcess ($value->accessgrp) !== true) {
+                   unset($a['data'][$key]); 
+                }
+            }
+            $this->set($a);
+            $this->render('getpages');
+        } else {
+            Notification::error('Erreur ID', 'ERREUR ID');
+		    $referer = (!empty($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : 'articles';
+		    $this->redirect($referer, 3);
+        }
     }
 
-    public function view ()
+    public function read ()
     {
-        $hash   = is_string($this->data[2]) ? $this->data[2] : 'ERROR ID';
-        $number = is_numeric($this->data[3]) ? $this->data[3] : 1; 
-        $a['article'] = $this->models->getArticlesContent ($hash, $number);
-        $this->set($a);
-        $this->render('renderview');
+        $id = $this->data[2];
+        if (ctype_alnum($id)) {
+            $a['data'] = $this->models->read ($id);
+            if (Security::IsAcess ($a['data']->accessgrp) !== true) {
+                Notification::warning('Vous ne pouvez pas consulter cette page', 'Page');
+                return;
+            }
+            $this->models->viewOne ($id);
+            $this->set($a);
+            $this->render('read');
+        } else {
+            Notification::error('Erreur ID', 'ERREUR ID');
+		    $referer = (!empty($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : 'articles';
+		    $this->redirect($referer, 3);
+        }
     }
 }

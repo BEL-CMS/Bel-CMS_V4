@@ -9,111 +9,80 @@
  * @author as Stive - stive@determe.be
  */
 
-namespace Belcms\Pages\Models;
-
-use BelCMS\PDO\BDD;
-
 if (!defined('CHECK_INDEX')):
     header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
     exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
 endif;
 
-############################################
-#  TABLE_FORUM
-#  TABLE_FORUM_MSG
-#  TABLE_FORUM_NAME 
-#  TABLE_FORUM_THREAD
-############################################
-final class Forum
+use BelCMS\PDO\BDD;
+
+#####################################
+# Infos tables
+#####################################
+# TABLE_FORUM
+# TABLE_FORUM_MSG
+# TABLE_FORUM_NAME
+# TABLE_FORUM_THREADS
+#####################################
+final class ModelsForum
 {
-    public function getNameForum ()
+    public function getAllMsg()
     {
         $sql = new BDD;
-        $sql->table ('TABLE_FORUM');
+        $sql->table('TABLE_FORUM_MSG');
         $sql->queryAll();
         $return = $sql->data;
         return $return;
     }
-
-    public function getForumForID ($id)
+    public function getForum ()
     {
         $sql = new BDD;
-        $sql->table ('TABLE_FORUM_NAME');
-        $sql->where(array('name' => 'id_forum', 'value' => $id));
+        $sql->table('TABLE_FORUM');
         $sql->queryAll();
         $return = $sql->data;
         return $return;
     }
-
-    public function category ($id)
+    public function getNameForum ($id)
     {
         $sql = new BDD;
-        $sql->table('TABLE_FORUM_THREAD');
-        $sql->where(array('name' => 'id_cat', 'value' => $id));
-        $sql->count();
+        $sql->table('TABLE_FORUM');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->queryOne();
         $return = $sql->data;
         return $return;
     }
-
-    public function getIdMsg ($id)
+    public function getCat ()
     {
         $sql = new BDD;
-        $sql->table('TABLE_FORUM_THREAD');
-        $sql->where(array('name' => 'id_cat', 'value' => $id));
-        $sql->limit(1);
-        $sql->queryOne();
+        $sql->table('TABLE_FORUM_NAME');
+        $sql->queryAll();
         $return = $sql->data;
-        if (empty($return)) {
-            return null;
+        return $return;
+    }
+    public function getThreads()
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_FORUM_THREADS');
+        $sql->queryAll();
+        $return = $sql->data;
+        return $return;
+    }
+    public function AddCatMain ($data) : array
+    {
+        $sql =new BDD;
+        $sql->table('TABLE_FORUM');
+        $sql->insert($data);
+        if ($sql->rowCount == true) {
+            $array = array(
+                'type' => 'success',
+                'text' => constant('SEND_SUCCESS')
+            );
         } else {
-            return $return;
+            $array = array(
+                'type' => 'warning',
+                'text' => constant('EDIT_ERROR')
+            );
         }
-    }
-
-    public static function getLastMsg ($id)
-    {
-        $sql = new BDD;
-        $sql->table('TABLE_FORUM_MSG');
-        $sql->where(array('name' => 'id_mdg', 'value' => $id));
-        $sql->limit(1);
-        $sql->orderby(array(array('name' => 'date_post', 'type' => 'DESC')));
-        $sql->queryOne();
-        $return = $sql->data;
-        if (empty($return)) {
-            return false;
-        } else {
-            return $return;
-        }
-    }
-
-    public function getMsgForID ($id)
-    {
-        $sql = new BDD;
-        $sql->table ('TABLE_FORUM_MSG');
-        $sql->where(array('name' => 'id_mdg', 'value' => $id));
-        $sql->orderby(array(array('name' => 'date_post', 'type' => 'DESC')));
-        $sql->limit(1);
-        $sql->queryOne();
-        $return = $sql->data;
-        return $return;
-    }
-    public function getCountMsg ($id)
-    {
-        $sql = new BDD;
-        $sql->table('TABLE_FORUM_MSG');
-        $sql->where(array('name' => 'id_mdg', 'value' => $id));
-        $sql->count();
-        $return = $sql->data;
-        return $return;
-    }
-
-    public function getNbsubject ($id)
-    {
-        $sql = new BDD;
-        $sql->table('TABLE_FORUM_THREAD');
-        $sql->where(array('name' => 'id_cat', 'value' => $id));
-        $sql->count();
-        $return = $sql->data;
-        return $return;
+        return $array;
     }
 }

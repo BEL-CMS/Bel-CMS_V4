@@ -9,26 +9,42 @@
  * @author as Stive - stive@determe.be
  */
 
-namespace Belcms\Pages\Models;
-use BelCMS\PDO\BDD;
-use BelCMS\Core\Config;
-use BelCMS\Core\Dispatcher;
-use BelCMS\Core\GetHost;
-use BelCMS\Core\User;
-use BelCMS\Requires\Common;
-
 if (!defined('CHECK_INDEX')):
     header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
     exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
 endif;
 
-############################################
-#  TABLE_GALLERY
-#  TABLE_GALLERY_CAT
-############################################
-final class Gallery
+use BelCMS\PDO\BDD;
+
+#####################################
+# Infos tables                      #
+#####################################
+# TABLE_GALLERY                     #
+# TABLE_GALLERY_CAT                 #
+#####################################
+final class ModelsGallery
 {
-    public function getCategory ()
+    public function getGallery ()
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_GALLERY');
+        $sql->where(array('name' => 'valid', 'value' => 1));
+        $sql->queryAll();
+        $return = $sql->data;
+        return $return;
+    }
+
+    public function getGalleryValid()
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_GALLERY');
+        $sql->where(array('name' => 'valid', 'value' => 1));
+        $sql->queryAll();
+        $return = $sql->data;
+        return $return;
+    }
+
+    public function cat ()
     {
         $sql = new BDD;
         $sql->table('TABLE_GALLERY_CAT');
@@ -37,88 +53,156 @@ final class Gallery
         return $return;
     }
 
-    public function getImg ($id)
+    public function getcat ($id)
     {
-        $where[] = array('name' => 'valid', 'value' => 1);
-        $where[] = array('name' => 'id_cat', 'value' => $id);
         $sql = new BDD;
-        $sql->table('TABLE_GALLERY');
-        $sql->where($where);
-        $config = Config::GetConfigPage('gallery');
-        if (isset($config->config['MAX_PAGE'])) {
-            $nbpp = (int) $config->config['MAX_PAGE'];
-        } else {
-            $nbpp = (int) 6;
-        }
-        $page = (Dispatcher::RequestPages() * $nbpp) - $nbpp;
-        $sql->orderby(array(array('name' => 'id', 'type' => 'DESC')));
-        $sql->limit(array(0 => $page, 1 => $nbpp), true);
+        $sql->table('TABLE_GALLERY_CAT');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->queryOne();
+        $return = $sql->data;
+        return $return;
+    }
+
+    public function groups ()
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_GROUPS');
         $sql->queryAll();
         $return = $sql->data;
         return $return;
     }
 
-    public function getImgNew()
+    public function addCat ($data)
     {
         $sql = new BDD;
-        $sql->table('TABLE_GALLERY');
-        $sql->orderby(array(array('name' => 'id', 'type' => 'ASC')));
-        $sql->limit(6);
-        $sql->where(array('name' => 'valid', 'value' => 1));
-        $sql->queryAll();
-        $return = $sql->data;
+        $sql->table('TABLE_GALLERY_CAT');
+        $sql->insert($data);
+        $return = $sql->rowCount;
+        if ($return == 1) {
+            $return = true;
+        } else {
+            $return = false;
+        }
         return $return;
     }
 
-    public function insertTmp ($data)
+    public function editCat ($data, $id)
     {
-        $insert['url'] = $data['image'];
-        $insert['name'] = $data['name'];
-        $insert['description'] = $data['description'];
-        $insert['author'] = User::isLogged() ? $_SESSION['USER']->user->hash_key : Common::GetIp();
-        $insert['valid'] = 0;
-        if (!empty($insert['author'])) {
-            $sql = new BDD;
-            $sql->table('TABLE_GALLERY');
-            $sql->insert($insert);
+        $sql = new BDD;
+        $sql->table('TABLE_GALLERY_CAT');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->update($data);
+        $return = $sql->rowCount;
+        if ($return == 1) {
+            $return = true;
+        } else {
+            $return = false;
         }
+        return $return;
     }
 
-    public function addVote ($insert)
+    public function addNew ($data)
     {
-        $where[]  = array('name' => 'num',    'value' => $insert['num']);
-        $where[]  = array('name' => 'name',   'value' => $insert['name']);
-        $where[]  = array('name' => 'author', 'value' => $insert['author']);
         $sql = new BDD;
-        $sql->table('TABLE_LIKE');
-        $sql->where($where);
-        $sql->count();
-        $return = $sql->data;
-        if ($return != 0) {
-            $message['msg']  = 'Vous avez déjà fait entendre votre voix en votant.';
-            $message['type'] = 'error';
+        $sql->table('TABLE_GALLERY');
+        $sql->insert($data);
+        $return = $sql->rowCount;
+        if ($return == 1) {
+            $return = true;
         } else {
-            $new = new BDD;
-            $new->table('TABLE_LIKE');
-            $new->insert($insert);
-            $message['msg']  = 'Vous avez participé au vote.';
-            $message['type'] = 'error';
+            $return = false;
         }
-        return $message;
+        return $return;
     }
 
-     public function getVote ($id)
+    public function delimg ($id)
     {
-        $where[]  = array('name' => 'num', 'value'    => $id);
-        $where[]  = array('name' => 'name', 'value'   => 'gallery');
+        $del = new BDD;
+        $del->table('TABLE_GALLERY');
+        $del->where(array('name' => 'id', 'value' => $id));
+        $del->queryOne();
+        $a = $del->data;
+        #####################################
         $sql = new BDD;
-        $sql->table('TABLE_LIKE');
-        $sql->where($where);
-        $sql->count();
-        if ($sql->data == 0) {
-            $return = 0;
+        $sql->table('TABLE_GALLERY');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->delete();
+        #####################################
+        $return = $sql->rowCount;
+        if ($return == 1) {
+            @unlink($a->url);
+            $return = true;
         } else {
+            $return = false;
+        }
+        return $return;
+    }
+
+    public function deletecat($id)
+    {
+        $del = new BDD;
+        $del->table('TABLE_GALLERY_CAT');
+        $del->where(array('name' => 'id', 'value' => $id));
+        $del->queryOne();
+        $a = $del->data;
+        #####################################
+        $sql = new BDD;
+        $sql->table('TABLE_GALLERY_CAT');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->delete();
+        #####################################
+        $return = $sql->rowCount;
+        if ($return == 1) {
+            @unlink($a->background);
+            $return = true;
+        } else {
+            $return = false;
+        }
+        return $return;
+    }
+
+    public function getimg($id)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_GALLERY');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->queryOne();
+        $return = $sql->rowCount;
+        if ($return == 1) {
             $return = $sql->data;
+        } else {
+            $return = false;
+        }
+        return $return;
+    }
+
+    public function sendedit ($data, $id)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_GALLERY');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->update($data);
+        $return = $sql->rowCount;
+        if ($return == 1) {
+            $return = true;
+        } else {
+            $return = false;
+        }
+        return $return;
+    }
+
+    public function read ($hash)
+    {
+        $upd['status'] = 1;
+        $sql = new BDD;
+        $sql->table('TABLE_GALLERY');
+        $sql->where(array('name' => 'hash', 'value' => $hash));
+        $sql->update($upd);
+        $return = $sql->rowCount;
+        if ($return == 1) {
+            $return = true;
+        } else {
+            $return = false;
         }
         return $return;
     }

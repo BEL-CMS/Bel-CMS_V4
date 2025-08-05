@@ -3,6 +3,26 @@ section#belcms_articles {
     width: 100%;
     position: relative;
 }
-#belcms_articles table {
-    border: 1px solid var(--bs-table-hover-color) !important;
+#belcms_articles > table {
+    border: 1px solid #505050;
+}
+#belcms_articles thead {
+    border: 1px solid rgba(255,255,255,.2);
+}
+#belcms_articles thead th {
+    padding-left: 5px;
+    font-weight: bolder;
+}
+th[scope="row"] {
+    background: rgba(255,255,255,.2);
+    margin: auto;
+    padding: auto;
+}
+th[scope="col"] {
+  background-color: #505050;
+  color: #fff;
+  text-align: center;
+}
+tbody tr td {
+    text-align: center;
 }

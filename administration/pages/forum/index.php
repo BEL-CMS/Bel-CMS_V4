@@ -11,66 +11,73 @@
  */
 
 use BelCMS\Core\User;
-use Belcms\Pages\Models\Forum;
 use BelCMS\Requires\Common;
+
+if (!defined('CHECK_INDEX')):
+    header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
+    exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
+endif;
 ?>
-<section id="belcms_forum">
-    <?php
-    foreach ($forum as $value):
-        echo '<div class="belcms_forum_title">
-            <a href="#" title="Titre Forum">' . $value->title . '</a>
-            <span>' . $value->subtitle . '</span>
-        </div>';
-        foreach ($value->category as $v):
-            $countMsg = isset($v->countMessage) ? $v->countMessage : 0;
-            $countSubject = isset($v->countSubject) ? $v->countSubject : 0;
-            if (isset($v->threads)) {
-                $last   = Forum::getLastMsg($v->threads->id_message);
-                $avatar = User::getInfosUserAll($last->author);
-                $user   = $avatar->user->username;
-                $avatar = $avatar->profils->avatar;
-                $date   = Common::TransformDate($last->date_post, 'MEDIUM', 'SHORT');
-                $title  = $v->threads->title;
-                $thread = $v->threads->id_message;
-            } else {
-                $avatar = '';
-                $date   = '';
-                $title  = '';
-                $thread = '';
-            }
-        ?>
-            <div class="belcms_forum_cat">
-                <div class="belcms_forum_body">
-                    <span class="belcms_forum_ico"><i class="<?= $v->icon; ?>"></i></span>
-                    <span class="belcms_forum_main_title">
-                        <a href="#" title=""><?= $v->title; ?></a>
-                        <span><?= $v->subtitle; ?></span>
-                    </span>
-                    <span class="belcms_forum_subject">
-                        <dl class="belcms_forum_subject_pairs">
-                            <dt>Sujets</dt>
-                            <dd><?= $countSubject; ?></dd>
-                        </dl>
-                        <dl class="belcms_forum_subject_pairs">
-                            <dt>Messages</dt>
-                            <dd><?= $countMsg + $countSubject ; ?></dd>
-                        </dl>
-                    </span>
-                    <div class="belcms_last_msg">
-                        <div class="belcms_forum_avatar">
-                            <a href="Members/<?= $user; ?>" title="avatar_<?= $user; ?>">
-                                <img src="<?= $avatar; ?>" alt="avatar_<?= $user; ?>">
-                            </a>
-                        </div>
-                        <ul>
-                            <li><a href="Forum/Message/<?= $thread; ?>" title="<?= $title; ?>"><?= $title; ?></a></li>
-                            <li><?= $date; ?></li>
-                        </ul>
+<div class="card-body">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card custom-card">
+                <div class="top-left"></div>
+                <div class="top-right"></div>
+                <div class="bottom-left"></div>
+                <div class="bottom-right"></div>
+                <div class="card-header">
+                    <div class="card-title">
+                        Liste des messages du forum
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered text-nowrap w-100 DataTableBelCMS">
+                            <thead>
+                                <tr>
+                                    <th>CODE ID</th>
+                                    <th>Auteur</th>
+                                    <th>Date</th>
+                                    <th>Message</th>
+                                    <th>Options</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                foreach ($message as $v):
+                                    if (User::ifUserExist($v->author)) {
+                                        $username = User::getInfosUserAll($v->author);
+                                        $username = $username->user->username;
+                                    } else {
+                                        $username = $v->author;
+                                    }
+                                    $dateMsg = Common::TransformDate($v->date_post, 'FULL', 'MEDIUM');
+                                    $content = Common::truncate($v->content, 50);
+                                    $content = Common::VarSecure($content, null);
+                                ?>
+                                    <tr>
+                                        <td><?= $v->id_mdg; ?></td>
+                                        <td><?= $username; ?></td>
+                                        <td><?= $dateMsg; ?></td>
+                                        <td><?= $content; ?></td>
+                                        <td>
+                                            <button class="btn btn-info label-btn rounded-pill" onclick="location.href='registration/edit/<?= $v->id; ?>?admin&option=users'">
+                                                <i class="ri-settings-4-line label-btn-icon me-2"></i>Edition
+                                            </button>&nbsp; &nbsp;
+                                            <button class="btn btn-danger label-btn label-end rounded-pill" onclick="location.href='registration/del/<?= $v->id; ?>?admin&option=users'">Supprimer
+                                                <i class="ri-close-line label-btn-icon ms-2 rounded-pill"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                <?php
+                                endforeach;
+                                ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-    <?php
-        endforeach;
-    endforeach;
-    ?>
-</section>
+        </div>
+    </div>
+</div>
