@@ -34,7 +34,7 @@ class Downloads extends Pages
     public function viewcat ()
     {
         if (ctype_digit($this->data[2])) {
-            $getdls['data'] = $this->models->getDlForID ($this->data[2]);
+            $getdls['data'] = $this->models->getAllDlForID ($this->data[2]);
             if (empty($getdls['data'])) {
                 Notification::infos('Aucune option de téléchargement n\'est présente dans la base de données.', 'information');
                 return false;

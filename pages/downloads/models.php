@@ -38,6 +38,18 @@ final class Downloads
 
     public function getDlForID ($id)
     {
+        $where = array('name' => 'id', 'value' => $id);
+        $sql = new BDD;
+        $sql->table('TABLE_DOWNLOADS');
+        $sql->where($where);
+        $sql->queryOne();
+        $return = $sql->data;
+        return $return;
+    }
+
+
+    public function getAllDlForID ($id)
+    {
         $where = array('name' => 'id_groups', 'value' => $id);
         $sql = new BDD;
         $sql->table('TABLE_DOWNLOADS');
