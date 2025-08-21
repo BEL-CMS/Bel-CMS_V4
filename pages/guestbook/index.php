@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Bel-CMS [Content management system]
  * @version 4.0.0 [PHP8.4]
@@ -9,54 +8,71 @@
  * @copyright 2015-2025 Bel-CMS
  * @author as Stive - stive@determe.be
  */
-
 use BelCMS\Core\User;
 use BelCMS\Requires\Common;
 
+if (User::isLogged()) {
+    $user   = $_SESSION['USER']->user->hash_key;
+    $avatar = $_SESSION['USER']->profils->avatar;
+    if (!empty($user)) {
+        $read = 'readonly';
+    }
+} else {
+    $user   = '';
+    $avatar = constant('DEFAULT_AVATAR');
+    $read = '';
+}
 ?>
-<section id="belcms_guestbook">
-    <div class="container">
-        <div class="row">
+<div class="belcms_guestbook_container">
+    <div class="belcms_guestbook_title">Livre d'or</div>
+    <?php
+    foreach ($guest as $key => $value):
+    ?>
+    <div class="belcms_guestbook_entry">
+        <div class="belcms_guestbook_avatar">
             <?php
-            foreach ($guest as $v):
+            if (strlen($value->author) == 32) {
+                $valueUser = User::getInfosUserAll($value->author);
+                $username  = $valueUser->user->username;
+                $user_avatar = $valueUser->profils->avatar;
+                if (empty($user_avatar)) {
+                    $user_avatar = constant('DEFAULT_AVATAR');
+                }
+            } else {
+                $user_avatar = constant('DEFAULT_AVATAR');
+            }
             ?>
-            <div class="col-lg-6 col-sm-12 col-xsm-12 belcms_guestbook_block">
-                <div id="belcms_guestbook_table">
-                    <div class="belcms_guestbook_user">
-                        <a href="#" title="#"><?= $v->author; ?></a>
-                        <div class="date"><?= Common::TransformDate($v->date_insert, 'FULL', 'MEDIUM'); ?></div>
-                        <div class="belcms_guestbook_message">
-                            <?= $v->message; ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <?php
-            endforeach;
-            ?>
-            <div class="col-lg-12 col-sm-12 col-xsm-12">
-                <form action="Guestbook/new" method="post" class="mt-2">
-                    <?php
-                    if (isset($_SESSION['USER']) and User::ifUserExist($_SESSION['USER']->user->hash_key) == true):
-                        $input = '<input name="user" type="text" readonly value="' . $_SESSION['USER']->user->username . '" class="form-select mb-2">';
-                    else:
-                        $input = '<input name="user" type="text" readonly value="' . Common::GetIp() . '" class="form-select mb-2">';
-                    endif;
-                    ?>
-                    <?= $input; ?>
-                    <div class="input-group mb-2">
-                        <textarea name="msg" class="bel_cms_textarea_simple"></textarea>
-                    </div>
-                    <div class="input-group mb-1">
-                        <label class="input-group-text" for="captcha"><?= $_SESSION['CAPTCHA']['CODE']; ?></label>
-                        <input type="number" placeholder="Trouve la solution du calcul." name="captcha" class="form-control" id="captcha">
-                    </div>
-                    <div>
-                        <input type="hidden" name="captcha_value" value="">
-                        <input type="submit" class="btn btn-warning" value="<?= constant('SEND'); ?>">
-                    </div>
-                </form>
-            </div>
+            <img src="<?= $user_avatar; ?>" alt="Avatar de <?= $username; ?>">
+        </div>
+        <div class="belcms_guestbook_content">
+            <div class="belcms_guestbook_name"><?= $username; ?></div>
+            <div class="belcms_guestbook_date"><?= $value->date_insert; ?></div>
+            <div class="belcms_guestbook_message"><?= $value->message; ?></div>
         </div>
     </div>
-</section>
+    <?php
+    endforeach;
+    ?>
+</div>
+<?php
+if (User::isLogged()) {
+    $readonly = 'readonly';
+} else {
+    $readonly = '';
+}
+?>
+<div class="belcms_guestbook_form">
+    <div class="form-container">
+        <form method="post" action="guestbook/new">
+            <h2 class="mb-3">Laisse ton message 💬</h2>
+            <input type="text" id="name" name="user" <?= $readonly; ?> class="input-group-text" placeholder="Ex: Stive le Magnifique" required value="<?= $user; ?>">
+            <textarea id="message" name="msg" rows="3" class="belcms_guestbook_textarea bel_cms_textarea_simple"></textarea>
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="captcha"><?= $_SESSION['CAPTCHA']['CODE']; ?></label>
+                <input type="number" placeholder="Trouve la solution du calcul." name="captcha" class="form-control" id="captcha">
+            </div>
+            <input type="hidden" name="captcha_value" value="">
+            <input type="submit" value="Envoyer ✨" class="belcms_guestbook_submit">
+        </form>
+    </div>
+</div>

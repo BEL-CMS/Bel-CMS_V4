@@ -82,7 +82,7 @@ final class Links
         $sql = new BDD;
         $sql->table('TABLE_LINKS');
         $sql->where(array('name' => 'id', 'value' => $id));
-        $sql->queryAll();
+        $sql->queryOne();
         $return = $sql->data;
         return $return;
     }

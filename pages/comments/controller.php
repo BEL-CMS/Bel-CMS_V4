@@ -1,16 +1,17 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 3.0.0 [PHP8.2]
+ * @version 4.0.0 [PHP8.4]
  * @link https://bel-cms.dev
  * @link https://determe.be
- * @license http://opensource.org/licenses/GPL-3.-copyleft
- * @copyright 2015-2023 Bel-CMS
+ * @license MIT License
+ * @copyright 2015-2025 Bel-CMS
  * @author as Stive - stive@determe.be
  */
 
 namespace Belcms\Pages\Controller;
 
+use BelCMS\Core\Notification;
 use BelCMS\Core\Pages;
 
 if (!defined('CHECK_INDEX')):
@@ -26,25 +27,18 @@ class Comments extends Pages
 	{
 		if (isset($_SESSION['USER']->user->hash_key) and strlen($_SESSION['USER']->user->hash_key) == 32) {
 			if (empty($_POST['text'])) {
-				$this->error = true;
-				$this->errorInfos = array('error', constant('COMMENT_EMPTY'), 'Commentaires', false);
-				return;
+				Notification::error(constant('COMMENT_EMPTY'),'Commentaires');
 			}
 			if (empty($_POST['url'])) {
-				$this->error = true;
-				$this->errorInfos = array('error', constant('URL_EMPTY'), 'Commentaires', false);
-				return;
+				Notification::error(constant('URL_EMPTY'),'Commentaires');
 			}
 			$insert = $this->models->insertComment($this->data);
 			if ($insert === false) {
-				$this->error = true;
-				$this->errorInfos = array($insert['type'], $insert['text'], 'Commentaires', false);
+				Notification::error( $insert['text'], 'Commentaires');
 			} else {
-				$this->error = true;
-				$this->errorInfos = array($insert['type'], $insert['text'], 'Commentaires', false);
+				Notification::success( $insert['text'], 'Commentaires');
 			}
 		}
-
 		$referer = (!empty($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : 'news';
 		$this->redirect($referer, 3);
 	}

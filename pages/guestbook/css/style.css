@@ -1,36 +1,145 @@
-#belcms_guestbook_table {
-    display: block;
-    position: relative;
-    border: 1 solid var(--gray-50-color);
-    background-color: var(--gray-10-color);
-    -webkit-box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.75);
-    box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.75);
-    border-top-right-radius: 6px;
-    border-top-left-radius: 6px;
 }
-.belcms_guestbook_user {
-    line-height: 30px;
-    padding: 15px;
-    position: relative;
+
+    .belcms_guestbook_container {
+      max-width: 800px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .belcms_guestbook_title {
+      text-align: center;
+      font-size: 2em;
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+.belcms_guestbook_entry {
+  display: flex;
+  align-items: flex-start;
+  background-color: #fdfdfd;
+  border: 2px solid #d5bdaf;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
-.belcms_guestbook_user .date {
-    float: right;
-    margin-right: 15px;
-    font-style: italic;
-    font-size: 11px;
+
+.belcms_guestbook_avatar img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 20px;
+  border: 2px solid #ccc;
 }
+
+.belcms_guestbook_content {
+  flex: 1;
+}
+
+.belcms_guestbook_name {
+  font-weight: bold;
+  font-size: 1.1em;
+  color: #6b4f4f;
+}
+
+.belcms_guestbook_date {
+  font-size: 0.9em;
+  color: #999;
+  margin-bottom: 8px;
+}
+
 .belcms_guestbook_message {
-    background-color: #FFF;
-    margin: 10px;
-    padding: 20px;
-    text-align: justify;
-    color: var(--gray-50-color);
-    border-radius: 6px;
-    -webkit-box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.75);
-    box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.75);
+  font-style: italic;
+  color: #444;
 }
-.belcms_guestbook_block {
-    margin-bottom: 20px;
+
+    .belcms_guestbook_entry:hover {
+      transform: scale(1.01);
+    }
+
+    .belcms_guestbook_name {
+      font-weight: bold;
+      color: #555;
+    }
+
+    .belcms_guestbook_message {
+      margin-top: 5px;
+      font-style: italic;
+      color: #666;
+    }
+
+    .belcms_guestbook_form {
+      margin-top: 40px;
+    }
+
+    .belcms_guestbook_form h2 {
+      font-size: 1.5em;
+      margin-bottom: 20px;
+      color: #444;
+    }
+    .belcms_guestbook_form input[type="submit"] {
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .belcms_guestbook_input,
+.belcms_guestbook_textarea {
+  background-color: #f9f9f9;
+  border: 1px solid #cccccc;
+  color: #333333;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.belcms_guestbook_submit {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.belcms_guestbook_submit:hover {
+  background-color: #0056b3;
+}
+
+.form-container {
+  margin: 30px auto;
+  padding: 20px;
+  border: 2px solid rgba(0,0,0,0.05);
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.form-container h2 {
+  text-align: center;
+  color: #007BFF;
+  margin-bottom: 20px;
+}
+
+.belcms_guestbook_submit {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.belcms_guestbook_submit:hover {
+  background-color: #0056b3;
+}
+.input-group-text {
+  width: 100%;
 }

@@ -39,7 +39,7 @@ if ($page == 'registred') {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>User Login</title>
     <meta name="Author" content="https://bel-cms.dev">
-    <link id="style" href="/administration/intern/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link id="style" href="/assets/plugins/bootstrap-5.3.3/css/bootstrap.min.css" rel="stylesheet">
     <link href="/administration/intern/assets/css/styles.css" rel="stylesheet">
     <link href="/administration/intern/assets/css/icons.css" rel="stylesheet">
 </head>
@@ -63,7 +63,7 @@ if ($page == 'registred') {
                                 </div>
                                 <label for="lockscreen-password" class="form-label text-default">Mot de passe</label>
                                 <div class="position-relative">
-                                    <input type="password" required name="password" class="form-control create-password-input" id="-password" placeholder="Mot de passe">
+                                    <input type="password" required name="password" class="form-control create-password-input" id="password" placeholder="Mot de passe">
                                 </div>
                                 <div class="col-xl-12 d-grid mt-2">
                                     <input type="submit" class="btn btn-primary" value="Déverrouiller">
@@ -81,9 +81,10 @@ if ($page == 'registred') {
             </div>
         </div>
     </div>
-    <script src="/assets/jquery-3.7.1.min.js"></script>
-    <script src="/administration/intern/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="/administration/intern/assets/js/show-password.js"></script>
+
+    <script src="assets/plugins/jQuery/jquery-3.7.1.min.js"></script>
+    <script src="assets/plugins/bootstrap-5.3.3/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/administration/intern/login.js"></script>
 </body>
 

@@ -35,6 +35,7 @@ endif;
                             <thead>
                                 <tr>
                                     <th width="width:125px">Images</th>
+                                    <th>Icônes</th>
                                     <th width="25px">ID Groupes</th>
                                     <th>Name</th>
                                     <th>Options</th>
@@ -57,6 +58,7 @@ endif;
                                         <source style="width: 125px;" src="<?=$file;?>" type="image/webp">
                                         <img style="width: 125px;" src="<?=$file;?>" class="glightbox">
                                     </td>
+                                    <td style="text-align:center !important;"><i style="text-align:center;font-size: 90px;" class="<?= $value->ico; ?>"></i></td>
                                     <td style="text-align:center !important;"><?=$value->id_groups;?></td>
                                     <td><?=$value->name;?></td>
                                     <td>

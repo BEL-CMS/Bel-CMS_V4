@@ -28,13 +28,13 @@ use BelCMS\Requires\Common;
             $datedeReg = Common::TransformDate($user->profils->date_registration, 'MEDIUM', 'NONE');
             $avatar    = $user->profils->avatar;
         ?>
-            <div class="col-lg-3 col-sm-6 col-xsm-6">
+            <div class="col-lg-6 col-sm-4 col-xsm-6">
                 <div class="belcms_main_members">
                     <picture>
                         <img class="glightbox" src="<?= $avatar; ?>" alt="Avatar de <?= $username; ?>">
                     </picture>
                     <h2 style="color: <?= $color; ?>"><?= $username; ?></h2>
-                    <span><small>Enregistré le : <?= $datedeReg; ?></small></span>
+                    <span><small style="color:#FFF;">Enregistré le : <?= $datedeReg; ?></small></span>
                     <hr>
                     <a href="Members/detail/<?= $username; ?>" title="Membre <?= $username; ?>" class="bg-info text-dark">Visualiser la fiche publique</a>
                 </div>

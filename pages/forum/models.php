@@ -11,6 +11,8 @@
 
 namespace Belcms\Pages\Models;
 
+use BelCMS\Core\Config;
+use BelCMS\Core\Dispatcher;
 use BelCMS\PDO\BDD;
 use BelCMS\Requires\Common;
 
@@ -27,97 +29,73 @@ endif;
 ############################################
 final class Forum
 {
-    public function getNameForum ()
+    public function getCountMsg ()
     {
         $sql = new BDD;
-        $sql->table ('TABLE_FORUM');
+        $sql->table('TABLE_FORUM_MSG');
+        $sql->count();
+        $return = $sql->data;
+        return $return;
+    }
+
+    public function getCountThreads ()
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_FORUM_THREAD');
+        $sql->count();
+        $return = $sql->data;
+        return $return;
+    }
+
+    public function getCountPostThreads ($id)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_FORUM_THREAD');
+        $sql->where(array('name' => 'id_cat', 'value' => $id));
+        $sql->count();
+        $return = $sql->data;
+        return $return;
+    }
+
+    public function getCountNbThreads ($id)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_FORUM_THREAD');
+        $sql->where(array('name' => 'id_cat', 'value' => $id));
+        $sql->count();
+        $return = $sql->data;
+        return $return;
+    }
+
+    public function getForums ()
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_FORUM');
         $sql->queryAll();
         $return = $sql->data;
         return $return;
     }
 
-    public function getForumForID ($id)
+    public function subat ($id)
     {
         $sql = new BDD;
-        $sql->table ('TABLE_FORUM_NAME');
+        $sql->table('TABLE_FORUM_NAME');
         $sql->where(array('name' => 'id_forum', 'value' => $id));
         $sql->queryAll();
         $return = $sql->data;
         return $return;
     }
 
-    public function category ($id)
+    public function subatAll ()
     {
         $sql = new BDD;
-        $sql->table('TABLE_FORUM_THREAD');
-        $sql->where(array('name' => 'id_cat', 'value' => $id));
-        $sql->count();
+        $sql->table('TABLE_FORUM_NAME');
+        $sql->queryAll();
         $return = $sql->data;
         return $return;
     }
 
-    public function getIdMsg ($id)
-    {
-        $sql = new BDD;
-        $sql->table('TABLE_FORUM_THREAD');
-        $sql->where(array('name' => 'id_cat', 'value' => $id));
-        $sql->queryOne();
-        $return = $sql->data;
-        if (empty($return)) {
-            return null;
-        } else {
-            return $return;
-        }
-    }
-
-    public static function getLastMsg ($id)
-    {
-        $sql = new BDD;
-        $sql->table('TABLE_FORUM_MSG');
-        $sql->where(array('name' => 'id_mdg', 'value' => $id));
-        $sql->limit(1);
-        $sql->orderby(array(array('name' => 'date_post', 'type' => 'DESC')));
-        $sql->queryOne();
-        $return = $sql->data;
-        if (empty($return)) {
-            return false;
-        } else {
-            return $return;
-        }
-    }
-
-    public function getMsgForID ($id)
-    {
-        $sql = new BDD;
-        $sql->table ('TABLE_FORUM_MSG');
-        $sql->where(array('name' => 'id_mdg', 'value' => $id));
-        $sql->orderby(array(array('name' => 'date_post', 'type' => 'DESC')));
-        $sql->limit(1);
-        $sql->queryOne();
-        $return = $sql->data;
-        return $return;
-    }
-    public function getCountMsg ($id)
-    {
-        $sql = new BDD;
-        $sql->table('TABLE_FORUM_MSG');
-        $sql->where(array('name' => 'id_mdg', 'value' => $id));
-        $sql->count();
-        $return = $sql->data;
-        return $return;
-    }
-
-    public function getNbsubject ($id)
-    {
-        $sql = new BDD;
-        $sql->table('TABLE_FORUM_THREAD');
-        $sql->where(array('name' => 'id_cat', 'value' => $id));
-        $sql->count();
-        $return = $sql->data;
-        return $return;
-    }
-
-    public function getThreads ($id)
+    public function nameThreads ($id)
     {
         $sql = new BDD;
         $sql->table('TABLE_FORUM_THREAD');
@@ -127,9 +105,8 @@ final class Forum
         return $return;
     }
 
-    public static function readNbMsg($id)
+    public function getCountMsgThreads ($id)
     {
-        $id = Common::VarSecure($id, null);
         $sql = new BDD;
         $sql->table('TABLE_FORUM_MSG');
         $sql->where(array('name' => 'id_mdg', 'value' => $id));
@@ -137,37 +114,54 @@ final class Forum
         $return = $sql->data;
         return $return;
     }
-    public static function lastMsgRead ($id)
-    {
-        $sql = new BDD;
-        $sql->table ('TABLE_FORUM_MSG');
-        $sql->where(array('name' => 'id_mdg', 'value' => $id));
-        $sql->orderby(array(array('name' => 'date_post', 'type' => 'DESC')));
-        $sql->limit(1);
-        $sql->queryOne();
-        $return = $sql->data;
-        return $return;
-    }
 
-    public function getTitleMsg ($id)
+    public function getMsg ($id)
     {
+        $config = Config::GetConfigPage('forum');
+        if (isset($config->config['MAX_PAGE'])) {
+            $nbpp = (int) $config->config['MAX_PAGE'];
+        } else {
+            $nbpp = (int) 6;
+        }
+        $page = (Dispatcher::RequestPages() * $nbpp) - $nbpp;
         $sql = new BDD;
-        $sql->table('TABLE_FORUM_THREAD');
-        $sql->where(array('name' => 'id_message', 'value' => $id));
-        $sql->queryOne();
-        $return = $sql->data;
-        return $return;
-    }
-
-    public function getReadMsg ($id)
-    {
-        $sql = new BDD;
-        $sql->table ('TABLE_FORUM_MSG');
+        $sql->table('TABLE_FORUM_MSG');
         $sql->where(array('name' => 'id_mdg', 'value' => $id));
         $sql->orderby(array(array('name' => 'id', 'type' => 'ASC')));
+        $sql->limit(array(0 => $page, 1 => $nbpp), true);
         $sql->queryAll();
         $return = $sql->data;
-        return $return; 
+        self::countOnePlus($id);
+        return $return;
+    }
+
+    public function getnName ($id)
+    {
+        $id  = Common::secureRequest($id);
+        $get = new BDD();
+        $get->table('TABLE_FORUM_THREAD');
+        $get->where(array('name' => 'id_message', 'value' => $id));
+        $get->queryOne();
+        $return = $get->data;
+        return $return->title;
+    }
+
+    private function countOnePlus ($id)
+    {
+        if ($id) {
+            $id  = Common::secureRequest($id);
+            $get = new BDD();
+            $get->table('TABLE_FORUM_THREAD');
+            $get->where(array('name' => 'id_message', 'value' => $id));
+            $get->queryOne();
+            $data = $get->data;
+            $count = $data->view_post;
+            $count++;
+            $update = new BDD();
+            $update->table('TABLE_FORUM_THREAD');
+            $update->where(array('name' => 'id_message', 'value' => $id));
+            $update->update(array('view_post' => $count));
+        }
     }
 
     public function sendReply ($data)
@@ -182,6 +176,35 @@ final class Forum
             $return['text'] = constant('SAVE_BDD_ERROR');
             return $return;
         }
+    }
+
+    public function category ($id)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_FORUM_NAME');
+        $sql->where(array('name' => 'id_forum', 'value' => $id));
+        $sql->queryAll();
+        $return = $sql->data;
+        return $return;
+    }
+
+    public function nameCat ($id)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_FORUM');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->queryOne();
+        $return = $sql->data;
+        return $return; 
+    }
+
+    public function getnbMesg ($id)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_FORUM_MSG');
+        $sql->where(array('name' => 'id_mdg', 'value' => $id));
+        $sql->count();
+        return $sql->data;
     }
 
     public function sendThread ($data)
@@ -206,5 +229,15 @@ final class Forum
         } else {
             return false;
         }  
+    }
+
+    public function charte ()
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_CONFIG_PAGES');
+        $sql->where(array('name' => 'name', 'value' => 'forum'));
+        $sql->queryOne();
+        $return = $sql->data;
+        return $return->infos_sup;
     }
 }

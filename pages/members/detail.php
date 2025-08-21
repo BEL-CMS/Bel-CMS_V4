@@ -11,21 +11,27 @@
  */
 
 use BelCMS\Requires\Common;
+use BelCMS\Core\groups;
 
 if (!defined('CHECK_INDEX')):
     header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
     exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
 endif;
 ?>
-<div class="row">
-    <div class="col-md-6">
-        <div class="card">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th style="text-align: center;" colspan="2">Profil utilisateur</th>
-                    </tr>
-                </thead>
+ <div class="belcms_members_wrapper">
+    <aside class="belcms_members_sidebar">
+      <img src="<?= $user->profils->avatar; ?>" alt="Photo de Stive" class="belcms_members_avatar">
+      <h1 class="belcms_members_name"><?= $user->user->username; ?></h1>
+    </aside>
+
+    <main class="belcms_members_main">
+      <section class="belcms_members_section">
+        <h2 class="belcms_members_title">À propos</h2>
+        <p class="belcms_members_text"><?= $user->profils->info_text; ?></p>
+      </section>
+        <section class="belcms_members_section">
+        <h2 class="belcms_members_title">Profil utilisateur</h2>
+            <table class="table table-hover belcms_members_table">
                 <tbody>
                     <tr>
                         <td>Nom d'utilisateur</td>
@@ -79,11 +85,10 @@ endif;
                     </tr>
                 </tbody>
             </table>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="card">
-            <table class="table table-hover">
+        </section>
+        <section class="belcms_members_section">
+        <h2 class="belcms_members_title">Matériel utilisé</h2>
+            <table class="table table-hover belcms_members_table">
                 <thead>
                     <tr>
                         <th style="text-align: center;" colspan="2">Configuration Materiel informatique</th>
@@ -136,6 +141,21 @@ endif;
                     </tr>
                 </tbody>
             </table>
-        </div>
-    </div>
-</div>
+        </section>
+      <section class="belcms_members_section">
+        <h2 class="belcms_members_title">Groupe(s)</h2>
+        <ul class="belcms_members_tags">
+        <?php 
+        $group = $user->groups->all_groups;
+        foreach ($group as $key => $value):
+            $groups = Groups::getName($value);
+            $nameGroups = (defined($groups->name)) ? constant($groups->name) : $groups->name;
+            ?>
+            <li><?= $nameGroups; ?></li>
+            <?php
+        endforeach;
+        ?>
+        </ul>
+      </section>
+    </main>
+  </div>

@@ -117,7 +117,7 @@ class Downloads extends AdminPages
                 'type' => 'error',
                 'text' => constant('EDIT_PARAM_SUCCESS')
             );
-            $this->models->updateUpload ($insert);
+            $this->models->updateUpload ($insert, $_POST['id']);
             $this->error('Téléchargement', $array['text'], $array['type']);
             $this->redirect('downloads?admin&option=pages', 3);
         } else {

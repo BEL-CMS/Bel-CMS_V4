@@ -67,7 +67,7 @@ final class groups
         if (is_numeric($id)) {
             $sql = new BDD;
             $sql->table('TABLE_GROUPS');
-            $sql->fields(array('name'));
+            $sql->fields(array('name', 'color'));
             $sql->where(array('name' => 'id_group', 'value' => $id));
             $sql->queryOne();
             return $sql->data;

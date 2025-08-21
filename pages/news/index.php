@@ -29,3 +29,5 @@ foreach ($news as $key => $data):
     </div>
 <?php
 endforeach;
+echo $pagination;
+?>

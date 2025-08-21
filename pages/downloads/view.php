@@ -9,6 +9,7 @@
  * @author as Stive - stive@determe.be
  */
 
+use BelCMS\Core\Comment;
 use BelCMS\Core\Notification;
 use BelCMS\Core\User;
 use BelCMS\Requires\Common;
@@ -46,47 +47,78 @@ if (User::ifUserExist($data->uploader)) {
             </div>
             <div class="col-md-8">
                 <div class="card-body no_margin">
-                    <table class="belcms_downloads_table">
-                        <tr>
-                            <td>Nom :</td>
-                            <td>t<?= $data->name; ?></td>
-                        </tr>
-                        <tr>
-                            <td>Publié par :</td>
-                            <td style="color: <?=$color;?>"><?= $uploader; ?></td>
-                        </tr>
-                        <tr>
-                            <td>Vu</td>
-                            <td><?= $data->view; ?></td>
-                        </tr>
-                        <tr>
-                            <td>Date de publication</td>
-                            <td><?= $data->date; ?></td>
-                        </tr>
-                    </table>
-                    <table class="belcms_downloads_table">
-                        <tr>
-                            <td>Date</td>
-                            <td><?= Common::TransformDate($data->date, 'LONG', 'SHORT'); ?></td>
-                        </tr>
-                        <tr>
-                            <td>Commentaires</td>
-                            <td>5</td>
-                        </tr>
-                         <tr>
-                            <td>Fichier télécharger</td>
-                            <td><?= $data->dls; ?></td>
-                        </tr>
-                         <tr>
-                            <td>Catégorie</td>
-                            <td></td>
-                        </tr>              
-                    </table>
+                    
+
+  <div class="belcms_table">
+    <div class="belcms_header">
+      <div class="belcms_cell">Utilisateur</div>
+      <div class="belcms_cell">Contact</div>
+    </div>
+
+    <div class="belcms_row">
+      <div class="belcms_cell">
+        <div class="belcms_subcell">
+          <div class="belcms_label">Nom : </div>
+          <div class="belcms_value"><?= $data->name; ?></div>
+        </div>
+        <div class="belcms_subcell">
+          <div class="belcms_label">Publié par :</div>
+          <div style="color: <?=$color;?>" class="belcms_value"><?= $uploader; ?></div>
+        </div>
+      </div>
+      <div class="belcms_cell">
+        <div class="belcms_subcell">
+          <div class="belcms_label">Vu : </div>
+          <div class="belcms_value"><?= $data->view; ?></div>
+        </div>
+        <div class="belcms_subcell">
+          <div class="belcms_label">Date de publication :</div>
+          <div class="belcms_value"><?= $data->date; ?></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="belcms_row">
+      <div class="belcms_cell">
+        <div class="belcms_subcell">
+          <div class="belcms_label">Catégorie</div>
+          <div class="belcms_value"><?= $data->idcat; ?></div>
+        </div>
+        <div class="belcms_subcell">
+          <div class="belcms_label">Date</div>
+          <div class="belcms_value"><?= Common::TransformDate($data->date, 'LONG', 'NONE'); ?></div>
+        </div>
+      </div>
+      <div class="belcms_cell">
+        <div class="belcms_subcell">
+          <div class="belcms_label">Commentaires :</div>
+          <div class="belcms_value"><?= Comment::countComments('downloads', $data->id); ?></div>
+        </div>
+        <div class="belcms_subcell">
+          <div class="belcms_label">Fichier télécharger : </div>
+          <div class="belcms_value"><?= $data->dls; ?></div>
+        </div>
+      </div>
+    </div>
+    <div id="belcms_description"><?= $data->description; ?></div>
+  
                 </div>
             </div>
             <div class="card-footer">
+                <?php
+                if (User::isLogged() === true):
+                ?>
                 <button type="button" class="btn btn-info" onclick="location.href='Downloads/getDownload/<?= $data->id; ?>&echo'">Télécharger</button>
+                <?php
+                else:
+                Notification::warning('Il est nécessaire d\'être authentifié afin de télécharger le fichier.', 'Login');
+                endif;
+                ?>
             </div>
         </div>
+        <?php
+        $comments = new Comment;
+        $comments->html();
+        ?>
     </div>
 </section>

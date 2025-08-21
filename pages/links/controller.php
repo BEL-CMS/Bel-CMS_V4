@@ -38,6 +38,18 @@ class Links extends Pages
         $this->render('index');
     }
 
+    public function viewall ()
+    {
+        $id = $this->data[2];
+        if (ctype_digit($id)) {
+            $id = (int) $this->data[2];
+            $a['cat']   = $this->models->getCatForNumber($id);
+            $a['links'] = $this->models->getLinksForNumberCat($a['cat']->id);
+            $this->set($a);
+            $this->render('viewall');
+        }
+    }
+
     public function cat()
     {
         $id = (int) $this->data[2];
@@ -47,13 +59,15 @@ class Links extends Pages
         $this->render('cat');
     }
 
-    public function link()
+    public function view()
     {
-        $id = (int) $this->data[2];
-        $this->models->addCount ($id);
-        $a['links'] = $this->models->getLinksForNumber($id);
-        $this->set($a);
-        $this->render('link');
+        $id = $this->data[2];
+        if (ctype_digit($id)) {
+            $this->models->addCount ($id);
+            $a['links'] = $this->models->getLinksForNumber($id);
+            $this->set($a);
+            $this->render('view');
+        }
     }
 
     public function click()
@@ -89,7 +103,7 @@ class Links extends Pages
                 $post['description'] = $post['description'];
             }
             if (isset($_FILES['image'])) {
-                $image = Common::Upload('image', 'uploads/links/tmp/', array('.png', '.gif', '.jpg', '.jpeg', '.ico', '.tif', '.eps', '.svg', '.webp'), true);
+                $image = Common::Upload('image', 'uploads/links/tmp/', 'img', true);
                 if ($image) {
                     $post['image'] = $image;
                     $this->models->insertTmp($post);

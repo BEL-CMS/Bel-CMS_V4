@@ -149,4 +149,13 @@ final class Downloads
             return false;
         }
     }
+
+    public function getCatForId($id) {
+        $sql = new BDD;
+        $sql->table('TABLE_DOWNLOADS_CAT');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->queryOne();
+        $return = $sql->data;
+        return $return->name;
+    }
 }

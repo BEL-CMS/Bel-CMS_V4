@@ -59,7 +59,6 @@ if (is_file(ROOT.DS.'INSTALL'.DS.'index.php')) {      #
 #######################################################
 require_once ROOT.DS.'requires'.DS.'requires.all.php';#
 #######################################################
-# Fichier requis                                      #
 # Bannissement                                        #
 #######################################################
 new Ban;                                              #

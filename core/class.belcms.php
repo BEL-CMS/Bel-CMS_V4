@@ -48,6 +48,20 @@ final class BelCMS
         ob_start();
         $require = ucfirst($this->link);
         $view    = Dispatcher::view();
+		$unavailable = new \Maintenance;
+		if ($unavailable->status() == 'close') {
+			if (User::isLogged()) {
+				if (in_array(1, $_SESSION['USER']->groups->all_groups)) {
+					Notification::alert($unavailable->description(), constant('WARNING'), false);
+				}
+			} else {
+				if (empty($_SESSION['CONFIG_CMS']['CMS_WEBSITE_NAME'])) {
+					$_SESSION['CONFIG_CMS']['CMS_WEBSITE_NAME'] = constant('NO_NAME');
+				}
+                require ROOT.DS.'assets'.DS.'templates'.DS.'maintenance'.DS.'tpl'.DS.'index.php';
+				die();
+			}
+		}
         $dir = constant('DIR_PAGES').strtolower($this->link).DS.'controller.php';
         if (file_exists($dir)) {
             require_once $dir;
@@ -155,6 +169,25 @@ final class BelCMS
 		}
 		return $return;
 	}
+
+    #########################################
+    # Récupère les vrais utilisateurs
+    #########################################
+    public function noBot ()
+    {
+        ob_start();
+        echo '<input type="text" name="robot_check" style="display:none">';
+        if (empty($_POST['robot_check'])) {
+            new Visitors();
+        }
+		$content = ob_get_contents();
+		if (ob_get_length() != 0) {
+			ob_end_clean();
+		}
+        return $content;
+    }
+
+
     public function Templates ()
     {
 		ob_start();
@@ -216,6 +249,7 @@ final class BelCMS
                 ));
                 $insert->update($update);
             }
+            self::noBot();
         }
     }
     ##################################################

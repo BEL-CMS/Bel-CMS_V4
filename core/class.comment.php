@@ -42,7 +42,6 @@ final class Comment
 		foreach ($sql->data as $k => $v) {
 			$sql->data[$k]->user = self::getDataUser($v->hash_key);
 		}
-
 		return $sql->data;
 	}
 
@@ -89,27 +88,40 @@ final class Comment
 			$dispatcher->link;
 			$links = $dispatcher->link[0].'/'.$dispatcher->link[1].'/'.$dispatcher->link[2];
 			if ($_SESSION['USER']->user->hash_key !== false) {
-				$html .= '<form action="Comments/Send" method="post"><input name="url" type="hidden" value="'.$links.'"><textarea name="text"></textarea><button type="submit" class="belcms_btn belcms_bg_black">Envoyer</button></form>';
+				$html .= '<form action="Comments/Send" method="post"><input name="url" type="hidden" value="'.$links.'"><textarea name="text"></textarea><button type="submit" class="btn btn-info">Envoyer</button></form>';
 			}
-		}
+			echo $html;
 		$html .= '</nav>';
-
-		echo $html;
+		} else {
+			?>
+			<div style="padding: 20px;margin-top:20px;">
+			<?php
+			Notification::infos('Il est nécessaire d\'être authentifié afin de publier un commentaire.', 'Login');
+			?>
+			</div>
+			<?php
+		}
 	}
 	public static function countComments($page, $page_id)
 	{
+		$dispatcher = new Dispatcher();
+		$dispatcher->link;
+
 		$sql = New BDD;
 		$sql->table('TABLE_COMMENTS');
-		$where[] = array(
-					'name'  => 'page_id',
-					'value' => (int) $page_id
-				);
-		$where[] = array(
-					'name'  => 'page',
-					'value' => $page
-				);
+
+		$where[] = array('name' => 'page', 'value' => $dispatcher->link[0]);
+		$where[] = array('name' => 'page_sub', 'value' => $dispatcher->link[1]);
+		$where[] = array('name' => 'page_id', 'value' => $dispatcher->link[2]);
+
 		$sql->where($where);
 		$sql->count();
-		return $sql->data;
+		$return = $sql->data;
+
+		if ($return == 0) {
+			return (int) 0;
+		} else {
+			return $return;
+		}
 	}
 }

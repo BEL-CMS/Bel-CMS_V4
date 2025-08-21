@@ -34,6 +34,10 @@ $array = array(
 	'ERROR_SERIAL_OR_NAME'                => 'L\'email ou la clé d\'activation est incorrecte',
 	'USER_CREATE_ACTIVED'                 => 'Votre compte a bien été activé',
 	'NOT_EXISTS'                          => 'L\'utilisateur n\'existe pas',
+	'ID_ERROR_MSG'                        => 'L\'utilisateur a donné une ID qui n\' est pas valide',
+	'ID_ERROR'                            => 'ID Incorrecte, un message sera transmis aux administrateurs',
+	'SEND_SUCCESS'                        => 'Insertion en base de donnée avec succès',
+	'SAVE_BDD_ERROR'                      => 'Données corrompues, la sauvegarde n\'a pas eu lieu',
  	#####################################
 	# Langue Français - COMMUN
 	#####################################
@@ -66,7 +70,8 @@ $array = array(
 	'MEMBER_DELETE'                       => 'Membre supprimé',
 	'CODE_CAPTCHA_ERROR'                  => 'Erreur de code captcha, veuillez réessayer',
 	'NO_BANS_YET'                         => 'Aucun bannissement pour l\'instant',
-	#####################################
+	'NO_USER_CONNECT'                     => 'Il est important d\'établir des connexions avec le site',
+ 	#####################################
 	# Fichier lang en français - Social
 	#####################################
 	'FACEBOOK'                            => 'Facebook',
@@ -142,6 +147,7 @@ $array = array(
 	'CATEGORIE'                           => 'Catégorie',
 	'WEB_IS_CLOSED'                       => 'Le site web est en mode fermé, seuls les administrateurs suprêmes ont accès.',
 	'ERROR_CAPTCHA'                       => 'Erreur de CAPTCHA !<br>Trop de tentative fausse, il est possible que vous soyez banni !',
+	'NO_ID_DEFINED'                       => 'Pas d\'ID définit.',
 	########## ###########################
 	# COMMUN
 	#####################################
@@ -440,6 +446,7 @@ $array = array(
 	'MEMBERS'                             => 'Membres',
 	'PSEUDO'                              => 'Pseudo',
 	'ABOUT'                               => 'À propos',
+	'PSEUDO_UNKNOW'                       => 'Aucun pseudo',
 	'MY_AVATAR'                           => 'Mes avatars',
 	'AVATAR'                              => 'Avatar',
 	'AVATARS'                             => 'Avatars',

@@ -53,3 +53,137 @@
 table {
     border: 1px solid var(--black-50-color);
 }
+
+/* Structure */
+.belcms_members_wrapper {
+  display: flex;
+  max-width: 1000px;
+  margin: 2rem auto;
+  background-color: #fdfdfd;
+  box-shadow: 0 0 20px rgba(0,0,0,0.05);
+  border-radius: 12px;
+  overflow: hidden;
+  font-family: 'Helvetica Neue', sans-serif;
+}
+.belcms_members_wrapper section {
+    padding: 0 !important
+}
+
+/* Sidebar */
+.belcms_members_sidebar {
+  background-color: #0077cc;
+  color: white;
+  padding: 2rem;
+  width: 300px;
+  text-align: center;
+}
+
+.belcms_members_avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+  border: 3px solid white;
+}
+
+.belcms_members_name {
+  font-size: 1.8rem;
+  margin: 0.5rem 0;
+}
+
+.belcms_members_role {
+  font-size: 1.2rem;
+  font-weight: 300;
+}
+
+.belcms_members_location {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* Main content */
+.belcms_members_main {
+  padding: 2rem;
+  flex: 1;
+}
+
+.belcms_members_section {
+  margin-bottom: 2rem;
+}
+
+.belcms_members_title {
+  font-size: 1.4rem;
+  color: #0077cc;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+.belcms_members_text {
+  font-size: 1rem;
+  color: #333;
+  margin: 0.5rem 0;
+}
+
+.belcms_members_list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.belcms_members_list li {
+  margin: 0.5rem 0;
+  padding-left: 1rem;
+  position: relative;
+}
+
+.belcms_members_list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #0077cc;
+}
+
+/* Tags */
+.belcms_members_tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  padding-left: 0;
+}
+
+.belcms_members_tags li {
+  background-color: #0077cc;
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+.belcms_members_table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+}
+
+.belcms_members_table thead {
+  background-color: #0077cc;
+  color: white;
+}
+
+.belcms_members_table th,
+.belcms_members_table td {
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.belcms_members_table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.belcms_members_table tbody tr:hover {
+  background-color: #eef6ff;
+}

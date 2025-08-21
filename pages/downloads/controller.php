@@ -53,6 +53,7 @@ class Downloads extends Pages
         $id = $this->data[2];
         if (ctype_digit($this->data[2])) {
             $set['data'] = $this->models->getDlForID ($id);
+            $set['data']->idcat = $this->models->getCatForId ($set['data']->idcat);
             $this->models->viewAdd($id);
             $this->set($set);
             $this->render('view');

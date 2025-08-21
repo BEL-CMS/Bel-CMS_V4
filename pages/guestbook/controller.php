@@ -27,9 +27,9 @@ class Guestbook extends Pages
     public function index ()
     {
         $a['guest'] = $this->models->getGuest ();
-        $this->set($a);
         $captcha = new Captcha ();
-        $d['captcha'] = $captcha->createCaptcha ();
+        $a['captcha'] = $captcha->createCaptcha ();
+        $this->set($a);
         $this->render ('index');
     }
 
@@ -40,13 +40,13 @@ class Guestbook extends Pages
             $data['message'] = $_POST['msg'];
             $return = $this->models->addnew ($data);
             if ($return === false) {
-                Notification::error('Une erreur s\'est produite lors du transfert vers la base de données.', 'Captcha');
+                Notification::error(constant('ERROR_INSERT_BDD'), 'Message');
             } else {
                 $type = $return['type'];
                 Notification::$type($return['msg'], 'Guestbook');
             }
         } else {
-            Notification::error('Le captcha intégral ne s\'aligne pas avec nos attentes.', 'Captcha');
+            Notification::error(constant('CODE_CAPTCHA_ERROR'), 'Captcha');
             return;
         }
         $this->redirect('Guestbook', 2);

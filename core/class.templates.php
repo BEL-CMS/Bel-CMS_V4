@@ -29,7 +29,8 @@ class Templates
             $fullwide,
             $host,
             $keywords,
-            $description;
+            $description,
+            $custom_tpl;
 
     public function __construct($var = null)
     {
@@ -45,6 +46,12 @@ class Templates
         $this->keywords     = self::keywords(Dispatcher::page());
         $fileLoadTpl        = constant('DIR_TPL').self::getNameTpl().DS.'template.php';
         $fileLoadTplDefault = ROOT.DS.'assets'.DS.'templates'.DS.'default'.DS.'template.php';
+        if ($_SESSION['CONFIG']['CMS_CUSTOM_CSS'] == 1) {
+            $files = 'templates'.DS.self::getNameTpl().DS.'custom'.DS.'styles.css';
+            $this->custom_tpl .= '<link href="'.$files.'" rel="stylesheet" type="text/css" media="all">'.PHP_EOL;
+        } else {
+            $this->custom_tpl = null;
+        }
         if (is_file($fileLoadTpl) === true) {
             require $fileLoadTpl;
         } else {
@@ -73,15 +80,19 @@ class Templates
     }
     protected function getDescription ($page)
     {
-        $page = Common::VarSecure($page, null);
-        if ($page != '') {
-            $sql = new BDD;
-            $sql->table('TABLE_CONFIG_PAGES');
-            $sql->where(array('name' => 'name', 'value' => $page));
-            $sql->queryOne();
-            $data = $sql->data;
-            $return = $data->description;
-            return $return;
+        if ($page != 'comments') {
+            $page = Common::VarSecure($page, null);
+            if ($page != '') {
+                $sql = new BDD;
+                $sql->table('TABLE_CONFIG_PAGES');
+                $sql->where(array('name' => 'name', 'value' => $page));
+                $sql->queryOne();
+                $data = $sql->data;
+                $return = $data->description;
+                return $return;
+            } else {
+                return '';
+            }
         } else {
             return '';
         }
@@ -191,15 +202,19 @@ class Templates
 
     protected function keywords ($page)
     {
-        $page = Common::VarSecure($page, null);
-        if ($page != '') {
-            $sql = new BDD;
-            $sql->table('TABLE_CONFIG_PAGES');
-            $sql->where(array('name' => 'name', 'value' => $page));
-            $sql->queryOne();
-            $data = $sql->data;
-            $return = $data->keywords;
-            return $return;
+        if ($page != 'comments') {
+            $page = Common::VarSecure($page, null);
+            if ($page != '') {
+                $sql = new BDD;
+                $sql->table('TABLE_CONFIG_PAGES');
+                $sql->where(array('name' => 'name', 'value' => $page));
+                $sql->queryOne();
+                $data = $sql->data;
+                $return = $data->keywords;
+                return $return;
+            } else {
+                return '';
+            }
         } else {
             return '';
         }
