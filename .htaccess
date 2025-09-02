@@ -2,6 +2,17 @@
 <IfModule autoindex>
   IndexIgnore *
 </IfModule>
+# Bloquer certains user-agents indésirables
+<IfModule mod_rewrite.c>
+RewriteEngine On
+# Liste des bots à bannir
+RewriteCond %{HTTP_USER_AGENT} (AhrefsBot|SemrushBot|MJ12bot|DotBot|BLEXBot|SEOkicks|linkdexbot|MegaIndex|SeznamBot) [NC,OR]
+RewriteCond %{HTTP_USER_AGENT} (YandexBot|Mail.RU_Bot|Baiduspider|Sogou|PetalBot) [NC,OR]
+RewriteCond %{HTTP_USER_AGENT} (curl|wget|python-requests|libwww-perl|Scrapy|HttpClient|Go-http-client|Java|okhttp|httpunit|Mechanize) [NC,OR]
+RewriteCond %{HTTP_USER_AGENT} (HTTrack|SiteSnagger|WebStripper|WebCopier|Teleport|Zeus|BacklinkCrawler) [NC]
+# Réponse 403 Forbidden
+RewriteRule .* - [F,L]
+</IfModule>
 Options -Indexes
 RewriteBase "/"
 RewriteEngine On

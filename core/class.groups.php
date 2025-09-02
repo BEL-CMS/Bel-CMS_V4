@@ -67,7 +67,21 @@ final class groups
         if (is_numeric($id)) {
             $sql = new BDD;
             $sql->table('TABLE_GROUPS');
-            $sql->fields(array('name', 'color'));
+            $sql->fields(array('name'));
+            $sql->where(array('name' => 'id_group', 'value' => $id));
+            $sql->queryOne();
+            return $sql->data;
+        } else {
+            debug('ERROR ID');
+        }
+    }
+
+    public static function getColor ($id)
+    {
+        if (is_numeric($id)) {
+            $sql = new BDD;
+            $sql->table('TABLE_GROUPS');
+            $sql->fields(array('color'));
             $sql->where(array('name' => 'id_group', 'value' => $id));
             $sql->queryOne();
             return $sql->data;

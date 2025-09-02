@@ -73,6 +73,57 @@ final class Visitors
 
 	private function insertBdd () 
 	{
+		// Liste noire de bots à bannir
+		$badBots = [
+			// SEO / Crawlers agressifs
+			'AhrefsBot',
+			'SemrushBot',
+			'MJ12bot',
+			'DotBot',
+			'BLEXBot',
+			'SEOkicks',
+			'linkdexbot',
+			'MegaIndex',
+			'SeznamBot',
+			// Bots d’indexation étrangers peu utiles
+			'YandexBot',
+			'Mail.RU_Bot',
+			'Baiduspider',
+			'Sogou',
+			'PetalBot',
+			// Scrapers & frameworks automatisés
+			'curl',
+			'wget',
+			'python-requests',
+			'libwww-perl',
+			'Scrapy',
+			'HttpClient',
+			'Go-http-client',
+			'Java',
+			'okhttp',
+			'httpunit',
+			'Mechanize',
+			// Divers spam bots connus
+			'spamBot',
+			'crawler4j',
+			'Apache-HttpClient',
+			'HTTrack',
+			'SiteSnagger',
+			'Jack',
+			'WebStripper',
+			'WebCopier',
+			'Teleport',
+			'Zeus',
+			'BacklinkCrawler'
+		];
+		$userAgent = strtolower($_SERVER['HTTP_USER_AGENT'] ?? '');
+		// Vérification et blocage
+		foreach ($badBots as $bot) {
+			if (strpos($userAgent, strtolower($bot)) !== false) {
+				header('HTTP/1.1 403 Forbidden');
+				exit("Access denied.");
+			}
+		}
 		$insert['visitor_user']     = $this->visitedUser;
 		$insert['visitor_ip']       = $this->visitor_ip;
 		$insert['visitor_browser']  = $this->visitorBrowser;

@@ -80,7 +80,7 @@ final class eMail
 			$name    = explode('.', $explode[1]);
 			$this->phpMailer->setFrom($data, $name[0]);
 		} else if ($data == 'null') {
-			$this->phpMailer->setFrom($_SESSION['CONFIG_CMS']['CMS_WEBSITE_NAME']);
+			$this->phpMailer->setFrom($_SESSION['CONFIG']['CMS_NAME']);
 		} else {
 			return;
 		}
@@ -114,7 +114,7 @@ final class eMail
 				$this->phpMailer->addAddress($email, $name);
 			}
 		} else if ($email == null) {
-			$this->phpMailer->addAddress($_SESSION['CONFIG_CMS']['CMS_MAIL_WEBSITE'], $_SESSION['CONFIG_CMS']['CMS_WEBSITE_NAME']);
+			$this->phpMailer->addAddress($_SESSION['CONFIG']['CMS_MAIL'], $_SESSION['CONFIG']['CMS_NAME']);
 		}
 	}
 
