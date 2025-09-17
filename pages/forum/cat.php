@@ -1,9 +1,11 @@
 <?php
+
+use BelCMS\Core\User;
 use BelCMS\Requires\Common;
   ?> 
 <nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="index.html"><i class="fa-solid fa-comments"></i> Bel-CMS :: Forum</a>
+        <a class="navbar-brand fw-bold" href="index.html"><i class="fa-solid fa-comments"></i> <?= $_SESSION['CONFIG']['CMS_NAME']; ?> :: Forum</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -18,7 +20,7 @@ use BelCMS\Requires\Common;
   <!-- Hero -->
   <header class="py-5 bg-light border-bottom mb-3" style="position: relative;">
     <div class="container mb-3">
-      <h1 class="fw-semibold mb-2 belcms_forum_bnv">Bienvenue sur le forum de Bel-CMS</h1>
+      <h1 class="fw-semibold mb-2 belcms_forum_bnv">Bienvenue sur le forum de <?= $_SESSION['CONFIG']['CMS_NAME']; ?></h1>
       <p class="lead text-secondary" style="text-align: center;">Discute, apprends et partage dans une communauté bienveillante.</p>
     </div>
     <a href="Forum/reply/<?= $id; ?>" class="btn btn-success" id="belcms_forum_btn_reply"><span>Nouveau Sujet</span></a>
@@ -51,11 +53,21 @@ use BelCMS\Requires\Common;
             <div class="last-activity d-flex align-items-center gap-2 text-end">
               <div>
                 <div class="small fw-semibold text-truncate" style="max-width: 140px;">
-                  Dernier par Marie
+                <?php
+                if (User::ifUserExist($value->last->author)) {
+                  $nameinfos = User::getInfosUserAll($value->last->author);
+                  $name = $nameinfos->user->username;
+                  $avatar =  $nameinfos->profils->avatar;
+                } else {
+                  $name = constant('ERROR_NO_USER');
+                  $avatar = constant('DEFAULT_AVATAR');
+                }
+                ?>
+                  Dernier par <?= $name; ?>
                 </div>
-                <div class="text-muted small">19 août 2025, 14:07</div>
+                <div class="text-muted small"><?= $value->last->date_post;?></div>
               </div>
-              <img src="assets/img/default_avatar.jpg" alt="Avatar dernier message" class="rounded-circle flex-shrink-0 avatar-2lines">
+              <img src="<?= $avatar; ?>" alt="Avatar dernier message" class="rounded-circle flex-shrink-0 avatar-2lines">
             </div>
           </div>
         </div>

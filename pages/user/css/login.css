@@ -1,0 +1,71 @@
+html, body {
+    width: 100%;
+    position: relative;
+    background: #142425;
+    background: radial-gradient(circle, rgba(20, 36, 37, 1) 0%, rgba(24, 61, 57, 1) 30%, rgba(0, 0, 0, 1) 100%);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #ffffff;
+    font-family: 'Segoe UI', sans-serif;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.form-control::placeholder {
+    color: #cccccc;
+    opacity: 1;
+}
+.signup-box {
+    background-color: rgba(20, 20, 20, 0.95);
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 0 25px #00ffcc;
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+}
+
+.signup-box h2 {
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    color: #00ffcc;
+}
+
+.form-control {
+    background-color: #1c1c1c;
+    border: 1px solid #00ffcc;
+    color: #ffffff;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 10px #00ffcc;
+    border-color: #00ffcc;
+}
+
+.btn-neon {
+    background-color: #00ffcc;
+    color: #000;
+    border: none;
+    padding: 0.75rem;
+    width: 100%;
+    border-radius: 50px;
+    font-weight: bold;
+    transition: 0.3s ease;
+}
+
+.btn-neon:hover {
+    background-color: #00d4aa;
+    box-shadow: 0 0 15px #00ffcc;
+}
+
+a {
+    color: #00ffcc;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

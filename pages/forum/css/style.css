@@ -500,10 +500,9 @@ footer {
 
     .belcms_forum_charte_item {
       margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      display: block;
       transition: transform 0.2s ease;
+      text-align: left;
     }
 
     .belcms_forum_charte_item:hover {

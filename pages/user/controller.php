@@ -11,6 +11,10 @@
 
 namespace Belcms\Pages\Controller;
 
+use BelCMS\Core\Config;
+use BelCMS\Core\eMail;
+use BelCMS\Core\encrypt;
+use BelCMS\Core\Notification;
 use BelCMS\Core\Pages;
 use BelCMS\Core\Secure;
 use BelCMS\Core\User as CoreUser;
@@ -230,9 +234,169 @@ class User extends Pages
             $this->set($d);
             $this->render('login');
         } else {
-            $this->message('warning', constant('REQUESTED_PAGE_NOT_ACCESSIBLE'), constant('INFO'));
-            $this->redirect('/user/login&echo', 0);
+            $this->render ('passwordlost');
         }
+    }
+
+    public function sendLostPassword()
+    {
+        $mail = Secure::isMail($_POST['mail']) ? $_POST['mail'] : false;
+        if ($mail == false) {
+            Notification::error('Email', 'Erreur adresse email.');
+            return false;
+        } else {
+            $mailSecureBDD = $this->models->mailSecureBDD($mail);
+            if ($mailSecureBDD !== true) {
+                Notification::error('Email', 'Adresse email non répertoriée dans la base de données.');
+            }
+             if (strlen($_POST['token'])) {
+                $token = Common::VarSecure($_POST['token'], null);
+                $check = $this->models->checkToken($mail, $token);
+                if ($check === true) {
+                    $newPassword = Common::randomString(8);
+                    $new = new encrypt($newPassword, $_SESSION['CONFIG']['CMS_KEY_ADMIN']);
+                    $new = $new->encrypt();
+                    $insert['password'] = $new;
+                    $this->models->sendNewPass ($mail, $new);
+                    self::sendMailPass($mail, $newPassword);
+                    $this->models->removeToken($mail);
+                    Notification::success($newPassword, 'Mot de passe');
+                } else {
+                    $this->models->removeToken($mail);
+                    Notification::error(constant('NO_VALID_TOKEN_USER'), 'Email');
+                }
+            }
+        }
+    }
+
+    public function sendMailPass ($mail, $password)
+    {
+        $body = '<!DOCTYPE html>
+                <html lang="fr">
+                <head>
+                <meta charset="UTF-8">
+                </head>
+                <body style="margin:0; padding:0; background-color:#f4f4f4;">
+                <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f4f4;">
+                    <tr><td align="center">
+                        <table class="container" width="600" cellpadding="0" cellspacing="0"
+                        style="background-color:#ffffff; padding:40px; font-family:Arial, sans-serif; border-radius:8px;">
+                        <tr><td align="center" style="padding-bottom:20px;"><h2 style="margin:0; color:#6c5ce7;">🔐 Récupération de votre compte</h2></td></tr>
+                        <tr><td style="color:#333333; font-size:16px; line-height:1.5;">Bonjour ' . $mail . ',<br><br>
+                            Vous avez demandé à récupérer votre compte. Voici votre nouveau mot de passe :<br><br><strong
+                                style="display:block;text-align;center; background:#f1f1f1; padding:10px 20px; border-radius:6px; font-size:18px; letter-spacing:1px;">' . $password . '</strong><br><br>
+                            <br><br>Merci,<br>L’équipe de support</td></tr>
+                        <tr><td align="center" style="padding-top:30px; font-size:12px; color:#999999;">' . constant('MAIL_BY_BELCMS') . '</td></tr>
+                        </table>
+                    </td>
+                    </tr>
+                </table>
+                </body>
+                </html>';
+        require_once ROOT . DS . 'core' . DS . 'class.mail.php';
+        $email = new eMail;
+        $email->setFrom($_SESSION['CONFIG']['CMS_NAME']);
+        $email->addAdress($mail, $mail);
+        $email->subject(constant('GET_PASSWORD_TOKEN'));
+        $email->body($body);
+        $email->submit();
+    }
+
+    public function sendToken ()
+    {
+        if (CoreUser::isLogged() == false) {
+            if (Secure::isMail($_GET['data'])) {
+                $generator = self::generatePass();
+                $mailSecureBDD = $this->models->mailSecureBDD ($_GET['data']);
+                if ($mailSecureBDD === true) {
+                    $getUser = $this->models->getUserInfo ($_GET['data']);
+                    $this->models->updateLostPassword ($getUser->mail, $generator);
+                    
+                    require_once ROOT.DS.'core'.DS.'class.mail.php';
+                    $mail = new eMail;
+                    $mail->setFrom($_SESSION['CONFIG']['CMS_NAME']);
+                    $mail->addAdress($getUser->mail, $getUser->username);
+                    $mail->subject(constant('ACCOUNT_REGISTRATION'));
+                    $mail->body(self::sendHtmlBody($getUser->username, $generator));
+                    $mail->submit();
+                    
+                    echo 'true';
+                } else {
+                    echo "Ce mail ne figure pas dans notre base de données.";
+                }   
+            }
+        }
+    }
+
+    private function sendHtmlBody ($user, $generatePass)
+    {
+        setLocale(LC_TIME, 'fr_FR.utf8');
+        $dateNow = new \DateTimeImmutable('now');
+        $dateNow->add(new \DateInterval('PT15M'));
+		$currentDate  =  new \DateTimeImmutable('now');
+		$currentDate  = $currentDate->format('d-m-Y H:i:s');
+
+        return ' <!DOCTYPE html>
+        <html lang="fr">
+        <head>
+            <meta charset="UTF-8">
+        </head>
+        <body style="margin:0; padding:0; background-color:#f4f4f4;">
+            <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f4f4;">
+                <tr>
+                    <td align="center">
+                        <table class="container" width="600" cellpadding="0" cellspacing="0" style="background-color:#ffffff; padding:40px; font-family:Arial, sans-serif; border-radius:8px;">
+                            <tr>
+                                <td align="center" style="padding-bottom:20px;">
+                                    <h2 style="margin:0; color:#6c5ce7;">🔐 Récupération de votre compte</h2>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="color:#333333; font-size:16px; line-height:1.5;">Bonjour '. $user .',<br><br>
+                                    Vous avez demandé à récupérer votre compte. Voici votre token de sécurité :<br><br>
+                                    <strong style="display:block;text-align;center; background:#f1f1f1; padding:10px 20px; border-radius:6px; font-size:18px; letter-spacing:1px;">'.$generatePass.'</strong><br><br>
+                                    Ce token est valable pendant 15 minutes jusqu\'a '.$currentDate.'<br>
+                                    Si vous n’êtes pas à l’origine de cette demande, vous pouvez ignorer cet e-mail.<br><br>
+                                    <a href="https://'.$_SERVER['SERVER_NAME'].'/User/passwordLost?echo&token='.$generatePass.'" class="button" style="display:block; background-color:#6c5ce7; color:#ffffff; text-decoration:none; padding:12px 24px; border-radius:6px; font-weight:bold;">Réinitialiser mon mot de passe</a><br><br>Merci,<br>L’équipe de support
+                                </td>
+                            </tr>
+                            <tr><td align="center" style="padding-top:30px; font-size:12px; color:#999999;">'.constant('MAIL_BY_BELCMS').'</td></tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </body>
+        </html>';
+    }
+	#########################################
+    #   Génération de mots de passe de 
+    #   32 caractères tous en MAJUSCULE
+    #########################################
+	private function generatePass ($height = 32){
+		// initialiser la variable $return
+		$return = '';
+		// Définir tout les caractères possibles dans le mot de passe,
+		$character = "012346789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		// obtenir le nombre de caractères dans la chaîne précédente
+		$max = strlen($character);
+		if ($height > $max) {
+			$height = $max;
+		}
+		// initialiser le compteur
+		$i = 0;
+		// ajouter un caractère aléatoire à $return jusqu'à ce que $height soit atteint
+		while ($i < $height) {
+			// prendre un caractère aléatoire
+			$letter = substr($character, mt_rand(0, $max-1), 1);
+			// vérifier si le caractère est déjà utilisé dans $mdp
+			if (!stristr($return, $character)) {
+				// Si non, ajouter le caractère à $return et augmenter le compteur
+				$return .= $letter;
+				$i++;
+			}
+		}
+		// retourner le résultat final
+		return strtoupper($return);
     }
 	#########################################
     #   Material

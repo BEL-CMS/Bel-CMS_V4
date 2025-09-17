@@ -5,7 +5,7 @@ use BelCMS\Requires\Common;
 ?>
 <nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="index.html"><i class="fa-solid fa-comments"></i> Bel-CMS :: Forum</a>
+        <a class="navbar-brand fw-bold" href="index.html"><i class="fa-solid fa-comments"></i> <?= $_SESSION['CONFIG']['CMS_NAME']; ?> :: Forum</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -19,7 +19,7 @@ use BelCMS\Requires\Common;
 </nav>
 <header class="py-5 bg-light border-bottom">
     <div class="container">
-        <h1 class="fw-semibold mb-2 belcms_forum_bnv">Bienvenue sur le forum de Bel-CMS section :: <strong><?= $title; ?></strong></h1>
+        <h1 class="fw-semibold mb-2 belcms_forum_bnv">Bienvenue sur le forum de <?= $_SESSION['CONFIG']['CMS_NAME']; ?> section :: <strong><?= $title; ?></strong></h1>
         <p class="lead text-secondary" style="text-align: center;">Discute, apprends et partage dans une communauté bienveillante.</p>
     </div>
 </header>

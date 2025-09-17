@@ -26,15 +26,22 @@ class Downloads extends Pages
 
     public function index()
     {
-        $cat['cat'] = $this->models->allGetCat ();
-        $this->set($cat);
+        $d['cat'] = $this->models->allGetCat ();
+        if (empty($d['cat'])) {
+            Notification::infos(constant('NO_INDEX_CAT'), 'Téléchargements');
+            return;
+        }
+        foreach ($d['cat'] as $key => $value) {
+            $d['cat'][$key]->countNbDls = $this->models->getNbDls ($value->id);
+        }
+        $this->set($d);
         $this->render('index');
     }
 
     public function viewcat ()
     {
         if (ctype_digit($this->data[2])) {
-            $getdls['data'] = $this->models->getAllDlForID ($this->data[2]);
+            $getdls['data'] = $this->models->getDlForID ($this->data[2]);
             if (empty($getdls['data'])) {
                 Notification::infos('Aucune option de téléchargement n\'est présente dans la base de données.', 'information');
                 return false;
@@ -53,7 +60,6 @@ class Downloads extends Pages
         $id = $this->data[2];
         if (ctype_digit($this->data[2])) {
             $set['data'] = $this->models->getDlForID ($id);
-            $set['data']->idcat = $this->models->getCatForId ($set['data']->idcat);
             $this->models->viewAdd($id);
             $this->set($set);
             $this->render('view');
@@ -78,4 +84,9 @@ class Downloads extends Pages
 		    $this->redirect($referer, 3); 
         }
 	}
+
+    public function charte ()
+    {
+        $this->render('charte');
+    }
 }

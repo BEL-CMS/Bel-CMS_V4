@@ -1,13 +1,14 @@
 <?php
+
 /**
  * Bel-CMS [Content management system]
- * @version 3.1.  [PHP8.3]
+ * @version 4.0.0 [PHP8.4]
  * @link https://bel-cms.dev
  * @link https://determe.be
- * @license http://opensource.org/licenses/GPL-3.-copyleft
- * @copyright 2015-2024 Bel-CMS
+ * @license MIT License
+ * @copyright 2015-2025 Bel-CMS
  * @author as Stive - stive@determe.be
-*/
+ */
 
 namespace BelCMS\Core;
 use Belcms\Templates\Models\Landing as models;

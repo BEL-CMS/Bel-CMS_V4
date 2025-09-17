@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.3]
+ * @version 4.0.0 [PHP8.4]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -53,10 +53,10 @@ final class Interaction
         $this->agent = $_SERVER['HTTP_USER_AGENT'];
     }
 
-    public function author ($author = true)
+    public function author ($author = false)
     {
-        if ($author === true) {
-            $this->author = $_SESSION['USER']->user->hash_key;
+        if (strlen($author) == 32) {
+            $this->author = $author;
         } else {
             $this->author = Common::GetIp();
         }
@@ -204,9 +204,9 @@ final class Interaction
         $sql->insert($insert);
 
         if ($this->status == 'red') {
-            Ban::addBan($insert['author'], Common::GetIp(), null, 'P10Y',$insert['message']);
+            Ban::addBan($insert['author'], Common::GetIp(), null, $this->time,$insert['message']);
         } else if ($this->status == 'orange') {
-            Ban::addBan($insert['author'], Common::GetIp(), null, 'P1D', $insert['message']);
+            Ban::addBan($insert['author'], Common::GetIp(), null, $this->time, $insert['message']);
         }
     }
 

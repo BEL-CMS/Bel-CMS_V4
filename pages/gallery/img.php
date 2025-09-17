@@ -21,6 +21,13 @@ endif;
     <h2>Galerie de photos</h2>
     [ <a href="Gallery" title="Galerie home">Index</a> | <a href="Gallery/new" title="Galerie nouveauté">Nouveaux</a> | <a href="Gallery/popular" title="Galerie les plus Populaire">Populaire</a> | <a href="Gallery/propose" title="Galerie Proposé">Proposé</a> ]
     <ul>
+        <li id="section_gallery_title">
+            <span class="section_gallery_title_img">Images :</span>
+            <span class="section_gallery_title_name">Nom :</span>
+            <span class="section_gallery_title_desc">Description :</span>
+            <span class="section_gallery_title_date">Date :</span>
+            <span class="section_gallery_title_vote">Vote :</span>
+        </li>
         <?php
         foreach ($img as $value):
         ?>

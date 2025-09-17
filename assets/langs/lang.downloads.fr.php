@@ -40,4 +40,5 @@ Common::constant(array(
 	'NB_VIEW'          => 'Nombre de vu',
 	'DETAILS'          => 'Détails',
 	'ADD_INFOS'        => 'Information additionnelle',
+	'NO_INDEX_CAT'     => 'La base de données n\'a enregistré aucun téléchargement.',
 ));

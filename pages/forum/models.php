@@ -240,4 +240,15 @@ final class Forum
         $return = $sql->data;
         return $return->infos_sup;
     }
+
+    public function getLastMsg ($id)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_FORUM_MSG');
+        $sql->where(array('name' => 'id_mdg', 'value' => $id));
+        $sql->orderby("ORDER BY `belcms_forum_msg`.`id` DESC", true);
+        $sql->queryOne();
+        $return = $sql->data;
+        return $return;
+    }
 }

@@ -2,9 +2,9 @@
     <div class="row row-cols-1 row-cols-md-3 g-4">
 <?php
 foreach ($data as $data):
-    if (is_file(constant('ROOT_DOC').$data->screen)) {
+    if (is_file($data->screen)) {
         $img = $data->screen;
-        $img = '<img src="'.$img.'" class="card-img-top belcms_downloads_img_cat" alt="image '.$data->name.'">';
+        $img = '<img src="'.$img.'" class="card-img-top" alt="image '.$data->name.'">';
     } else {
         $img = 'assets/img/no_img_fullwide.webp';
         $img = '<img src="'.$img.'" class="card-img-top" alt="image no image">';

@@ -450,6 +450,9 @@ final class Common
     #########################################
     public static function ConvertSize ($size)
     {
+        if ($size  == 0) {
+            $size = 1;
+        }
         if (is_numeric($size)) {
             $unit = array('byte','Ko','Mo','Gb ','TéraOctet','Pétaoctet');
             return @round($size/pow(1024,($i=floor(log($size,1024)))),2).' '.$unit[$i];
@@ -645,16 +648,19 @@ final class Common
             if (!is_writable($dir)) {
                 chmod($dir, 0777);
             }
-
-            if ($ext !== false) {
-                $extensions = $ext;
-            } else {
+            if ($ext == 'img') {
+                 $extensions = array('.jpe','.jpg','.jpeg','.gif','.png','.bmp','.ico','.svg','.svgz','.tif','.tiff','.ai','.drw','.pct','.psp','.xcf','.psd','.raw','.webp','.heic'
+                );
+            }
+            if ($ext == 'all') {
                 $extensions = array(
                 '.png', '.bmp', '.gif', '.jpg', '.ico', '.svg', '.tiff', '.webp', '.jpeg', '.doc', '.txt', '.pdf', '.rar',
                 '.zip', '.7zip', '.exe', '.tar', '.psd', '.jar','.avi', '.mpg', '.mpeg', '.av4', '.ac3', '.docx', '.doc', '.mp3',
                 '.mp4', '.svg', '.tif', '.tiff', '.txt', '.3gp', '.3g2', '.xml', '.xls', '.xlsx', '.ppt', '.pptx', '.pkg',
-                '.iso', '.torrent','.apk', '.webp'
-                );
+                '.iso', '.torrent','.apk', '.webp','.jpe','.jpg','.jpeg','gif','png','.bmp','.ico','.svg','.svgz','.tif','.tiff','.ai','.drw','.pct','.psp','.xcf','.psd','.raw','.webp','.heic');
+            }
+            if ($ext == false) {
+                $extensions = array();
             }
 
             $extension = strrchr($_FILES[$name]['name'], '.');
@@ -692,6 +698,8 @@ final class Common
         }
         return $return;
     }
+
+
     #########################################
     # Delete all > dir file
     #########################################

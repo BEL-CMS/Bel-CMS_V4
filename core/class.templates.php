@@ -138,8 +138,7 @@ class Templates
         $files[] = 'assets/plugins/lightbox/lightbox.css';
 
         if ($link == 'articles') {
-            $files[] = 'assets/plugins/highlight/styles/default.min.css';
-            $files[] = 'assets/plugins/highlight/default.min.css';
+            $files[] = 'assets/plugins/prism/prism.css';
         }
 
         /* pages css */
@@ -178,21 +177,17 @@ class Templates
         $files[] = 'assets/plugins/tooltip/popper.min.js';
         $files[] = 'assets/plugins/tooltip/tippy-bundle.umd.min.js';
         $files[] = 'assets/plugins/tooltip/tooltip.js';
-        /* jQuery BEL-CMS */
+     /* jQuery BEL-CMS */
         $files[] = 'assets/js/belcms.core.js';
         /* pages js */
-
-        if ($link == 'articles') {
-            $files[] = 'assets/plugins/highlight/highlight.min.js';
-            $files[] = 'assets/plugins/highlight/languages/php.min.js';
-            $files[] = 'assets/plugins/highlight/languages/javascript.min.js';
-            $files[] = 'assets/plugins/highlight/languages/css.min.js';
-        }
 
         $dirPage = ROOT.DS.'pages'.DS.strtolower($var).DS.'js'.DS.'javascripts.js';
 		if ($dirPage) {
 			$files[] = 'pages/'.strtolower($var). '/js/javascript.js';
 		}
+        if ($link == 'articles') {
+            $files[] = 'assets/plugins/prism/prism.js';
+        }
 
         foreach ($files as $v) {
             $return .= '	<script type="text/javascript" src="'.$v.'"></script>'.PHP_EOL;

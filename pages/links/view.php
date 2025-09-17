@@ -10,6 +10,7 @@
  * @author as Stive - stive@determe.be
  */
 
+use BelCMS\Core\Comment;
 use BelCMS\Core\User;
 use BelCMS\Requires\Common;
 if (User::ifUserExist($links->author)) {
@@ -24,56 +25,26 @@ if (!empty($this->img)) {
     $img = null;
 }
 ?>
-<section id="belcms_links">
-    <div class="container">
-        <div class="row">
-            <div id="belcms_cat_view">
-                <div class="belcms_cat_view_box">
-                    <div id="belcms_cat_view_title">
-                        <h2><?=$links->name;?></h2>
-                    </div>
-                    <div id="belcms_cat_view_img">
-                        <img src="<?=$img;?>" class="img-thumbnail" alt="...">
-                    </div>
-                    <div id="belcms_cat_view_infos" class="card">
-                        <div class="card-header">Information
-                    </div>
-                    <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr><td colspan="2" id="belcms_cat_view_inf">Informations</td></tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Vu</td>
-                                        <td><?= $links->view; ?></td>
-                                    <tr>
-                                    </tr>
-                                        <td>Date de publication</td>
-                                        <td><?= Common::TransformDate($links->date_insert, 'FULL', 'MEDIUM'); ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Visité</td>
-                                        <td><?= $links->click; ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Auteur</td>
-                                        <td><?= $user; ?></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="col-md-6">
-                            <div id="textarea"><?= $links->description; ?></div>
-                        </div>
-                        <div class="card-footer">
-                            <a href="Links/Click/<?=$links->id;?>" target="_blank" title="<?=$links->name;?>">Lien</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="belcms_links_page">
+    <div class="belcms_links_title"><?= $links->name; ?></div>
+    <div class="belcms_links_url">🔗 <a href="Links/Click/<?= $links->id; ?>" target="_blank" title="<?= $links->name; ?>"><?= $links->link; ?></a></div>
+    <div class="belcms_links_description"> <?= $links->description; ?></div>
+
+    <div class="belcms_links_stats">
+      <div class="belcms_links_stat">👁️ Vues : <?= $links->view; ?></div>
+      <div class="belcms_links_stat">🖱️ Clics :<?= $links->click; ?></div>
+      <div class="belcms_links_stat">📅 Publié le : <?= Common::TransformDate($links->date_insert, 'FULL', 'NONE'); ?></div>
+      <div class="belcms_links_stat">✍️ Publié par : <?= $user; ?></div>
     </div>
-</section>
+    <!-- À implanté plus tard
+    <div class="belcms_links_tags">
+      <span class="belcms_links_tag">#CSS</span>
+      <span class="belcms_links_tag">#Flexbox</span>
+      <span class="belcms_links_tag">#Jeu</span>
+      <span class="belcms_links_tag">#Apprentissage</span>
+    </div>
+    -->
+  </div>
+<?php
+$comments = new Comment;
+$comments->html();

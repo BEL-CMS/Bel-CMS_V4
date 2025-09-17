@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Bel-CMS [Content management system]
  * @version 4.0.0 [PHP8.4]
@@ -28,21 +29,21 @@ endif;
             </tr>
         </thead>
         <tbody>
-        <?php
-        foreach ($data as $key => $value):
-            $countView = Articles::getCountView($value->id_articles);
-        ?>
-            <tr>
-                <th scope="row">
-                    <button onclick="location.href='articles/getpages/<?= $value->id_articles; ?>'" type="button" class="btn belcms_btn"><?= $value->name; ?></button>
-                </th>
-                <td><?= Common::TransformDate($value->publish, 'FULL', 'MEDIUM'); ?></td>
-                <td><?= $value->nbpage; ?></td>
-                <td><?= $countView; ?></td>
-            </tr>
-        <?php
-        endforeach;
-        ?>
+            <?php
+            foreach ($data as $key => $value):
+                $countView = Articles::getCountView($value->id_articles);
+            ?>
+                <tr>
+                    <th scope="row">
+                        <a href="articles/getpages/<?= $value->id_articles; ?>" class=""><?= $value->name; ?></a>
+                    </th>
+                    <td><?= Common::TransformDate($value->publish, 'FULL', 'MEDIUM'); ?></td>
+                    <td><?= $value->nbpage; ?></td>
+                    <td><?= $countView; ?></td>
+                </tr>
+            <?php
+            endforeach;
+            ?>
         </tbody>
     </table>
 </section>

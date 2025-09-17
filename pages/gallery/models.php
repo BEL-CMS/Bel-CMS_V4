@@ -77,7 +77,7 @@ final class Gallery
         $insert['description'] = $data['description'];
         $insert['author'] = User::isLogged() ? $_SESSION['USER']->user->hash_key : Common::GetIp();
         $insert['valid'] = 0;
-        if (!empty($insert['author'])) {
+        if (User::isLogged()) {
             $sql = new BDD;
             $sql->table('TABLE_GALLERY');
             $sql->insert($insert);

@@ -1,14 +1,5 @@
-/*-------------------------------------------------------------------------------------------------*/
-/*	Commun styles
----------------------------------------------------------------------------------------------------*/
-.belcms_bold {
-	font-weight: bold !important;
-}
-.belcms_underline {
-	text-decoration: underline;
-}
-.belcms_no_padding {
-	padding: 0px !important;
+code, pre {
+	word-wrap:break-word !important;
 }
 /*-------------------------------------------------------------------------------------------------*/
 /*	Commentaires styles
@@ -144,4 +135,64 @@ nav#bel_cms_comment {
 }
 .belcms_pagination_item.disabled a {
 	cursor: not-allowed;
+}
+/*-------------------------------------------------------------------------------------------------*/
+/*	Commun styles
+---------------------------------------------------------------------------------------------------*/
+#belcms_charte_title {
+	text-align: center;
+	font-size: 2.5em;
+	color: #2c3e50;
+	margin-bottom: 40px;
+	animation: belcms_forum_charte_fadeInDown 1s ease-out;
+}
+.belcms_charte_back-btn {
+	display: inline-block;
+	background-color: #27ae60;
+	color: white;
+	padding: 12px 20px;
+	border-radius: 8px;
+	text-decoration: none;
+	font-size: 1em;
+	transition: background 0.3s, transform 0.3s;
+	margin-bottom: 30px;
+}
+.belcms_charte_section {
+	background-color: #fff;
+	padding: 20px;
+	margin-bottom: 30px;
+	border-radius: 12px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+	animation: belcms_forum_charte_fadeInUp 0.8s ease forwards;
+}
+.belcms_charte_heading {
+	float: left;
+	width: 100%;
+	text-align: left;
+	font-size: 20px;
+	text-transform: uppercase;
+	color: #000;
+	font-weight: 700;
+	margin-bottom: 15px;
+	cursor: pointer;
+}
+.belcms_charte_item:hover {
+	cursor: pointer;
+	transform: translateX(5px);
+}
+.belcms_charte_list {
+	list-style: none;
+	padding-left: 0;
+}
+.belcms_charte_item {
+	margin-bottom: 12px;
+	display: block;
+	transition: transform 0.2s ease;
+	text-align: left;
+}
+#belcms_bnv {
+	color: #777;
+	font-size: 0.85rem;
+	margin-left: 10px;
 }

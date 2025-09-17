@@ -38,18 +38,6 @@ final class Downloads
 
     public function getDlForID ($id)
     {
-        $where = array('name' => 'id', 'value' => $id);
-        $sql = new BDD;
-        $sql->table('TABLE_DOWNLOADS');
-        $sql->where($where);
-        $sql->queryOne();
-        $return = $sql->data;
-        return $return;
-    }
-
-
-    public function getAllDlForID ($id)
-    {
         $where = array('name' => 'id_groups', 'value' => $id);
         $sql = new BDD;
         $sql->table('TABLE_DOWNLOADS');
@@ -150,12 +138,13 @@ final class Downloads
         }
     }
 
-    public function getCatForId($id) {
+    public function getNbDls ($id) : int
+    {
         $sql = new BDD;
-        $sql->table('TABLE_DOWNLOADS_CAT');
-        $sql->where(array('name' => 'id', 'value' => $id));
-        $sql->queryOne();
+        $sql->table('TABLE_DOWNLOADS');
+        $sql->where(array('name' => 'idcat', 'value' => $id));
+        $sql->count();
         $return = $sql->data;
-        return $return->name;
+        return $return;
     }
 }

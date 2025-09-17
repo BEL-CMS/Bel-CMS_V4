@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.3]
+ * @version 4.0.0 [PHP8.4]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -13,7 +13,6 @@ namespace BelCMS\Core;
 use BelCMS\PDO\BDD;
 use BelCMS\Core\Templates;
 use BelCMS\Requires\Common;
-use Dom\Notation;
 
 if (!defined('CHECK_INDEX')):
     header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
@@ -34,6 +33,7 @@ final class BelCMS
         new Config;
         new User;
         self::getLangs();
+        new Visitors();
 		$this->link      = Dispatcher::page($_SESSION['CONFIG']['CMS_DEFAULT_PAGE']);
         $this->widgets   = self::WidgetsContent ();
         $this->page      = self::PageContent();

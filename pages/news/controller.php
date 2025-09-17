@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.4]
+ * @version 4.0.0 [PHP8.3]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -14,7 +14,6 @@ namespace Belcms\Pages\Controller;
 use BelCMS\Core\Config;
 use BelCMS\Core\Notification;
 use BelCMS\Core\Pages;
-use BelCMS\Core\User;
 
 if (!defined('CHECK_INDEX')):
     header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');

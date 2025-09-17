@@ -208,6 +208,7 @@ class Forum extends Pages
                 $data['data'] = $this->models->nameThreads ($id);
                 foreach ($data['data'] as $key => $value) {
                     $data['data'][$key]->reply = $this->models->getnbMesg ($value->id_message);
+                    $data['data'][$key]->last = $this->models->getLastMsg($value->id_message);
                 }
                 $data['id'] = $id;
                 $this->set($data);

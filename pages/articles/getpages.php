@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Bel-CMS [Content management system]
  * @version 4.0.0 [PHP8.4]
@@ -29,22 +30,28 @@ endif;
             </tr>
         </thead>
         <tbody>
-        <?php
-        foreach ($data as $key => $value):
-        if (User::ifUserExist($value->author)) {
-            $author = User::getInfosUserAll($value->author)->user->username;
-        }
-        ?>
-        <tr>
-            <th scope="row"><a href="articles/read/<?= $value->id; ?>" title="<?= $value->name; ?>"><h2> <?= $value->name; ?></h2></a></th>
-            <td><?= Common::TransformDate($value->publish, 'FULL', 'MEDIUM'); ?></td>
-            <td><?= $author; ?></td>
-            <td><?= $value->view; ?></td>
-            <td><button onclick="location.href='articles/read/<?= $value->id; ?>'" type="button" class="btn btn-info">Lire</button></td>
-        </tr>
-        <?php
-        endforeach;
-        ?>
+            <?php
+            foreach ($data as $key => $value):
+                if (User::ifUserExist($value->author)) {
+                    $author = User::getInfosUserAll($value->author)->user->username;
+                }
+            ?>
+                <tr>
+                    <th scope="row"><a href="articles/read/<?= $value->id; ?>" title="<?= $value->name; ?>">
+                            <h2 class="belcms_read_value"> <?= $value->name; ?></h2>
+                        </a></th>
+                    <td><?= Common::TransformDate($value->publish, 'FULL', 'MEDIUM'); ?></td>
+                    <td><?= $author; ?></td>
+                    <td><?= $value->view; ?></td>
+                    <td>
+                        <a href="articles/read/<?= $value->id; ?>">
+                            <h2 class="belcms_read_value">Lire</h2>
+                        </a>
+                    </td>
+                </tr>
+            <?php
+            endforeach;
+            ?>
         </tbody>
     </table>
 </section>

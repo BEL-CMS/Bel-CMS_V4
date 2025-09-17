@@ -14,9 +14,9 @@ $databases["server"] = array(
 # Réglages MySQL - SERVEUR
 #####################################
 'DB_DRIVER'   => 'mysql',
-'DB_NAME'     => '',
+'DB_NAME'     => 'v4',
 'DB_USER'     => 'root',
-'DB_PASSWORD' => '',
+'DB_PASSWORD' => '784830',
 'DB_HOST'     => 'localhost',
 'DB_PREFIX'   => 'belcms_',
 'DB_PORT'     => '3306'

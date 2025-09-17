@@ -26,3 +26,6 @@ th[scope="col"] {
 tbody tr td {
     text-align: center;
 }
+.belcms_read_value {
+    font-size: 13px;
+}

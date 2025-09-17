@@ -71,6 +71,8 @@ $array = array(
 	'CODE_CAPTCHA_ERROR'                  => 'Erreur de code captcha, veuillez réessayer',
 	'NO_BANS_YET'                         => 'Aucun bannissement pour l\'instant',
 	'NO_USER_CONNECT'                     => 'Il est important d\'établir des connexions avec le site',
+	'NO_VALID_TOKEN_USER'                 => 'La clé "Token" ou l\'adresse e-mail n\'est pas valide',
+	'GET_PASSWORD_TOKEN'                  => 'Récupération de mot de passe',
  	#####################################
 	# Fichier lang en français - Social
 	#####################################
@@ -269,6 +271,7 @@ $array = array(
 	'MOBILE'                              => 'Mobile',
 	'SEARCH'                              => 'Rechercher',
 	'MAX_UPLOADS'                         => 'Max taille Upload',
+	'MAIL_BY_BELCMS'                      => '© '.date("Y").' Mail by <a href="https://bel-cms.dev">Bel-CMS.dev</a> Tous droits réservés.',
 	#####################################
 	# UPLOAD
 	#####################################
@@ -422,7 +425,7 @@ $array = array(
 	'COMMENT'                             => 'Commentaire',
 	'READMORE'                            => 'Lire la suite',
 	'NEWTHREAD'                           => 'Nouveau Post',
-	'MAILS'                               => 'Boîte de réception',
+	'INBOX'                               => 'Boîte de réception',
 	'MANAGEMENTS'                         => 'Administration',
 	'GUESTBOOK'                           => 'Livre d\'or',
 	'DONATIONS'                           => 'Don',
@@ -434,6 +437,7 @@ $array = array(
 	'SURVEY'                              => 'Sondages',
 	'MARKET'                              => 'Boutique',
 	'PRICING'                             => 'Tarifs',
+	
 	#####################################
 	# USER
 	#####################################

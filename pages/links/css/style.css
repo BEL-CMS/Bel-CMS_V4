@@ -129,3 +129,136 @@
 .card-body {
     padding-bottom: 0 !important;
 }
+
+/* index */
+    .belcms_links_page,
+  .belcms_links_container {
+      max-width: 800px;
+      margin: auto;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin-bottom: 15px;
+    }
+
+    .belcms_links_title {
+      font-size: 1.8em;
+      color: #2c3e50;
+      margin-bottom: 10px;
+    }
+
+    .belcms_links_description {
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    .belcms_links_list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .belcms_links_item {
+      margin-bottom: 15px;
+      padding: 12px;
+      background-color: #eef6fc;
+      border-left: 4px solid #3498db;
+      border-radius: 4px;
+    }
+
+    .belcms_links_item a {
+      text-decoration: none;
+      color: #2980b9;
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+
+    .belcms_links_item span {
+      display: block;
+      color: #7f8c8d;
+      font-size: 0.9em;
+      margin-top: 4px;
+    }
+
+    .belcms_links_tags {
+      margin-top: 20px;
+    }
+
+    .belcms_links_tag {
+      display: inline-block;
+      background-color: #3498db;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 20px;
+      margin-right: 8px;
+      font-size: 0.8em;
+    }
+
+/* Conteneur principal */
+
+/* Nom du lien à gauche */
+.belcms_links_name {
+  font-size: 1.2em;
+  font-weight: 600;
+  color: #2c3e50;
+  transition: color 0.3s ease;
+}
+
+/* Lien cliquable */
+.belcms_links_name a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.3s ease;
+}
+
+.belcms_links_name a:hover {
+  color: #1a73e8;
+}
+
+/* Bloc des statistiques à droite */
+.belcms_links_stats {
+  display: flex;
+  gap: 16px;
+  cursor: pointer;
+}
+
+/* Chaque statistique */
+.belcms_links_stat {
+  background-color: #f2f4f7;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.95em;
+  color: #34495e;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+}
+
+/* Effet au survol des stats */
+.belcms_links_stat:hover {
+  background-color: #dfe6ec;
+  transform: scale(1.05);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Label en gras */
+.belcms_links_stat span:first-child {
+  font-weight: bold;
+}
+
+/* Responsive mobile */
+@media (max-width: 600px) {
+  .belcms_links_container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .belcms_links_stats {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+}

@@ -350,4 +350,79 @@ final class ModelsUser
         $return['type'] = 'success';
         return $return;
     }
+
+    public function mailSecureBDD ($mail)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_USERS');
+        $sql->where(array('name' => 'mail', 'value' => $mail));
+        $sql->count();
+        if ($sql->data == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+	public function getUserInfo ($mail)
+	{
+        $sql = new BDD;
+        $sql->table('TABLE_USERS');
+        $sql->where(array('name' => 'mail', 'value' => $mail));
+        $sql->queryOne();
+        $return = $sql->data;
+        return $return;
+	}
+    #########################################
+	# Update le token
+	#########################################
+    public function updateLostPassword ($mail, $token)
+    {
+        $where[] = array('name' => 'mail', 'value' => $mail);
+        #-----------------------------------------------------------#
+        $updateUser = array('token' => $token);
+        #-----------------------------------------------------------#
+        $sqlUser = new BDD;
+        $sqlUser->table('TABLE_USERS');
+        $sqlUser->where($where);
+        $sqlUser->update($updateUser);
+        #-----------------------------------------------------------#
+    }
+
+    public function checkToken ($mail, $token)
+    {
+        $where[] = array('name' => 'token', 'value' => $token);
+        $where[] = array('name' => 'mail', 'value' => $mail);
+        $sql = new BDD;
+        $sql->table('TABLE_USERS');
+        $sql->where($where);
+        $sql->count();
+        if ($sql->data == 1) {
+            $return = true;
+        } else {
+            $return = false;
+        }
+        return $return;
+    }
+
+    public function removeToken ($mail)
+    {
+        $data['token'] = null;
+        $where[] = array('name' => 'mail', 'value' => $mail);
+        $sql = new BDD;
+        $sql->table('TABLE_USERS');
+        $sql->where($where);
+        $sql->update($data);
+    }
+
+    public function sendNewPass ($mail, $password)
+    {
+        $where[] = array('name' => 'mail', 'value' => $mail);
+        $data['mail'] = $mail;
+        $data['password'] = $password;
+        $sql = new BDD;
+        $sql->table('TABLE_USERS');
+        $sql->where($where);
+        $sql->update($data);
+    }
 }

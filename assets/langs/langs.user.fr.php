@@ -81,6 +81,10 @@ $array = array(
 	'USER_CHANGE_AVATAR_OK'               => 'L\'avatar a été effectuer ce changement avec succès',
 	'USER_DELETE_AVATAR_OK'               => 'Supression de l\'avatar avec succès',
 	'USER_GRAVATAR_OK'                    => 'Changement de statut pour le Gravatar',
+	'SUBJECT_HTML'                        => 'Récupération du code à valider',
+	'ACCOUNT_REGISTRATION'                => 'Enregistrement du compte',
+	'SERIAL_ACTIVE'                       => 'Clé d\'activation',
+	'ACTIVE_TO_SERIAL'                    => 'Voici la clé de sécurité pour activer votre compte.',
 );
 foreach ($array as $constant => $value) {
 	if (!defined($constant)) {

@@ -43,6 +43,8 @@ $tables = array(
     'TABLE_FAQ'                 => $DB_PREFIX.'faq',
     'TABLE_FAQ_CAT'             => $DB_PREFIX.'faq_cat',
     'TABLE_GUESTBOOK'           => $DB_PREFIX.'guestbook',
+    'TABLE_INBOX'               => $DB_PREFIX.'inbox',
+    'TABLE_INBOX_MSG'           => $DB_PREFIX.'inbox_msg',
     'TABLE_INTERACTION'         => $DB_PREFIX.'interaction',
     'TABLE_INTERACTION_ADMIN'   => $DB_PREFIX.'interaction_admin',
     'TABLE_GROUPS'              => $DB_PREFIX.'groups',
@@ -58,6 +60,7 @@ $tables = array(
     'TABLE_TICKET_CAT'          => $DB_PREFIX.'ticket_cat',
     'TABLE_TICKET_REP'          => $DB_PREFIX.'ticket_rep',
     'TABLE_MAIL_BLACKLIST'      => $DB_PREFIX.'mails_blacklist',
+    'TABLE_MAINTENANCE'         => $DB_PREFIX.'maintenance',
     'TABLE_MAIL_CONFIG'         => $DB_PREFIX.'mails_config',
     'TABLE_USERS'               => $DB_PREFIX.'users',
     'TABLE_USERS_GAMING'        => $DB_PREFIX.'users_gaming',
@@ -67,6 +70,7 @@ $tables = array(
     'TABLE_USERS_PROFILS'       => $DB_PREFIX.'users_profils',
     'TABLE_USERS_SOCIAL'        => $DB_PREFIX.'users_social',
     'TABLE_USERS_HARDWARE'      => $DB_PREFIX.'users_hardware',
+    'TABLE_VISITORS'            => $DB_PREFIX.'visitors',
     #####################################################
 );
 #####################################################

@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.4]
+ * @version 4.0.0 [PHP8.3]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -10,6 +10,7 @@
 */
 
 namespace Belcms\Pages\Controller;
+
 use BelCMS\Core\Pages;
 use BelCMS\Core\Secure;
 use BelCMS\Core\User;

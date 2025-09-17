@@ -61,4 +61,34 @@ function generer_password(champ_cible) {
         });
     });
 
+    $(document).on('click','#requestTokenBt',function(){
+        var mail = $("#email").val();
+        if (!mail) {
+            alert("Veuillez entrer votre adresse e-mail avant de demander le token.");
+        } else {
+            $.ajax({
+                url: "/User/sendToken?echo",
+                type: "GET",
+                data: {
+                    data: mail,
+                },
+                success: function(response) {
+                    $('#requestTokenBt span').empty().append('<div class="spinner"></div>');
+                    setTimeout(
+                    function()  {
+                        $('#requestTokenBt span').empty().append('<div class="spinner"></div>');
+                        if (response == 'true') {
+                            $('#requestTokenBt span').empty().append('Le courriel concernant la réinitialisation a été correctement expédié.');
+                        } else {
+                            $('#requestTokenBt span').empty().append(response);
+                        }
+                    }, 1500);
+                },
+                error: function() {
+                    alert("error Ajax");
+                }
+            });
+        }
+    });
+
 })(jQuery);

@@ -522,7 +522,7 @@ class User
 		return $color;
 	}
 	#########################################
-	# Verifie si l'utilisateur existe hash_key
+	# Verifie si l'utilisateur existe
 	#########################################
 	public static function ifUserExist ($hash_key = null)
 	{
@@ -534,30 +534,6 @@ class User
 			$sql->where(array(
 				'name'  => 'hash_key',
 				'value' => $hash_key
-			));
-			$sql->count();
-			$return = $sql->data;
-			if (!empty($return)) {
-				$return = true;
-			}
-		}
-
-		return $return;
-	}
-
-	#########################################
-	# Verifie si l'utilisateur existe User
-	#########################################
-	public static function ifUserExistName ($name = null)
-	{
-		$return = false;
-
-		if ($name !== null) {
-			$sql = New BDD();
-			$sql->table('TABLE_USERS');
-			$sql->where(array(
-				'name'  => 'username',
-				'value' => $name
 			));
 			$sql->count();
 			$return = $sql->data;

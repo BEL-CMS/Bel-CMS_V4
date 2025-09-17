@@ -7,11 +7,13 @@
       <div class="col-12">
         <div class="card shadow-sm">
           <div class="card-header bg-white d-flex align-items-center">
-            <i class="fa-solid fa-code text-primary me-2"></i>
+            <i class="<?= $value->icon; ?> text-primary me-2"></i>
             <h2 class="h5 mb-0"><?= $value->title; ?></h2>
           </div>
           <div class="card-body">
-            <p class="text-secondary mb-4"><?= $value->subtitle; ?></p>
+            <?php if (!empty($value->subtitle)): ?>
+              <p class="text-secondary mb-4"><?= $value->subtitle; ?></p>
+            <?php endif; ?>
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
               <?php
               foreach ($value->subCat as $sub):
@@ -32,7 +34,7 @@
             </div>
           </div>
           <div class="card-footer bg-white small text-secondary">
-            Dernier message: <strong>Hier</strong> par <i class="fa-regular fa-user"></i> Alice • <i class="fa-regular fa-clock"></i> 22:17
+            Dernier message: <strong>Hier</strong> par <i class="fa-regular fa-user"></i>  • <i class="fa-regular fa-clock"></i> 
           </div>
         </div>
       </div>
@@ -42,4 +44,4 @@
     </div>
   </div>
   <?php
-  include 'footer.php';
+  include ('footer.php');

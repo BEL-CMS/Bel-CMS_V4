@@ -42,7 +42,7 @@ class Gallery extends Pages
             $d['img'][$key]->vote = $this->models->getVote ($value->id);
         }
         $config = Config::GetConfigPage('gallery');
-        $d['pagination'] = $this->pagination($config->config['MAX_PAGE'], 'gallery/subcat', constant('TABLE_GALLERY'), array('name' => 'id_cat', 'value' => $id));
+        $d['pagination'] = $this->pagination($config->config['MAX_PAGE'], 'gallery/subcat', constant('TABLE_GALLERY'));
         if ($d['img'] == null) {
             Notification::error('Pas d\'images disponibles dans cette catégorie.', 'Images');
         } else {
@@ -83,14 +83,11 @@ class Gallery extends Pages
                 $post['description'] = Common::VarSecure($_POST['description'], 'html');
             }
             if (isset($_FILES['image'])) {
-                $dirWeb = 'uploads/gallery/tmp/';
-                $dir = ROOT . DS . 'uploads' . DS . 'gallery' . DS . 'tmp' . DS;
-                $extensions = array('.png', '.gif', '.jpg', '.ico', '.jpeg', '.svg', '.webp');
-                if (isset($_FILES['image']['name']) and !empty($_FILES['image']['name'])) {
-                    $post['image'] = Common::Upload('image', $dir, $extensions, true);
-                    $post['image'] = $dirWeb . $post['image'];
+                $image = Common::Upload('image', 'uploads/gallery/tmp/', array('.png', '.gif', '.jpg', '.jpeg', '.ico', '.tif', '.eps', '.svg', '.webp'), true);
+                if ($image) {
+                    $post['image'] = $image;
+                    $this->models->insertTmp($post);
                 }
-                $this->models->insertTmp($post);
             } else {
                 Notification::error('Aucune image n\'a été envoyée.', 'Image');
                 return;
