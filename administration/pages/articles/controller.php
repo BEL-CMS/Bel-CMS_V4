@@ -63,6 +63,15 @@ class Articles extends AdminPages
         $this->render('add', $menu);
     }
 
+    public function editart ()
+    {
+        $menu[] = array('title' => 'Accueil', 'href' => 'articles?Admin&option=pages', 'ico'  => 'fa-solid fa-igloo');
+        $id = (int) $this->data[2];
+        $d['data'] = $this->models->getEdit ($id);
+        $this->set($d);
+        $this->render('edit', $menu);
+    }
+
     public function sendnew ()
     {
         $a['name']        = Common::VarSecure($_POST['name'], null);

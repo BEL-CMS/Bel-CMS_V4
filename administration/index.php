@@ -61,11 +61,11 @@ final class Administration
                     Common::Redirect('User/Login&echo');
                 }
             } else {
-                Notification::error('L\'accès à l\'administration vous est interdit.');
+                Notification::error('Vous n\'êtes pas autorisé à entrer dans l\'administration.', 'access', true);
                 Common::Redirect('User/Login&echo', 3);
             }
         } else {
-            Notification::error('Il est nécessaire d\'être connecté afin d\'accéder à l\'administration.');
+            Notification::error('Il est nécessaire d\'être connecté afin d\'accéder à l\'administration.', 'Utilisateur', true);
             Common::Redirect('User/Login&echo', 3);
         }
     }

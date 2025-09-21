@@ -11,6 +11,7 @@
  */
 
 use BelCMS\Core\config;
+use BelCMS\Core\Notification;
 use BelCMS\Requires\Common;
 
 if (!defined('CHECK_INDEX')):
@@ -38,8 +39,13 @@ class News extends AdminPages
     public function add ()
     {
         $a['cat']  = $this->models->getCat();
-        $this->set($a);
-        $this->render('add');
+        if (empty($a['cat'])) {
+            Notification::error('Une catégorie est obligatoire', 'Catégorie');
+            $this->redirect('news/addcat?Admin&option=pages', 3);
+        } else {
+            $this->set($a);
+            $this->render('add');
+        }
     }
     public function sendnew()
     {
@@ -103,6 +109,7 @@ class News extends AdminPages
 
     public function cat ()
     {
+        $menu[] = array('title' => 'Accueil', 'href' => 'news?Admin&option=pages', 'ico'  => 'fa-solid fa-igloo');
         $menu[] = array('title' => 'Ajouter une catégorie', 'href' => 'news/addcat?Admin&option=pages', 'ico'  => 'fa-solid fa-pen-to-square');
     
         $d['cat'] = $this->models->getCat();

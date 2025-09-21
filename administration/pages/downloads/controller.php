@@ -11,6 +11,7 @@
  */
 
 use BelCMS\Core\config;
+use BelCMS\Core\Notification;
 use BelCMS\Core\Secure;
 use BelCMS\Requires\Common;
 
@@ -40,6 +41,11 @@ class Downloads extends AdminPages
     public function add ()
     {
         $a['cat'] = $this->models->getCat();
+        if (empty($a['cat'])) {
+            Notification::warning('Une catégorie est nécessaire.', 'Téléchargements');
+            $this->redirect('downloads/newcategorys?Admin&option=pages', 2);
+            return;
+        }
         $this->set($a);
         $this->render('add');
     }
@@ -89,6 +95,11 @@ class Downloads extends AdminPages
             $d['data']        = $this->models->getOneDls ($id);
             $d['data']->idcat = $this->models->getCatOne ($d['data']->idcat);
             $d['cat']         = $this->models->getCat ();
+            if (empty($d['cat'])) {
+                Notification::warning('Une catégorie est nécessaire.', 'Téléchargements');
+                $this->redirect('downloads/newcategorys?Admin&option=pages', 2);
+                return;
+            }
             $this->set($d);
             $this->render('editdls');
         }
@@ -117,7 +128,7 @@ class Downloads extends AdminPages
                 'type' => 'error',
                 'text' => constant('EDIT_PARAM_SUCCESS')
             );
-            $this->models->updateUpload ($insert, $_POST['id']);
+            $this->models->updateUpload ($insert);
             $this->error('Téléchargement', $array['text'], $array['type']);
             $this->redirect('downloads?admin&option=pages', 3);
         } else {

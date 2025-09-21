@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Bel-CMS [Content management system]
  * @version 4.0.0 [PHP8.4]
@@ -63,7 +64,7 @@ endif;
                                             <a href="Articles/deletePage/<?= $v->id; ?>?admin&option=pages" class="btn btn-danger label-end rounded-pill">
                                                 Supprimer
                                             </a>&emsp;
-                                            <a href="Articles/editdls/<?= $v->id; ?>?admin&option=pages" class="btn btn-warning rounded-pill">
+                                            <a href="Articles/editart/<?= $v->id; ?>?admin&option=pages" class="btn btn-warning rounded-pill">
                                                 Editer
                                             </a>
                                         </td>
@@ -79,3 +80,11 @@ endif;
         </div>
     </div>
 </div>
+<!-- PrismJS Core -->
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-php.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
+<script>
+    Prism.highlightAll();
+</script>

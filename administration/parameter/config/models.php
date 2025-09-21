@@ -27,13 +27,23 @@ final class ConfigModels
         return $return;
     }
 
-    public function getInfos ($name)
+    public function getInfos ($id)
     {
         $sql = new BDD;
         $sql->table('TABLE_CONFIG_PAGES');
-        $sql->where(array('name'=> 'name', 'value' => $name));
+        $sql->where(array('name'=> 'id', 'value' => $id));
         $sql->queryOne();
         $return = $sql->data;
+        return $return;
+    }
+
+    public function sendParameter ($data, $id)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_CONFIG_PAGES');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->update($data);
+        $return = $sql->data == true ? true : false;
         return $return;
     }
 }

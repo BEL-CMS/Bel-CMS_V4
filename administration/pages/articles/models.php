@@ -52,6 +52,16 @@ final class ModelsAtl
         return $return;
     }
 
+    public function getEdit($id)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_ARTICLES_CONTENT');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->queryOne();
+        $return = $sql->data;
+        return $return;
+    }
+
     public function addNewPage ($data)
     {
         $sql = new BDD;

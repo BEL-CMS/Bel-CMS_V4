@@ -9,6 +9,7 @@
  * @author as Stive - stive@determe.be
  */
 
+use BelCMS\Core\Interaction;
 use BelCMS\Requires\Common;
 
 if (!defined('CHECK_INDEX')):
@@ -31,9 +32,60 @@ class config extends AdminPages
 
     public function edit ()
     {
-        $name = Common::VarSecure($_GET['title'], null);
-        $d['infos'] = $this->models->getInfos($name);
+        $id = (int) $this->id;
+        $d['data'] = $this->models->getInfos($id);
         $this->set($d);
         $this->render('edit');
+    }
+
+    public function sendParameter ()
+    {
+        $_POST['access_groups'][] = 1;
+        $_POST['access_admin'][]  = 1;
+        $send['active']           = isset($_POST['active']) ? 1 : 0;
+        $send['access_groups']    = implode('|', $_POST['access_groups']);
+        $send['access_admin']     = implode('|', $_POST['access_admin']);
+        $send['description']      = Common::VarSecure($_POST['description'], null);
+        $send['key_seo']          = Common::VarSecure($_POST['key_seo'], null);
+        $send['infos_sup']        = Common::VarSecure($_POST['infos_sup'], 'html');
+        $id                       = (int) $_POST['id'];
+        $send['config']           = Common::VarSecure($_POST['config'], null);
+        $name                     = Common::VarSecure($_POST['name'], null);
+
+        $return = $this->models->sendParameter($send, $id);
+
+        if ($return === true) {
+            #######################################################
+            $msg   = $_SESSION['USER']->user->username . ' à modifier les paramètres de la page : '.$name;
+            $interaction = new Interaction();
+            $interaction->status('green');
+            $interaction->message($msg);
+            $interaction->title('Modification des paramètre');
+            $interaction->author($_SESSION['USER']->user->hash_key);
+            $interaction->setAdmin();
+            #######################################################
+            $array = array(
+                'type' => 'success',
+                'text' => constant('NEW_PARAMETER_SUCCESS')
+            );
+            $this->error('Tickets', $array['text'], $array['type']);
+            $this->redirect('config?admin&option=parameter', 2);
+        } else {
+            #######################################################
+            $msg   = $_SESSION['USER']->user->username . ' à tenter de modifier les paramètres de la page : '.$name;
+            $interaction = new Interaction();
+            $interaction->status('orange');
+            $interaction->message($msg);
+            $interaction->title('Modification des paramètres');
+            $interaction->author($_SESSION['USER']->user->hash_key);
+            $interaction->setAdmin();
+            #######################################################
+            $array = array(
+                'type' => 'warning',
+                'text' => constant('NEW_PARAMETER_ERROR')
+            );
+            $this->error('Tickets', $array['text'], $array['type']);
+            $this->redirect('config?admin&option=parameter', 2);
+        }
     }
 }
