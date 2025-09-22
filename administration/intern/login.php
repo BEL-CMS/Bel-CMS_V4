@@ -15,7 +15,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><?= $_SESSION['CONFIG']['CMS_NAME']; ?> - Administration Login</title>
     <meta name="Author" content="https://bel-cms.dev">
-    <link id="style" href="/administration/intern/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link id="style" href="/assets/plugins/bootstrap-5.3.3/css/bootstrap.min.css" rel="stylesheet">
     <link href="/administration/intern/assets/css/styles.min.css" rel="stylesheet">
     <link href="/administration/intern/assets/css/icons.css" rel="stylesheet">
 </head>
