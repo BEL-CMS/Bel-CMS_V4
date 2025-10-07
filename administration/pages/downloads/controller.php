@@ -56,20 +56,30 @@ class Downloads extends AdminPages
         $send['description'] = Common::VarSecure($_POST['description'], 'html');
         $send['uploader']    = $_SESSION['USER']->user->hash_key;
 
-        if ($_FILES['download']['error'] == 4) {
-			$array = array(
-				'type' => 'error',
-				'text' => 'Aucun fichier'
-			);
-            $this->error('Téléchargement', $array['text'], $array['type']);
-            $this->redirect('downloads?admin&option = pages', 3);
-            return false;
+        if (isset($_FILES['torrent'])) {
+            if ($_FILES['torrent']['error'] != 4) {
+                $torrent           = Common::Upload('torrent', 'uploads/downloads/torrent/', 'all', true);
+                $send['torrent']   = '/uploads/downloads/torrent/' . $torrent;
+            }
         }
 
-        if (isset($_FILES['download'])) {
-            $screen           = Common::Upload('download', 'uploads/downloads','all',true);
-            $send['download'] = '/uploads/downloads/' . $screen;
-            $send['size']     = $_FILES['download']['size'];
+        if (!empty($_POST['link'])) {
+            $send['download'] = Common::VarSecure($_POST['link'], 'url');
+        } else {
+            if ($_FILES['download']['error'] == 4) {
+                $array = array(
+                    'type' => 'error',
+                    'text' => 'Aucun fichier'
+                );
+                $this->error('Téléchargement', $array['text'], $array['type']);
+                $this->redirect('downloads?admin&option=pages', 3);
+            } else {
+                if (isset($_FILES['download'])) {
+                    $screen           = Common::Upload('download', 'uploads/downloads', 'all', true);
+                    $send['download'] = '/uploads/downloads/' . $screen;
+                    $send['size']     = $_FILES['download']['size'];
+                }
+            }
         }
 
         if (isset($_FILES['screen'])) {
@@ -77,13 +87,15 @@ class Downloads extends AdminPages
             $send['screen'] = '/uploads/downloads/screen/' . $screen;
         }
 
-        $send['idcat'] = 0;
+        $send['idcat'] = $_POST['idcat'] == is_numeric(($_POST['idcat'])) ? $_POST['idcat'] : 0;
 
         $this->models->AddNewsUpload($send);
+
         $array = array(
             'type' => 'success',
             'text' => 'Fichier uploadé avec succès'
         );
+
         $this->error('Téléchargement', $array['text'], $array['type']);
         $this->redirect('downloads?admin&option=pages', 3);
     }
@@ -95,6 +107,7 @@ class Downloads extends AdminPages
             $d['data']        = $this->models->getOneDls ($id);
             $d['data']->idcat = $this->models->getCatOne ($d['data']->idcat);
             $d['cat']         = $this->models->getCat ();
+            $d['groups']      = config::getGroups();
             if (empty($d['cat'])) {
                 Notification::warning('Une catégorie est nécessaire.', 'Téléchargements');
                 $this->redirect('downloads/newcategorys?Admin&option=pages', 2);
@@ -109,26 +122,38 @@ class Downloads extends AdminPages
     {
         if (ctype_digit($_POST['id']) == true) {
 
+            $id = (int) $_POST['id'];
+
             $insert = array();
 
-            if (isset($_FILES['download']['name'])) {
-                $screen             = Common::Upload('download', 'uploads/downloads','all',true);
-                $insert['download'] = '/uploads/downloads/' . $screen;
-                $insert['size']     = $_FILES['download']['size'];
+            if (!empty($_POST['link'])) {
+                $insert['download'] = Common::VarSecure($_POST['link'], 'url');
+            } else {
+                if (isset($_FILES['download'])) {
+                    if ($_FILES['download']['error'] != 4) {
+                        $dls              = Common::Upload('download', 'uploads/downloads', 'all', true);
+                        $send['download'] = '/uploads/downloads/' . $dls;
+                        $send['size']     = $_FILES['download']['size'];
+                    }
+                }
             }
 
             if (isset($_FILES['screen']['name'])) {
-                $screen           = Common::Upload('screen', 'uploads/downloads/screen','img',true);
-                $insert['screen'] = '/uploads/downloads/screen/' . $screen;
-            }            
-            $insert['name']        = Common::VarSecure($_POST['name']);
-            $insert['description'] = Common::VarSecure($_POST['description'], 'html');
-            $insert['idcat']       = $_POST['idcat'] == is_numeric(($_POST['idcat'])) ? $_POST['idcat'] : 0;
+                if ($_FILES['screen']['error'] != 4) {
+                    $screen           = Common::Upload('screen', 'uploads/downloads/screen','img',true);
+                    $insert['screen'] = '/uploads/downloads/screen/' . $screen;
+                }
+            }
+            $insert['groups_access']    = implode('|', $_POST['groups_access']);
+            $insert['name']             = Common::VarSecure($_POST['name']);
+            $insert['description']      = Common::VarSecure($_POST['description'], 'html');
+            $insert['idcat']            = $_POST['idcat'] == is_numeric(($_POST['idcat'])) ? $_POST['idcat'] : 0;
+
             $array = array(
                 'type' => 'error',
                 'text' => constant('EDIT_PARAM_SUCCESS')
             );
-            $this->models->updateUpload ($insert);
+            $this->models->updateUpload ($insert, $id);
             $this->error('Téléchargement', $array['text'], $array['type']);
             $this->redirect('downloads?admin&option=pages', 3);
         } else {
@@ -144,7 +169,7 @@ class Downloads extends AdminPages
     public function category()
     {
         $menu[] = array('title' => 'Accueil Téléchargement', 'href' => 'downloads?Admin&option=pages', 'ico'  => 'fa-solid fa-igloo');
-        $menu[] = array('title' => 'Accueil Catégorie', 'href' => 'downloads/newcategory?Admin&option=pages', 'ico'  => 'fa-solid fa-puzzle-piece');
+        $menu[] = array('title' => 'Accueil Catégorie', 'href' => 'downloads/category?Admin&option=pages', 'ico'  => 'fa-solid fa-puzzle-piece');
         $menu[] = array('title' => 'Ajouter une Catégorie', 'href' => 'downloads/newcategorys?Admin&option=pages', 'ico'  => 'fa-solid fa-puzzle-piece');
 
 
@@ -200,12 +225,12 @@ class Downloads extends AdminPages
             $insert['banniere'] = '/uploads/downloads/cat/' . $screen;
         }
 
-        if (!empty($_FILES['ico'])) {
-            $insert['ico'] = Common::VarSecure($_FILES['ico'], 'html');
+        if (!empty($_POST['ico'])) {
+            $insert['ico'] = Common::VarSecure($_POST['ico'], 'html');
         }
 
-        if (!empty($_FILES['description'])) {
-            $insert['description'] = Common::VarSecure($_FILES['description'],'html');
+        if (!empty($_POST['description'])) {
+            $insert['description'] = Common::VarSecure($_POST['description'],'html');
         }
 
         $insert['id_groups'] = Common::randomString(32);

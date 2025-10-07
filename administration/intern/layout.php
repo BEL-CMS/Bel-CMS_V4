@@ -31,6 +31,7 @@ $menu = new Menu();
     <link href="assets/plugins/fontawesome-6.5.1/css/all.min.css" rel="stylesheet">
     <link href="administration/intern/assets/icon-fonts/boxicons/css/boxicons.min.css" rel="stylesheet">
     <link href="administration/intern/assets/icon-fonts/feather/feather.css" rel="stylesheet">
+    <link href="assets/plugins/fontawesome-6.5.1/css/all.min.css" rel="stylesheet">
     <link href="administration/intern/assets/libs/node-waves/waves.min.css" rel="stylesheet">
     <link href="administration/intern/assets/libs/simplebar/simplebar.min.css" rel="stylesheet">
     <link rel="stylesheet" href="administration/intern/assets/libs/flatpickr/flatpickr.min.css">
@@ -94,18 +95,18 @@ $menu = new Menu();
                                 <span class="side-menu__label">Home</span>
                                 <i class="fe fe-chevron-down side-menu__angle"></i>
                             </a>
-                            
+
                             <ul class="slide-menu child1">
                                 <li class="slide side-menu__label1">
                                     <a href="javascript:void(0)">Home</a>
                                 </li>
-                                
+
                                 <li class="slide">
                                     <a href="/?admin" class="side-menu__item">Retour à l'accueil</a>
                                 </li>
                             </ul>
                         </li>
-                        
+
                         <li class="slide__category"><span class="category-name">Pages</span></li>
                         <li class="slide has-sub">
                             <a href="javascript:void(0);" class="side-menu__item">
@@ -206,16 +207,18 @@ $menu = new Menu();
         <script src="/assets/plugins/lightbox/lightbox.js"></script>
         <script src="/assets/belcms.core.js"></script>
         <script src="administration/intern/assets/js/custom.js"></script>
-        <div id="endloading" style="display: none;">
+        <script src="assets/plugins/fontawesome-6.5.1/js/all.min.js"></script>
+        <div id=" endloading" style="display: none;">
             <?php usleep(500000); /* 1/2s permet de ne pas surcharger le serveur et lui laissez le temps d'une demi seconde */
             $time = (microtime(true) - $_SESSION['SESSION_START']);
-            echo round($time, 3); ?> secondes </div>
-        <script>
-            $(window).on(' load', function() {
-                var endloading = $('#endloading').text();
-                $('#belcms_genered').append(endloading);
-            });
-        </script>
+            echo round($time, 3); ?> secondes < /div>
+                <
+                    script>
+                    $(window).on(' load', function() {
+                    var endloading = $('#endloading').text();
+                    $('#belcms_genered').append(endloading);
+                    });
+                    </script>
 </body>
 
 </html>

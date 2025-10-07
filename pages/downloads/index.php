@@ -31,18 +31,18 @@ endif;
         </div>
     </div>
 </nav>
-<header class="py-5 bg-light border-bottom">
+<div class="bg-light border-bottom">
     <div class="container">
-        <h1 class="fw-semibold mb-2" id="belcms_bnv">Votre ressource est ici, est prête à être téléchargée.</h1>
-        <p class="lead text-secondary" style="text-align: center;"></p>
+        <h1 class="fw-semibold mb-2 belcms_bnv" id="belcms_bnv">Votre ressource est ici, est prête à être téléchargée.</h1>
+        <p class=" lead text-secondary" style="text-align: center;"></p>
     </div>
-</header>
+</div>
 
 <div class="card shadow-sm mt-5">
     <div class="card-header bg-white d-flex align-items-center">
         <svg class="svg-inline--fa fa-file text-primary me-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="file" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg="">
             <path fill="currentColor" d="M0 64C0 28.7 28.7 0 64 0H224V128c0 17.7 14.3 32 32 32H384V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0L384 128z"></path>
-        </svg><!-- <i class="fa-solid fa-file text-primary me-2"></i> Font Awesome fontawesome.com -->
+        </svg>
         <h2 class="h5 mb-0">Catégories</h2>
     </div>
     <div class="card-body">
@@ -50,9 +50,10 @@ endif;
             <?php
             foreach ($cat as $key => $value):
                 $ico = (empty($value->ico)) ? '' : '<i class="fa ' . $value->ico . '"</i>';
+                $name = Common::FormatName($value->name);
             ?>
                 <div class="col">
-                    <a class="subcat card h-100 border-0" href="forum/category/1">
+                    <a class="subcat card h-100 border-0" href="downloads/category/<?= $value->id; ?>/<?= $name; ?>">
                         <div class="card-body belcms_card_body_bg">
                             <h3 class="h6 mb-1"><?= $ico; ?> <?= $value->name; ?></h3>
                             <p class="small text-secondary mb-2"><?= $value->description; ?></p>

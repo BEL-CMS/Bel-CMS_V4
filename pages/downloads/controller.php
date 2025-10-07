@@ -14,6 +14,7 @@ namespace Belcms\Pages\Controller;
 
 use BelCMS\Core\Notification;
 use BelCMS\Core\Pages;
+use BelCMS\Core\Security;
 
 if (!defined('CHECK_INDEX')):
     header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
@@ -38,13 +39,18 @@ class Downloads extends Pages
         $this->render('index');
     }
 
-    public function viewcat ()
+    public function category ()
     {
         if (ctype_digit($this->data[2])) {
-            $getdls['data'] = $this->models->getDlForID ($this->data[2]);
+            $getdls['data'] = $this->models->getCatForID ($this->data[2]);
             if (empty($getdls['data'])) {
-                Notification::infos('Aucune option de téléchargement n\'est présente dans la base de données.', 'information');
-                return false;
+                Notification::infos('Aucun téléchargement n\'est présente dans la base de données.', 'information');
+                return;
+            }
+            foreach ($getdls['data'] as $key => $value) {
+                if (Security::IsAcess($value->groups_access) !== true) {
+                    unset($getdls['data'][$key]);
+                }
             }
             $this->set($getdls);
             $this->render('viewcat');
@@ -67,6 +73,22 @@ class Downloads extends Pages
             Notification::error('Erreur ID', 'ERREUR ID');
 		    $referer = (!empty($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : 'downloads';
 		    $this->redirect($referer, 3);
+        }
+    }
+
+    public function getDownloadTorrent()
+    {
+        $id = is_numeric($this->data[2]) ? $this->data[2] : false;
+        if ($id !== false) {
+            if ($this->models->ifAccess($id) == true) {
+                $download = $this->models->getDownloadsTorrent($id);
+                debug($download);
+                $this->linkHeader($download);
+            }
+        } else {
+            Notification::error('Erreur ID', 'ERREUR ID');
+            $referer = (!empty($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : 'downloads';
+            $this->redirect($referer, 3);
         }
     }
 

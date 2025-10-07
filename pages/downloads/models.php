@@ -36,14 +36,24 @@ final class Downloads
         return $return;
     }
 
-    public function getDlForID ($id)
+    public function getCatForID ($id)
     {
-        $where = array('name' => 'id_groups', 'value' => $id);
+        $where = array('name' => 'idcat', 'value' => $id);
         $sql = new BDD;
         $sql->table('TABLE_DOWNLOADS');
         $sql->orderby(array(array('name' => 'name', 'type' => 'ASC')));
         $sql->where($where);
         $sql->queryAll();
+        $return = $sql->data;
+        return $return;
+    }
+
+    public function getDlForID ($id)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_DOWNLOADS');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->queryOne();
         $return = $sql->data;
         return $return;
     }
@@ -67,6 +77,26 @@ final class Downloads
             return $return->download;
         }
         
+    }
+
+    public function getDownloadsTorrent($id = null)
+    {
+        if ($id !== null && is_numeric($id)) {
+            $sql = new BDD();
+            $sql->table('TABLE_DOWNLOADS');
+            $id = (int) $id;
+            $where = array(
+                'name' => 'id',
+                'value' => $id
+            );
+            $sql->where($where);
+            $sql->queryOne();
+            $return = $sql->data;
+
+            self::AddDownload($id);
+
+            return $return->torrent;
+        }
     }
 
     public function AddDownload($id)

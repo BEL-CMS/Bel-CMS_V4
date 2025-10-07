@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Bel-CMS [Content management system]
  * @version 4.0.0 [PHP8.4]
@@ -10,6 +11,7 @@
  */
 
 use BelCMS\Requires\Common;
+use BelCMS\Core\groups;
 
 if (!defined('CHECK_INDEX')):
     header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
@@ -37,16 +39,23 @@ endif;
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Fichier</span>
-                            <span class="input-group-text"><?=ini_get(option: 'upload_max_filesize');?> max</span>
+                            <span class="input-group-text"><?= ini_get(option: 'upload_max_filesize'); ?> max</span>
                             <input type="file" name="download" class="form-control">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Lien du téléchargement</span>
+                            <input type="text" name="link" class="form-control" placeholder="http://">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Fichier torrent</span>
+                            <input type="file" accept=".torrent" name="torrent" class="form-control">
                         </div>
                         <div class="mb-3">
                             <select name="idcat" class="form-control">
-                                <option value="0">Veuillez choisir une catégorie</option>
                                 <?php
                                 foreach ($cat as $key => $value):
                                 ?>
-                                <option value="<?=$value->id;?>"><?=$value->name;?></option>
+                                    <option value="<?= $value->id; ?>"><?= $value->name; ?></option>
                                 <?php
                                 endforeach;
                                 ?>
@@ -57,8 +66,30 @@ endif;
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Image</span>
-                            <span class="input-group-text"><?=ini_get(option: 'upload_max_filesize');?> max</span>
+                            <span class="input-group-text"><?= ini_get(option: 'upload_max_filesize'); ?> max</span>
                             <input type="file" accept="image/*" name="screen" class="form-control">
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row gy-3">
+                            <div class="mb-3">
+                                <?php
+                                $groups = groups::getGroups();
+                                $groups[] = (object) array('id_group' => 0, 'name' => 'VISITOR');
+                                foreach ($groups as $key => $value):
+                                    $name = defined($value->name) ? constant($value->name) : $value->name;
+                                    if ($value->name != 'ADMINISTRATOR'):
+                                ?>
+                                        <div class="custom-toggle-switch d-flex align-items-center mb-4">
+                                            <input value="<?= $value->id_group; ?>" name="groups_access[]" id="toggleswitchLight_<?= $value->id_group; ?>" type="checkbox">
+                                            <label for="toggleswitchLight_<?= $value->id_group; ?>" class="label-warning"></label>
+                                            <span class="ms-3">Activer <?= $name; ?></span>
+                                        </div>
+                                <?php
+                                    endif;
+                                endforeach;
+                                ?>
+                            </div>
                         </div>
                     </div>
                     <div class="card-footer">
