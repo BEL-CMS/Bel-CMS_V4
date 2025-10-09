@@ -21,7 +21,6 @@ main {
 }
 
 footer {
-  text-align: center;
   background: #eee;
   padding: 10px;
   font-size: 0.85rem;
@@ -563,4 +562,9 @@ footer {
   font-size: 1em;
   transition: background 0.3s, transform 0.3s;
   margin-bottom: 30px;
+}
+.belcms_forum_header {
+  display: block;
+  width: 100% !important;
+  max-width: 100% !important;
 }

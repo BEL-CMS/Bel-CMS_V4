@@ -25,7 +25,7 @@
             use BelCMS\Requires\Common;
 
             foreach ($data as $data):
-                if (is_file($data->screen)) {
+                if (is_file(ROOT.$data->screen)) {
                     $img = $data->screen;
                     $img = '<img src="' . $img . '" class="card-img-top" alt="image ' . $data->name . '">';
                 } else {

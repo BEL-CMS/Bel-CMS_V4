@@ -48,6 +48,9 @@ class Downloads extends Pages
                 return;
             }
             foreach ($getdls['data'] as $key => $value) {
+                if (!isset($value->groups_access)) {
+                    $value->groups_access = 0;
+                }
                 if (Security::IsAcess($value->groups_access) !== true) {
                     unset($getdls['data'][$key]);
                 }
@@ -106,6 +109,13 @@ class Downloads extends Pages
 		    $this->redirect($referer, 3); 
         }
 	}
+
+    public function addOne ()
+    {
+        $id = is_numeric($_GET['data']) ? $_GET['data'] : false;
+        $this->models->AddDownload($id);
+        debug($id);
+    }
 
     public function charte ()
     {

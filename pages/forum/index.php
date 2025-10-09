@@ -34,7 +34,6 @@
             </div>
           </div>
           <div class="card-footer bg-white small text-secondary">
-            Dernier message: <strong>Hier</strong> par <i class="fa-regular fa-user"></i>  • <i class="fa-regular fa-clock"></i> 
           </div>
         </div>
       </div>

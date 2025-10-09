@@ -17,7 +17,7 @@ use BelCMS\Requires\Common;
         </div>
     </div>
 </nav>
-<header class="py-5 bg-light border-bottom">
+<header class="belcms_forum_header py-5 bg-light border-bottom">
     <div class="container">
         <h1 class="fw-semibold mb-2 belcms_forum_bnv">Bienvenue sur le forum de <?= $_SESSION['CONFIG']['CMS_NAME']; ?> section :: <strong><?= $title; ?></strong></h1>
         <p class="lead text-secondary" style="text-align: center;">Discute, apprends et partage dans une communauté bienveillante.</p>

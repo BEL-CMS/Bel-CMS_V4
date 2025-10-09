@@ -134,6 +134,7 @@ final class Downloads
         $addView['view'] = $view + 1;
         $update = new BDD;
         $update->table('TABLE_DOWNLOADS');
+        $update->where(array('name' => 'id', 'value' => $id));
         $update->update($addView);
     }
 

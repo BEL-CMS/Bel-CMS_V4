@@ -11,6 +11,7 @@
 
 namespace Belcms\Pages\Controller;
 
+use BelCMS\Core\Captcha;
 use BelCMS\Core\Config;
 use BelCMS\Core\eMail;
 use BelCMS\Core\encrypt;
@@ -124,7 +125,7 @@ class User extends Pages
     public function login ()
     {
         if (CoreUser::isLogged()) {
-            $this->redirect('/user', 2);
+            $this->redirect('user', 2);
         } else {
             $d['page'] = 'login';
             $this->set($d);
@@ -147,6 +148,9 @@ class User extends Pages
         if (CoreUser::isLogged()) {
             self::index();
         } else {
+            $captcha = new Captcha();
+            $a['captcha'] = $captcha->createCaptcha();
+            $this->set($a);
             $this->render('registred');
         }
     }
@@ -155,48 +159,54 @@ class User extends Pages
     #########################################
     public function createUser()
     {
-        $error = 0;
-        $array['username']  = Common::VarSecure($_POST['name'], null);
-        $array['mail']      = Secure::isMail($_POST['mail']);
-        $array['password']  = Common::VarSecure($_POST['password'], null);
-        if (!empty($array['username'])) {
-            $array['username'] = str_replace(' ', '_', $array['username']);
-        }
+        if (Captcha::verifCaptcha($_POST['captcha']) == true and empty($_POST['captcha_value'])) {
+            $error = 0;
+            $array['username']  = Common::VarSecure($_POST['name'], null);
+            $array['mail']      = Secure::isMail($_POST['mail']);
+            $array['password']  = Common::VarSecure($_POST['password'], null);
+            if (!empty($array['username'])) {
+                $array['username'] = str_replace(' ', '_', $array['username']);
+            }
 
-        $backlist = $this->models->blackListEmail($array['mail']);
-        $arrayBlackList = array();
-        foreach ($backlist as $k => $v) {
-            $arrayBlackList[$v['id']] = $v['name'];
-        }
-        if (!empty($array['mail'])) {
-            $tmpMailSplit = explode('@', $array['mail']);
-            $tmpNdd =  explode('.', $tmpMailSplit[1]);
-        }
+            $backlist = $this->models->blackListEmail($array['mail']);
+            $arrayBlackList = array();
+            foreach ($backlist as $k => $v) {
+                $arrayBlackList[$v['id']] = $v['name'];
+            }
+            if (!empty($array['mail'])) {
+                $tmpMailSplit = explode('@', $array['mail']);
+                $tmpNdd =  explode('.', $tmpMailSplit[1]);
+            }
 
-        $checkName = $this->models->checkUser($array['username']);
-        $checkMail = $this->models->checkMail($array['mail']);
+            $checkName = $this->models->checkUser($array['username']);
+            $checkMail = $this->models->checkMail($array['mail']);
 
-        if (empty($array['username']) or empty($array['mail']) or empty($array['password'])) {
-            $this->message('warning', constant('UNKNOW_USER_MAIL_PASS'), constant('INFO'));
-        } else if (in_array($tmpNdd[0], $arrayBlackList)) {
-            $this->message('warning', constant('NO_MAIL_ALLOWED'), constant('INFO'));
-        } else if (strlen($array['username']) < 3) {
-            $this->message('warning', constant('MIN_THREE_CARACTER'), constant('INFO'));
-        } else if (strlen($array['password']) < 6) {
-            $return['msg']   = constant('MIN_SIX_CARACTER');
-            $error++;
-            $this->message('warning', constant('MIN_SIX_CARACTER'), constant('INFO'));
-        } else if (strlen($array['username']) > 32) {
-            $this->message('warning', constant('MAX_CARACTER'), constant('INFO'));
-        } else if ($checkName >= 1) {
-            $this->message('warning', constant('THIS_NAME_OR_PSEUDO_RESERVED'), constant('INFO'));
-        } elseif ($checkMail >= 1) {
-            $this->message('warning', constant('THIS_MAIL_IS_ALREADY_RESERVED'), constant('INFO'));
+            if (empty($array['username']) or empty($array['mail']) or empty($array['password'])) {
+                $this->message('warning', constant('UNKNOW_USER_MAIL_PASS'), constant('INFO'));
+            } else if (in_array($tmpNdd[0], $arrayBlackList)) {
+                $this->message('warning', constant('NO_MAIL_ALLOWED'), constant('INFO'));
+            } else if (strlen($array['username']) < 3) {
+                $this->message('warning', constant('MIN_THREE_CARACTER'), constant('INFO'));
+            } else if (strlen($array['password']) < 6) {
+                $return['msg']   = constant('MIN_SIX_CARACTER');
+                $error++;
+                $this->message('warning', constant('MIN_SIX_CARACTER'), constant('INFO'));
+            } else if (strlen($array['username']) > 32) {
+                $this->message('warning', constant('MAX_CARACTER'), constant('INFO'));
+            } else if ($checkName >= 1) {
+                $this->message('warning', constant('THIS_NAME_OR_PSEUDO_RESERVED'), constant('INFO'));
+            } elseif ($checkMail >= 1) {
+                $this->message('warning', constant('THIS_MAIL_IS_ALREADY_RESERVED'), constant('INFO'));
+            } else {
+                $return = $this->models->sendRegistration($array);
+                CoreUser::login($array['username'], $array['password']);
+                $this->message('success', $return['msg'], constant('INFO'));
+                $this->redirect('user', 2);
+            }
         } else {
-            $return = $this->models->sendRegistration($array);
-            CoreUser::login($array['username'], $array['password']);
-            $this->message('success', $return['msg'], constant('INFO'));
-            $this->redirect('user', 2);
+            Notification::error(constant('CODE_CAPTCHA_ERROR'), 'Captcha');
+            $this->redirect('user/registred&echo', 2);
+            return;
         }
     }
 	#########################################
@@ -218,11 +228,22 @@ class User extends Pages
     #########################################
     public function sendLogin ()
     {
-        $user   = Common::VarSecure($_POST['user'], null);
-        $mdp    = Common::VarSecure($_POST['password'], null);
-        $return = CoreUser::login($user, $mdp);
-        $this->message($return['type'], $return['msg'], constant('INFO'));
-        $this->redirect('user', 2);
+        if ($_POST['user'] == '' or $_POST['password'] == '') {
+            $this->message('warning', constant('UNKNOW_USER_MAIL_PASS'), constant('INFO'));
+            $this->redirect('user/login&echo', 2);
+        } else if (strlen($_POST['user']) < 3) {
+            $this->message('warning', constant('MIN_THREE_CARACTER'), constant('INFO'));
+            $this->redirect('user/login&echo', 2);
+        } else if (strlen($_POST['password']) < 6) {
+            $this->message('warning', constant('MIN_SIX_CARACTER'), constant('INFO'));
+            $this->redirect('user/login&echo', 2);
+        } else {
+            $user   = Common::VarSecure($_POST['user'], null);
+            $mdp    = Common::VarSecure($_POST['password'], null);
+            $return = CoreUser::login($user, $mdp);
+            $this->message($return['type'], $return['msg'], constant('INFO'));
+            $this->redirect('user', 2);
+        }
     }
 	#########################################
     #   Mot de passe perdu

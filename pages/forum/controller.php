@@ -99,7 +99,7 @@ class Forum extends Pages
             }
         } else {
             Notification::error(constant('NO_USER_CONNECT'), 'Login requis');
-            $referer = 'login&echo';
+            $referer = 'user/login&echo';
             $this->redirect($referer, 3);
             return;
         }
@@ -128,7 +128,7 @@ class Forum extends Pages
                 }
             } else {
                 Notification::error(constant('NO_USER_CONNECT'), 'Login requis');
-                $referer = 'login?echo';
+                $referer = 'user/login?echo';
 		        $this->redirect($referer, 3);
                 return;
             } 
@@ -165,7 +165,7 @@ class Forum extends Pages
             }
         } else {
             Notification::error(constant('NO_USER_CONNECT'), 'Login requis');
-            $referer = 'login?echo';
+            $referer = 'user/login?echo';
 		    $this->redirect($referer, 3);
             return;
         }
@@ -192,7 +192,7 @@ class Forum extends Pages
             }
         } else {
             Notification::error(constant('NO_USER_CONNECT'), 'Login requis');
-            $referer = 'login&echo';
+            $referer = 'user/login&echo';
             $this->redirect($referer, 3);
             return;
         }
@@ -221,7 +221,7 @@ class Forum extends Pages
             }
         } else {
             Notification::error(constant('NO_USER_CONNECT'), 'Login requis');
-            $referer = 'login&echo';
+            $referer = 'user/login&echo';
             $this->redirect($referer, 3);
             return;
         }

@@ -13,6 +13,8 @@
 use BelCMS\Core\User;
 use BelCMS\Requires\Common;
 use BelCMS\Core\Comment;
+use BelCMS\Core\Notification;
+use BelCMS\Core\Security;
 
 if (!defined('CHECK_INDEX')):
     header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
@@ -78,18 +80,30 @@ if (User::ifUserExist($data->uploader)) {
         </tbody>
     </table>
 </div>
-<?php 
-if (!empty($data->download)) {
-?>
-    <a href="Downloads/getDownload/<?= $data->id; ?>&echo" class="btn btn-info">Télécharger</a>
 <?php
+
+if (Security::IsAcess($data->access) == true) {
+
+    if (!empty($data->download)) {
+
+        if (stripos($data->download, 'http') !== false) {
+    ?>
+            <a href="<?= $data->download; ?>" id="dlsSupp" data="<?= $data->id; ?>" target="_blank" class="btn btn-info">Télécharger</a>
+        <?php
+        } else {
+        ?>
+            <a href="Downloads/getDownload/<?= $data->id; ?>&echo" class="btn btn-info">Télécharger</a>
+        <?php
+        }
+    }
+
+    if (!empty($data->torrent)) {
+        ?>
+        <a href="<?= $data->torrent; ?>" class="btn btn-warning">Télécharger le torrent</a>
+    <?php
+    }
+} else {
+    Notification::warning(constant('GROUP_FAIL'));
 }
-if (!empty($data->torrent)) {
-?>
-    <a href="<?= $data->torrent; ?>" class="btn btn-warning">Télécharger le torrent</a>
-<?php
-}
-?>
-<?php
 $comments = new Comment;
 $comments->html();
