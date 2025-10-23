@@ -49,7 +49,7 @@ endif;
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
             <?php
             foreach ($cat as $key => $value):
-                $ico = (empty($value->ico)) ? '' : '<i class="fa ' . $value->ico . '"</i>';
+                $ico = (empty($value->ico)) ? '' : '<i class="fa ' . $value->ico . '"></i>';
                 $name = Common::FormatName($value->name);
             ?>
                 <div class="col">

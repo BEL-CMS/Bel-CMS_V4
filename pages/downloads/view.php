@@ -81,7 +81,6 @@ if (User::ifUserExist($data->uploader)) {
     </table>
 </div>
 <?php
-
 if (Security::IsAcess($data->access) == true) {
 
     if (!empty($data->download)) {

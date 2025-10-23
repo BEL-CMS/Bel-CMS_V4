@@ -106,7 +106,7 @@ use BelCMS\Core\groups;
                                         $checked = (in_array($value->id_group, $arrayAccess)) ? "checked" : '';
                                 ?>
                                         <div class="custom-toggle-switch d-flex align-items-center mb-4">
-                                            <input value="<?= $value->id_group; ?>" name="groups_access[]" id="toggleswitchLight_<?= $value->id_group; ?>" type="checkbox" <?= $checked; ?>>
+                                            <input value="<?= $value->id_group; ?>" name="access[]" id="toggleswitchLight_<?= $value->id_group; ?>" type="checkbox" <?= $checked; ?>>
                                             <label for="toggleswitchLight_<?= $value->id_group; ?>" class="label-warning"></label>
                                             <span class="ms-3">Activer <?= $name; ?></span>
                                         </div>

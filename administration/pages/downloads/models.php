@@ -50,7 +50,7 @@ final class ModelsDls
         $sql->insert($data);
     }
 
-        public function updateUpload ($data, $id)
+    public function updateUpload ($data, $id)
     {
         $sql = new BDD;
         $sql->table('TABLE_DOWNLOADS');

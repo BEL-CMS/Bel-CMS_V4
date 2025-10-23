@@ -59,7 +59,7 @@ class Downloads extends AdminPages
         if (isset($_FILES['torrent'])) {
             if ($_FILES['torrent']['error'] != 4) {
                 $torrent           = Common::Upload('torrent', 'uploads/downloads/torrent/', 'all', true);
-                $send['torrent']   = '/uploads/downloads/torrent/' . $torrent;
+                $send['torrent']   = 'uploads/downloads/torrent/' . $torrent;
             }
         }
 
@@ -76,7 +76,7 @@ class Downloads extends AdminPages
             } else {
                 if (isset($_FILES['download'])) {
                     $screen           = Common::Upload('download', 'uploads/downloads', 'all', true);
-                    $send['download'] = '/uploads/downloads/' . $screen;
+                    $send['download'] = 'uploads/downloads/' . $screen;
                     $send['size']     = $_FILES['download']['size'];
                 }
             }
@@ -84,7 +84,7 @@ class Downloads extends AdminPages
 
         if (isset($_FILES['screen'])) {
             $screen         = Common::Upload('screen', 'uploads/downloads/screen','img',true);
-            $send['screen'] = '/uploads/downloads/screen/' . $screen;
+            $send['screen'] = 'uploads/downloads/screen/' . $screen;
         }
 
         $send['idcat'] = $_POST['idcat'] == is_numeric(($_POST['idcat'])) ? $_POST['idcat'] : 0;
@@ -132,7 +132,7 @@ class Downloads extends AdminPages
                 if (isset($_FILES['download'])) {
                     if ($_FILES['download']['error'] != 4) {
                         $dls              = Common::Upload('download', 'uploads/downloads', 'all', true);
-                        $send['download'] = '/uploads/downloads/' . $dls;
+                        $send['download'] = 'uploads/downloads/' . $dls;
                         $send['size']     = $_FILES['download']['size'];
                     }
                 }
@@ -141,13 +141,13 @@ class Downloads extends AdminPages
             if (isset($_FILES['screen']['name'])) {
                 if ($_FILES['screen']['error'] != 4) {
                     $screen           = Common::Upload('screen', 'uploads/downloads/screen','img',true);
-                    $insert['screen'] = '/uploads/downloads/screen/' . $screen;
+                    $insert['screen'] = 'uploads/downloads/screen/' . $screen;
                 }
             }
-            $insert['groups_access']    = implode('|', $_POST['groups_access']);
-            $insert['name']             = Common::VarSecure($_POST['name']);
-            $insert['description']      = Common::VarSecure($_POST['description'], 'html');
-            $insert['idcat']            = $_POST['idcat'] == is_numeric(($_POST['idcat'])) ? $_POST['idcat'] : 0;
+            $insert['access']         = implode('|', $_POST['access']);
+            $insert['name']           = Common::VarSecure($_POST['name']);
+            $insert['description']    = Common::VarSecure($_POST['description'], 'html');
+            $insert['idcat']          = $_POST['idcat'] == is_numeric(($_POST['idcat'])) ? $_POST['idcat'] : 0;
 
             $array = array(
                 'type' => 'error',
@@ -222,7 +222,7 @@ class Downloads extends AdminPages
 
         if (isset($_FILES['download']['name'])) {
             $screen             = Common::Upload('download', 'uploads/downloads/cat','img',true);
-            $insert['banniere'] = '/uploads/downloads/cat/' . $screen;
+            $insert['banniere'] = 'uploads/downloads/cat/' . $screen;
         }
 
         if (!empty($_POST['ico'])) {
