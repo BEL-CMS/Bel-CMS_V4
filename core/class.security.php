@@ -43,8 +43,6 @@ final class Security
 							}
 							if (in_array($v, $access)) {
 								return true;
-							} else {
-								return false;
 							}
 						}
 					}
@@ -117,7 +115,7 @@ final class Security
 	public static function accessSqlPages ($name)
 	{
 		$sql = New BDD();
-		$sql->table('TABLE_PAGES_CONFIG');
+		$sql->table('TABLE_CONFIG_PAGES');
 		$sql->where(array('name' => 'name', 'value' => $name));
 		$sql->queryAll();
 		if (empty($sql->data)) {

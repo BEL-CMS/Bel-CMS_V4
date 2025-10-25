@@ -31,11 +31,11 @@ class Pages
 
     public function __construct ()
     {
-        self::isAccess();
         $this->data        = self::get();
         $this->pageName    = Dispatcher::page();
         $this->subPageName = Dispatcher::view();
         $this->id          = isset($_GET['id']) ? $_GET['id'] : 0 ;
+        self::isAccess(); 
         if (isset($this->useModels) and !empty($this->useModels)){
             self::loadModel($this->useModels);
         }
@@ -43,6 +43,12 @@ class Pages
 
     private function isAccess ()
     {
+ 		// Test si l'utilisateur a accès à la page.
+        $security = Security::getAccessPage(strtolower($this->pageName));
+		if ($security === false or $security == null) {
+			$this->errorInfos = array('warning', constant('NO_ACCESS_GROUP_PAGE'), 'Info', $full = false);
+			return false;
+		}
         $name = Common::VarSecure(Dispatcher::page(), null);
         $sql = new BDD;
         $sql->table('TABLE_CONFIG_PAGES');
@@ -58,8 +64,6 @@ class Pages
                 $groups = array_unique(array_merge($groupsUser,$groupsAdmin), SORT_REGULAR);
                 if (in_array(0, $groups)) {
                     return true;
-                } else {
-    
                 }
             }
         } else {
