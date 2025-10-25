@@ -11,11 +11,11 @@
 
 namespace Belcms\Pages\Models;
 
-use BelCMS\Core\eMail;
-use BelCMS\Core\encrypt;
-use BelCMS\Core\Secure;
-use BelCMS\Core\User;
 use BelCMS\PDO\BDD;
+use BelCMS\Core\User;
+use BelCMS\Core\eMail;
+use BelCMS\Core\Secure;
+use BelCMS\Core\encrypt;
 use BelCMS\Requires\Common;
 
 if (!defined('CHECK_INDEX')):
@@ -63,6 +63,10 @@ final class ModelsUser
             $password = $passwordCrypt->encrypt();
             $pass_key = Common::randomString(32);
 
+            $test = New BDD();
+            $test->table('TABLE_USERS');
+            $test->count();
+            
             $insertUser = array(
                 'id'                => null,
                 'username'          => $data['username'],
@@ -74,9 +78,13 @@ final class ModelsUser
                 'token'             => '',
                 'number_valid'      => '',
                 '2FA'               => 0,
-                'admin'             => 0,
-                'root'              => 0
+                'admin'             => 0
             );
+
+            if ($test->data == 0) {
+                $insertUser['admin'] = 1;
+                $insertUser['root']  = 1;
+            }
 
             if (constant('CMS_VALIDATION') == 'mail') {
                 $insertUser['valid'] = (int) 0;
@@ -85,10 +93,6 @@ final class ModelsUser
                 $insertUser['valid'] = (int) 1;
                 $insertUser['number_valid'] = null;
             }
-
-            $test = New BDD();
-            $test->table('TABLE_USERS');
-            $test->count();
 
             $insert = New BDD();
             $insert->table('TABLE_USERS');
@@ -127,6 +131,7 @@ final class ModelsUser
                 'hight_avatar' => '',
                 'friends'      => ''
             );
+
             $insertProfils = New BDD();
             $insertProfils->table('TABLE_USERS_PROFILS');
             $insertProfils->insert($dataProfils);
@@ -138,7 +143,6 @@ final class ModelsUser
             $hardware = New BDD();
             $hardware->table('TABLE_USERS_HARDWARE');
             $hardware->insert(array('hash_key'=> $hash_key));
-
 
             $stats = new BDD();
             $stats->table('TABLE_USERS_PAGE');

@@ -94,4 +94,32 @@ final class UsersModels
             return false;
         }
     }
+
+    public function sendMainGroups ($num, $hash_key)
+    {
+        $upd['user_group'] = $num;
+        $sql = new BDD;
+        $sql->table('TABLE_USERS_GROUPS');
+        $sql->where(array('name' => 'hash_key', 'value' => $hash_key));
+        $sql->update($upd);
+        if ($sql->rowCount == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function sendSecondGroups ($num, $hash_key)
+    {
+        $upd['user_groups'] = $num;
+        $sql = new BDD;
+        $sql->table('TABLE_USERS_GROUPS');
+        $sql->where(array('name' => 'hash_key', 'value' => $hash_key));
+        $sql->update($upd);
+        if ($sql->rowCount == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
