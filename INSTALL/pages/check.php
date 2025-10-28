@@ -1,13 +1,13 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.3]
+ * @version 3.1.0 [PHP8.3]
  * @link https://bel-cms.dev
  * @link https://determe.be
- * @license MIT License
- * @copyright 2015-2025 Bel-CMS
+ * @license http://opensource.org/licenses/GPL-3.-copyleft
+ * @copyright 2015-2024 Bel-CMS
  * @author as Stive - stive@determe.be
-*/
+ */
 
 $php_true    = checkPhp()    == true ? '<span class="check_green">Le PHP minimum requis est ok.</span>' : '<span class="check_red">PHP 8.x minimum requis</span>';
 $checkPDO    = checkPDO()    == true ? '<span class="check_green">la function pdo_mysql est ok.</span>' : '<span class="check_red">function pdo_mysql est requis</span>';
