@@ -932,6 +932,15 @@ final class Common
         return $str;
     }
 
+    public static function randomNumeric ($length)
+    {
+        $result = '';
+        for ($i = 0; $i < $length; $i++) {
+            $result .= random_int(0, 9);
+        }
+        return $result;
+    }
+
     public static function encryptDecrypt ($string, $key, $action = true)
     {
         $output = false;

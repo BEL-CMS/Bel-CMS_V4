@@ -47,7 +47,7 @@ class Groups extends AdminPages
             return false;
         }
 
-        $d['name'] = Common::replaceTo($_POST['name'], ' ', '');
+        $d['name'] = str_replace(" ", "", $_POST['name']);
 
         $returnCheckName = $this->models->testName($d['name']);
 
@@ -58,7 +58,7 @@ class Groups extends AdminPages
             return false;
         }
 
-        $d['color'] = Common::nbCountCaractere($_POST['color']);
+        $d['color'] = strlen($_POST['color']);
 
         if ($d['color'] != 7) {
             $return['text']  = 'Couleur Hex obligatoire';
@@ -117,8 +117,7 @@ class Groups extends AdminPages
     {
         if ($_POST['old_name'] != $_POST['name']) {
 
-            $d['name'] = Common::replaceTo($_POST['name'], ' ', '');
-
+            $d['name']       = str_replace(" ", "", $_POST['name']);
             $returnCheckName = $this->models->testName($d['name']);
 
             if ($returnCheckName >= 1) {
@@ -129,7 +128,7 @@ class Groups extends AdminPages
             }
         }
 
-        $d['color'] = Common::nbCountCaractere($_POST['color']);
+        $d['color'] = strlen($_POST['color']);
 
         if ($d['color'] != 7) {
             $return['text']  = 'Couleur Hex obligatoire';

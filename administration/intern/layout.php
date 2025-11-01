@@ -11,13 +11,11 @@
  */
 
 use BelCMS\Core\GetHost;
-
 require 'administration/intern/menu.php';
 $menu = new Menu();
 ?>
 <!DOCTYPE html>
-<html lang="fr" dir="ltr" data-nav-layout="horizontal" data-theme-mode="light" data-header-styles="color" data-menu-styles="gradient" loader="enable" data-nav-style="menu-hover" data-page-style="classic" data-width="fullwidth" data-menu-position="fixed" data-header-position="scrollable" style="--primary-rgb: 58, 88, 146;">
-
+<html lang="en" dir="ltr" data-nav-layout="horizontal" data-theme-mode="dark" data-header-styles="dark" data-menu-styles="dark" loader="enable" data-nav-style="menu-hover" style="--primary-rgb: 223, 90, 90; --body-bg-rgb: 68.95299755459997, 68.08086748729392, 79.03094499902524; --body-bg-rgb2: 82.95299755459997, 82.08086748729392, 93.03094499902524; --light-rgb: 82.95299755459997, 82.08086748729392, 93.03094499902524; --form-control-bg: rgb(82.95299755459997, 82.08086748729392, 93.03094499902524); --input-border: rgba(255,255,255,0.1);" data-bg-img="bgimg2" data-page-style="regular">
 <head>
     <base href="<?= GetHost::getBaseUrl(); ?>">
     <meta charset="UTF-8">
@@ -37,7 +35,7 @@ $menu = new Menu();
     <link rel="stylesheet" href="administration/intern/assets/libs/flatpickr/flatpickr.min.css">
     <link rel="stylesheet" href="administration/intern/assets/libs/@simonwep/pickr/themes/nano.min.css">
     <link rel="stylesheet" href="assets/plugins/lightbox/lightbox.css">
-    <link rel="stylesheet" href="assets/plugins/DataTables-1.13.06/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="assets/plugins/DataTables-2.3.4/datatables.min.css">
 </head>
 
 <body>
@@ -148,6 +146,7 @@ $menu = new Menu();
                                 <?php echo $menu->user(); ?>
                             </ul>
                         </li>
+                        <!--
                         <li class="slide has-sub">
                             <a href="javascript:void(0);" class="side-menu__item">
                                 <i class="fa-regular fa-font-awesome side-menu__icon"></i>
@@ -158,10 +157,10 @@ $menu = new Menu();
                                 <li class="slide side-menu__label1">
                                     <a href="javascript:void(0)">Extras</a>
                                 </li>
-                                <?php echo $menu->extras(); ?>
+                                <?php //echo $menu->extras(); ?>
                             </ul>
                         </li>
-
+                        -->
                     </ul>
                 </nav>
             </div>
@@ -190,8 +189,8 @@ $menu = new Menu();
         </div>
         <div id="responsive-overlay"></div>
         <script src="/assets/plugins/jQuery/jquery-3.7.1.min.js"></script>
-        <script src="/assets/plugins/DataTables-1.13.06/datatable.fr.js"></script>
-        <script src="/assets/plugins/DataTables-1.13.06/datatables.min.js"></script>
+        <script src="/assets/plugins/DataTables-2.3.4/datatables.min.js"></script>
+        <script src="/assets/plugins/DataTables-2.3.4/datatable.fr.js"></script>
         <script src="administration/intern/assets/libs/@popperjs/core/umd/popper.min.js"></script>
         <script src="administration/intern/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="administration/intern/assets/js/defaultmenu.min.js"></script>
@@ -205,20 +204,21 @@ $menu = new Menu();
         <script src="administration/intern/assets/js/custom-switcher.min.js"></script>
         <script src="/assets/plugins/tinymce/tinymce.min.js"></script>
         <script src="/assets/plugins/lightbox/lightbox.js"></script>
-        <script src="/assets/belcms.core.js"></script>
+        <script src="/assets/js/belcms.core.js"></script>
         <script src="administration/intern/assets/js/custom.js"></script>
         <script src="assets/plugins/fontawesome-6.5.1/js/all.min.js"></script>
-        <div id=" endloading" style="display: none;">
+        <div id="endloading" style="display: none;">
             <?php usleep(500000); /* 1/2s permet de ne pas surcharger le serveur et lui laissez le temps d'une demi seconde */
             $time = (microtime(true) - $_SESSION['SESSION_START']);
-            echo round($time, 3); ?> secondes < /div>
-                <
-                    script>
-                    $(window).on(' load', function() {
-                    var endloading = $('#endloading').text();
-                    $('#belcms_genered').append(endloading);
-                    });
-                    </script>
+            echo round($time, 3); ?> secondes 
+        </div>
+        <script>
+            $(window).on(' load', function() {
+            var endloading = $('#endloading').text();
+            $('#belcms_genered').append(endloading);
+            });
+        </script>
+    </div>
 </body>
 
 </html>

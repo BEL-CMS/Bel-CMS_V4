@@ -28,44 +28,36 @@ endif;
                 <div class="bottom-right"></div>
                 <div class="card-header">
                     <div class="card-title">
-                        Liste des messages du forum
+                        Liste des sous catégories
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered text-nowrap w-100 DataTableBelCMS">
+                        <table class="table table-bordered text-nowrap w-1000" id="DataTableBelCMS">
                             <thead>
                                 <tr>
-                                    <th>CODE ID</th>
-                                    <th>Auteur</th>
-                                    <th>Date</th>
-                                    <th>Message</th>
+                                    <th style="text-align: center;">Icône</th>
+                                    <th>Titre</th>
+                                    <th>Sous-titre</th>
+                                    <th>Catégorie principal</th>
                                     <th>Options</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                foreach ($message as $v):
-                                    if (User::ifUserExist($v->author)) {
-                                        $username = User::getInfosUserAll($v->author);
-                                        $username = $username->user->username;
-                                    } else {
-                                        $username = $v->author;
-                                    }
-                                    $dateMsg = Common::TransformDate($v->date_post, 'FULL', 'MEDIUM');
-                                    $content = Common::truncate($v->content, 50);
-                                    $content = Common::VarSecure($content, null);
+                                foreach ($cat as $v):
+                                    $subtitle = Common::VarSecure($v->subtitle, null);
                                 ?>
                                     <tr>
-                                        <td><?= $v->id_mdg; ?></td>
-                                        <td><?= $username; ?></td>
-                                        <td><?= $dateMsg; ?></td>
-                                        <td><?= $content; ?></td>
+                                        <td style="text-align: center;"><i class="<?= $v->icon; ?>"></i></td>
+                                        <td><?= $v->title; ?></td>
+                                        <td><?= $subtitle; ?></td>
+                                        <td><?= $v->nameForum->title; ?></td>
                                         <td>
-                                            <button class="btn btn-info label-btn rounded-pill" onclick="location.href='registration/edit/<?= $v->id; ?>?admin&option=users'">
+                                            <button class="btn btn-info label-btn rounded-pill" onclick="location.href='forum/subForumEdit/<?= $v->id; ?>?admin&option=pages'">
                                                 <i class="ri-settings-4-line label-btn-icon me-2"></i>Edition
                                             </button>&nbsp; &nbsp;
-                                            <button class="btn btn-danger label-btn label-end rounded-pill" onclick="location.href='registration/del/<?= $v->id; ?>?admin&option=users'">Supprimer
+                                            <button class="btn btn-danger label-btn label-end rounded-pill" onclick="location.href='forum/subForumDelete/<?= $v->id; ?>?admin&option=pages'">Supprimer
                                                 <i class="ri-close-line label-btn-icon ms-2 rounded-pill"></i>
                                             </button>
                                         </td>

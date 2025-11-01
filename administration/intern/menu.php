@@ -32,7 +32,7 @@ final class Menu
         $array = array(
             'Préférences Générales'   => 'prefgen?admin&option=parameter',
             'Contact'                 => 'contact?admin&option=parameter',
-            'e-mail'                  => 'mail?admin&option=parameter',
+            'Configuration e-mail'    => 'mail?admin&option=parameter',
             'Maintenance'             => 'unavailable?admin&option=parameter',
             'Configuration des pages' => 'config?admin&option=parameter'
         );
@@ -65,21 +65,21 @@ final class Menu
     {
         $array = array(
             'Articles'            => 'articles?admin&amp;option=pages',
-            'Calendrier'          => 'calendar?admin&amp;option=pages',
+            //'Calendrier'          => 'calendar?admin&amp;option=pages',
             'Commentaires'        => 'comments?admin&amp;option=pages',
-            'Donation'            => 'donations?admin&amp;option=pages',
+            //'Donation'            => 'donations?admin&amp;option=pages',
             'Téléchargements'     => 'downloads?admin&amp;option=pages',
-            'Foire aux questions' => 'faq?admin&amp;option=pages',
+            //'Foire aux questions' => 'faq?admin&amp;option=pages',
             'Forum'               => 'forum?admin&amp;option=pages',
             'Galerie d\'images'   => 'gallery?admin&amp;option=pages',
             'Livre d\'or'         => 'guestbook?admin&amp;option=pages',
             'Liens'               => 'links?admin&amp;option=pages',
-            'Boutique'            => 'market?admin&amp;option=pages',
+            //'Boutique'            => 'market?admin&amp;option=pages',
             'Actualités'          => 'news?admin&amp;option=pages',
             'Newsletter'          => 'newsletter?admin&amp;option=pages',
-            'Tarifs'              => 'pricing?admin&amp;option=pages',
+            //'Tarifs'              => 'pricing?admin&amp;option=pages',
             'Recherche'           => 'search?admin&amp;option=pages',
-            'Tickets'             => 'tickets?admin&amp;option=pages'
+            //'Tickets'             => 'tickets?admin&amp;option=pages'
         );
         ksort($array);
         self::getLayout($array);

@@ -33,7 +33,7 @@ endif;
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered text-nowrap w-100 DataTableBelCMS">
+                        <table class="table table-bordered text-nowrap w-100" id="DataTableBelCMS">
                             <thead>
                                 <tr>
                                     <th width="120" height="90">Images</th>

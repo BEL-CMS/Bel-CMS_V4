@@ -65,6 +65,7 @@ class Downloads extends AdminPages
 
         if (!empty($_POST['link'])) {
             $send['download'] = Common::VarSecure($_POST['link'], 'url');
+            $send['size'] =  (int) ($_POST['size']);
         } else {
             if ($_FILES['download']['error'] == 4) {
                 $array = array(

@@ -46,7 +46,7 @@ class config extends AdminPages
         $send['access_groups']    = implode('|', $_POST['access_groups']);
         $send['access_admin']     = implode('|', $_POST['access_admin']);
         $send['description']      = Common::VarSecure($_POST['description'], null);
-        $send['key_seo']          = Common::VarSecure($_POST['key_seo'], null);
+        $send['keywords']         = Common::VarSecure($_POST['keywords'], null);
         $send['infos_sup']        = Common::VarSecure($_POST['infos_sup'], 'html');
         $id                       = (int) $_POST['id'];
         $send['config']           = Common::VarSecure($_POST['config'], null);

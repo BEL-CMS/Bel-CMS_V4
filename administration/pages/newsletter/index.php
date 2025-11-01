@@ -29,7 +29,7 @@ endif;
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered text-nowrap w-100 DataTableBelCMS">
+                        <table class="table table-bordered text-nowrap w-1000" id="DataTableBelCMS">
                             <thead>
                                 <tr>
                                     <th>Auteur</th>

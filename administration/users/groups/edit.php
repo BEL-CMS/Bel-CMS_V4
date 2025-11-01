@@ -42,7 +42,7 @@ if ($edit->id_group == '1' or $edit->id_group == '2') {
                             <input class="form-control form-input-color" type="color" name="color" required  value="<?=$edit->color;?>">
                         </div>
                         <?php
-                        if (is_file($edit->image)):
+                        if (is_readable(ROOT.DS.$edit->image)):
                         ?>
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
                                 <img style="width: 25%; height:auto;" src="<?=$edit->image;?>">

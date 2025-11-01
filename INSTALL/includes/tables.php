@@ -241,10 +241,10 @@ switch ($_POST['table']) {
 			`id_forum` int NOT NULL,
 			`id_supp` int DEFAULT NULL,
 			`title` varchar(128) NOT NULL,
-			`subtitle` varchar(256) NOT NULL,
+			`subtitle` varchar(128) DEFAULT NULL,
 			`orderby` int DEFAULT NULL,
 			`lock` tinyint(1) DEFAULT NULL,
-			`icon` text NOT NULL,
+			`icon` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci,
 			`access_groups` text,
 			`access_admin` text,
 			PRIMARY KEY (`id`)

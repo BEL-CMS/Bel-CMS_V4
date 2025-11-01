@@ -17,7 +17,7 @@ if (!defined('CHECK_INDEX')):
     exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
 endif;
 ?>
-<form action="Forum/AddCatMain?management&option=pages" method="post" enctype="multipart/form-data">
+<form action="Forum/AddCatSec?management&option=pages" method="post" enctype="multipart/form-data">
     <div class="card-body">
         <div class="row">
             <div class="col-xl-12">
@@ -33,24 +33,22 @@ endif;
                     </div>
                     <div class="card-body">
                         <div class="mb-3">
-                            <label for="cattitle" class="form-label">Nom de la catégorie principal</label>
-                            <input id="cattitle" type="text" class="form-control" required name="title">
+                            <label for="title" class="form-label">Nom de la catégorie secondaire</label>
+                            <input id="title" type="text" class="form-control" required name="title">
                         </div>
                         <div class="mb-3">
-                            <label for="catsubtitle" class="form-label">Sous-titre</label>
-                            <input id="catsubtitle" type="text" class="form-control" name="subtitle">
-                        </div>
+                            <label for="subtitle" class="form-label">Sous-titre</label>
+                            <input id="subtitle" type="text" class="form-control" name="subtitle">
+                        </div>   
                         <div class="mb-3">
-                            <label for="caticon" class="form-label">Icon <span style="color:red;font-weight:bold;">* <a style="color:red;" href="https://fontawesome.com/search?ic=free" target="_blank">Voir ici</a></span></label>
-                            <input id="caticon" type="text" class="form-control" name="icon" placeholder="fa-solid fa-house">
-                        </div>
-                        <div class="mb-3">
-                            <span class="mb-3">Activation de la catégorie</span>
-                            <div class="custom-toggle-switch d-flex align-items-center mb-4 mt-3">
-                                <input value="1" name="activate" id="toggleswitchLight" type="checkbox">
-                                <label for="toggleswitchLight" class="label-warning"></label>
-                                <span class="ms-3">Activer</span>
-                             </div>
+                            <label for="forum" class="form-label">Catégorie principal</label>
+                            <select class="form-control" name="id_forum">
+                                <?php
+                                foreach ($forum as $key => $value):
+                                    echo '<option value="'. $value->id .'">'. $value->title .'</option>';
+                                endforeach;
+                                ?>
+                            </select>
                         </div>
                         <div class="mb-3">
                             <span class="mb-3">Groupes qui ont accès</span>
@@ -88,6 +86,18 @@ endif;
                                 endif;
                             endforeach;
                             ?>
+                        </div>
+                        <div class="mb-3">
+                            <span class="mb-3">Catégorie Ouvert-Fermer</span>
+                            <div class="custom-toggle-switch d-flex align-items-center mb-4 mt-3">
+                                <input value="1" name="lock_forum" id="toggleswitchLight" type="checkbox">
+                                <label for="toggleswitchLight" class="label-warning"></label>
+                                <span class="ms-3">Ouvert</span>
+                             </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="icon" class="form-label">Icon <span style="color:red;font-weight:bold;">* <a style="color:red;" href="https://fontawesome.com/search?ic=free" target="_blank">Voir ici</a></span></label>
+                            <input id="icon" type="text" class="form-control" name="icon" placeholder="fa-solid fa-house">
                         </div>
                         <div class="mb-3">
                             <span>Ordre</span>
