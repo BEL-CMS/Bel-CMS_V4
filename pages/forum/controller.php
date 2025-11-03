@@ -29,18 +29,74 @@ class Forum extends Pages
 
     public function index ()
     {
-        $data['threads']      = $this->models->getForums ();
+        $isAccess = false;
+        $isAccessSub = false;
+
+        $data['threads'] = $this->models->getForums ();
         foreach ($data['threads'] as $key => $value) {
             $data['threads'][$key]->subCat   = $this->models->subat ($value->id);
             foreach ($value->subCat as $ksub => $valueCount) {
                 $data['threads'][$key]->subCat[$ksub]->nbMsg = $this->models->getCountPostThreads ($valueCount->id_supp);
                 $data['threads'][$key]->subCat[$ksub]->nbsubcat = $this->models->getCountPostThreads ($valueCount->id);
             }
+            /*
+            foreach ($data['threads'][$key]->subCat as $sub) {
+                if (strpos($sub->access_groups, '|') === false) {
+                    $access_groups_sub = array($sub->access_groups);
+                } else {
+                    $access_groups_sub = implode('|', $sub->access_groups);
+                }
+
+                if (strpos($sub->access_admin, '|') === false) {
+                    $access_admin_sub = array($sub->access_admin);
+                } else {
+                    $access_admin_sub = implode('|', $sub->access_admin);
+                }
+
+                $arrayGrp = array_merge($access_groups_sub, $access_admin_sub);
+
+                foreach ($arrayGrp as $access) {
+                    if (in_array($access, $_SESSION['USER']->groups->all_groups)) {
+                        $isAccessSub = true;
+                        break;
+                    } else {
+                        unset($data['threads'][$key]);
+                    }
+                }
+            }
+            */
         }
+        foreach ($data['threads'] as $key => $value) {
+            if (strpos('|', $value->access_admin) === false) {
+                $access_admin = array($value->access_admin);
+            } else {
+                $access_admin = implode('|', $value->access_admin);
+            }
+            foreach ($access_admin as $access) {
+                if (in_array($access, $_SESSION['USER']->groups->all_groups)) {
+                    $isAccess = true;
+                    break;
+                }
+            }
+            if ($isAccess === false) {
+                if (strpos('|', $value->access_groups) === false) {
+                    $access_groups = array($value->access_groups);
+                } else {
+                    $access_groups = implode('|', $value->access_groups);
+                }
+                foreach ($access_groups as $access) {
+                    if (!in_array($access, $_SESSION['USER']->groups->all_groups)) {
+                        unset($data['threads'][$key]);
+                    }
+                }
+            }
+        }
+
         $data['countMessage'] = $this->models->getCountMsg ();
         $data['countThreads'] = $this->models->getCountThreads ();
+
         $this->set($data);
-        $this->render ('index');
+        $this->render('index');
     }
 
     public function subforum ()

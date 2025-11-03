@@ -1,4 +1,19 @@
 <?php
+/**
+ * Bel-CMS [Content management system]
+ * @version 4.0.0 [PHP8.4]
+ * @link https://bel-cms.dev
+ * @link https://determe.be
+ * @license MIT License
+ * @copyright 2015-2025 Bel-CMS
+ * @author as Stive - stive@determe.be
+*/
+
+if (!defined('CHECK_INDEX')):
+    header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
+    exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
+endif;
+
 use BelCMS\Core\User;
 use BelCMS\Core\groups;
 use BelCMS\Requires\Common;
@@ -42,18 +57,19 @@ use BelCMS\Requires\Common;
                 $color  = constant('DEFAULT_COLOR_USERNAME');
                 $avatar = 'assets/img/default_avatar.jpg';
                 $registred = date('dMY');
+                $nameGroups = constant('VISITOR');
                 $datepost   = Common::TransformDate($value->date_post, 'FULL', 'MEDIUM');
             }
             ?>
         <article class="card post shadow-sm mb-3">
         <div class="card-body d-flex gap-3">
-            <div class="author text-center" style="width: 160px;">
+            <div class="author text-center" style="width: 235px;">
             <div class="avatar"><img src="<?= $avatar; ?>" alt="avatar_user"></div>
             <div class="small mt-2 fw-semibold" style="color: <?= $color; ?>"><?= $username; ?></div>
             <div class="xsmall text-secondary"><?= $nameGroups; ?></div>
             <div class="xsmall text-secondary"><i class="fa-regular fa-calendar"></i> Inscrit(e): <?= $registred; ?></div>
             </div>
-            <div class="flex-grow-1" style="width: calc(100% - 160px);">
+            <div class="flex-grow-1" style="width: calc(100% - 235px);">
             <div class="post-meta small text-secondary mb-2">
                 <i class="fa-regular fa-hashtag"></i> #<?= $value->id; ?> • <i class="fa-regular fa-clock"></i> <?= $datepost; ?>
             </div>
