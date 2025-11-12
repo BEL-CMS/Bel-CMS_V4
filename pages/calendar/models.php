@@ -79,9 +79,9 @@ final class Calendar
 
 	public function getMonthDayYear ($day, $month, $year)
 	{
-		$countCaracter = strlen($day) == 1 ? '0'.$day : $day;
+		$countCaracter      = strlen($day)   == 1 ? '0'.$day : $day;
 		$countCaracterMonth = strlen($month) == 1 ? '0'.$month : $month;
-		$day =  $countCaracter;
+		$day   =  $countCaracter;
 		$month = $countCaracterMonth;
 		$valueStart = $year.'-'.$month.'-'.$day;
 		$where = "WHERE `start_date` = '{$valueStart}' OR `end_date` = '{$valueStart}'";

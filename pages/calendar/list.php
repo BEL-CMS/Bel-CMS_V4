@@ -32,10 +32,10 @@ endif;
             $dateFinal .= $date2;
         }
 
-            if (!is_file(ROOT.$value->image)) {
-                $file = '/assets/img/no_image_events.png';
-            } else {
+            if (is_readable(constant('ROOT').DS.$value->image)) {
                 $file = $value->image;
+            } else {
+                $file = '/assets/img/no_image_events.png';
             }
     ?>
         <div class="belcms_calendar_item">
