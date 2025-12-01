@@ -26,14 +26,24 @@ class Gallery extends AdminPages
 
     public function index ()
     {
-        $menu[] = array('title' => 'Accueil', 'href' => 'gallery?Admin&option=pages', 'ico'  => 'fa-solid fa-igloo');
-        $menu[] = array('title' => 'Ajouté une image', 'href' => 'gallery/addImg/?Admin&option=pages', 'ico'  => 'fa-solid fa-pen-to-square');
-        $menu[] = array('title' => 'Validation', 'href' => 'gallery/valid/?Admin&option=pages', 'ico'  => 'fa-solid fa-pen-to-square');
-        $menu[] = array('title' => 'Liste de(s) catégorie(s)', 'href' => 'gallery/categories/?Admin&option=pages', 'ico'  => 'fa-solid fa-pen-to-square');
-        $a['gallery'] = $this->models->getGalleryValid();
-        foreach ($a['gallery'] as $key => $v) {
-            $a['gallery'][$key]->id_cat = $this->models->getcat($v->id_cat);
+        $menu[] = array('title' => 'Ajouter', 'href' => 'gallery/addimg?Admin&option=pages', 'ico'  => 'fa-solid fa-file-image');
+        $menu[] = array('title' => 'catégories', 'href' => 'gallery/categories?Admin&option=pages', 'ico'  => 'fa-solid fa-list');
+        $menu[] = array('title' => 'Sous-Catégories', 'href' => 'gallery/subcat?Admin&option=pages', 'ico'  => 'fa-solid fa-table-cells-large');
+        $menu[] = array('title' => 'A validé', 'href' => 'gallery/valid?Admin&option=pages', 'ico'  => 'fa-solid fa-check-double');
+
+        $a['screen'] = $this->models->getGallery ();
+
+        foreach ($a['screen'] as $key => $value) {
+            $a['screen'][$key]->name_cat = $this->models->getcat($value->cat_id);
+            if ($a['screen'][$key]->name_cat === false) {
+                $a['screen'][$key]->name_cat = (object) array('name' => 'Aucune');
+            }
+            $a['screen'][$key]->subcat   = $this->models->getNameCat($value->cat_id);
+            if (empty($a['screen'][$key]->subcat)) {
+                $a['screen'][$key]->subcat = (object) array('name' => 'Aucune');
+            }
         }
+
         $this->set($a);
         $this->render ('index', $menu);
     }
@@ -41,8 +51,8 @@ class Gallery extends AdminPages
     public function valid ()
     {
         $menu[] = array('title' => 'Accueil', 'href' => 'gallery?Admin&option=pages', 'ico'  => 'fa-solid fa-igloo');
-        $menu[] = array('title' => 'Ajouté une image', 'href' => 'gallery/addImg/?Admin&option=pages', 'ico'  => 'fa-solid fa-pen-to-square');
-        $menu[] = array('title' => 'Liste de(s) catégorie(s)', 'href' => 'gallery/categories/?Admin&option=pages', 'ico'  => 'fa-solid fa-pen-to-square');
+        $menu[] = array('title' => 'Ajouté une image', 'href' => 'gallery/addImg/?Admin&option=pages', 'ico'  => 'fa-solid fa-image');
+        $menu[] = array('title' => 'Liste de(s) catégorie(s)', 'href' => 'gallery/categories/?Admin&option=pages', 'ico'  => 'fa-solid fa-layer-group');
         $a['gallery'] = $this->models->getGalleryValid();
         foreach ($a['gallery'] as $key => $v) {
             $a['gallery'][$key]->id_cat = $this->models->getcat($v->id_cat);
@@ -60,8 +70,10 @@ class Gallery extends AdminPages
             $this->redirect('gallery/addcat?admin&option=pages', 2);
             return;
         } else {
-            $this->set($cat);
-            $this->render ('add');
+            $menu[] = array('title' => 'Accueil', 'href' => 'gallery?Admin&option=pages', 'ico'  => 'fa-solid fa-igloo');
+            $a['subcat'] = $this->models->subcat ();
+            $this->set($a);
+            $this->render ('add', $menu);
         }
     }
 
@@ -133,7 +145,7 @@ class Gallery extends AdminPages
     {
         $menu[] = array('title' => 'Accueil', 'href' => 'gallery?Admin&option=pages', 'ico'  => 'fa-solid fa-igloo');
         if (is_numeric($this->data[2]) === true) {
-            $a['cat'] = $this->models->cat();
+            $a['cat'] = $this->models->subcat();
             $id = (int) $this->data[2];
             $a['img'] = $this->models->getimg($id);
             $this->set($a);
@@ -151,7 +163,7 @@ class Gallery extends AdminPages
 
     public function sendnew ()
     {
-        if (empty($_FILES['url']['name'])) {
+        if (isset($_FILES['url']['error']) and $_FILES['url']['error'] != 0) {
             $array = array(
                 'type' => 'error',
                 'text' => 'Aucune image transférée'
@@ -160,16 +172,15 @@ class Gallery extends AdminPages
             $this->redirect('gallery?Admin&option=pages', 3);
             return false; 
         }
+
+        $idcat = $_POST['id_cat'];
+        $cat = $this->models->getIdcatToken ($idcat);
+        $nameCat = str_replace(' ','_',$cat->name);
+
         $a['name']        = Common::VarSecure($_POST['name'], null);
         $a['description'] = Common::VarSecure($_POST['description'], 'html');
-        $dir = ROOT . DS . 'uploads' . DS . 'gallery' . DS;
-        $dirWeb = 'uploads/gallery';
-
-        if (!is_dir($dir)) {
-            mkdir($dir, 0777, true);
-            $fopen  = fopen($dir . 'index.html', 'a+');
-            fclose($fopen);
-        }
+        $dir = ROOT . DS . 'uploads' . DS . 'gallery' . DS . $nameCat.DS;
+        $dirWeb = 'uploads/gallery' . DS . $nameCat.DS;
 
         if (isset($_FILES['url']['name']) and !empty($_FILES['url']['name'])) {
             $a['url'] = Common::Upload('url', $dir, 'img', true);
@@ -177,7 +188,17 @@ class Gallery extends AdminPages
         }
 
         $a['author'] = $_SESSION['USER']->user->hash_key;
-        $a['id_cat'] = (int) $_POST['id_cat'];
+        $a['cat_id'] = ctype_alnum($_POST['id_cat']) ? $_POST['id_cat'] : false;
+
+        if ($a['cat_id'] === false) {
+            $array = array(
+                'type' => 'error',
+                'text' => 'Catégorie ID inconnu'
+            );
+            $this->error('Galeries', $array['text'], $array['type']);
+            $this->redirect('gallery?Admin&option=pages', 3);
+            return false;
+        }
 
         $return = $this->models->addNew($a);
 
@@ -202,6 +223,8 @@ class Gallery extends AdminPages
     {
         $menu[]   = array('title' => 'Accueil', 'href' => 'gallery?Admin&option=pages', 'ico'  => 'fa-solid fa-igloo');
         $menu[]   = array('title' => 'Ajouter une categorie', 'href' => 'gallery/addcat/?Admin&option=pages', 'ico'  => 'fa-solid fa-pen-to-square');
+        $menu[]   = array('title' => 'Sous-Catégories', 'href' => 'gallery/subcat?Admin&option=pages', 'ico'  => 'fa-solid fa-table-cells-large');
+
         $a['cat'] = $this->models->cat ();
         $this->set($a);
         $this->render('categories', $menu);
@@ -217,6 +240,8 @@ class Gallery extends AdminPages
 
     public function sendnewcat ()
     {
+        // serial BDD unique par catégorie
+        $key = strtoupper(Common::randomString(16));
         $a['name'] = Common::VarSecure($_POST['name'],null);
 
         if (!isset($_POST['access'])) {
@@ -230,12 +255,16 @@ class Gallery extends AdminPages
         $a['color']       = Common::VarSecure($_POST['color'], null);
         $a['description'] = Common::VarSecure($_POST['description'], 'html');
 
-        $dir = ROOT . DS . 'uploads' . DS . 'gallery' . DS . 'cat' .DS;
-        $dirWeb = 'uploads/gallery/cat/';
+        $_POST['name']    = str_replace(' ','_',$_POST['name']);
+        $_POST['name']    = str_replace('"','-',$_POST['name']);
+        $_POST['name']    = urlencode($_POST['name']);
+        $dir = ROOT . DS . 'uploads' . DS . 'gallery' .DS. $key;
+        $dirWeb = 'uploads/gallery/'.$key.DS;
 
-        if (!is_dir($dir)) {
-            mkdir($dir, 0777, true);
-            $fopen  = fopen($dir . 'index.html', 'a+');
+
+        if (!is_dir($dirWeb)) {
+            mkdir($dirWeb, 0777, true);
+            $fopen  = fopen($dirWeb . 'index.html', 'a+');
             fclose($fopen);
         }
 
@@ -243,6 +272,8 @@ class Gallery extends AdminPages
             $a['background'] = Common::Upload('background', $dir, 'img', true);
             $a['background'] = $dirWeb.$a['background'];
         }
+
+        $a['cat_id'] = strtoupper(Common::randomString(16));
 
         $return = $this->models->addCat ($a);
 
@@ -277,7 +308,7 @@ class Gallery extends AdminPages
                 'text' => constant('ID_ERROR')
             );
             $this->error('Galeries', $array['text'], $array['type']);
-            $this->redirect('gallery/categories/?Admin&option=pages', 3);
+            $this->redirect('gallery?Admin&option=pages', 3);
             return;
         }
         $this->render('editcat', $menu);
@@ -288,7 +319,7 @@ class Gallery extends AdminPages
         if (is_numeric($_POST['id']) === true) {
             $dir = ROOT . DS . 'uploads' . DS . 'gallery' . DS;
             $dirWeb = 'uploads/gallery/';
-            
+
             if (isset($_FILES['url']['name']) and !empty($_FILES['url']['name'])) {
                 $a['url'] = Common::Upload('url', $dir, 'img', true);
                 $a['url'] = $dirWeb . $a['url'];
@@ -298,8 +329,20 @@ class Gallery extends AdminPages
             $id = (int) $_POST['id'];
 
             $a['author'] = $_SESSION['USER']->user->hash_key;
-            $a['id_cat'] = (int) $_POST['id_cat'];
-            $a['description'] = Common::truncate_3(Common::VarSecure($_POST['description'], null), 100);
+            $cat_id = ctype_alnum($_POST['id_cat']) ? $_POST['id_cat'] : false;
+            if ($cat_id !== false) {
+                $a['cat_id']  = $_POST['id_cat'];
+            } else {
+                $array = array(
+                    'type' => 'error',
+                    'text' => 'Catégorie ID inconnu'
+                );
+                $this->error('Galeries', $array['text'], $array['type']);
+                $this->redirect('gallery?Admin&option=pages', 3);
+            }
+            if (!empty($_POST['description'])){
+                $a['description'] = Common::truncate_3(Common::VarSecure($_POST['description'], null), 100);
+            }
 
             $return = $this->models->sendedit($a, $id);
 
@@ -311,16 +354,22 @@ class Gallery extends AdminPages
                 $this->error('Galerie', $array['text'], $array['type']);
                 $this->redirect('gallery?Admin&option=pages', 2);
 
-            $a['name'] = Common::VarSecure($_POST['name'], null);
+                $a['name'] = Common::VarSecure($_POST['name'], null);
             } else {
                 $array = array(
-                    'type' => 'error',
-                    'text' => constant('ID_ERROR')
+                    'type' => 'warning',
+                    'text' => 'Erreur lors de la modification'
                 );
                 $this->error('Galeries', $array['text'], $array['type']);
-                $this->redirect('gallery/categories/?Admin&option=pages', 3);
-            return;
+                $this->redirect('gallery?Admin&option=pages', 3);
             }
+        } else {
+            $array = array(
+                'type' => 'error',
+                'text' => constant('ID_ERROR')
+            );
+            $this->error('Galeries', $array['text'], $array['type']);
+            $this->redirect('gallery?Admin&option=pages', 3);
         }
     }
 
@@ -340,12 +389,33 @@ class Gallery extends AdminPages
             }
             $a['color']       = Common::VarSecure($_POST['color'], null);
             $a['description'] = Common::VarSecure($_POST['description'], 'html');
-            $dir = ROOT . DS . 'uploads' . DS . 'gallery' . DS . 'cat' . DS;
-            $dirWeb = 'uploads/gallery/cat/';
+
+            $_POST['name']    = str_replace(' ','_',$_POST['name']);
+            $_POST['name']    = str_replace('"','-',$_POST['name']);
+            $_POST['name']    = urlencode($_POST['name']);
+            $key = strtoupper(Common::randomString(16));
+            $dir = ROOT . DS . 'uploads' . DS . 'gallery' .DS. $key;
+            $dirWeb = 'uploads/gallery/'. $key .DS;
+
+
+            if (!is_dir($dirWeb)) {
+                mkdir($dirWeb, 0777, true);
+                $fopen  = fopen($dirWeb . 'index.html', 'a+');
+                fclose($fopen);
+            }
+
             if (isset($_FILES['background']['name']) and !empty($_FILES['background']['name'])) {
                 $a['background'] = Common::Upload('background', $dir, 'img', true);
-                $a['background'] = $dirWeb . $a['background'];
+                $a['background'] = $dirWeb.$a['background'];
+                if ($_FILES['background']['error'] == 1) {
+                    $array = array(
+                        'type' => 'warning',
+                        'text' => constant('La taille et le poids de l\'image est trop volumineuse.')
+                    );
+                    $this->error('Article', $array['text'], $array['type']);
+                }
             }
+
             $return = $this->models->editCat($a, $id);
             if ($return === true) {
                 $array = array(
@@ -368,7 +438,164 @@ class Gallery extends AdminPages
                 'text' => constant('ID_ERROR')
             );
             $this->error('Galeries', $array['text'], $array['type']);
-            $this->redirect('gallery/categories/?Admin&option=pages', 3);
+            $this->redirect('gallery?Admin&option=pages', 3);
+            return;
+        }
+    }
+
+    public function subcat  ()
+    {
+        $menu[] = array('title' => 'Accueil', 'href' => 'gallery?Admin&option=pages', 'ico'  => 'fa-solid fa-igloo');
+        $menu[] = array('title' => 'Liste de(s) catégorie(s)', 'href' => 'gallery/categories/?Admin&option=pages', 'ico'  => 'fa-solid fa-folder-plus');
+        $menu[] = array('title' => 'Ajouter une sous-categorie', 'href' => 'gallery/addsubcategories/?Admin&option=pages', 'ico'  => 'fa-solid fa-pen-to-square');
+
+        $a['data'] = $this->models->subcat ();
+
+        $this->set($a);
+        $this->render('subcat', $menu);
+    }
+
+    public function addsubcategories ()
+    {
+        $menu[] = array('title' => 'Accueil', 'href' => 'gallery?Admin&option=pages', 'ico'  => 'fa-solid fa-igloo');
+        $a['cat'] = $this->models->cat ();
+        if (empty($a['cat'])) {
+            $array = array(
+                'type' => 'warning',
+                'text' => 'Veuille créer une catégorie principale..'
+            );
+            $this->error('Galeries', $array['text'], $array['type']);
+            $this->redirect('gallery/addcat/?Admin&option=pages', 3);
+            return;
+        }
+        $id['id'] = ctype_alnum($this->data[2]) ? $this->data[2] : 'Error ID';
+        $this->set($a);
+        $this->set($id);
+        $this->render('addsubmenu', $menu);
+    }
+
+    public function deletesubcat ()
+    {
+        if (is_numeric($this->data[2]) === true) {
+            $id = $this->data[2];
+            $return = $this->models->delsubcat ($id);
+            if ($return === true) {
+                $array = array(
+                    'type' => 'success',
+                    'text' => constant('DEL_SUCCESS')
+                );
+                $this->error('Galeries', $array['text'], $array['type']);
+                $this->redirect('gallery/subcategories/?Admin&option=pages', 3);  
+            } else {
+                $array = array(
+                    'type' => 'warning',
+                    'text' => constant('DEL_ERROR')
+                );
+                $this->error('Galeries', $array['text'], $array['type']);
+                $this->redirect('gallery/subcategories/?Admin&option=pages', 3);
+            }
+        } else {
+            $array = array(
+                'type' => 'error',
+                'text' => constant('ID_ERROR')
+            );
+            $this->error('Galeries', $array['text'], $array['type']);
+            $this->redirect('gallery/subcategories/?Admin&option=pages', 3);
+            return;
+        }
+    }
+
+    public function sendnewsubcat ()
+    {
+        if (!isset($_POST['access'])) {
+            $_POST['access'] = array(1);
+        }
+        if (!in_array(1, $_POST['access'])) {
+            array_push($_POST['access'], "1");
+        }
+        $data['name']            = Common::VarSecure($_POST['name'], null);
+        $data['groups_access']   = implode('|', $_POST['access']);
+        $data['color']           = strlen($_POST['color']) == 7 ? $_POST['color'] : '#333333';
+        $data['bg_color']        = strlen($_POST['bg_color']) == 7 ? $_POST['bg_color'] : '#FFFFFF';
+        $data['cat_id']          = ctype_alnum($_POST['id_cat']) ? $_POST['id_cat'] : false;
+
+        if ($data['cat_id'] === false) {
+            $array = array(
+                'type' => 'error',
+                'text' => constant('ID_ERROR')
+            );
+            $this->error('Galeries', $array['text'], $array['type']);
+            $this->redirect('gallery/sendnewsubcat/?Admin&option=pages', 3);  
+        }
+
+        $return = $this->models->sendnewsubcat($data);
+
+        if ($return === true) {
+            $array = array(
+                'type' => 'success',
+                'text' => constant('SEND_SUCCESS')
+            );
+            $this->error('Galeries', $array['text'], $array['type']);
+            $this->redirect('gallery/subcat?Admin&option=pages', 3); 
+        } else {
+            $array = array(
+                'type' => 'warning',
+                'text' => constant('SAVE_BDD_ERROR')
+            );
+            $this->error('Galeries', $array['text'], $array['type']);
+            $this->redirect('gallery/subcat?Admin&option=pages', 3);
+        }
+    }
+
+    public function editsubcat () {
+        if (is_numeric($this->data[2]) === true) {
+            $menu[] = array('title' => 'Accueil', 'href' => 'gallery?Admin&option=pages', 'ico'  => 'fa-solid fa-igloo');
+            $id = (int) $this->data[2];
+            $a['cat']  = $this->models->getSubCat ();
+            $a['data'] = $this->models->getSubCatOne ($id);
+            $a['data']->groups_access = explode('|', $a['data']->groups_access);
+            $this->set($a);
+            $this->render('editsubcat', $menu);
+        } else {
+            $array = array(
+                'type' => 'error',
+                'text' => constant('ID_ERROR')
+            );
+            $this->error('Galeries', $array['text'], $array['type']);
+            $this->redirect('gallery/subcat/?Admin&option=pages', 3);
+            return;
+        }
+    }
+
+    public function sendeditsubcat ()
+    {
+        if (is_numeric($_POST['id']) === true) {
+            $data['name']          = Common::VarSecure($_POST['name'], null);
+            $data['color']         = strlen($_POST['color']) == 7 ? $_POST['color'] : '#000000';
+            $data['bg_color']      = strlen($_POST['bg_color']) == 7 ? $_POST['bg_color'] : '#000000';
+            $data['groups_access'] = implode('|', $_POST['groups_access']);
+            $id = (int) $_POST['id'];
+            $return = $this->models->sendeditsubcat ($data, $id);
+            if ($return === true) {
+                $array = array(
+                    'type' => 'success',
+                    'text' => constant('SEND_SUCCESS')
+                );
+            } else {
+                $array = array(
+                    'type' => 'warning',
+                    'text' => constant('SAVE_BDD_ERROR')
+                ); 
+            }
+            $this->error('Galeries', $array['text'], $array['type']);
+            $this->redirect('gallery/subcat?Admin&option=pages', 3); 
+        } else {
+            $array = array(
+                'type' => 'error',
+                'text' => constant('ID_ERROR')
+            );
+            $this->error('Galeries', $array['text'], $array['type']);
+            $this->redirect('gallery/subcat/?Admin&option=pages', 3);
             return;
         }
     }

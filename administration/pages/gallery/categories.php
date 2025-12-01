@@ -55,7 +55,17 @@ endif;
                                         </td>
                                         <td><?= $v->name; ?></td>
                                         <td style="background-color: <?= $v->color; ?>"><?= $v->color; ?></td>
-                                        <td><?= Common::truncate_3($v->description, 80); ?></td>
+                                        <?php 
+                                        if (empty($v->description)) {
+                                            ?>
+                                            <td></td>
+                                            <?php
+                                        } else {
+                                            ?>
+                                            <td><?= Common::truncate_3($v->description, 80); ?></td>
+                                            <?php 
+                                        }
+                                        ?>
                                         <td><?= Common::TransformDate($v->datecreate, 'FULL', 'MEDIUM'); ?></td>
                                         <td>
                                             <a href="gallery/deletecat/<?= $v->id; ?>?admin&option=pages" class="btn btn-danger label-btn label-end rounded-pill">

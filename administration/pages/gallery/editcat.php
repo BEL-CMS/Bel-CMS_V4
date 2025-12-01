@@ -25,7 +25,7 @@ endif;
                 <div class="bottom-right"></div>
                 <div class="card-header">
                     <div class="card-title">
-                        Créer une catégorie additionnelle
+                        Editer la catégorie
                     </div>
                 </div>
                 <form action="gallery/sendeditcat?management&option=pages" method="post" enctype="multipart/form-data">
@@ -91,6 +91,7 @@ endif;
                         </div>
                         <div class="card-footer">
                             <div class="mb-3">
+                                <input type="hidden" name="key" value="<?= $cat->cat_id; ?>">
                                 <input type="hidden" name="id" value="<?=$cat->id;?>">
                                 <button type="submit" class="btn btn-primary">Editer</button>
                             </div>

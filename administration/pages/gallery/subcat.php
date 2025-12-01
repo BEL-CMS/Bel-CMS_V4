@@ -28,7 +28,7 @@ endif;
                 <div class="bottom-right"></div>
                 <div class="card-header">
                     <div class="card-title">
-                        Liste des images
+                        
                     </div>
                 </div>
                 <div class="card-body">
@@ -38,39 +38,31 @@ endif;
                                 <tr>
                                     <th>#ID</th>
                                     <th>Nom</th>
-                                    <th>Image</th>
-                                    <th>Câtégorie</th>
-                                    <th>Sous-catégorie</th>
+                                    <th>Date de création</th>
                                     <th>Options</th>
                                 </tr>
                             </thead>
                             <tbody>
                             <?php
-                            foreach ($screen as $img):
-                            ?>
-                            <tr>
-                                <td><?= $img->id; ?></td>
-                                <td><?= $img->name; ?></td>
-                                <td>
-                                    <a href="<?= $img->url; ?>" class="glightbox">
-                                        <img style="height: 60px;" src="<?= $img->url; ?>" alt="work-thumbnail" class="rounded-lg">
-                                    </a>
-                                </td>
-                                <td><?= $img->name_cat->name; ?></td>
-                                <td><?= $img->subcat->name; ?></td>
-                                <td>
-                                    <a href="gallery/deleteimg/<?= $img->id; ?>?admin&option=pages" class="btn btn-danger label-btn label-end rounded-pill">
-                                        <?= constant('DELETE'); ?>
-                                        <i class="ri-close-line label-btn-icon ms-2 rounded-pill"></i>
-                                    </a>
-                                    <a href="gallery/editimg/<?= $img->id; ?>?admin&option=pages" class="btn btn-warning label-btn rounded-pill">
-                                        <i class="ri-chat-smile-line label-btn-icon me-2"></i>
-                                        <?= constant('EDIT') ?>
-                                    </a>
-                                </td>
-                            </tr>
-                            <?php
-                            endforeach;
+                                foreach ($data as $key => $value):
+                                ?>
+                                <tr>
+                                    <td style="text-align:center"><?= $value->id; ?></td>
+                                    <td><?= $value->name; ?></td>
+                                    <td style="color:<?= $value->color; ?>;background-color: <?= $value->bg_color; ?>"><?= $value->color; ?></td>
+                                    <td>
+                                        <a href="gallery/deletesubcat/<?= $value->id; ?>?admin&option=pages" class="btn btn-danger label-btn label-end rounded-pill">
+                                            Supprimer
+                                            <i class="ri-close-line label-btn-icon ms-2 rounded-pill"></i>
+                                        </a>
+                                        <a href="gallery/editsubcat/<?= $value->id; ?>?admin&option=pages" class="btn btn-warning label-btn rounded-pill">
+                                            <i class="ri-chat-smile-line label-btn-icon me-2"></i>
+                                            Editer
+                                        </a>
+                                    </td>
+                                </tr>
+                                <?php
+                                endforeach;
                             ?>
                             </tbody>
                         </table>

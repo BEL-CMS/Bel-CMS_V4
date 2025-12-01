@@ -48,9 +48,9 @@ endif;
                             <label for="input-file" class="form-label">Catégorie</label>
                             <select name="id_cat" class="form-select form-select-sm mb-3">
                                 <?php
-                                foreach ($cat as $key => $value):
+                                foreach ($subcat as $key => $value):
                                 ?>
-                                    <option value="<?= $value->id; ?>"><?= $value->name; ?></option>
+                                    <option value="<?= $value->cat_id; ?>"><?= $value->name; ?></option>
                                 <?php
                                 endforeach;
                                 ?>
