@@ -17,8 +17,22 @@ if (!defined('CHECK_INDEX')):
 endif;
 ?>
 <section id="belcms_gallery">
-    <h2>Galerie de photos</h2>
-    [ <a href="Gallery" title="Galerie home">Index</a> | <a href="Gallery/new" title="Galerie nouveauté">Nouveaux</a> | <a href="Gallery/popular" title="Galerie les plus Populaire">Populaire</a> | <a href="Gallery/propose" title="Galerie Proposé">Proposé</a> ]
+    <nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="Gallery"><?= $_SESSION['CONFIG']['CMS_NAME']; ?> :: Galerie de photos</a>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="Gallery">Accueil</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="bg-light border-bottom pt-3 pb-3 mb-3">
+        <div class="container">
+            <h1 class="fw-semibold mb-2 belcms_bnv" id="belcms_bnv">Proposé une image.</h1>
+            <p class=" lead text-secondary" style="text-align: center;"></p>
+        </div>
+    </div>
     <form action="gallery/SendNew" method="post" enctype="multipart/form-data">
         <div class="input-group mb-2 mt-3">
             <div class="form-floating">

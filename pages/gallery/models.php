@@ -25,6 +25,7 @@ endif;
 ############################################
 #  TABLE_GALLERY
 #  TABLE_GALLERY_CAT
+#  TABLE_GALLERY_SUBCAT
 ############################################
 final class Gallery
 {
@@ -40,7 +41,7 @@ final class Gallery
     public function getImg ($id)
     {
         $where[] = array('name' => 'valid', 'value' => 1);
-        $where[] = array('name' => 'id_cat', 'value' => $id);
+        $where[] = array('name' => 'id', 'value' => $id);
         $sql = new BDD;
         $sql->table('TABLE_GALLERY');
         $sql->where($where);
@@ -122,4 +123,54 @@ final class Gallery
         }
         return $return;
     }
+	#####################################
+	# Récupère les sous-catégories avec id
+	#####################################
+	public function GetNameSubCatId ($id = null)
+	{
+        $sql = new BDD;
+        $sql->table('TABLE_GALLERY_CAT');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->queryOne();
+        $catManID = $sql->data->cat_id;
+        unset($sql);
+
+		$sql = New BDD();
+		$sql->table('TABLE_GALLERY_SUBCAT');
+        $sql->where(array('name' => 'main_id', 'value' => $catManID));
+		$sql->queryAll();
+
+		if (!empty($sql->data)) {
+			return $sql->data;
+		} else {
+			return false;
+		}
+	}
+	#####################################
+	# Récupère les donné d'une image
+	#####################################
+	public function getDetail ($id)
+	{
+		$sql = new BDD;
+		$sql->table('TABLE_GALLERY');
+		$sql->where(array('name' => 'cat_id', 'value' => $id));
+		$sql->queryAll();
+		foreach ($sql->data as $key => $value) {
+			$sql->data[$key]->vote = self::getVoteId ($value->id);
+		}
+		$return = $sql->data;
+		return $return;
+	} 
+	#####################################
+	# Récupère les vote d'une image
+	#####################################
+	private function getVoteId ($id)
+	{
+		$sql = new BDD;
+		$sql->table('TABLE_GALLERY_VOTE');
+		$sql->where(array('name' => 'id_vote', 'value' => $id));
+		$sql->count();
+		$return = $sql->data;
+		return $return;
+	}
 }

@@ -1,6 +1,9 @@
 #belcms_gallery {
     text-align: center;
 }
+#belcms_gallery * {
+    list-style: none !important;
+}
 .belcms_main_gallery_box {
     display: inline-table;
     border-radius: 15px;
@@ -114,4 +117,202 @@ padding-left: 15px;
 }
 .section_gallery_title_vote {
     width: auto;
+}
+.section_gallery_title_row {
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+}
+.section_gallery_title_row > img {
+    width: 100%;
+    height: 300px;
+}
+#belcms_ul_detail {
+    columns: 2;
+    gap: var(--gutter);
+    margin: 0 auto;
+    padding: 0;
+}
+#belcms_ul_detail li {
+    position: relative;
+    transition: all 0.5s ease;
+}
+#belcms_ul_detail li a {
+    display: block;
+    transition: all 0.5s ease;
+}
+#belcms_ul_detail li:hover .belcms_ul_detail_data {
+    background-color: rgba(0, 0, 0, 0.75);
+    color: #FFF;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transition: all 0.5s ease;
+    overflow: hidden;
+    border-radius: .250rem;
+    padding: 25px;
+}
+
+
+* {
+    box-sizing: border-box;
+    font-family: "Segoe UI", Roboto, sans-serif;
+}
+
+.slider {
+    position: relative;
+    max-width: 900px;
+    margin: 40px auto;
+    overflow: hidden;
+}
+
+.slides {
+    position: relative;
+    height: 0;
+    padding-bottom: 65%;
+    /* ratio image + texte */
+}
+
+.slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 500ms ease;
+}
+
+.slide.is-active {
+    opacity: 1;
+}
+
+/* Carte */
+.card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.card img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Infos élégantes */
+.info {
+    text-align: center;
+    padding: 10px;
+    position: relative;
+}
+
+.info h3 {
+    margin: 0 0 8px;
+    font-size: 1.4rem;
+    color: #222;
+    font-weight: 600;
+}
+
+.info p {
+    margin: 0;
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.5;
+}
+
+/* Boutons gauche/droite */
+.nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 22px;
+    line-height: 42px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    transition: background 0.3s ease;
+}
+
+.nav:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+.prev span,
+.next span {
+    display: block;
+    margin: auto;
+}
+
+/* Boutons collés aux côtés gauche/droite */
+.nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 22px;
+    line-height: 42px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    transition: background 0.3s ease;
+}
+
+.nav:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+.prev span,
+.next span {
+    display: block;
+    margin: auto;
+}
+.section_gallery_title_vote {
+    display: block;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+}
+#belcms_gallery_ul {
+    overflow: hidden;
+}
+#belcms_gallery_ul li {
+    display: block;
+    float: left;
+    width: 50%;
+    padding: 10px 0;
+}
+#belcms_gallery_ul li a i,
+#belcms_gallery_ul li a svg {
+    font-size: 40px;
 }

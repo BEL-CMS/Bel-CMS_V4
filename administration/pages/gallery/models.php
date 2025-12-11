@@ -49,6 +49,16 @@ final class ModelsGallery
     {
         $sql = new BDD;
         $sql->table('TABLE_GALLERY_CAT');
+        $sql->where(array('name' => 'cat_id', 'value' => $id));
+        $sql->queryOne();
+        $return = $sql->data;
+        return $return;
+    }
+
+    public function getcatForId ($id)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_GALLERY_CAT');
         $sql->where(array('name' => 'id', 'value' => $id));
         $sql->queryOne();
         $return = $sql->data;
@@ -265,6 +275,22 @@ final class ModelsGallery
         $sql->where(array('name' => 'cat_id', 'value' => $id));
         $sql->queryOne();
         $return = $sql->data;
+        return $return;
+    }
+
+    public function getNameCatPrimary ($id)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_GALLERY_SUBCAT');
+        $sql->where(array('name' => 'cat_id', 'value' => $id));
+        $sql->queryOne();
+        $returnSecCat = $sql->data->main_id;
+
+        $sub = new BDD;
+        $sub->table('TABLE_GALLERY_CAT');
+        $sub->where(array('name' => 'cat_id', 'value' => $returnSecCat));
+        $sub->queryOne();
+        $return = $sub->data;
         return $return;
     }
 

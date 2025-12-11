@@ -15,6 +15,7 @@ use BelCMS\Core\Captcha;
 use BelCMS\Core\Pages;
 use BelCMS\Core\Config;
 use BelCMS\Core\Notification;
+use BelCMS\Core\Security;
 use BelCMS\Core\User;
 use BelCMS\Requires\Common;
 
@@ -27,14 +28,38 @@ class Gallery extends Pages
 {
     var $useModels = 'Gallery';
 
+    #####################################
+    # Page d'accueil index
+    #####################################
     function index ()
     {
         $d['cat'] = $this->models->getCategory ();
         $this->set($d);
         $this->render ('index');
     }
-
+    #####################################
+    # Page d'accueil - sous catégorie
+    #####################################
     public function subcat ()
+    {
+        $id = (int) $this->data['2'];
+        if (empty($id) or $id == 0) {
+            Notification::warning(constant('INVALID_ID'), 'Galerie');
+        } else {
+            
+            $data['data'] = $this->models->GetNameSubCatId($id);
+            if ($data['data'] != false) {
+                foreach ($data['data'] as $key => $value) {
+                    if (Security::IsAcess($value->groups_access) == false ) {
+                        unset($data['data'][$key]);
+                    }
+                }
+                $this->set($data);
+            } 
+            $this->render('subcat');
+        }
+    }
+    public function sub ()
     {
         $id = (int) $this->data[2];
         $d['img'] = $this->models->getImg ($id);
@@ -44,7 +69,7 @@ class Gallery extends Pages
         $config = Config::GetConfigPage('gallery');
         $d['pagination'] = $this->pagination($config->config['MAX_PAGE'], 'gallery/subcat', constant('TABLE_GALLERY'));
         if ($d['img'] == null) {
-            Notification::error('Pas d\'images disponibles dans cette catégorie.', 'Images');
+            Notification::warning('Pas d\'images disponibles dans cette catégorie.', 'Images');
         } else {
             $this->set($d);
             $this->render ('img');
@@ -113,4 +138,19 @@ class Gallery extends Pages
         }
         $referer = (!empty($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : 'gallery';
         $this->redirect($referer, 3);
-    }}
+    }
+
+    #####################################
+    # Affiche-les données d'une image
+    #####################################
+    public function detail ()
+    {
+        $id =  $this->data['2'];
+        $data['data'] = $this->models->getDetail($id);
+        foreach ($data['data'] as $key => $value) {
+            $data['data'][$key]->vote = $this->models->getVote($value->id);
+        }
+        $this->set($data);
+        $this->render('detail');
+    }
+}

@@ -56,8 +56,8 @@ endif;
                                         <img style="height: 60px;" src="<?= $img->url; ?>" alt="work-thumbnail" class="rounded-lg">
                                     </a>
                                 </td>
-                                <td><?= $img->name_cat->name; ?></td>
-                                <td><?= $img->subcat->name; ?></td>
+                                <td><?= $img->nameCat; ?></td>
+                                <td><?= $img->nameSecCat; ?></td>
                                 <td>
                                     <a href="gallery/deleteimg/<?= $img->id; ?>?admin&option=pages" class="btn btn-danger label-btn label-end rounded-pill">
                                         <?= constant('DELETE'); ?>

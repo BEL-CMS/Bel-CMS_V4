@@ -59,18 +59,15 @@ endif;
                             <select name="id_cat" class="form-select form-select-sm mb-3">
                                 <?php
                                 foreach ($cat as $key => $value):
-                                    if ($img == $value->cat_id):
+                                    if ($img->cat_id == $value->cat_id):
                                     ?>
-                                        <option checked value="<?= $value->cat_id; ?>"><?= $value->name; ?></option>
+                                        <option selected value="<?= $value->cat_id; ?>"><?= $value->name; ?></option>
                                     <?php
                                     else:
                                     ?>
                                         <option value="<?= $value->cat_id; ?>"><?= $value->name; ?></option>
                                     <?php
                                     endif;
-                                    ?>
-                                        <option value="<?= $value->cat_id; ?>"><?= $value->name; ?></option>
-                                    <?php
                                 endforeach;
                                 ?>
                             </select>
