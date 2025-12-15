@@ -44,12 +44,28 @@ class Mail extends AdminPages
         $save['host']        = Common::VarSecure($_POST['host'], null);
         $save['Port']        = is_numeric($_POST['Port']) ? $_POST['Port'] : '587';
         $save['SMTPAuth']    = $_POST['SMTPAuth'] == 'true' ? true : false;
-        $save['SMTPAutoTLS'] = $_POST['SMTPAutoTLS'] == 'true' ? true : false;
+        $save['SMTPAutoTLS'] = $_POST['SMTPAutoTLS'] == '1' ? true : false;
         $save['WordWrap']    = is_numeric($_POST['WordWrap']) ? $_POST['WordWrap'] : '65';
         $save['IsHTML']      = $_POST['IsHTML'] == 'true' ? true : false;
         $save['setFrom']     = Secure::isMail($_POST['setFrom']);
         $save['fromName']    = Common::VarSecure($_POST['fromName'], null);
-        $save['charset']     = $_POST['charset'] == '465' or $_POST['charset'] == 'Windows-1252' or $_POST['charset'] == 'ISO-8859-1'? $_POST['charset'] : '465';
+        switch ($_POST['charset']) {
+            case 'UTF-8':
+                $save['charset'] = 'UTF-8';
+            break;
+
+            case 'Windows-1252':
+                $save['charset'] = 'Windows-1252';
+            break;
+
+            case 'ISO-8859-1':
+                $save['charset'] = 'ISO-8859-1';
+            break;
+
+            default:
+                $save['charset'] = 'UTF-8';
+            break;
+        }
         $save['username']    = Common::VarSecure($_POST['username'], null);
         $save['Password']    = Common::VarSecure($_POST['Password'], null);
 
