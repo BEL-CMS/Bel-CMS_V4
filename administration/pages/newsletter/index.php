@@ -24,7 +24,7 @@ endif;
             <div class="card custom-card">
                 <div class="card-header">
                     <div class="card-title">
-                        Liste des commentaires du livre d'or
+                        Liste des newsletter
                     </div>
                 </div>
                 <div class="card-body">
@@ -33,8 +33,7 @@ endif;
                             <thead>
                                 <tr>
                                     <th>Auteur</th>
-                                    <th>IP</th>
-                                    <th>E-mail</th>
+                                    <th>Groupe</th>
                                     <th>Date</th>
                                     <th>Options</th>
                                 </tr>
@@ -53,7 +52,7 @@ endif;
                                     <tr>
                                         <td><?= $username; ?></td>
                                         <td><?= $value->ip; ?></td>
-                                        <td><?= $value->mail; ?></td>
+                                        <td><?= $value->groups_send; ?></td>
                                         <td><?= Common::TransformDate($value->date, 'FULL', 'MEDIUM'); ?></td>
                                         <td align="center">
                                             <a href="newsletter/delete/<?= $value->id; ?>?admin&option=pages" class="btn btn-danger label-end rounded-pill">

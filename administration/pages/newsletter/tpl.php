@@ -49,7 +49,12 @@ endif;
                                         <tr>
                                             <td><?= $value->id; ?></td>
                                             <td><?= $value->name; ?></td>
-                                            <td><?= Common::TransformDate($value->name, 'FULL', 'MEDIUM'); ?></td>
+                                            <td><?= Common::TransformDate($value->date_insert, 'FULL', 'MEDIUM'); ?></td>
+                                            <td align="center">
+                                                <a href="newsletter/deletetpl/<?= $value->id; ?>?admin&option=pages" class="btn btn-danger label-end rounded-pill">
+                                                    Supprimer
+                                                </a>
+                                            </td>
                                         </tr>
                                     <?php
                                     endforeach;

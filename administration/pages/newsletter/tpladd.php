@@ -19,6 +19,18 @@ endif;
 ?>
 <form action="newsletter/sendnewtpl?management&option=pages" method="post">
     <div class="row">
+        <div class="col-xl-12">
+            <div class="card custom-card">
+                <div class="card-header justify-content-between">
+                    <div class="card-title">Nom du Template Newsletter</div>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <input type="text" required="required" type="text" class="form-control" name="name" placeholder="Nom du TPL">
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="col-xl-6">
             <div class="card custom-card">
                 <div class="top-left"></div>
@@ -28,10 +40,10 @@ endif;
                 <div class="card-header justify-content-between">
                     <div class="card-title">Template Design</div>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="margin: auto;">
                     <div class="mb-3">
                         <textarea style="width: 625px !important;margin:auto;" class="bel_cms_textarea_full" name="content">
-                            <table style="background-color: #f4f4f4; width: 600px;" cellspacing="0" cellpadding="0">
+                            <table align="center" style="background-color: #f4f4f4; width: 600px;" cellspacing="0" cellpadding="0">
                                 <tbody>
                                 <tr>
                                 <td align="center">
