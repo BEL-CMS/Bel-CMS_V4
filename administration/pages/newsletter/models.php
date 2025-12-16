@@ -22,6 +22,7 @@ use BelCMS\PDO\BDD;
 ############################################
 #   TALBE_NEWSLETTER                       #
 #   TALBE_NEWSLETTER_TPL                   #
+#   TALBE_NEWSLETTER_SEND                  #
 ############################################
 final class ModelsNewsletter
 {
@@ -95,4 +96,34 @@ final class ModelsNewsletter
         }
         return $return;
     }
+
+    public function getUsersNewsletter (): array
+    {
+        $sql = new BDD();
+        $sql->table('TALBE_NEWSLETTER');
+        $sql->queryAll();
+        $return = $sql->data;
+        return $return;
+    }
+
+    public function delete ($id)
+    {
+        $sql = new BDD();
+        $sql->table('TALBE_NEWSLETTER');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->delete();
+        $return = $sql->rowCount;
+        if ($return == 1) {
+            return true;
+        } else {
+            return false;
+        }
+   }
+
+   public function sendMail ($data)
+   {
+        $sql = new BDD();
+        $sql->table('TALBE_NEWSLETTER_SEND');
+        $sql->insert($data);
+   }
 }

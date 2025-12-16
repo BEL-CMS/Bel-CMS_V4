@@ -32,27 +32,19 @@ endif;
                         <table class="table table-bordered text-nowrap w-1000" id="DataTableBelCMS">
                             <thead>
                                 <tr>
-                                    <th>Auteur</th>
-                                    <th>Groupe</th>
-                                    <th>Date</th>
+                                    <th>E-Mails</th>
+                                    <th>IP</th>
+                                    <th>Date d'inscription</th>
                                     <th>Options</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                 foreach ($data as $key => $value):
-                                    $user = User::ifUserExist($value->hash_key);
-                                    if ($user == true) {
-                                        $infosUser = User::getInfosUserAll($value->hash_key);
-                                        $username = $infosUser->user->username;
-                                    } else {
-                                        $username = $value->hash_key;
-                                    }
                                 ?>
                                     <tr>
-                                        <td><?= $username; ?></td>
+                                        <td><?= $value->mail; ?></td>
                                         <td><?= $value->ip; ?></td>
-                                        <td><?= $value->groups_send; ?></td>
                                         <td><?= Common::TransformDate($value->date, 'FULL', 'MEDIUM'); ?></td>
                                         <td align="center">
                                             <a href="newsletter/delete/<?= $value->id; ?>?admin&option=pages" class="btn btn-danger label-end rounded-pill">

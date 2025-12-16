@@ -92,6 +92,8 @@ class Newsletter extends AdminPages
     public function sendmail()
     {
         #########################################
+        $test = true;
+        #########################################
         $tpl = is_numeric($_POST['tpl']);
         #########################################
         if ($tpl === false) {
@@ -103,23 +105,72 @@ class Newsletter extends AdminPages
             $this->redirect('newsletter/send?admin&option=pages', 3);
         }
         #########################################
-        foreach ($_POST['groups'] as $value) {
-            $user = $this->models->getUsers ($value);
-            if (!empty($user)) {
-                foreach ($user as $key => $value) {
-                    $userMail = $key;
-                    $userName = $value;
-                    self::getTplSend($tpl, $userMail, $userName);
+        if (isset($_POST['groups']) and is_array($_POST['groups'])) {
+            foreach ($_POST['groups'] as $value) {
+                $user = $this->models->getUsers ($value);
+                if (!empty($user)) {
+                    foreach ($user as $key => $value) {
+                        $userMail = $key;
+                        $userName = $value;
+                        self::getTplSend($tpl, $userMail, $userName);
+                    }
+                }
+            }
+            #########################################
+            if (isset($_POST['newsletter'])) {
+                #########################################
+                $user = $this->models->getUsersNewsletter ();
+                #########################################
+                if (!empty($user)) {
+                    foreach ($user as $key => $value) {
+                        self::getTplSend($tpl, $value->mail, $value->mail);
+                    }
+                }
+            }
+            #########################################
+            $d['template'] = $tpl;
+            $d['author']   = $_SESSION['USER']->user->hash_key;
+            $this->models->sendMail($d);
+            #########################################
+            $array = array(
+                'type' => 'success',
+                'text' => 'Les messages électroniques ont été envoyés avec succès.'
+            );
+            $this->error('Newsletter', $array['text'], $array['type']);
+            $this->redirect('newsletter?admin&option=pages', 3);
+            return;
+            #########################################
+        } else {
+            $_POST['newsletter'] = 'true';
+            $test = true;
+        }
+        #########################################
+        if ($test === true) {
+            if (isset($_POST['newsletter'])) {
+                #########################################
+                if ($_POST['newsletter'] == 'true') {
+                    #########################################
+                    $user = $this->models->getUsersNewsletter ();
+                    #########################################
+                    if (!empty($user)) {
+                        foreach ($user as $key => $value) {
+                            self::getTplSend($tpl, $value->mail, $value->mail);
+                        }
+                    }
+                    #########################################
+                    $d['template'] = $tpl;
+                    $d['author']   = $_SESSION['USER']->user->hash_key;
+                    $this->models->sendMail($d);
+                    #########################################
+                    $array = array(
+                        'type' => 'warning',
+                        'text' => 'Aucune sélection n\'a été effectuée concernant les groupes d\'envoi.<br>Les messages électroniques ont été envoyés avec succès.'
+                    );
+                    $this->error('Newsletter', $array['text'], $array['type']);
+                    $this->redirect('newsletter/send?admin&option=pages', 5);
                 }
             }
         }
-        #########################################
-        $array = array(
-            'type' => 'success',
-            'text' => 'Les messages électroniques ont été envoyés avec succès.'
-        );
-        $this->error('Newsletter', $array['text'], $array['type']);
-        $this->redirect('newsletter/send?admin&option=pages', 3);
     }
 
     private function getTplSend ($id, $userMail, $userName)
@@ -147,6 +198,39 @@ class Newsletter extends AdminPages
             $email->body($tpl);
             $email->submit();
             #########################################
+        }
+    }
+
+    public function delete ()
+    {
+        #########################################
+        $id = is_numeric($this->id);
+        #########################################
+        if ($id == true) {
+            $return = $this->models->delete ($id);
+            if ($return === true) {
+                $array = array(
+                    'type' => 'success',
+                    'text' => constant('DEL_SUCCESS')
+                );
+                $this->error('Newsletter', $array['text'], $array['type']);
+                $this->redirect('newsletter?Admin&option=pages', 3);  
+            } else {
+                $array = array(
+                    'type' => 'warning',
+                    'text' => constant('DEL_ERROR')
+                );
+                $this->error('Newsletter', $array['text'], $array['type']);
+                $this->redirect('newsletter?Admin&option=pages', 3);
+            }
+        } else {
+            $array = array(
+                'type' => 'error',
+                'text' => constant('ID_ERROR')
+            );
+            $this->error('Newsletter', $array['text'], $array['type']);
+            $this->redirect('newsletter?admin&option=pages', 3);
+            return;
         }
     }
 }

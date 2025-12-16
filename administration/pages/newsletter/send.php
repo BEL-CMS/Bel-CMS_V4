@@ -41,7 +41,7 @@ endif;
                     ?>
                     <div class="input-group mb-3">
                         <div class="input-group-text">
-                            <input name="groups[]" checked value="0" class="form-check-input mt-0" type="checkbox" style="cursor: pointer;">
+                            <input name="newsletter" checked value="true" class="form-check-input mt-0" type="checkbox" style="cursor: pointer;">
                         </div>
                         <input type="text" class="form-control" value="Les inscrit de la newsletter" disabled>
                     </div>
