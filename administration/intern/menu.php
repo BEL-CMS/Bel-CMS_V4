@@ -65,7 +65,7 @@ final class Menu
     {
         $array = array(
             'Articles'            => 'articles?admin&amp;option=pages',
-            //'Calendrier'          => 'calendar?admin&amp;option=pages',
+            'Calendrier'          => 'calendar?admin&amp;option=pages',
             'Commentaires'        => 'comments?admin&amp;option=pages',
             //'Donation'            => 'donations?admin&amp;option=pages',
             'Téléchargements'     => 'downloads?admin&amp;option=pages',
