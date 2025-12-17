@@ -205,6 +205,34 @@ switch ($_POST['table']) {
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 	break;
 
+	case 'events':
+		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
+		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
+			`id` int NOT NULL AUTO_INCREMENT,
+			`name` varchar(100) NOT NULL,
+			`image` varchar(100) DEFAULT NULL,
+			`start_date` varchar(10) NOT NULL,
+			`end_date` varchar(10) DEFAULT NULL,
+			`start_time` varchar(10) DEFAULT NULL,
+			`end_time` varchar(10) DEFAULT NULL,
+			`color` varchar(7) DEFAULT NULL,
+			`location` varchar(255) DEFAULT NULL,
+			`description` text,
+			`state` tinyint DEFAULT NULL,
+			PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
+	break;
+
+	case 'events_cat':
+		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
+		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
+			`id` int NOT NULL AUTO_INCREMENT,
+			`name` varchar(32) NOT NULL,
+			`color` varchar(7) NOT NULL,
+			PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
+	break;
+
 	case 'forum':
 		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
 		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
@@ -270,13 +298,13 @@ switch ($_POST['table']) {
 		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
 		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
 			`id` int NOT NULL AUTO_INCREMENT,
-			`id_cat` int DEFAULT NULL,
 			`name` varchar(64) DEFAULT NULL,
 			`author` varchar(32) DEFAULT NULL,
 			`date_post` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			`url` varchar(256) NOT NULL,
 			`description` text,
 			`valid` int NOT NULL DEFAULT '1',
+			`cat_id` varchar(16) DEFAULT NULL,
 			PRIMARY KEY (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 	break;
@@ -291,6 +319,32 @@ switch ($_POST['table']) {
 			`description` text,
 			`background` text,
 			`datecreate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			`cat_id` varchar(16) DEFAULT NULL,
+			PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
+	break;
+
+	case 'gallery_sub_cat':
+		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
+		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
+			`id` int NOT NULL AUTO_INCREMENT,
+			`name` text,
+			`color` varchar(64) NOT NULL,
+			`bg_color` varchar(32) NOT NULL,
+			`groups_access` text,
+			`cat_id` varchar(16) DEFAULT NULL,
+			`main_id` varchar(16) DEFAULT NULL,
+			PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
+	break;
+
+	case 'gallery_vote':
+		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
+		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
+			`id` int NOT NULL AUTO_INCREMENT,
+			`author` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+			`id_vote` int NOT NULL,
+			`date_vote` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			PRIMARY KEY (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 	break;
@@ -525,6 +579,29 @@ switch ($_POST['table']) {
 			`ip` text,
 			`mail` varchar(128) DEFAULT NULL,
 			`date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
+	break;
+
+	case 'newsletter_send':
+		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
+		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
+			`id` int NOT NULL AUTO_INCREMENT,
+			`template` int DEFAULT NULL,
+			`date_send` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			`author` varchar(32) DEFAULT NULL,
+			PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
+	break;
+
+	case 'newsletter_tpl':
+		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
+		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
+			`id` int NOT NULL AUTO_INCREMENT,
+			`name` varchar(64) DEFAULT NULL,
+			`content` text,
+			`date_insert` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			`author` varchar(32) DEFAULT NULL,
 			PRIMARY KEY (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 	break;
