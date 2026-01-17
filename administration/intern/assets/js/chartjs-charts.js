@@ -15,8 +15,8 @@
         labels: labels,
         datasets: [{
             label: 'My First dataset',
-            backgroundColor: 'rgb(98, 89, 202)',
-            borderColor: 'rgb(98, 89, 202)',
+            backgroundColor: 'rgb(152, 95, 253)',
+            borderColor: 'rgb(152, 95, 253)',
             data: [0, 10, 5, 2, 20, 30, 45],
         }]
     };
@@ -46,22 +46,22 @@
             label: 'My First Dataset',
             data: [65, 59, 80, 81, 56, 55, 40],
             backgroundColor: [
-                'rgba(98, 89, 202, 0.2)',
-                'rgba(35, 183, 229, 0.2)',
-                'rgba(245, 184, 73, 0.2)',
-                'rgba(73, 182, 245, 0.2)',
-                'rgba(230, 83, 60, 0.2)',
-                'rgba(38, 191, 148, 0.2)',
-                'rgba(35, 35, 35, 0.2)'
+                'rgba(152, 95, 253, 0.2)',
+                'rgba(255, 73, 205, 0.2)',
+                'rgba(253, 175, 34, 0.2)',
+                'rgba(50, 212, 132, 0.2)',
+                'rgba(0, 201, 255, 0.2)',
+                'rgba(255, 103, 87, 0.2)',
+                'rgba(10, 10, 10, 0.2)'
             ],
-            borderColor: [
-                'rgb(98, 89, 202)',
-                'rgb(35, 183, 229)',
-                'rgb(245, 184, 73)',
-                'rgb(73, 182, 245)',
-                'rgb(230, 83, 60)',
-                'rgb(38, 191, 148)',
-                'rgb(35, 35, 35)'
+            borderColor: [ 
+                'rgb(152, 95, 253)',
+                'rgb(255, 73, 205)',
+                'rgb(253, 175, 34)',
+                'rgb(50, 212, 132)',
+                'rgb(0, 201, 255)',
+                'rgb(255, 103, 87)',
+                'rgb(10, 10, 10)'
             ],
             borderWidth: 1
         }]
@@ -85,17 +85,17 @@
     /* pie chart */
     const data2 = {
         labels: [
-            'Red',
-            'Blue',
+            'Purple',
+            'Pink',
             'Yellow'
         ],
         datasets: [{
             label: 'My First Dataset',
             data: [300, 50, 100],
             backgroundColor: [
-                'rgb(98, 89, 202)',
-                'rgb(35, 183, 229)',
-                'rgb(245, 184, 73)'
+                'rgb(152, 95, 253)',
+                'rgb(255, 73, 205)',
+                'rgb(253, 175, 34)'
             ],
             hoverOffset: 4
         }]
@@ -112,17 +112,17 @@
     /* doughnut chart */
     const data3 = {
         labels: [
-            'Red',
-            'Blue',
+            'Purple',
+            'Pink',
             'Yellow'
         ],
         datasets: [{
             label: 'My First Dataset',
             data: [300, 50, 100],
             backgroundColor: [
-                'rgb(98, 89, 202)',
-                'rgb(35, 183, 229)',
-                'rgb(245, 184, 73)'
+                'rgb(152, 95, 253)',
+                'rgb(255, 73, 205)',
+                'rgb(253, 175, 34)'
             ],
             hoverOffset: 4
         }]
@@ -148,14 +148,14 @@
             type: 'bar',
             label: 'Bar Dataset',
             data: [10, 20, 30, 40],
-            borderColor: 'rgb(98, 89, 202)',
-            backgroundColor: 'rgba(98, 89, 202, 0.2)'
+            borderColor: 'rgb(152, 95, 253)',
+            backgroundColor: 'rgba(152, 95, 253, 0.2)'
         }, {
             type: 'line',
             label: 'Line Dataset',
             data: [50, 50, 50, 50],
             fill: false,
-            borderColor: 'rgb(35, 183, 229)'
+            borderColor: 'rgb(255, 73, 205)'
         }]
     };
     const config5 = {
@@ -177,21 +177,21 @@
     /* polar area chart */
     const data5 = {
         labels: [
-            'Red',
+            'Purple',
             'Green',
             'Yellow',
             'Grey',
-            'Blue'
+            'Pink'
         ],
         datasets: [{
             label: 'My First Dataset',
             data: [11, 16, 7, 3, 14],
             backgroundColor: [
-                'rgb(98, 89, 202)',
+                'rgb(152, 95, 253)',
                 'rgb(75, 192, 192)',
-                'rgb(245, 184, 73)',
+                'rgb(253, 175, 34)',
                 'rgb(201, 203, 207)',
-                'rgb(35, 183, 229)'
+                'rgb(255, 73, 205)'
             ]
         }]
     };
@@ -220,22 +220,22 @@
             label: 'My First Dataset',
             data: [65, 59, 90, 81, 56, 55, 40],
             fill: true,
-            backgroundColor: 'rgba(98, 89, 202, 0.2)',
-            borderColor: 'rgb(98, 89, 202)',
-            pointBackgroundColor: 'rgb(98, 89, 202)',
+            backgroundColor: 'rgba(152, 95, 253, 0.2)',
+            borderColor: 'rgb(152, 95, 253)',
+            pointBackgroundColor: 'rgb(152, 95, 253)',
             pointBorderColor: '#fff',
             pointHoverBackgroundColor: '#fff',
-            pointHoverBorderColor: 'rgb(98, 89, 202)'
+            pointHoverBorderColor: 'rgb(152, 95, 253)'
         }, {
             label: 'My Second Dataset',
             data: [28, 48, 40, 19, 96, 27, 100],
             fill: true,
-            backgroundColor: 'rgba(35, 183, 229, 0.2)',
-            borderColor: 'rgb(35, 183, 229)',
-            pointBackgroundColor: 'rgb(35, 183, 229)',
+            backgroundColor: 'rgba(255, 73, 205, 0.2)',
+            borderColor: 'rgb(255, 73, 205)',
+            pointBackgroundColor: 'rgb(255, 73, 205)',
             pointBorderColor: '#fff',
             pointHoverBackgroundColor: '#fff',
-            pointHoverBorderColor: 'rgb(35, 183, 229)'
+            pointHoverBorderColor: 'rgb(255, 73, 205)'
         }]
     };
     const config7 = {
@@ -271,7 +271,7 @@
                 x: 0.5,
                 y: 5.5
             }],
-            backgroundColor: 'rgb(98, 89, 202)'
+            backgroundColor: 'rgb(152, 95, 253)'
         }],
     };
     const config8 = {
@@ -304,7 +304,7 @@
                 y: 10,
                 r: 10
             }],
-            backgroundColor: 'rgb(98, 89, 202)'
+            backgroundColor: 'rgb(152, 95, 253)'
         }]
     };
     const config9 = {

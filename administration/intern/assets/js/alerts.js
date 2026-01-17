@@ -6,10 +6,4 @@ const a = document.getElementById("liveAlertPlaceholder"),
 	};
 s && s.addEventListener("click", () => {
 	r("Nice, you triggered this alert message!", "success")
-}), document.querySelectorAll('.bd-example-indeterminate [type="checkbox"]').forEach(e => {
-	e.indeterminate = !0
-}), document.querySelectorAll('.bd-content [href="#"]').forEach(e => {
-	e.addEventListener("click", e => {
-		e.preventDefault()
-	})
 });

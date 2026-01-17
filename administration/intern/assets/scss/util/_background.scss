@@ -1,7 +1,9 @@
+@use "variables";
 .color-container {
-  width: 5rem;
-  height: 5rem;
-  border-radius: 5px;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.5rem;
+  box-shadow: variables.$box-shadow;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -9,36 +11,36 @@
 }
 .text-container {
   padding: 0.25rem 0.5rem;
-  border-radius: $default-radius;
-  box-shadow: $box-shadow;
+  border-radius: variables.$default-radius;
+  box-shadow: variables.$box-shadow;
 }
 /* Start::background color */
 .bg-body {
-    background-color: $default-body-color !important;
+    background-color: variables.$default-body-color !important;
 }
 /* End::background color */
 
 /* Start::background color */
 .bg-primary {
-    background-color: $primary !important;
+    background-color: variables.$primary !important;
     &.bg-opacity-10 {
-        background-color: $primary-01 !important;
+        background-color: variables.$primary-01 !important;
     }
     &.bg-opacity-25 {
-        background-color: $primary-03 !important;
+        background-color: variables.$primary-03 !important;
     }
     &.bg-opacity-50 {
-        background-color: $primary-05 !important;
+        background-color: variables.$primary-05 !important;
     }
     &.bg-opacity-75 {
-        background-color: $primary-08 !important;
+        background-color: variables.$primary-08 !important;
     }
     &.bg-opacity-100 {
-        background-color: $primary !important;
+        background-color: variables.$primary !important;
     }
 }
 .bg-secondary {
-    background-color: $secondary !important;
+    background-color: variables.$secondary !important;
     &.bg-opacity-10 {
         background-color: rgba(var(--secondary-rgb),0.1) !important;
     }
@@ -56,7 +58,7 @@
     }
 }
 .bg-info {
-    background-color: $info !important;
+    background-color: variables.$info !important;
     &.bg-opacity-10 {
         background-color: rgba(var(--info-rgb),0.1) !important;
     }
@@ -74,7 +76,7 @@
     }
 }
 .bg-success {
-    background-color: $success !important;
+    background-color: variables.$success !important;
     &.bg-opacity-10 {
         background-color: rgba(var(--success-rgb),0.1) !important;
     }
@@ -92,7 +94,7 @@
     }
 }
 .bg-warning {
-    background-color: $warning !important;
+    background-color: variables.$warning !important;
     &.bg-opacity-10 {
         background-color: rgba(var(--warning-rgb),0.1) !important;
     }
@@ -110,7 +112,7 @@
     }
 }
 .bg-danger {
-    background-color: $danger !important;
+    background-color: variables.$danger !important;
     &.bg-opacity-10 {
         background-color: rgba(var(--danger-rgb),0.1) !important;
     }
@@ -128,7 +130,7 @@
     }
 }
 .bg-dark {
-    background-color: $dark !important;
+    background-color: variables.$dark !important;
     &.bg-opacity-10 {
         background-color: rgba(var(--dark-rgb),0.1) !important;
     }
@@ -146,7 +148,7 @@
     }
 }
 .bg-light {
-    background-color: $light !important;
+    background-color: variables.$light !important;
     &.bg-opacity-10 {
         background-color: rgba(var(--light-rgb),0.1) !important;
     }
@@ -164,847 +166,873 @@
     }
 }
 .bg-white {
-    background-color: $custom-white !important;
+    background-color: variables.$custom-white !important;
 }
 .bg-pink {
-    background-color: $pink !important;
+    background-color: variables.$pink !important;
 }
 .bg-orange {
-    background-color: $orange !important;
+    background-color: variables.$orange !important;
 }
 .bg-purple {
-    background-color: $purple !important;
+    background-color: variables.$purple !important;
 }
 .bg-green {
-    background-color: $green !important;
+    background-color: variables.$green !important;
 }
 .bg-teal {
-    background-color: $teal !important;
+    background-color: variables.$teal !important;
 }
 .bg-blue {
-    background-color: $blue !important;
+    background-color: variables.$blue !important;
 }
 .bg-indigo {
-    background-color: $indigo !important;
+    background-color: variables.$indigo !important;
 }
 .bg-yellow {
-    background-color: $yellow !important;
+    background-color: variables.$yellow !important;
 }
 /* End::background color */
 
 /* Start::gradient colors */
 .bg-primary-gradient {
-  background: $primary-gradient !important;
-  color: $white;
+  background: variables.$primary-gradient !important;
+  color: variables.$white;
 }
 .bg-secondary-gradient {
-  background: $secondary-gradient !important;
-  color: $white;
+  background: variables.$secondary-gradient !important;
+  color: variables.$white;
 }
 .bg-warning-gradient {
-  background: $warning-gradient !important;
-  color: $white;
+  background: variables.$warning-gradient !important;
+  color: variables.$white;
 }
 .bg-info-gradient {
-  background: $info-gradient !important;
-  color: $white;
+  background: variables.$info-gradient !important;
+  color: variables.$white;
 }
 .bg-success-gradient {
-  background: $success-gradient !important;
-  color: $white;
+  background: variables.$success-gradient !important;
+  color: variables.$white;
 }
 .bg-danger-gradient {
-  background: $danger-gradient !important;
-  color: $white;
+  background: variables.$danger-gradient !important;
+  color: variables.$white;
 }
 .bg-orange-gradient {
-  background: $orange-gradient !important;
-  color: $white;
+  background: variables.$orange-gradient !important;
+  color: variables.$white;
 }
 .bg-purple-gradient {
-  background: $purple-gradient !important;
-  color: $white;
+  background: variables.$purple-gradient !important;
+  color: variables.$white;
 }
 .bg-teal-gradient {
-  background: $teal-gradient !important;
-  color: $white;
+  background: variables.$teal-gradient !important;
+  color: variables.$white;
 }
 .bg-light-gradient {
-  background: $light-gradient !important;
-  color: $black;
+  background: variables.$light-gradient !important;
+  color: variables.$white;
 }
 .bg-dark-gradient {
-  background: $dark-gradient !important;
-  color: $white;
+  background: variables.$dark-gradient !important;
+  color: variables.$white;
 }
 /* End::gradient colors */
 
 /* Start:: outline colors */
 .bg-outline-primary {
-  background-color: $custom-white;
-  border: 1px solid $primary;
-  color: $primary;
+  background-color: variables.$custom-white;
+  border: 1px solid variables.$primary;
+  color: variables.$primary;
 }
 .bg-outline-secondary {
-  background-color: $custom-white;
-  border: 1px solid $secondary;
-  color: $secondary;
+  background-color: variables.$custom-white;
+  border: 1px solid variables.$secondary;
+  color: variables.$secondary;
 }
 .bg-outline-warning {
-  background-color: $custom-white;
-  border: 1px solid $warning;
-  color: $warning;
+  background-color: variables.$custom-white;
+  border: 1px solid variables.$warning;
+  color: variables.$warning;
 }
 .bg-outline-info {
-  background-color: $custom-white;
-  border: 1px solid $info;
-  color: $info;
+  background-color: variables.$custom-white;
+  border: 1px solid variables.$info;
+  color: variables.$info;
 }
 .bg-outline-success {
-  background-color: $custom-white;
-  border: 1px solid $success;
-  color: $success;
+  background-color: variables.$custom-white;
+  border: 1px solid variables.$success;
+  color: variables.$success;
 }
 .bg-outline-danger {
-  background-color: $custom-white;
-  border: 1px solid $danger;
-  color: $danger;
+  background-color: variables.$custom-white;
+  border: 1px solid variables.$danger;
+  color: variables.$danger;
 }
 .bg-outline-dark {
-  background-color: $custom-white;
-  border: 1px solid $dark;
-  color: $dark;
+  background-color: variables.$custom-white;
+  border: 1px solid variables.$dark;
+  color: variables.$dark;
 }
 .bg-outline-light {
-  background-color: $custom-white;
-  border: 1px solid $light;
-  color: $custom-black;
+  background-color: variables.$custom-white;
+  border: 1px solid variables.$light;
+  color: variables.$custom-black;
 }
 /* End:: outline colors */
 
 /* Start::gray set */
 .bg-gray-100 {
-    background-color: $gray-1; 
+    background-color: variables.$gray-1; 
 }
 .bg-gray-200 {
-    background-color: $gray-2;
+    background-color: variables.$gray-2;
 }
 .bg-gray-300 {
-    background-color: $gray-3;
+    background-color: variables.$gray-3;
 }
 .bg-gray-400 {
-    background-color: $gray-4;
+    background-color: variables.$gray-4;
 }
 .bg-gray-500 {
-    background-color: $gray-5;
+    background-color: variables.$gray-5;
 }
 .bg-gray-600 {
-    background-color: $gray-6;
+    background-color: variables.$gray-6;
 }
 .bg-gray-700 {
-    background-color: $gray-7;
+    background-color: variables.$gray-7;
 }
 .bg-gray-800 {
-    background-color: $gray-8;
+    background-color: variables.$gray-8;
 }
 .bg-gray-900 {
-    background-color: $gray-9;
+    background-color: variables.$gray-9;
 }
 /* End::gray set */
 
 
 /* Start::background transparent */
 .bg-primary-transparent {
-    background-color: $primary-01 !important;
-    color: $primary !important;
+    background-color: rgba(var(--primary-rgb), 0.1) !important;
+    color: variables.$primary !important;
     &:hover {
-        background-color: $primary-01 !important;
-        color: $primary !important;
+        background-color: rgba(var(--primary-rgb), 0.1) !important;
+        color: variables.$primary !important;
     }
 }
 .bg-secondary-transparent {
     background-color: rgba(var(--secondary-rgb), 0.1) !important;
-    color: $secondary !important;
+    color: variables.$secondary !important;
     &:hover {
         background-color: rgba(var(--secondary-rgb), 0.1) !important;
-        color: $secondary !important;
+        color: variables.$secondary !important;
     }
 }
 .bg-info-transparent {
     background-color: rgba(var(--info-rgb), 0.1) !important;
-    color: $info !important;
+    color: variables.$info !important;
     &:hover {
         background-color: rgba(var(--info-rgb), 0.1) !important;
-        color: $info !important;
+        color: variables.$info !important;
     }
 }
 .bg-success-transparent {
     background-color: rgba(var(--success-rgb), 0.1) !important;
-    color: $success !important;
+    color: variables.$success !important;
     &:hover {
         background-color: rgba(var(--success-rgb), 0.1) !important;
-        color: $success !important;
+        color: variables.$success !important;
     }
 }
 .bg-warning-transparent {
     background-color: rgba(var(--warning-rgb), 0.1) !important;
-    color: $warning !important;
+    color: variables.$warning !important;
     &:hover {
         background-color: rgba(var(--warning-rgb), 0.1) !important;
-        color: $warning !important;
+        color: variables.$warning !important;
     }
 }
 .bg-danger-transparent {
     background-color: rgba(var(--danger-rgb), 0.1) !important;
-    color: $danger !important;
+    color: variables.$danger !important;
     &:hover {
         background-color: rgba(var(--danger-rgb), 0.1) !important;
-        color: $danger !important;
+        color: variables.$danger !important;
     }
 }
 .bg-light-transparent {
     background-color: rgba(var(--light-rgb), 0.1) !important;
-    color: $light !important;
+    color: variables.$light !important;
     &:hover {
         background-color: rgba(var(--light-rgb), 0.1) !important;
-        color: $default-text-color !important;
+        color: variables.$default-text-color !important;
     }
 }
 .bg-dark-transparent {
     background-color: rgba(var(--dark-rgb), 0.1) !important;
-    color: $dark !important;
+    color: variables.$dark !important;
     &:hover {
         background-color: rgba(var(--dark-rgb), 0.1) !important;
-        color: $dark !important;
+        color: variables.$dark !important;
     }
 }
 .bg-pink-transparent {
     background-color: rgba(var(--pink-rgb), 0.1) !important;
-    color: $pink !important;
+    color: variables.$pink !important;
     &:hover {
         background-color: rgba(var(--pink-rgb), 0.1) !important;
-        color: $pink !important;
+        color: variables.$pink !important;
     }
 }
 .bg-orange-transparent {
     background-color: rgba(var(--orange-rgb), 0.1) !important;
-    color: $orange !important;
+    color: variables.$orange !important;
     &:hover {
         background-color: rgba(var(--orange-rgb), 0.1) !important;
-        color: $orange !important;
+        color: variables.$orange !important;
     }
 }
 .bg-purple-transparent {
     background-color: rgba(var(--purple-rgb), 0.1) !important;
-    color: $purple !important;
+    color: variables.$purple !important;
     &:hover {
         background-color: rgba(var(--purple-rgb), 0.1) !important;
-        color: $purple !important;
+        color: variables.$purple !important;
     }
 }
 .bg-teal-transparent {
     background-color: rgba(var(--teal-rgb), 0.1) !important;
-    color: $teal !important;
+    color: variables.$teal !important;
     &:hover {
         background-color: rgba(var(--teal-rgb), 0.1) !important;
-        color: $teal !important;
+        color: variables.$teal !important;
     }
 }
 .bg-green-transparent {
-    background-color: rgba($green, 0.1) !important;
-    color:$green !important;
+    background-color: rgba(var(--green-rgb), 0.1) !important;
+    color:variables.$green !important;
     &:hover {
-        background-color: rgba($green, 0.1) !important;
-        color:$green !important;
+        background-color: rgba(var(--green-rgb), 0.1) !important;
+        color:variables.$green !important;
     }
 }
 .bg-indigo-transparent {
-    background-color: rgba($indigo, 0.1) !important;
-    color: $indigo !important;
+    background-color: rgba(variables.$indigo, 0.1) !important;
+    color: variables.$indigo !important;
     &:hover {
-        background-color: rgba($indigo, 0.1) !important;
-        color: $indigo !important;
+        background-color: rgba(variables.$indigo, 0.1) !important;
+        color: variables.$indigo !important;
     }
 }
 .bg-yellow-transparent {
-    background-color: rgba($yellow, 0.1) !important;
-    color: $yellow !important;
+    background-color: rgba(variables.$yellow, 0.1) !important;
+    color: variables.$yellow !important;
     &:hover {
-        background-color: rgba($yellow, 0.1) !important;
-        color: $yellow !important;
+        background-color: rgba(variables.$yellow, 0.1) !important;
+        color: variables.$yellow !important;
     }
 }
 .bg-blue-transparent {
-    background-color: rgba($blue, 0.1) !important;
-    color: $blue !important;
+    background-color: rgba(variables.$blue, 0.1) !important;
+    color: variables.$blue !important;
     &:hover {
-        background-color: rgba($blue, 0.1) !important;
-        color: $blue !important;
+        background-color: rgba(variables.$blue, 0.1) !important;
+        color: variables.$blue !important;
+    }
+}
+.bg-white-transparent {
+    background-color: rgba(255,255,255, 0.1) !important;
+    color: rgb(255,255,255) !important;
+    &:hover {
+        background-color: rgba(255,255,255, 0.1) !important;
+        color: rgb(255,255,255) !important;
+    }
+}
+.bg-black-transparent {
+    background-color: rgba(0,0,0, 0.1) !important;
+    color: rgb(0,0,0) !important;
+    &:hover {
+        background-color: rgba(0,0,0, 0.1) !important;
+        color: rgb(0,0,0) !important;
     }
 }
 /* End::background transparent */
 
 /* Start::backgrounds with colors */
 .text-bg-primary {
-    background-color:$primary !important;
-    color:$white !important;
+    background-color:variables.$primary !important;
+    color:variables.$white !important;
 }
 .text-bg-secondary {        
-    background-color:$secondary !important;
-    color:$white !important;
+    background-color:variables.$secondary !important;
+    color:variables.$white !important;
 }
 .text-bg-warning {
-    background-color:$warning !important;
-    color:$white !important;
+    background-color:variables.$warning !important;
+    color:variables.$white !important;
 }
 .text-bg-info {
-    background-color:$info !important;
-    color:$white !important;
+    background-color:variables.$info !important;
+    color:variables.$white !important;
 }
 .text-bg-success {
-    background-color:$success !important;
-    color:$white !important;
+    background-color:variables.$success !important;
+    color:variables.$white !important;
 }
 .text-bg-danger {
-    background-color:$danger !important;
-    color:$white !important;
+    background-color:variables.$danger !important;
+    color:variables.$white !important;
 }
 .text-bg-light {
-    background-color:$light !important;
-    color:$black !important;
+    background-color:variables.$light !important;
+    color:variables.$white !important;
 }
 .text-bg-dark {
-    background-color:$dark !important;
-    color:$white !important;
+    background-color:variables.$dark !important;
+    color:variables.$white !important;
 }
 /* End::backgrounds with colors */
 
 /* Start::svg colors */
-.svg-primary {
-    fill: $primary;
+.svg-primary svg{
+    fill: variables.$primary !important;
 }
-.svg-secondary {
-    fill: $secondary;
+.svg-secondary svg{
+    fill: variables.$secondary !important;
 }
-.svg-success {
-    fill: $success;
+.svg-success svg{
+    fill: variables.$success !important;
 }
-.svg-danger {
-    fill: $danger;
+.svg-danger svg{
+    fill: variables.$danger !important;
 }
-.svg-warning {
-    fill: $warning;
+.svg-warning svg{
+    fill: variables.$warning !important;
 }
-.svg-white {
-    fill: $white;
+.svg-white svg{
+    fill: variables.$white !important;
 }
-.svg-black {
-    fill: $black;
+.svg-black svg{
+    fill: variables.$white !important;
 }
-.svg-pink {
-    fill: $pink;
+.svg-pink svg{
+    fill: variables.$pink !important;
 }
-.svg-orange {
-    fill: $orange;
+.svg-orange svg{
+    fill: variables.$orange !important;
 }
-.svg-purple {
-    fill: $purple;
+.svg-purple svg{
+    fill: variables.$purple !important;
 }
-.svg-indigo {
-    fill: $indigo;
+.svg-indigo svg{
+    fill: variables.$indigo !important;
 }
-.svg-info {
-    fill: $info;
+.svg-info svg{
+    fill: variables.$info !important;
 }
-.svg-yellow {
-    fill: $yellow;
+.svg-yellow svg{
+    fill: variables.$yellow !important;
 }
-.svg-light {
-  fill: $light;
+.svg-light svg{
+  fill: variables.$light !important;
 }
-.svg-dark {
-  fill: $dark;
+.svg-dark svg{
+  fill: variables.$dark !important;
 }
-.svg-teal {
-  fill: $teal;
+.svg-teal svg{
+  fill: variables.$teal !important;
 }
-.svg-default {
-  fill: $default-text-color;
+.svg-default svg{
+  fill: variables.$default-text-color !important;
 }
 /* End::svg colors */
 
 /* Start::Colors */
 /* Start::blue set */
 .bd-blue-100 {
-    background-color: rgba($blue, 0.1);
-    color: $default-text-color;
+    background-color: rgba(variables.$blue, 0.1);
+    color: variables.$default-text-color;
   }
   .bd-blue-200 {
-    background-color: rgba($blue, 0.2);
-    color: $default-text-color;
+    background-color: rgba(variables.$blue, 0.2);
+    color: variables.$default-text-color;
   }
   .bd-blue-300 {
-    background-color: rgba($blue, 0.3);
-    color: $default-text-color;
+    background-color: rgba(variables.$blue, 0.3);
+    color: variables.$default-text-color;
   }
   .bd-blue-400 {
-    background-color: rgba($blue, 0.4);
-    color: $default-text-color;
+    background-color: rgba(variables.$blue, 0.4);
+    color: variables.$default-text-color;
   }
   .bd-blue-500 {
-    background-color: rgba($blue, 0.5);
-    color: $default-text-color;
+    background-color: rgba(variables.$blue, 0.5);
+    color: variables.$default-text-color;
   }
   .bd-blue-600 {
-    background-color: rgba($blue, 0.6);
-    color: $white;
+    background-color: rgba(variables.$blue, 0.6);
+    color: variables.$white;
   }
   .bd-blue-700 {
-    background-color: rgba($blue, 0.7);
-    color: $white;
+    background-color: rgba(variables.$blue, 0.7);
+    color: variables.$white;
   }
   .bd-blue-800 {
-    background-color: rgba($blue, 0.8);
-    color: $white;
+    background-color: rgba(variables.$blue, 0.8);
+    color: variables.$white;
   }
   .bd-blue-900 {
-    background-color: rgba($blue, 0.9);
-    color: $white;
+    background-color: rgba(variables.$blue, 0.9);
+    color: variables.$white;
   }
   .bd-blue {
-    background-color: $blue;
-    color: $white;
+    background-color: variables.$blue;
+    color: variables.$white;
   }
   /* Start::blue set */
   
   /* Start::indigo set */
   .bd-indigo-100 {
-    background-color: rgba($indigo, 0.1);
-    color: $default-text-color;
+    background-color: rgba(variables.$indigo, 0.1);
+    color: variables.$default-text-color;
   }
   .bd-indigo-200 {
-    background-color: rgba($indigo, 0.2);
-    color: $default-text-color;
+    background-color: rgba(variables.$indigo, 0.2);
+    color: variables.$default-text-color;
   }
   .bd-indigo-300 {
-    background-color: rgba($indigo, 0.3);
-    color: $default-text-color;
+    background-color: rgba(variables.$indigo, 0.3);
+    color: variables.$default-text-color;
   }
   .bd-indigo-400 {
-    background-color: rgba($indigo, 0.4);
-    color: $default-text-color;
+    background-color: rgba(variables.$indigo, 0.4);
+    color: variables.$default-text-color;
   }
   .bd-indigo-500 {
-    background-color: rgba($indigo, 0.5);
-    color: $default-text-color;
+    background-color: rgba(variables.$indigo, 0.5);
+    color: variables.$default-text-color;
   }
   .bd-indigo-600 {
-    background-color: rgba($indigo, 0.6);
-    color: $white;
+    background-color: rgba(variables.$indigo, 0.6);
+    color: variables.$white;
   }
   .bd-indigo-700 {
-    background-color: rgba($indigo, 0.7);
-    color: $white;
+    background-color: rgba(variables.$indigo, 0.7);
+    color: variables.$white;
   }
   .bd-indigo-800 {
-    background-color: rgba($indigo, 0.8);
-    color: $white;
+    background-color: rgba(variables.$indigo, 0.8);
+    color: variables.$white;
   }
   .bd-indigo-900 {
-    background-color: rgba($indigo, 0.9);
-    color: $white;
+    background-color: rgba(variables.$indigo, 0.9);
+    color: variables.$white;
   }
   .bd-indigo {
-    background-color: $indigo;
-    color: $white;
+    background-color: variables.$indigo;
+    color: variables.$white;
   }
   /* Start::indigo set */
   
   /* Start::purple set */
   .bd-purple-100 {
     background-color: rgba(var(--purple-rgb), 0.1);
-    color: $default-text-color;
+    color: variables.$default-text-color;
   }
   .bd-purple-200 {
     background-color: rgba(var(--purple-rgb), 0.2);
-    color: $default-text-color;
+    color: variables.$default-text-color;
   }
   .bd-purple-300 {
     background-color: rgba(var(--purple-rgb), 0.3);
-    color: $default-text-color;
+    color: variables.$default-text-color;
   }
   .bd-purple-400 {
     background-color: rgba(var(--purple-rgb), 0.4);
-    color: $default-text-color;
+    color: variables.$default-text-color;
   }
   .bd-purple-500 {
     background-color: rgba(var(--purple-rgb), 0.5);
-    color: $default-text-color;
+    color: variables.$default-text-color;
   }
   .bd-purple-600 {
     background-color: rgba(var(--purple-rgb), 0.6);
-    color: $white;
+    color: variables.$white;
   }
   .bd-purple-700 {
     background-color: rgba(var(--purple-rgb), 0.7);
-    color: $white;
+    color: variables.$white;
   }
   .bd-purple-800 {
     background-color: rgba(var(--purple-rgb), 0.8);
-    color: $white;
+    color: variables.$white;
   }
   .bd-purple-900 {
     background-color: rgba(var(--purple-rgb), 0.9);
-    color: $white;
+    color: variables.$white;
   }
   .bd-purple {
-    background-color: $purple;
-    color: $white;
+    background-color: variables.$purple;
+    color: variables.$white;
   }
   /* Start::purple set */
   
   /* Start::pink set */
   .bd-pink-100 {
     background-color: rgba(var(--pink-rgb), 0.1);
-    color: $default-text-color;
+    color: variables.$default-text-color;
   }
   .bd-pink-200 {
     background-color: rgba(var(--pink-rgb), 0.2);
-    color: $default-text-color;
+    color: variables.$default-text-color;
   }
   .bd-pink-300 {
     background-color: rgba(var(--pink-rgb), 0.3);
-    color: $default-text-color;
+    color: variables.$default-text-color;
   }
   .bd-pink-400 {
     background-color: rgba(var(--pink-rgb), 0.4);
-    color: $default-text-color;
+    color: variables.$default-text-color;
   }
   .bd-pink-500 {
     background-color: rgba(var(--pink-rgb), 0.5);
-    color: $default-text-color;
+    color: variables.$default-text-color;
   }
   .bd-pink-600 {
     background-color: rgba(var(--pink-rgb), 0.6);
-    color: $white;
+    color: variables.$white;
   }
   .bd-pink-700 {
     background-color: rgba(var(--pink-rgb), 0.7);
-    color: $white;
+    color: variables.$white;
   }
   .bd-pink-800 {
     background-color: rgba(var(--pink-rgb), 0.8);
-    color: $white;
+    color: variables.$white;
   }
   .bd-pink-900 {
     background-color: rgba(var(--pink-rgb), 0.9);
-    color: $white;
+    color: variables.$white;
   }
   .bd-pink {
-    background-color: $pink;
-    color: $white;
+    background-color: variables.$pink;
+    color: variables.$white;
   }
   /* Start::pink set */
   
   /* Start::red set */
   .bd-red-100 {
-    background-color: rgba($red, 0.1);
-    color: $default-text-color;
+    background-color: rgba(variables.$red, 0.1);
+    color: variables.$default-text-color;
   }
   .bd-red-200 {
-    background-color: rgba($red, 0.2);
-    color: $default-text-color;
+    background-color: rgba(variables.$red, 0.2);
+    color: variables.$default-text-color;
   }
   .bd-red-300 {
-    background-color: rgba($red, 0.3);
-    color: $default-text-color;
+    background-color: rgba(variables.$red, 0.3);
+    color: variables.$default-text-color;
   }
   .bd-red-400 {
-    background-color: rgba($red, 0.4);
-    color: $default-text-color;
+    background-color: rgba(variables.$red, 0.4);
+    color: variables.$default-text-color;
   }
   .bd-red-500 {
-    background-color: rgba($red, 0.5);
-    color: $default-text-color;
+    background-color: rgba(variables.$red, 0.5);
+    color: variables.$default-text-color;
   }
   .bd-red-600 {
-    background-color: rgba($red, 0.6);
-    color: $white;
+    background-color: rgba(variables.$red, 0.6);
+    color: variables.$white;
   }
   .bd-red-700 {
-    background-color: rgba($red, 0.7);
-    color: $white;
+    background-color: rgba(variables.$red, 0.7);
+    color: variables.$white;
   }
   .bd-red-800 {
-    background-color: rgba($red, 0.8);
-    color: $white;
+    background-color: rgba(variables.$red, 0.8);
+    color: variables.$white;
   }
   .bd-red-900 {
-    background-color: rgba($red, 0.9);
-    color: $white;
+    background-color: rgba(variables.$red, 0.9);
+    color: variables.$white;
   }
   .bd-red {
-    background-color: $red;
-    color: $white;
+    background-color: variables.$red;
+    color: variables.$white;
   }
   /* Start::red set */
   
   /* Start::orange set */
   .bd-orange-100 {
     background-color: rgba(var(--orange-rgb), 0.1);
-    color: $default-text-color;
+    color: variables.$default-text-color;
   }
   .bd-orange-200 {
     background-color: rgba(var(--orange-rgb), 0.2);
-    color: $default-text-color;
+    color: variables.$default-text-color;
   }
   .bd-orange-300 {
     background-color: rgba(var(--orange-rgb), 0.3);
-    color: $default-text-color;
+    color: variables.$default-text-color;
   }
   .bd-orange-400 {
     background-color: rgba(var(--orange-rgb), 0.4);
-    color: $default-text-color;
+    color: variables.$default-text-color;
   }
   .bd-orange-500 {
     background-color: rgba(var(--orange-rgb), 0.5);
-    color: $default-text-color;
+    color: variables.$default-text-color;
   }
   .bd-orange-600 {
     background-color: rgba(var(--orange-rgb), 0.6);
-    color: $white;
+    color: variables.$white;
   }
   .bd-orange-700 {
     background-color: rgba(var(--orange-rgb), 0.7);
-    color: $white;
+    color: variables.$white;
   }
   .bd-orange-800 {
     background-color: rgba(var(--orange-rgb), 0.8);
-    color: $white;
+    color: variables.$white;
   }
   .bd-orange-900 {
     background-color: rgba(var(--orange-rgb), 0.9);
-    color: $white;
+    color: variables.$white;
   }
   .bd-orange {
-    background-color: $orange;
-    color: $white;
+    background-color: variables.$orange;
+    color: variables.$white;
   }
   /* Start::orange set */
   
   /* Start::yellow set */
   .bd-yellow-100 {
-    background-color: rgba($yellow, 0.1);
-    color: $default-text-color;
+    background-color: rgba(variables.$yellow, 0.1);
+    color: variables.$default-text-color;
   }
   .bd-yellow-200 {
-    background-color: rgba($yellow, 0.2);
-    color: $default-text-color;
+    background-color: rgba(variables.$yellow, 0.2);
+    color: variables.$default-text-color;
   }
   .bd-yellow-300 {
-    background-color: rgba($yellow, 0.3);
-    color: $default-text-color;
+    background-color: rgba(variables.$yellow, 0.3);
+    color: variables.$default-text-color;
   }
   .bd-yellow-400 {
-    background-color: rgba($yellow, 0.4);
-    color: $default-text-color;
+    background-color: rgba(variables.$yellow, 0.4);
+    color: variables.$default-text-color;
   }
   .bd-yellow-500 {
-    background-color: rgba($yellow, 0.5);
-    color: $default-text-color;
+    background-color: rgba(variables.$yellow, 0.5);
+    color: variables.$default-text-color;
   }
   .bd-yellow-600 {
-    background-color: rgba($yellow, 0.6);
-    color: $white;
+    background-color: rgba(variables.$yellow, 0.6);
+    color: variables.$white;
   }
   .bd-yellow-700 {
-    background-color: rgba($yellow, 0.7);
-    color: $white;
+    background-color: rgba(variables.$yellow, 0.7);
+    color: variables.$white;
   }
   .bd-yellow-800 {
-    background-color: rgba($yellow, 0.8);
-    color: $white;
+    background-color: rgba(variables.$yellow, 0.8);
+    color: variables.$white;
   }
   .bd-yellow-900 {
-    background-color: rgba($yellow, 0.9);
-    color: $white;
+    background-color: rgba(variables.$yellow, 0.9);
+    color: variables.$white;
   }
   .bd-yellow {
-    background-color: $yellow;
-    color: $white;
+    background-color: variables.$yellow;
+    color: variables.$white;
   }
   /* Start::yellow set */
   
   /* Start::green set */
   .bd-green-100 {
-    background-color: rgba($green, 0.1);
-    color: $default-text-color;
+    background-color: rgba(var(--green-rgb), 0.1);
+    color: variables.$default-text-color;
   }
   .bd-green-200 {
-    background-color: rgba($green, 0.2);
-    color: $default-text-color;
+    background-color: rgba(var(--green-rgb), 0.2);
+    color: variables.$default-text-color;
   }
   .bd-green-300 {
-    background-color: rgba($green, 0.3);
-    color: $default-text-color;
+    background-color: rgba(var(--green-rgb), 0.3);
+    color: variables.$default-text-color;
   }
   .bd-green-400 {
-    background-color: rgba($green, 0.4);
-    color: $default-text-color;
+    background-color: rgba(var(--green-rgb), 0.4);
+    color: variables.$default-text-color;
   }
   .bd-green-500 {
-    background-color: rgba($green, 0.5);
-    color: $default-text-color;
+    background-color: rgba(var(--green-rgb), 0.5);
+    color: variables.$default-text-color;
   }
   .bd-green-600 {
-    background-color: rgba($green, 0.6);
-    color: $white;
+    background-color: rgba(var(--green-rgb), 0.6);
+    color: variables.$white;
   }
   .bd-green-700 {
-    background-color: rgba($green, 0.7);
-    color: $white;
+    background-color: rgba(var(--green-rgb), 0.7);
+    color: variables.$white;
   }
   .bd-green-800 {
-    background-color: rgba($green, 0.8);
-    color: $white;
+    background-color: rgba(var(--green-rgb), 0.8);
+    color: variables.$white;
   }
   .bd-green-900 {
-    background-color: rgba($green, 0.9);
-    color: $white;
+    background-color: rgba(var(--green-rgb), 0.9);
+    color: variables.$white;
   }
   .bd-green {
-    background-color: $green;
-    color: $white;
+    background-color: variables.$green;
+    color: variables.$white;
   }
   /* Start::green set */
   
   /* Start::teal set */
   .bd-teal-100 {
     background-color: rgba(var(--teal-rgb), 0.1);
-    color: $default-text-color;
+    color: variables.$default-text-color;
   }
   .bd-teal-200 {
     background-color: rgba(var(--teal-rgb), 0.2);
-    color: $default-text-color;
+    color: variables.$default-text-color;
   }
   .bd-teal-300 {
     background-color: rgba(var(--teal-rgb), 0.3);
-    color: $default-text-color;
+    color: variables.$default-text-color;
   }
   .bd-teal-400 {
     background-color: rgba(var(--teal-rgb), 0.4);
-    color: $default-text-color;
+    color: variables.$default-text-color;
   }
   .bd-teal-500 {
     background-color: rgba(var(--teal-rgb), 0.5);
-    color: $default-text-color;
+    color: variables.$default-text-color;
   }
   .bd-teal-600 {
     background-color: rgba(var(--teal-rgb), 0.6);
-    color: $white;
+    color: variables.$white;
   }
   .bd-teal-700 {
     background-color: rgba(var(--teal-rgb), 0.7);
-    color: $white;
+    color: variables.$white;
   }
   .bd-teal-800 {
     background-color: rgba(var(--teal-rgb), 0.8);
-    color: $white;
+    color: variables.$white;
   }
   .bd-teal-900 {
     background-color: rgba(var(--teal-rgb), 0.9);
-    color: $white;
+    color: variables.$white;
   }
   .bd-teal {
-    background-color: $teal;
-    color: $white;
+    background-color: variables.$teal;
+    color: variables.$white;
   }
   /* Start::teal set */
   
   /* Start::cyan set */
   .bd-cyan-100 {
-    background-color: rgba($cyan, 0.1);
-    color: $default-text-color;
+    background-color: rgba(variables.$cyan, 0.1);
+    color: variables.$default-text-color;
   }
   .bd-cyan-200 {
-    background-color: rgba($cyan, 0.2);
-    color: $default-text-color;
+    background-color: rgba(variables.$cyan, 0.2);
+    color: variables.$default-text-color;
   }
   .bd-cyan-300 {
-    background-color: rgba($cyan, 0.3);
-    color: $default-text-color;
+    background-color: rgba(variables.$cyan, 0.3);
+    color: variables.$default-text-color;
   }
   .bd-cyan-400 {
-    background-color: rgba($cyan, 0.4);
-    color: $default-text-color;
+    background-color: rgba(variables.$cyan, 0.4);
+    color: variables.$default-text-color;
   }
   .bd-cyan-500 {
-    background-color: rgba($cyan, 0.5);
-    color: $default-text-color;
+    background-color: rgba(variables.$cyan, 0.5);
+    color: variables.$default-text-color;
   }
   .bd-cyan-600 {
-    background-color: rgba($cyan, 0.6);
-    color: $white;
+    background-color: rgba(variables.$cyan, 0.6);
+    color: variables.$white;
   }
   .bd-cyan-700 {
-    background-color: rgba($cyan, 0.7);
-    color: $white;
+    background-color: rgba(variables.$cyan, 0.7);
+    color: variables.$white;
   }
   .bd-cyan-800 {
-    background-color: rgba($cyan, 0.8);
-    color: $white;
+    background-color: rgba(variables.$cyan, 0.8);
+    color: variables.$white;
   }
   .bd-cyan-900 {
-    background-color: rgba($cyan, 0.9);
-    color: $white;
+    background-color: rgba(variables.$cyan, 0.9);
+    color: variables.$white;
   }
   .bd-cyan {
-    background-color: $cyan;
-    color: $white;
+    background-color: variables.$cyan;
+    color: variables.$white;
   }
   /* Start::cyan set */
   
   /* Start::gray set */
   .bd-gray-100 {
-    background-color: rgba($gray, 0.1);
-    color: $default-text-color;
+    background-color: rgba(variables.$gray, 0.1);
+    color: variables.$default-text-color;
   }
   .bd-gray-200 {
-    background-color: rgba($gray, 0.2);
-    color: $default-text-color;
+    background-color: rgba(variables.$gray, 0.2);
+    color: variables.$default-text-color;
   }
   .bd-gray-300 {
-    background-color: rgba($gray, 0.3);
-    color: $default-text-color;
+    background-color: rgba(variables.$gray, 0.3);
+    color: variables.$default-text-color;
   }
   .bd-gray-400 {
-    background-color: rgba($gray, 0.4);
-    color: $default-text-color;
+    background-color: rgba(variables.$gray, 0.4);
+    color: variables.$default-text-color;
   }
   .bd-gray-500 {
-    background-color: rgba($gray, 0.5);
-    color: $default-text-color;
+    background-color: rgba(variables.$gray, 0.5);
+    color: variables.$default-text-color;
   }
   .bd-gray-600 {
-    background-color: rgba($gray, 0.6);
-    color: $white;
+    background-color: rgba(variables.$gray, 0.6);
+    color: variables.$white;
   }
   .bd-gray-700 {
-    background-color: rgba($gray, 0.7);
-    color: $white;
+    background-color: rgba(variables.$gray, 0.7);
+    color: variables.$white;
   }
   .bd-gray-800 {
-    background-color: rgba($gray, 0.8);
-    color: $white;
+    background-color: rgba(variables.$gray, 0.8);
+    color: variables.$white;
   }
   .bd-gray-900 {
-    background-color: rgba($gray, 0.9);
-    color: $white;
+    background-color: rgba(variables.$gray, 0.9);
+    color: variables.$white;
   }
   .bd-gray {
-    background-color: $gray;
-    color: $white;
+    background-color: variables.$gray;
+    color: variables.$white;
   }
-  
   /* Start::gray set */
   /* Start::Colors */
+
+  /* Start:: filter */
+  [data-theme-mode = "dark"] {
+    .invert-1 {
+      filter : invert(1);
+    }
+  }
+  .backdrop-blur {
+    backdrop-filter: blur(30px);
+  }
+  /* End:: filter */

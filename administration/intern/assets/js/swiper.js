@@ -198,7 +198,7 @@
         pagination: {
             el: ".swiper-pagination",
         },
-        loop: true,
+        loop: false,
         autoplay: {
             delay: 1500,
             disableOnInteraction: false
@@ -227,7 +227,7 @@
     // swiper flip
     var swiper = new Swiper(".swiper-flip", {
         effect: "flip",
-        grabCursor: true,
+        grabCursor: false,
         pagination: {
             el: ".swiper-pagination",
         },
@@ -235,7 +235,7 @@
             nextEl: ".swiper-button-next",
             prevEl: ".swiper-button-prev",
         },
-        loop: true,
+        loop: false,
         autoplay: {
             delay: 1500,
             disableOnInteraction: false
@@ -245,7 +245,7 @@
     // swiper overflow
     var swiper = new Swiper(".swiper-overflow", {
         effect: "coverflow",
-        grabCursor: true,
+        grabCursor: false,
         centeredSlides: true,
         slidesPerView: "4",
         coverflowEffect: {

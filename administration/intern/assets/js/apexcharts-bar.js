@@ -16,7 +16,7 @@
                 horizontal: true,
             }
         },
-        colors: ["#6259ca"],
+        colors: ["#985ffd"],
         grid: {
             borderColor: '#f2f5f7',
         },
@@ -74,7 +74,7 @@
         grid: {
             borderColor: '#f2f5f7',
         },
-        colors: ["#6259ca", "#fb6b25"],
+        colors: ["#985ffd", "#ff49cd"],
         dataLabels: {
             enabled: true,
             offsetX: -6,
@@ -151,7 +151,7 @@
             width: 1,
             colors: ['#fff']
         },
-        colors: ["#6259ca", "#fb6b25", "#f5b849", "#e6533c", "#49b6f5"],
+        colors: ['#985ffd', '#ff49cd', '#fdaf22', '#32d484', '#00c9ff', '#ff6757'],
         grid: {
             borderColor: '#f2f5f7',
         },
@@ -243,7 +243,7 @@
             width: 1,
             colors: ['#fff']
         },
-        colors: ["#6259ca", "#fb6b25", "#f5b849", "#e6533c", "#49b6f5"],
+        colors: ['#985ffd', '#ff49cd', '#fdaf22', '#32d484', '#00c9ff', '#ff6757'],
         grid: {
             borderColor: '#f2f5f7',
         },
@@ -332,7 +332,7 @@
             width: 1,
             colors: ["#fff"]
         },
-        colors: ["#6259ca", "#fb6b25"],
+        colors: ["#985ffd", "#ff49cd"],
         grid: {
             xaxis: {
                 lines: {
@@ -511,7 +511,7 @@
         grid: {
             borderColor: '#f2f5f7',
         },
-        colors: ['#fb6b25'],
+        colors: ['#ff49cd'],
         dataLabels: {
             formatter: function (val, opt) {
                 const goals =
@@ -591,7 +591,7 @@
         grid: {
             borderColor: '#f2f5f7',
         },
-        colors: ["#6259ca"],
+        colors: ["#985ffd"],
         plotOptions: {
             bar: {
                 horizontal: true,
@@ -657,22 +657,22 @@
                 },
             }
         },
-        colors: ["#6259ca", "#fb6b25", "#f5b849", "#e6533c", "#49b6f5", "#a65e76", "#5b67c7", "#a65e9a",
-            "#26bf94", "#fb6b25"
+        colors: ['#985ffd', '#ff49cd', '#fdaf22', '#32d484', '#00c9ff', '#ff6757', 'rgba(53, 181, 170,1)','rgb(190, 43, 235)',
+            "#0cd7b1", "#ff49cd"
         ],
         grid: {
             borderColor: '#f2f5f7',
         },
         dataLabels: {
             enabled: true,
-            textAnchor: 'start',
+            textAnchor: 'center',
             style: {
                 colors: ['#fff']
             },
             formatter: function (val, opt) {
                 return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val
             },
-            offsetX: 0,
+            offsetX: 5,
             dropShadow: {
                 enabled: false
             }
@@ -768,7 +768,7 @@
         stroke: {
             width: 2,
         },
-        colors: ["#6259ca", "#fb6b25", "#f5b849", "#49b6f5"],
+        colors: ['#985ffd', '#ff49cd', '#fdaf22', '#32d484'],
         title: {
             text: 'Compare Sales Strategy',
             style: {
@@ -908,7 +908,7 @@
             type: 'image',
             opacity: 0.87,
             image: {
-                src: ['../assets/images/media/5.jpg'],
+                src: ['../assets/images/media/media-64.jpg'],
                 width: 466,
                 height: 406
             }

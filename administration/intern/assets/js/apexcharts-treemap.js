@@ -68,7 +68,7 @@
             height: 350,
             type: 'treemap'
         },
-        colors: ["#6259ca"],
+        colors: ["#985ffd"],
         title: {
             text: 'Basic Treemap',
             align: 'left',
@@ -132,7 +132,7 @@
                 ]
             }
         ],
-        colors: ["#6259ca", "#fb6b25"],
+        colors: ["#985ffd", "#ff49cd"],
         legend: {
             show: false
         },
@@ -230,18 +230,7 @@
             },
         },
         colors: [
-            '#6259ca',
-            '#a65e76',
-            '#f5b849',
-            '#a66a5e',
-            '#a65e9a',
-            '#26bf94',
-            '#e6533c',
-            '#49b6f5',
-            '#5b67c7',
-            '#2dce89',
-            '#EF6537',
-            '#8c9097'
+           '#985ffd', '#ff49cd', '#fdaf22', '#32d484', '#00c9ff', '#ff6757', 'rgba(53, 181, 170,1)','rgb(190, 43, 235)'
         ],
         plotOptions: {
             treemap: {
@@ -349,12 +338,12 @@
                         {
                             from: -6,
                             to: 0,
-                            color: '#6259ca'
+                            color: '#985ffd'
                         },
                         {
                             from: 0.001,
                             to: 6,
-                            color: '#fb6b25'
+                            color: '#ff49cd'
                         }
                     ]
                 }

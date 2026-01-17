@@ -262,8 +262,8 @@
         plotOptions: {
             candlestick: {
                 colors: {
-                    upward: '#6259ca',
-                    downward: '#fb6b25'
+                    upward: '#985ffd',
+                    downward: '#ff49cd'
                 }
             }
         },
@@ -323,8 +323,8 @@
         plotOptions: {
             candlestick: {
                 colors: {
-                    upward: '#6259ca',
-                    downward: '#fb6b25'
+                    upward: '#985ffd',
+                    downward: '#ff49cd'
                 }
             }
         },
@@ -395,11 +395,11 @@
                     ranges: [{
                         from: -1000,
                         to: 0,
-                        color: '#f5b849'
+                        color: '#fdaf22'
                     }, {
                         from: 1,
                         to: 10000,
-                        color: '#e6533c'
+                        color: '#ff6757'
                     }],
 
                 },
@@ -702,13 +702,13 @@
             xaxis: [
                 {
                     x: 'Oct 06 14:00',
-                    borderColor: '#5b67c7',
+                    borderColor: '#ff49cd',
                     label: {
-                        borderColor: '#5b67c7',
+                        borderColor: '#ff49cd',
                         style: {
                             fontSize: '12px',
                             color: '#fff',
-                            background: '#5b67c7'
+                            background: '#ff49cd'
                         },
                         orientation: 'horizontal',
                         offsetY: 7,
@@ -726,8 +726,8 @@
         plotOptions: {
             candlestick: {
                 colors: {
-                    upward: '#6259ca',
-                    downward: '#fb6b25'
+                    upward: '#985ffd',
+                    downward: '#ff49cd'
                 }
             }
         },
@@ -1048,7 +1048,7 @@
         stroke: {
             width: [3, 1]
         },
-        colors: ["#49b6f5"],
+        colors: ["#0ca3e7"],
         tooltip: {
             shared: true,
             custom: [function ({ seriesIndex, dataPointIndex, w }) {
@@ -1066,8 +1066,8 @@
         plotOptions: {
             candlestick: {
                 colors: {
-                    upward: '#6259ca',
-                    downward: '#fb6b25'
+                    upward: '#985ffd',
+                    downward: '#ff49cd'
                 }
             }
         },

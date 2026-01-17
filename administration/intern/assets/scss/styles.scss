@@ -1,8 +1,8 @@
 /*------------------------------------------------------------------
 [Master Stylesheet]
 
-Project                            :   Hogo - HTML5 Bootstrap Admin Template
-Create Date                        :   
+Project                            :   VYZOR - PHP Bootstrap Admin Template
+Create Date                        :   06/june/2025
 Author & Copyright Ownership       :   Spruko Technologies Private Limited 
 Author URL                         :   https://themeforest.net/user/spruko
 Support	                           :   https://support.spruko.com/
@@ -10,11 +10,11 @@ License Details                    :   https://spruko.com/licenses-details
 ------------------------------------------------------------------*/
 
 /* Table Of Content 
-variables
 switcher
 accordion
 alerts
 badge
+breadcrumb
 buttons
 cards
 dropdown
@@ -35,10 +35,9 @@ custom
 dashboard_styles
 error
 header
-image
 plugins
+ribbons
 widgets
-sign-up
 closed_menu
 detached_menu
 double_menu
@@ -63,82 +62,71 @@ opacity
 typography
 */
 
+@forward "switcher";
 
-/* FONT */
-/* inter */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
-/* Montserrat */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&display=swap');
-
-/* Poppins */
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
-
-
-@import "variables";
-@import "switcher";
 
 /* BOOTSTRAP */
-@import "bootstrap/accordion";
-@import "bootstrap/alerts";
-@import "bootstrap/badge";
-@import "bootstrap/breadcrumb";
-@import "bootstrap/buttons";
-@import "bootstrap/cards";
-@import "bootstrap/dropdown";
-@import "bootstrap/forms";
-@import "bootstrap/input_group";
-@import "bootstrap/list_group";
-@import "bootstrap/modals";
-@import "bootstrap/navbar";
-@import "bootstrap/navs_tabs";
-@import "bootstrap/pagination";
-@import "bootstrap/popovers";
-@import "bootstrap/progress";
-@import "bootstrap/tables";
-@import "bootstrap/toast";
-@import "bootstrap/tags";
-@import "bootstrap/tooltips";
+@forward "bootstrap/accordion";
+@forward "bootstrap/alerts";
+@forward "bootstrap/badge";
+@forward "bootstrap/breadcrumb";
+@forward "bootstrap/buttons";
+@forward "bootstrap/cards";
+@forward "bootstrap/dropdown";
+@forward "bootstrap/forms";
+@forward "bootstrap/input_group";
+@forward "bootstrap/list_group";
+@forward "bootstrap/modals";
+@forward "bootstrap/navbar";
+@forward "bootstrap/navs_tabs";
+@forward "bootstrap/pagination";
+@forward "bootstrap/popovers";
+@forward "bootstrap/progress";
+@forward "bootstrap/tables";
+@forward "bootstrap/toast";
+@forward "bootstrap/tooltips";
 
 /* CUSTOM */
-@import "custom/authentication";
-@import "custom/custom";
-@import "custom/dashboard_styles";
-@import "custom/error";
-@import "custom/header";
-@import "custom/image";
-@import "custom/plugins";
-@import "custom/sidebar";
-@import "custom/time-line";
-@import "custom/widgets";
+@forward "custom/authentication";
+@forward "custom/custom";
+@forward "custom/dashboard_styles";
+@forward "custom/error";
+@forward "custom/header";
+@forward "custom/plugins";
+@forward "custom/ribbons";
+@forward "custom/widgets";
 
 /* MENU-STYLES */
-@import "menu-styles/closed_menu";
-@import "menu-styles/detached_menu";
-@import "menu-styles/double_menu";
-@import "menu-styles/horizontal";
-@import "menu-styles/icon_click";
-@import "menu-styles/icon_hover";
-@import "menu-styles/icon_overlay";
-@import "menu-styles/icontext";
-@import "menu-styles/menu_click";
-@import "menu-styles/menu_hover";
-@import "menu-styles/vertical";
+@forward "menu-styles/closed_menu";
+@forward "menu-styles/detached_menu";
+@forward "menu-styles/double_menu";
+@forward "menu-styles/horizontal";
+@forward "menu-styles/icon_click";
+@forward "menu-styles/icon_hover";
+@forward "menu-styles/icon_overlay";
+@forward "menu-styles/icontext";
+@forward "menu-styles/menu_click";
+@forward "menu-styles/menu_hover";
+@forward "menu-styles/vertical";
 
 /* PAGES */
-@import "pages/chat";
-@import "pages/ecommerce";
-@import "pages/file-manager";
-@import "pages/landing";
-@import "pages/mail";
-@import "pages/profile";
-@import "pages/task";
+@forward "pages/chat";
+@forward "pages/ecommerce";
+@forward "pages/file-manager";
+@forward "pages/landing";
+@forward "pages/mail";
+@forward "pages/task";
 
 
 /* UTILITIES */
-@import "util/avatars";
-@import "util/background";
-@import "util/border";
-@import "util/opacity";
-@import "util/typography";
+@forward "util/avatars";
+@forward "util/background";
+@forward "util/border";
+@forward "util/opacity";
+@forward "util/typography";
 
+
+/* FONT */
+
+/* Space Grotesk Sans */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');

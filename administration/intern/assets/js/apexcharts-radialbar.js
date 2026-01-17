@@ -8,7 +8,7 @@
             height: 300,
             type: 'radialBar',
         },
-        colors: ["#6259ca"],
+        colors: ["#985ffd"],
         plotOptions: {
             radialBar: {
                 hollow: {
@@ -48,7 +48,7 @@
                 }
             }
         },
-        colors: ["#6259ca", "#fb6b25", "#f5b849", "#e6533c"],
+        colors: ['#985ffd', '#ff49cd', '#fdaf22', '#32d484',],
         labels: ['Apples', 'Oranges', 'Bananas', 'Berries'],
     };
     var chart = new ApexCharts(document.querySelector("#radialbar-multiple"), options);
@@ -58,7 +58,7 @@
     var options = {
         series: [76, 67, 61, 90],
         chart: {
-            height: 300,
+            height: 320,
             type: 'radialBar',
         },
         plotOptions: {
@@ -82,7 +82,7 @@
                 }
             }
         },
-        colors: ['#6259ca', '#fb6b25', '#f5b849', '#e6533c'],
+        colors: ['#985ffd', '#ff49cd', '#fdaf22', '#32d484',],
         labels: ['Vimeo', 'Messenger', 'Facebook', 'LinkedIn'],
         legend: {
             show: true,
@@ -118,7 +118,7 @@
     var options = {
         series: [75],
         chart: {
-            height: 300,
+            height: 320,
             type: 'radialBar',
             toolbar: {
                 show: true
@@ -182,7 +182,7 @@
                 shade: 'dark',
                 type: 'horizontal',
                 shadeIntensity: 0.5,
-                gradientToColors: ['#fb6b25'],
+                gradientToColors: ['#d77cf7'],
                 inverseColors: true,
                 opacityFrom: 1,
                 opacityTo: 1,
@@ -205,7 +205,7 @@
             type: 'radialBar',
             offsetY: -10
         },
-        colors: ["#6259ca"],
+        colors: ["#985ffd"],
         plotOptions: {
             radialBar: {
                 startAngle: -135,
@@ -250,7 +250,7 @@
     var options = {
         series: [67],
         chart: {
-            height: 300,
+            height: 330,
             type: 'radialBar',
         },
         plotOptions: {
@@ -279,7 +279,7 @@
         fill: {
             type: 'image',
             image: {
-                src: ['../assets/images/media/media8.jpg'],
+                src: ['../assets/images/media/media-64.jpg'],
             }
         },
         stroke: {
@@ -295,7 +295,7 @@
         series: [76],
         chart: {
             type: 'radialBar',
-            height: 300,
+            height: 320,
             offsetY: -20,
             sparkline: {
                 enabled: true
@@ -329,7 +329,7 @@
                 }
             }
         },
-        colors: ["#6259ca"],
+        colors: ["#985ffd"],
         grid: {
             padding: {
                 top: -10

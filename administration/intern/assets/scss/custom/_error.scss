@@ -1,0 +1,49 @@
+@use "variables";
+.error-page {
+    width: 100%;
+    min-height: 100vh;
+}
+.error-text {
+    font-size: 9rem;
+    font-weight: 500;
+    line-height: 1;
+}
+.error-page-image-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    inset-block-start: 0;
+    inset-inline-end: 0;
+    z-index: -1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+        max-height: 600px;
+    }
+}
+@media (max-width: 575.98px) {
+    .error-text {
+        font-size: 3rem;
+    }
+}
+.error-main {
+    min-height: 100vh;
+    background-color: rgba(var(--primary-rgb), 0.1);
+    display: flex;
+    align-items: center;
+}
+.error-page-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    inset-inline-start: 0;
+    inset-block-start: 0;
+    z-index: -1;
+    opacity: 0.05;
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}

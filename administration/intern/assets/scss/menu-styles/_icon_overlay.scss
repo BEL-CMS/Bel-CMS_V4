@@ -1,3 +1,4 @@
+@use "variables";
 [data-vertical-style="overlay"][data-toggled="icon-overlay-close"] {
     @media(min-width: 992px) {
         &:not([data-icon-overlay="open"]) {
@@ -5,13 +6,14 @@
                 width: 5rem;
                 .main-sidebar-header {
                     width: 5rem;
+                    justify-content: center;
                     .header-logo {
                         .toggle-logo {
                             display: block;
                         }
                         .desktop-dark,
                         .desktop-logo,
-                        .toggle-dark,.desktop-white,.toggle-white {
+                        .toggle-dark {
                             display: none;
                         }
                     }
@@ -29,21 +31,26 @@
                 .side-menu__icon {
                     margin-inline-end: 0;
                 }
+                .main-menu{
+                    padding-inline: 0.5rem;
+                }
+               .slide {
+                    padding: 0 0rem !important;
+                } 
                 .slide__category {
-                    padding: 1.2rem 1.65rem;
+                    padding: 1.65rem;
                     position: relative;
                     &:before {
-                        content: "";
+                        content: "\f3c2";
+                        font-family: remixicon !important;
                         position: absolute;
-                        inset-inline-start: 2.25rem;
+                        font-size: 8px;
+                        inset-inline-start: 1.75rem;
                         inset-inline-end: 0;
-                        inset-block-start: 1.25rem;
+                        inset-block-start: 1rem;
                         inset-block-end: 0;
-                        width: 0.35rem;
-                        border-radius: 3.125rem;
-                        height: 0.35rem;
-                        border: 1px solid $menu-prime-color;
                         opacity: 1;
+                        color: variables.$menu-prime-color;
                     }
                 }
                 .side-menu__item .badge {
@@ -52,6 +59,9 @@
             }
             .side-menu__item {
                 justify-content: center;
+            }
+            .sidebar-profile {
+                display: none;
             }
         }
         .app-header {
@@ -63,23 +73,20 @@
 
         &[data-icon-overlay="open"] {
             .app-sidebar {
-                width: 15rem;
+                width: 16rem;
                 .main-sidebar-header {
-                    width: 15rem;
+                    width: 16rem;
                     .header-logo {
                         .desktop-logo {
                             display: block;
                         }
                         .desktop-dark,
                         .toggle-logo,
-                        .toggle-dark,.desktop-white,.toggle-white {
+                        .toggle-dark {
                             display: none;
                         }
                     }
                 }
-                // .side-menu__item .badge {
-                //     display: inline;
-                // }
                 .side-menu__item {
                     justify-content: flex-start;
                 }
@@ -87,7 +94,7 @@
                     margin-inline-end: 0.625rem;
                 }
                 .slide__category {
-                    padding: 0.75rem 1.65rem;
+                    padding: 0.75rem 1.2rem;
                     &:before {
                         display: none;
                     }
@@ -103,7 +110,7 @@
                     }
                     .desktop-dark,
                     .desktop-logo,
-                    .toggle-logo,.desktop-white,.toggle-white {
+                    .toggle-logo {
                         display: none;
                     }
                 }
@@ -111,16 +118,36 @@
             &[data-icon-overlay="open"] {
                 .main-sidebar-header {
                     .header-logo {
-                        .desktop-logo {
+                        .desktop-dark {
                             display: block;
                         }
                         .toggle-dark,
-                        .toggle-logo,.desktop-white,.toggle-white {
+                        .desktop-logo,
+                        .toggle-logo {
                             display: none;
                         }
                     }
                 }   
+                &[data-menu-styles="light"] {
+                    .main-sidebar-header {
+                        .header-logo {
+                            .desktop-logo {
+                                display: block;
+                            }
+                            .toggle-dark,
+                            .desktop-dark,
+                            .toggle-logo {
+                                display: none;
+                            }
+                        }
+                    }   
+                }
             }
         }
     }
 }
+[data-menu-styles="color"][data-header-styles="light"][data-nav-layout="vertical"][data-vertical-style="overlay"][data-toggled="icon-overlay-close"] {
+    .animated-arrow span:before,.animated-arrow span:after {
+        background: var(--header-prime-color);
+    }
+} 

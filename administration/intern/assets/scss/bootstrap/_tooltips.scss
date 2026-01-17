@@ -1,7 +1,9 @@
+@use "variables";
 .tooltip {
   @mixin tooltip-color($color) {
     .tooltip-inner {
       background-color: $color;
+      color: variables.$white;
     }
     &.bs-tooltip-auto[data-popper-placement^="top"] .tooltip-arrow::before,
     &.bs-tooltip-top .tooltip-arrow::before {
@@ -21,33 +23,33 @@
     }
   }
   &.tooltip-primary {
-    @include tooltip-color($primary);
+    @include tooltip-color(variables.$primary);
   }
   &.tooltip-secondary {
-    @include tooltip-color($secondary);
+    @include tooltip-color(variables.$secondary);
   }
   &.tooltip-warning {
-    @include tooltip-color($warning);
+    @include tooltip-color(variables.$warning);
   }
   &.tooltip-info {
-    @include tooltip-color($info);
+    @include tooltip-color(variables.$info);
   }
   &.tooltip-success {
-    @include tooltip-color($success);
+    @include tooltip-color(variables.$success);
   }
   &.tooltip-danger {
-    @include tooltip-color($danger);
+    @include tooltip-color(variables.$danger);
   }
   &.tooltip-dark {
-    @include tooltip-color($dark);
+    @include tooltip-color(variables.$dark);
     .tooltip-inner {
-      color: $custom-white;
+      color: variables.$custom-white;
     }
   }
   &.tooltip-light {
-    @include tooltip-color($light);
+    @include tooltip-color(variables.$light);
     .tooltip-inner {
-      color: $default-text-color;
+      color: variables.$default-text-color;
     }
   }
 }

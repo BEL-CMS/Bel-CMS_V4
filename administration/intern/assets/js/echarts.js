@@ -51,7 +51,7 @@
                 type: 'line'
             }
         ],
-        color: "#6259ca"
+        color: "rgb(152, 95, 253)"
     };
     if (option && typeof option === 'object') {
         myChart.setOption(option);
@@ -103,7 +103,7 @@
                 smooth: true
             }
         ],
-        color: "#6259ca"
+        color: "rgb(152, 95, 253)"
     };
     if (option && typeof option === 'object') {
         myChart.setOption(option);
@@ -156,7 +156,7 @@
                 areaStyle: {}
             }
         ],
-        color: "#6259ca"
+        color: "rgb(152, 95, 253)"
     };
     if (option && typeof option === 'object') {
         myChart.setOption(option);
@@ -248,7 +248,7 @@
                 data: [820, 932, 901, 934, 1290, 1330, 1320]
             }
         ],
-        color: ["#6259ca", "#fb6b25", "#f5b849", "#49b6f5", "#e6533c"]
+        color: ['#985ffd', '#ff49cd', '#fdaf22', '#32d484', '#00c9ff', '#ff6757', 'rgba(53, 181, 170,1)',]
     };
     if (option && typeof option === 'object') {
         myChart.setOption(option);
@@ -374,7 +374,7 @@
                 data: [820, 932, 901, 934, 1290, 1330, 1320]
             }
         ],
-        color: ["#6259ca", "#fb6b25", "#f5b849", "#49b6f5", "#e6533c"]
+        color: ['#985ffd', '#ff49cd', '#fdaf22', '#32d484', '#00c9ff', '#ff6757', 'rgba(53, 181, 170,1)',]
     };
     if (option && typeof option === 'object') {
         myChart.setOption(option);
@@ -453,7 +453,7 @@
                 data: [450, 432, 401, 454, 590, 530, 510]
             }
         ],
-        color: ["#6259ca", "#fb6b25", "#f5b849", "#49b6f5", "#e6533c"]
+        color: ['#985ffd', '#ff49cd', '#fdaf22', '#32d484', '#00c9ff', '#ff6757', 'rgba(53, 181, 170,1)',]
     };
     if (option && typeof option === 'object') {
         myChart.setOption(option);
@@ -504,7 +504,7 @@
                 type: 'bar'
             }
         ],
-        color: "#6259ca"
+        color: "rgb(152, 95, 253)"
     };
     if (option && typeof option === 'object') {
         myChart.setOption(option);
@@ -559,7 +559,7 @@
                 }
             }
         ],
-        color: "#6259ca"
+        color: "rgb(152, 95, 253)"
     };
     if (option && typeof option === 'object') {
         myChart.setOption(option);
@@ -611,7 +611,7 @@
                     {
                         value: 200,
                         itemStyle: {
-                            color: '#fb6b25'
+                            color: 'rgb(255, 73, 205)'
                         }
                     },
                     150,
@@ -623,7 +623,7 @@
                 type: 'bar'
             }
         ],
-        color: "#6259ca"
+        color: "rgb(152, 95, 253)"
     };
     if (option && typeof option === 'object') {
         myChart.setOption(option);
@@ -707,7 +707,7 @@
                 data: [2900, 1200, 300, 200, 900, 300]
             }
         ],
-        color: "#6259ca"
+        color: "rgb(152, 95, 253)"
     };
     if (option && typeof option === 'object') {
         myChart.setOption(option);
@@ -801,7 +801,7 @@
                 ]
             }
         ],
-        color: "#6259ca"
+        color: "rgb(152, 95, 253)"
     };
     if (option && typeof option === 'object') {
         myChart.setOption(option);
@@ -1006,7 +1006,7 @@
                 data: [98, 77, 101, 99, 40]
             }
         ],
-        color: ["#6259ca", "#fb6b25", "#f5b849", "#e6533c"]
+        color: ['#985ffd', '#ff49cd', '#fdaf22', '#32d484', '#00c9ff', '#ff6757', 'rgba(53, 181, 170,1)']
     };
     if (option && typeof option === 'object') {
         myChart.setOption(option);
@@ -1075,7 +1075,7 @@
                 data: [19325, 23438, 31000, 121594, 134141, 681807]
             }
         ],
-        color: ["#6259ca", "#fb6b25"]
+        color: ["rgb(152, 95, 253)", "rgb(255, 73, 205)"]
     };
     if (option && typeof option === 'object') {
         myChart.setOption(option);
@@ -1195,7 +1195,7 @@
                 data: [820, 832, 901, 934, 1290, 1330, 1320]
             }
         ],
-        color: ["#6259ca", "#fb6b25", "#f5b849", "#e6533c", "#49b6f5"]
+        color: ['#985ffd', '#ff49cd', '#fdaf22', '#32d484', '#00c9ff', '#ff6757', 'rgba(53, 181, 170,1)']
     };
     if (option && typeof option === 'object') {
         myChart.setOption(option);
@@ -1242,7 +1242,7 @@
                 }
             }
         ],
-        color: ["#6259ca", "#fb6b25", "#f5b849", "#e6533c", "#49b6f5"]
+        color: ['#985ffd', '#ff49cd', '#fdaf22', '#32d484', '#00c9ff', '#ff6757', 'rgba(53, 181, 170,1)']
     };
     if (option && typeof option === 'object') {
         myChart.setOption(option);
@@ -1297,7 +1297,7 @@
                 ]
             }
         ],
-        color: ["#6259ca", "#fb6b25", "#f5b849", "#e6533c", "#49b6f5"]
+        color: ['#985ffd', '#ff49cd', '#fdaf22', '#32d484', '#00c9ff', '#ff6757', 'rgba(53, 181, 170,1)']
     };
     if (option && typeof option === 'object') {
         myChart.setOption(option);
@@ -1370,7 +1370,7 @@
                 type: 'scatter'
             }
         ],
-        color: ["#6259ca"]
+        color: ["rgb(152, 95, 253)"]
     };
     if (option && typeof option === 'object') {
         myChart.setOption(option);
@@ -1495,16 +1495,16 @@
                 },
                 itemStyle: {
                     shadowBlur: 10,
-                    shadowColor: 'rgba(25, 100, 150, 0.5)',
+                    shadowColor: 'rgba(152, 95, 253, 0.5)',
                     shadowOffsetY: 5,
                     color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [
                         {
                             offset: 0,
-                            color: 'rgb(94, 154, 166)'
+                            color: 'rgb(152, 95, 253)'
                         },
                         {
                             offset: 1,
-                            color: 'rgb(94, 154, 166)'
+                            color: 'rgb(152, 95, 253)'
                         }
                     ])
                 }
@@ -1528,22 +1528,22 @@
                 },
                 itemStyle: {
                     shadowBlur: 10,
-                    shadowColor: 'rgba(120, 36, 50, 0.5)',
+                    shadowColor: 'rgba(255, 73, 205, 0.5)',
                     shadowOffsetY: 5,
                     color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [
                         {
                             offset: 0,
-                            color: 'rgb(185, 93, 75)'
+                            color: 'rgb(255, 73, 205)'
                         },
                         {
                             offset: 1,
-                            color: 'rgb(185, 93, 75)'
+                            color: 'rgb(255, 73, 205)'
                         }
                     ])
                 }
             }
         ],
-        color: ["#49b6f5", "#e6533c"]
+        color: ["rgb(12, 163, 231)", "rgb(254, 84, 84)"]
     };
     if (option && typeof option === 'object') {
         myChart.setOption(option);
@@ -1597,10 +1597,10 @@
                 ],
                 itemStyle: {
                     normal: {
-                        color: "#6259ca",
-                        color0: "#fb6b25",
-                        borderColor: "#6259ca",
-                        borderColor0: "#fb6b25",
+                        color: "rgb(152, 95, 253)",
+                        color0: "rgb(255, 73, 205)",
+                        borderColor: "rgb(152, 95, 253)",
+                        borderColor0: "rgb(255, 73, 205)",
                     }
                 }
             }
@@ -1654,7 +1654,7 @@
                 ]
             }
         ],
-        color: ["#6259ca", "#fb6b25"]
+        color: ["rgb(152, 95, 253)", "rgb(255, 73, 205)"]
     };
     if (option && typeof option === 'object') {
         myChart.setOption(option);
@@ -1766,7 +1766,7 @@
                 ]
             }
         ],
-        color: ["#6259ca", "#fb6b25"]
+        color: ["rgb(152, 95, 253)", "rgb(255, 73, 205)"]
     };
     if (option && typeof option === 'object') {
         myChart.setOption(option);
@@ -1842,7 +1842,7 @@
                 ]
             }
         ],
-        color: ["#6259ca", "#fb6b25", "#f5b849", "#e6533c", "#49b6f5"]
+        color: ['#985ffd', '#ff49cd', '#fdaf22', '#32d484', '#00c9ff', '#ff6757', 'rgba(53, 181, 170,1)']
     };
     if (option && typeof option === 'object') {
         myChart.setOption(option);
@@ -1880,7 +1880,7 @@
                 ]
             }
         ],
-        color: ["#6259ca"]
+        color: ["rgb(152, 95, 253)"]
     };
     if (option && typeof option === 'object') {
         myChart.setOption(option);
@@ -1982,7 +1982,7 @@
                 }
             }
         ],
-        color:["#6259ca"]
+        color:["rgb(152, 95, 253)"]
     };
     if (option && typeof option === 'object') {
         myChart.setOption(option);
@@ -2132,7 +2132,7 @@
                     ]
                 }
             ],
-            color: ["#6259ca", "#fb6b25"]
+            color: ["rgb(152, 95, 253)", "rgb(255, 73, 205)"]
         };
     }
     const options = [

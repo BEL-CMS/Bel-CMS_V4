@@ -12,7 +12,9 @@
                 alert('please select a valid image');
             }
         };
-        reader.readAsDataURL(event.target.files[0]);
+        if(event.target.files[0]){
+            reader.readAsDataURL(event.target.files[0]);
+        }
     };
 
     // for personal information language

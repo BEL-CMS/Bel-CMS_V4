@@ -20,9 +20,9 @@
                 color: '#8c9097'
             },
         },
-        colors: ["#6259ca"],
+        colors: ["#985ffd"],
         xaxis: {
-            categories: ['January', 'February', 'March', 'April', 'May', 'June']
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
         }
     };
     var chart = new ApexCharts(document.querySelector("#radar-basic"), options);
@@ -59,7 +59,7 @@
                 color: '#8c9097'
             },
         },
-        colors: ["#6259ca", "#fb6b25", "#f5b849"],
+        colors: ['#985ffd', '#ff49cd', '#fdaf22'],
         stroke: {
             width: 2
         },
@@ -106,11 +106,11 @@
                 color: '#8c9097'
             },
         },
-        colors: ['#fb6b25'],
+        colors: ['#ff49cd'],
         markers: {
             size: 4,
             colors: ['#fff'],
-            strokeColor: '#fb6b25',
+            strokeColor: '#ff49cd',
             strokeWidth: 2,
         },
         tooltip: {
@@ -121,7 +121,7 @@
             }
         },
         xaxis: {
-            categories: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+            categories: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
         },
         yaxis: {
             tickAmount: 7,

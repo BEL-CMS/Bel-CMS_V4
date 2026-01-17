@@ -1,60 +1,87 @@
+@use "variables";
 .page-link {
-    color: $default-text-color;
-    background-color: $custom-white;
-    border: 1px solid $default-border;
+    color: variables.$default-text-color;
+    background-color: variables.$custom-white;
+    border: 1px solid variables.$default-border;
     &:focus {
         box-shadow: none;
-        background-color: $light;
+        background-color: variables.$light;
     }
     &:hover {
-        color: $primary;
-        background-color: $light;
-        border-color: $default-border;
+        color: variables.$primary;
+        background-color: variables.$light;
+        border-color: variables.$default-border;
     }
 }
 .page-item.active .page-link {
-    color: $white;
-    background-color: $primary;
-    border-color: $primary;
+    color: variables.$white;
+    background-color: variables.$primary;
+    border-color: variables.$primary;
 }
 .disabled>.page-link, .page-link.disabled {
-    color: $default-text-color;
-    background-color: $custom-white;
-    border-color: $default-border;
+    color: variables.$default-text-color;
+    background-color: variables.$custom-white;
+    border-color: variables.$default-border;
     opacity: 0.7;
 }
 
+[dir="rtl"] { 
+    .pagination{
+        .page-link{
+            .bx-chevron-left::before{
+                content: "\ea50";
+            }
+            .bx-chevron-right::before{
+                content: "\ea4d";
+            }
+            .ri-arrow-right-s-line:before{
+                content: "\ea64";
+            }
+            .ri-arrow-left-s-line:before{
+                content: "\ea6e";
+            }
+        }
+    }
+}
 /* Start:: pagination-style-1 */
 .pagination-style-1 .pagination {
     .page-item {
-        margin: 0 0.225rem;
+        margin: 0 0.25rem;
         .page-link {
             border: 0;
-            border-radius: $default-radius;
+            border-radius: variables.$default-radius;
             font-size: 0.8125rem;
             i {
-                font-weight: 600;
+                font-weight: 400;
             }
         }
         &.active {
             .page-link {
-                border-radius: $default-radius;
-                background-color: $primary;
-                color: $white;
+                border-radius: variables.$default-radius;
+                background-color: variables.$primary;
+                color: variables.$white;
             }
             &:hover {
                 .page-link {
-                    border-radius: $default-radius;
-                    background-color: $primary;
-                    color: $white;
+                    border-radius: variables.$default-radius;
+                    background-color: variables.$primary;
+                    color: variables.$white;
                 }
             } 
         }
         &:hover {
             .page-link {
-                background-color: $light;
-                color: $default-text-color;
+                background-color: variables.$light;
+                color: variables.$default-text-color;
             }
+        }
+    }
+}
+
+[dir=rtl] {
+    .pagination-style-1{
+        .ri-arrow-right-s-line {
+            rotate: 360deg;
         }
     }
 }
@@ -62,7 +89,7 @@
 
 /* Start:: pagination-style-2 */
 .pagination-style-2 .pagination {
-    border-radius: $default-radius;
+    border-radius: variables.$default-radius;
     .page-item {
         margin: 0 0.25rem;
         .page-link {
@@ -71,8 +98,8 @@
         }
         &.active {
             .page-link {
-                background-color: $custom-white;
-                color: $primary;
+                background-color: variables.$custom-white;
+                color: variables.$primary;
                 position: relative;
                 font-weight: bold;
                 &:before {
@@ -81,8 +108,9 @@
                     inset-block-end: 0;
                     inset-inline-start: 0;
                     width: 100%;
-                    height: 0.1rem;
-                    background-color: $primary;
+                    height: .1875rem;
+                    border-radius: 10px;
+                    background-color: variables.$primary;
                 }
             }
         }
@@ -106,25 +134,24 @@
             border: 0;
             border-radius: 50px;
             font-size: 0.8125rem;
-            padding: 6px 0.85rem;
             i {
-                font-weight: 600;
+                font-weight: 400;
             }
         }
         &.active {
             .page-link {
-                background-color: $primary;
-                color: $white;
+                background-color: variables.$primary;
+                color: variables.$white;
             }
             &:hover {
                 .page-link {
-                    background-color: $primary;
+                    background-color: variables.$primary;
                 }
             }
         }
         &:hover {
             .page-link {
-                background-color: $light;
+                background-color: variables.$light;
             }
         }
     }
@@ -137,21 +164,21 @@
         .page-link {
             border: 0 !important;
             font-size: 0.8125rem;
-            border-radius: $default-radius;
+            border-radius: variables.$default-radius;
             i {
-                font-weight: 600;
+                font-weight: 400;
             }
         }
         &.active {
             .page-link {
                 border: 0;
-                border-radius: $default-radius;
-                background-color: $primary;
-                color: $white;
+                border-radius: variables.$default-radius;
+                background-color: variables.$primary;
+                color: variables.$white;
             }
             &:hover {
                 .page-link {
-                    background-color: $primary;
+                    background-color: variables.$primary;
                 }
             }
         }
@@ -163,11 +190,9 @@
     }
 }
 /* End:: pagination-style-4 */
-[dir=rtl] .pagination .page-link {
-    .ri-arrow-right-s-line:before {
-        content: "\ea64";
-    }
-    .ri-arrow-left-s-line:before {
-        content: "\ea6e";
+
+@media (max-width: 334px) {
+    nav .pagination.custom-pagination {
+        transform: translate(10px, 0px);
     }
 }

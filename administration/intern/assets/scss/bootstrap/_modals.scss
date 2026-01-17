@@ -1,22 +1,25 @@
+@use "variables";
 .modal  {
-	z-index: 9999;
+	z-index: 105;
+	padding-left: 0 !important;
+	padding-right: 0 !important;
 }
 .modal-backdrop {
 	z-index: 104;
 }
 .modal-content {
-    color: $default-text-color;
-    background-color: $custom-white;
-    border: 1px solid $default-border;
-    border-radius: $default-radius;
+    color: variables.$default-text-color;
+    background-color: variables.$custom-white;
+    border: 1px solid variables.$default-border;
+    border-radius: variables.$default-radius;
 }
 .modal-header {
     padding: 1rem 1.25rem;
-    border-block-end: 1px solid $default-border;
-    border-top-left-radius: $default-radius;
-    border-top-right-radius: $default-radius;
+    border-block-end: 1px solid variables.$default-border;
+    border-top-left-radius: variables.$default-radius;
+    border-top-right-radius: variables.$default-radius;
     .modal-title {
-        font-weight: 600;
+        font-weight: 500;
         line-height: 1;
     }
     .btn-close {
@@ -25,7 +28,7 @@
 }
 .modal-footer {
     padding: 1rem 1.25rem;
-    border-block-start: 1px solid $default-border;
+    border-block-start: 1px solid variables.$default-border;
 }
 
 /* modal animations */

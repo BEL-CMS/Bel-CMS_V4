@@ -30,7 +30,7 @@
         dataLabels: {
             enabled: false
         },
-        colors: ["#6259ca", "#fb6b25", "#f5b849"],
+        colors: ["#985ffd", "#ff49cd", "#fdaf22"],
         stroke: {
             show: true,
             width: 2,
@@ -111,7 +111,7 @@
                 colors: ["#8c9097"]
             }
         },
-        colors: ["#6259ca"],
+        colors: ["#985ffd"],
         xaxis: {
             categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
             position: 'top',
@@ -203,7 +203,7 @@
         grid: {
             borderColor: '#f2f5f7',
         },
-        colors: ["#6259ca", "#fb6b25", "#f5b849", "#e6533c"],
+        colors: ["#985ffd", "#ff49cd", "#fdaf22", "#32d484"],
         responsive: [{
             breakpoint: 480,
             options: {
@@ -287,7 +287,7 @@
                 }
             }
         }],
-        colors: ["#6259ca", "#fb6b25", "#f5b849"],
+        colors: ["#985ffd", "#ff49cd", "#fdaf22"],
         xaxis: {
             categories: ['2011 Q1', '2011 Q2', '2011 Q3', '2011 Q4', '2012 Q1', '2012 Q2',
                 '2012 Q3', '2012 Q4'
@@ -442,7 +442,7 @@
                 columnWidth: '60%'
             }
         },
-        colors: ['#fb6b25'],
+        colors: ['#ff49cd'],
         dataLabels: {
             enabled: false
         },
@@ -454,7 +454,7 @@
             showForSingleSeries: true,
             customLegendItems: ['Actual', 'Expected'],
             markers: {
-                fillColors: ['#fb6b25', '#775DD0']
+                fillColors: ['#ff49cd', '#775DD0']
             }
         },
         xaxis: {
@@ -515,9 +515,9 @@
             }
         },
         dataLabels: {
-            enabled: false
+            enabled: false,
         },
-        colors: ["#6259ca"],
+        colors: ["#985ffd"],
         stroke: {
             width: 2
         },
@@ -528,6 +528,7 @@
             labels: {
                 rotate: -45,
                 rotateAlways: true,
+                offsetY: -50,
                 style: {
                     colors: "#8c9097",
                     fontSize: '11px',
@@ -592,11 +593,11 @@
                     ranges: [{
                         from: -100,
                         to: -46,
-                        color: '#e6533c'
+                        color: '#32d484'
                     }, {
                         from: -45,
                         to: 0,
-                        color: '#a66a5e'
+                        color: '#ff49cd'
                     }]
                 },
                 columnWidth: '80%',
@@ -605,7 +606,7 @@
         grid: {
             borderColor: '#f2f5f7',
         },
-        colors: ["#6259ca"],
+        colors: ["#985ffd"],
         dataLabels: {
             enabled: false,
         },
@@ -693,7 +694,7 @@
         grid: {
             borderColor: '#f2f5f7',
         },
-        colors: ["#6259ca", "#fb6b25"],
+        colors: ["#985ffd", "#ff49cd"],
         plotOptions: {
             bar: {
                 horizontal: false
@@ -742,7 +743,7 @@
             show: false
         }
     }
-    var colors = ['#6259ca', '#fb6b25', '#f5b849', '#49b6f5', '#e6533c', '#26bf94', '#5b67c7'];
+    var colors = ['#985ffd', '#ff49cd', '#fdaf22', '#32d484', '#00c9ff', '#ff6757', '#ff6757'];
     function shuffleArray(array) {
         for (var i = array.length - 1; i > 0; i--) {
             var j = Math.floor(Math.random() * (i + 1));
@@ -1151,7 +1152,7 @@
                 }
             }
         },
-        colors: ['#6259ca', '#fb6b25', '#f5b849', '#49b6f5', '#e6533c', '#26bf94', '#5b67c7', '#a65e76'],
+        colors: ['#985ffd', '#ff49cd', '#fdaf22', '#32d484', '#00c9ff', '#ff6757', 'rgba(53, 181, 170,1)','rgb(190, 43, 235)'],
         plotOptions: {
             bar: {
                 columnWidth: '45%',

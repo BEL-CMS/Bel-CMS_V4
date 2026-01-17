@@ -1,5 +1,6 @@
+@use "variables";
 .navbar {
-  border-radius: $default-radius;
+  border-radius: variables.$default-radius;
   .navbar-nav {
     .nav-link {
       line-height: 1;
@@ -11,9 +12,9 @@
     padding: 0.4rem;
     font-size: 1rem;
     line-height: 1;
-    color: $custom-black;
-    border: 1px solid $default-border;
-    border-radius: $default-radius;
+    color: variables.$custom-black;
+    border: 1px solid variables.$default-border;
+    border-radius: variables.$default-radius;
     .navbar-toggler-icon {
       width: 1rem;
       height: 1rem;
@@ -24,7 +25,7 @@
         font-family: bootstrap-icons !important;
         position: absolute;
         font-size: 1rem;
-        color: $default-text-color;
+        color: variables.$default-text-color;
         inset-inline-start: 0;
       }
     }
@@ -34,289 +35,292 @@
   }
 }
 .navbar-nav .nav-link.active, .navbar-nav .nav-link.show {
-  color: $custom-black;
+  color: variables.$custom-black;
 }
 .navbar-brand {
   margin-inline-end: 1.5rem;
   img {
-    height: 2rem;
-    line-height: 2rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
+  }
+  &:focus,&:hover {
+    color: variables.$default-text-color;
   }
 }
 /* Start:: navbar transparent color schemes */
 .navbar-primary-transparent {
-  background-color: $primary-01;
-  color: $default-text-color;
+  background-color: variables.$primary-01;
+  color: variables.$default-text-color;
   .nav-link {
     &.active {
-      background-color: $primary;
-      color: $white !important;
+      background-color: variables.$primary;
+      color: variables.$white !important;
     }
     &:hover {
-      color: $default-text-color;
+      color: variables.$default-text-color;
     }
   }
   .form-control:focus {
-    border-color: $primary;
+    border-color: variables.$primary;
   }
 }
 .navbar-secondary-transparent {
   background-color: rgba(var(--secondary-rgb), 0.1);
-  color: $default-text-color;
+  color: variables.$default-text-color;
   .nav-link {
     &.active {
-      background-color: $secondary;
-      color: $white !important;
+      background-color: variables.$secondary;
+      color: variables.$white !important;
     }
     &:hover {
-      color: $default-text-color;
+      color: variables.$default-text-color;
     }
   }
   .form-control:focus {
-    border-color: $secondary;
+    border-color: variables.$secondary;
   }
 }
 .navbar-warning-transparent {
   background-color: rgba(var(--warning-rgb), 0.1);
-  color: $default-text-color;
+  color: variables.$default-text-color;
   .nav-link {
     &.active {
-      background-color: $warning;
-      color: $white !important;
+      background-color: variables.$warning;
+      color: variables.$white !important;
     }
     &:hover {
-      color: $default-text-color;
+      color: variables.$default-text-color;
     }
   }
   .form-control:focus {
-    border-color: $warning;
+    border-color: variables.$warning;
   }
 }
 .navbar-info-transparent {
   background-color: rgba(var(--info-rgb), 0.1);
-  color: $default-text-color;
+  color: variables.$default-text-color;
   .nav-link {
     &.active {
-      background-color: $info;
-      color: $white !important;
+      background-color: variables.$info;
+      color: variables.$white !important;
     }
     &:hover {
-      color: $default-text-color;
+      color: variables.$default-text-color;
     }
   }
   .form-control:focus {
-    border-color: $info;
+    border-color: variables.$info;
   }
 }
 .navbar-success-transparent {
   background-color: rgba(var(--success-rgb), 0.1);
-  color: $default-text-color;
+  color: variables.$default-text-color;
   .nav-link {
     &.active {
-      background-color: $success;
-      color: $white !important;
+      background-color: variables.$success;
+      color: variables.$white !important;
     }
     &:hover {
-      color: $default-text-color;
+      color: variables.$default-text-color;
     }
   }
   .form-control:focus {
-    border-color: $success;
+    border-color: variables.$success;
   }
 }
 .navbar-danger-transparent {
   background-color: rgba(var(--danger-rgb), 0.1);
-  color: $default-text-color;
+  color: variables.$default-text-color;
   .nav-link {
     &.active {
-      background-color: $danger;
-      color: $white !important;
+      background-color: variables.$danger;
+      color: variables.$white !important;
     }
     &:hover {
-      color: $default-text-color;
+      color: variables.$default-text-color;
     }
   }
   .form-control:focus {
-    border-color: $danger;
+    border-color: variables.$danger;
   }
 }
 .navbar-dark-transparent {
   background-color: rgba(var(--dark-rgb), 0.1);
-  color: $default-text-color;
+  color: variables.$default-text-color;
   .nav-link {
     &.active {
-      background-color: $custom-black;
-      color: $custom-white !important;
+      background-color: variables.$custom-black;
+      color: variables.$custom-white !important;
     }
     &:hover {
-      color: $default-text-color;
+      color: variables.$default-text-color;
     }
   }
   .form-control:focus {
-    border-color: $dark;
+    border-color: variables.$dark;
   }
 }
 /* End:: navbar transparent color schemes */
 
 /* Start:: navbar solid color schemes */
 .navbar-primary {
-  background-color: $primary;
-  color: $white;
+  background-color: variables.$primary;
+  color: variables.$white;
   .nav-link {
-    color: $white !important;
+    color: variables.$white !important;
     &.active {
-      background-color: $white-2;
-      color: $white !important;
+      background-color: variables.$white-2;
+      color: variables.$white !important;
     }
     &:hover {
-      color: $white !important;
+      color: variables.$white !important;
     }
   }
   .form-control:focus {
-    border-color: $white-2;
+    border-color: variables.$white-2;
   }
   .navbar-toggler {
       border: 1px solid rgba(255,255,255,0.2);
       .navbar-toggler-icon:before {
-          color: $white;
+          color: variables.$white;
       }
   }
 }
 .navbar-secondary {
-  background-color: $secondary;
-  color: $white;
+  background-color: variables.$secondary;
+  color: variables.$white;
   .nav-link {
-    color: $white !important;
+    color: variables.$white !important;
     &.active {
-      background-color: $white-2;
-      color: $white !important;
+      background-color: variables.$white-2;
+      color: variables.$white !important;
     }
     &:hover {
-      color: $white !important;
+      color: variables.$white !important;
     }
   }
   .form-control:focus {
-    border-color: $white-2;
+    border-color: variables.$white-2;
   }
   .navbar-toggler {
       border: 1px solid rgba(255,255,255,0.2);
       .navbar-toggler-icon:before {
-          color: $white;
+          color: variables.$white;
       }
   }
 }
 .navbar-warning {
-  background-color: $warning;
-  color: $white;
+  background-color: variables.$warning;
+  color: variables.$white;
   .nav-link {
-    color: $white !important;
+    color: variables.$white !important;
     &.active {
-      background-color: $white-2;
-      color: $white !important;
+      background-color: variables.$white-2;
+      color: variables.$white !important;
     }
     &:hover {
-      color: $white !important;
+      color: variables.$white !important;
     }
   }
   .form-control:focus {
-    border-color: $white-2;
+    border-color: variables.$white-2;
   }
   .navbar-toggler {
       border: 1px solid rgba(255,255,255,0.2);
       .navbar-toggler-icon:before {
-          color: $white;
+          color: variables.$white;
       }
   }
 }
 .navbar-info {
-  background-color: $info;
-  color: $white;
+  background-color: variables.$info;
+  color: variables.$white;
   .nav-link {
-    color: $white !important;
+    color: variables.$white !important;
     &.active {
-      background-color: $white-2;
-      color: $white !important;
+      background-color: variables.$white-2;
+      color: variables.$white !important;
     }
     &:hover {
-      color: $white !important;
+      color: variables.$white !important;
     }
   }
   .form-control:focus {
-    border-color: $white-2;
+    border-color: variables.$white-2;
   }
   .navbar-toggler {
       border: 1px solid rgba(255,255,255,0.2);
       .navbar-toggler-icon:before {
-          color: $white;
+          color: variables.$white;
       }
   }
 }
 .navbar-success {
-  background-color: $success;
-  color: $white;
+  background-color: variables.$success;
+  color: variables.$white;
   .nav-link {
-    color: $white !important;
+    color: variables.$white !important;
     &.active {
-      background-color: $white-2;
-      color: $white !important;
+      background-color: variables.$white-2;
+      color: variables.$white !important;
     }
     &:hover {
-      color: $white !important;
+      color: variables.$white !important;
     }
   }
   .form-control:focus {
-    border-color: $white-2;
+    border-color: variables.$white-2;
   }
   .navbar-toggler {
       border: 1px solid rgba(255,255,255,0.2);
       .navbar-toggler-icon:before {
-          color: $white;
+          color: variables.$white;
       }
   }
 }
 .navbar-danger {
-  background-color: $danger;
-  color: $white;
+  background-color: variables.$danger;
+  color: variables.$white;
   .nav-link {
-    color: $white !important;
+    color: variables.$white !important;
     &.active {
-      background-color: $white-2;
-      color: $white !important;
+      background-color: variables.$white-2;
+      color: variables.$white !important;
     }
     &:hover {
-      color: $white !important;
+      color: variables.$white !important;
     }
   }
   .form-control:focus {
-    border-color: $white-2;
+    border-color: variables.$white-2;
   }
   .navbar-toggler {
       border: 1px solid rgba(255,255,255,0.2);
       .navbar-toggler-icon:before {
-          color: $white;
+          color: variables.$white;
       }
   }
 }
 .navbar-dark {
-  background-color: $dark;
-  color: $custom-white;
+  background-color: variables.$dark;
+  color: variables.$custom-white;
   .nav-link {
-    color: $custom-white !important;
+    color: variables.$custom-white !important;
     &.active {
-      background-color: $white-2;
-      color: $custom-white !important;
+      background-color: variables.$white-2;
+      color: variables.$custom-white !important;
     }
     &:hover {
-      color: $custom-white !important;
+      color: variables.$custom-white !important;
     }
   }
   .form-control:focus {
-    border-color: $white-2;
+    border-color: variables.$white-2;
   }
   .navbar-toggler {
-      border: 1px solid $white-1;
+      border: 1px solid variables.$white-1;
       .navbar-toggler-icon:before {
-          color: $custom-white;
+          color: variables.$custom-white;
       }
   }
 }

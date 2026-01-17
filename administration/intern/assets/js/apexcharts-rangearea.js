@@ -60,7 +60,10 @@
         ],
         chart: {
             height: 350,
-            type: 'rangeArea'
+            type: 'rangeArea',
+            toolbar: {
+                show: false,
+            }
         },
         stroke: {
             curve: 'straight'
@@ -68,7 +71,7 @@
         title: {
             text: 'New York Temperature (all year round)'
         },
-        colors: ["#6259ca"],
+        colors: ["#985ffd"],
         markers: {
             hover: {
                 sizeOffset: 5
@@ -266,11 +269,14 @@
         chart: {
             height: 350,
             type: 'rangeArea',
+            toolbar: {
+                show: false,
+            },
             animations: {
                 speed: 500
             }
         },
-        colors: ['#6259ca', '#fb6b25', '#6259ca', '#fb6b25'],
+        colors: ['#985ffd', '#ff49cd', '#985ffd', '#ff49cd'],
         dataLabels: {
             enabled: false
         },

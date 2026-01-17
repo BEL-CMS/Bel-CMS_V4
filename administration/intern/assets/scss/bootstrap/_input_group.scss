@@ -1,9 +1,10 @@
+@use "variables";
 .input-group-text {
-    border-color: $input-border;
+    border-color: variables.$input-border;
     font-size: 0.875rem;
-    border-radius: 0.3125rem;
+    border-radius: 0.25rem;
     background-color: rgb(var(--light-rgb));
-    color: $default-text-color;
+    color: variables.$default-text-color;
     letter-spacing: 0;
     .form-control {
         border: 0;

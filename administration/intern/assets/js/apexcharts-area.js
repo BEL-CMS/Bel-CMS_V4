@@ -37,7 +37,7 @@
                 color: '#8c9097'
             },
         },
-        colors: ['#6259ca'],
+        colors: ['#985ffd'],
         xaxis: {
             type: 'datetime',
             labels: {
@@ -82,7 +82,7 @@
             height: 320,
             type: 'area'
         },
-        colors: ["#6259ca", "#fb6b25"],
+        colors: ["#985ffd", "#ff49cd"],
         dataLabels: {
             enabled: false
         },
@@ -354,7 +354,7 @@
                 show: false
             }
         },
-        colors: ["#6259ca", "#fb6b25"],
+        colors: ["#985ffd", "#ff49cd"],
         fill: {
             opacity: 0.5
         },
@@ -415,7 +415,7 @@
         grid: {
             borderColor: '#f2f5f7',
         },
-        colors: ['#6259ca'],
+        colors: ['#985ffd'],
         stroke: {
             width: 0,
             curve: 'smooth'
@@ -470,7 +470,7 @@
                 }
             },
         },
-        colors: ['#fb6b25'],
+        colors: ['#ff49cd'],
         dataLabels: {
             enabled: false
         },
@@ -563,7 +563,7 @@
                 }
             },
         },
-        colors: ['#6259ca', '#fb6b25', '#e6eaeb'],
+        colors: ['#985ffd', '#ff49cd', '#e6eaeb'],
         grid: {
             borderColor: '#f2f5f7',
         },
@@ -582,7 +582,8 @@
         },
         legend: {
             position: 'top',
-            horizontalAlign: 'left'
+            horizontalAlign: 'left',
+            offsetX: -10
         },
         xaxis: {
             type: 'datetime'
@@ -639,7 +640,7 @@
         markers: {
             size: 0,
         },
-        colors: ["#6259ca", "#fb6b25", "#f5b849"],
+        colors: ["#985ffd", "#ff49cd", "#fdaf22"],
         fill: {
             type: 'gradient',
             gradient: {
@@ -850,7 +851,7 @@
                 color: '#8c9097'
             },
         },
-        colors: ["#6259ca"],
+        colors: ["#985ffd"],
         grid: {
             borderColor: '#f2f5f7',
         },
@@ -1182,7 +1183,7 @@
                 autoScaleYaxis: true
             }
         },
-        colors: ["#6259ca"],
+        colors: ["#985ffd"],
         annotations: {
             yaxis: [{
                 y: 30,

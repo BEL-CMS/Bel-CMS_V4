@@ -35,7 +35,7 @@
             enabled: true,
             enabledOnSeries: [1]
         },
-        colors: ["#6259ca", "#fb6b25"],
+        colors: ["#985ffd", "#ff49cd"],
         labels: ['01 Jan 2001', '02 Jan 2001', '03 Jan 2001', '04 Jan 2001', '05 Jan 2001', '06 Jan 2001', '07 Jan 2001', '08 Jan 2001', '09 Jan 2001', '10 Jan 2001', '11 Jan 2001', '12 Jan 2001'],
         xaxis: {
             type: 'datetime',
@@ -117,7 +117,7 @@
         grid: {
             borderColor: '#f2f5f7',
         },
-        colors: ["#6259ca", "#fb6b25", "#f5b849"],
+        colors: ["#985ffd", "#ff49cd", "#fdaf22"],
         xaxis: {
             categories: [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016],
             labels: {
@@ -137,17 +137,17 @@
                 },
                 axisBorder: {
                     show: true,
-                    color: '#6259ca'
+                    color: '#985ffd'
                 },
                 labels: {
                     style: {
-                        colors: '#6259ca',
+                        colors: '#985ffd',
                     }
                 },
                 title: {
                     text: "Income (thousand crores)",
                     style: {
-                        color: '#6259ca',
+                        color: '#985ffd',
                     }
                 },
                 tooltip: {
@@ -162,17 +162,17 @@
                 },
                 axisBorder: {
                     show: true,
-                    color: '#fb6b25'
+                    color: '#ff49cd'
                 },
                 labels: {
                     style: {
-                        colors: '#fb6b25',
+                        colors: '#ff49cd',
                     }
                 },
                 title: {
                     text: "Operating Cashflow (thousand crores)",
                     style: {
-                        color: '#fb6b25',
+                        color: '#ff49cd',
                     }
                 },
             },
@@ -184,17 +184,17 @@
                 },
                 axisBorder: {
                     show: true,
-                    color: '#f5b849'
+                    color: '#fdaf22'
                 },
                 labels: {
                     style: {
-                        colors: '#f5b849',
+                        colors: '#fdaf22',
                     },
                 },
                 title: {
                     text: "Revenue (thousand crores)",
                     style: {
-                        color: '#f5b849',
+                        color: '#fdaf22',
                     }
                 }
             },
@@ -233,7 +233,7 @@
         stroke: {
             curve: 'smooth'
         },
-        colors: ["#6259ca", "#fb6b25"],
+        colors: ["#985ffd", "#ff49cd"],
         grid: {
             borderColor: '#f2f5f7',
         },
@@ -306,7 +306,7 @@
             }
         }
     };
-    var chart = new ApexCharts(document.querySelector("#mixed-linearea2"), options);
+    var chart = new ApexCharts(document.querySelector("#mixed-linearea"), options);
     chart.render();
 
     /* line column and area chart */
@@ -338,7 +338,7 @@
                 columnWidth: '50%'
             }
         },
-        colors: ["#6259ca","#fb6b25","#f5b849"],
+        colors: ["#985ffd","#ff49cd","#fdaf22"],
         grid: {
             borderColor: '#f2f5f7',
         },

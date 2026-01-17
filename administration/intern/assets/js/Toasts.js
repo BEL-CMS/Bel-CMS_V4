@@ -200,4 +200,17 @@
 		})
 	}
 
+	/* Toastify js */
+	document.getElementById("toast-button").addEventListener("click", function () {
+        Toastify({
+            text: "I'm a toast Message",
+            duration: 3000,
+            newWindow: true,
+            close: true,
+            gravity: "top", // `top` or `bottom`
+            positionRight: true, // `true` or `false`
+            backgroundColor: "linear-gradient(to right, var(--primary-color), rgb(215, 124, 247))"
+        }).showToast();
+    });
+
 })();    

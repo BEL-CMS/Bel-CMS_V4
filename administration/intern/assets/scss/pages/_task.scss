@@ -1,0 +1,229 @@
+@use "variables";
+/* Start::task-kanboard-board */
+.VYZOR-kanban-board {
+    display: flex;
+    overflow-x: auto;
+    align-items: stretch;
+    margin-bottom: 0.75rem;
+    padding-bottom: 1rem;
+    .kanban-tasks-type {
+        min-width: 20rem;
+        margin-inline-end: 0.5rem;
+        width: 100%;
+        .kanban-tasks{
+            .card {
+                touch-action: none;
+            }
+        }
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(var(--dark-rgb), 0.1);
+        border-radius: .3125rem;
+    }
+    &::-webkit-scrollbar-track {
+        border-radius: .3125rem;
+    }
+    .task-image {
+        .kanban-image {
+            height: 150px;
+            width: 100%;
+        }
+    } 
+    .kanban-content {
+        margin-top: 0.75rem;
+    }
+    .kanban-task-description {
+        color: variables.$default-text-color;
+        font-size: 0.82rem;
+    }
+    .kanban-tasks-type {
+        &.new {
+            .kanban-tasks .card {
+                background-color: rgba(var(--primary-rgb),0.05);
+                border: 1px solid rgba(var(--primary-rgb), 0.1);
+                .badge {
+                    background-color: rgba(var(--primary-rgb), 0.1);
+                    color: variables.$primary;
+                }
+            }
+        }
+        &.todo {
+            .kanban-tasks .card {
+                background-color: rgba(var(--warning-rgb),0.05);
+                border: 1px solid rgba(var(--warning-rgb), 0.1);
+                .badge {
+                    background-color: rgba(var(--warning-rgb), 0.1);
+                    color: variables.$warning;
+                }
+            }
+        }
+        &.in-progress {
+            .kanban-tasks .card {
+                background-color: rgba(var(--info-rgb),0.05);
+                border: 1px solid rgba(var(--info-rgb), 0.1);
+                .badge {
+                    background-color: rgba(var(--info-rgb), 0.1);
+                    color: variables.$info;
+                }
+            }
+        }
+        &.inreview {
+            .kanban-tasks .card {
+                background-color: rgba(var(--danger-rgb),0.05);
+                border: 1px solid rgba(var(--danger-rgb), 0.1);
+                border: 0;
+                .badge {
+                    background-color: rgba(var(--danger-rgb), 0.1);
+                    color: variables.$danger;
+                }
+            }
+        }
+        &.completed {
+            .kanban-tasks .card {
+                background-color: rgba(var(--success-rgb),0.05);
+                border: 1px solid rgba(var(--success-rgb), 0.1);
+                .badge {
+                    background-color: rgba(var(--success-rgb),0.1);
+                    color: variables.$success;
+                }
+            }
+        }
+    }
+    #new-tasks,#todo-tasks,#inprogress-tasks,#inreview-tasks,#completed-tasks {
+        .card.custom-card:last-child {
+            margin-bottom: 0;
+        }
+    }
+    #new-tasks,#todo-tasks,#inprogress-tasks,#inreview-tasks,#completed-tasks {
+        position: relative;
+        max-height: 35rem;
+        .simplebar-content {
+            // padding: 0 1rem 0 0 !important;
+            padding-block-start: 0px !important;
+            padding-inline-end: 1rem !important;
+            padding-block-end: 0px !important;
+            padding-inline-start: 0px !important;
+        }
+    }
+    .task-null-background {
+        display: none;
+    }
+    .task-Null {
+        position: relative;
+        min-height: 12.5rem;
+        .task-null-background {
+            position: absolute;
+            width: 100%;
+            height: 12.5rem;
+            inset-inline-start: 0;
+            inset-block-start: 0;
+            display: block;
+            pointer-events: none;
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+    }
+    .view-more-button {
+        margin-inline-end: 1rem;
+    }
+}
+.kanban-header {
+    .choices {
+        margin-bottom: 0;
+    }
+}
+/* end::task-kanboard-board */
+
+/* Start::task-details */
+.task-title {
+    position: relative;
+    inset-inline-start: 1rem;
+    &::before {
+        position: absolute;
+        content: "";
+        width: 0.5rem;
+        height: 0.5rem;
+        inset-inline-start: -1rem;
+        top: 0.75rem;
+        border-radius: 50%;
+        background-color: variables.$primary;
+    }
+}
+.task-details-key-tasks {
+    list-style-type:decimal;
+    li {
+        margin-bottom: 0.5rem;
+        font-size: .875rem;
+        color: variables.$text-muted;
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+.task-description {
+    font-size: 0.875rem;
+}
+.task-details-progress {
+    width: 6.25rem;
+}
+.task-comment-new {
+    background-color: var(--custom-white);
+    position: absolute;
+    width: 100%;
+    inset-inline-start: 0;
+    inset-block-end: 0;
+    padding: 20px;
+    border-top: 1px solid var(--default-border);
+}
+#task-comments-area {
+    height: 367px;
+    padding-block-end: 6rem;
+     li {
+        padding-inline-start: 3rem;
+     }
+}
+ul.task-additional-list {
+    margin-block-end: 0;
+    li {
+        margin-block-end: 1.29rem;
+        &:last-child {
+            margin-block-end: 0;
+        }
+    }
+}
+ul.task-files-list {
+    margin-block-end: 0;
+    li {
+        margin-block-end: .62rem;
+        padding: 0.25rem;
+        border: 1px solid var(--default-border);
+        border-radius: 30px;
+        &:last-child {
+            margin-block-end: 0;
+        }
+    }
+}
+ul.sub-tasks-list {
+    margin-block-end: 0;
+    li {
+        margin-block-end: 1.62rem;
+        &:last-child {
+            margin-block-end: 0;
+        }
+    }
+}
+.sub-tasks-list .form-check-input:checked + .form-check-label {
+    text-decoration: line-through;
+    color: var(--text-muted);
+  }
+  .sub-tasks-list .form-check-label {
+    transition: color 0.3s, -webkit-text-decoration 0.3s;
+    transition: color 0.3s, text-decoration 0.3s;
+    transition: color 0.3s, text-decoration 0.3s, -webkit-text-decoration 0.3s;
+    font-weight: 400;
+    font-size: 0.8rem;
+  }
+/* End::task-details */
