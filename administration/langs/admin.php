@@ -24,6 +24,5 @@ Common::constant(array(
 	#####################################
 	'ADMINISTRATORS'      => 'Administrateur',
 	'MEMBERS'             => 'Membres',
-	'ADMIN_TEXT_FALSE_ID' => 'Un administrateur a reçu des informations sur une situation alarmante relative à l\'ID.',
-	'ERROR_ARRAY'         => 'Attention ! la sauvegarde se fait uniquement par tableau array'
+	'ADMIN_TEXT_FALSE_ID' => 'Un administrateur a reçu des informations sur une situation alarmante relative à l\'ID.'
 ));

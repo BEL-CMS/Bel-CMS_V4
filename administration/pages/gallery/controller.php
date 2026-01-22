@@ -26,10 +26,10 @@ class Gallery extends AdminPages
 
     public function index ()
     {
-        $menu[] = array('title' => 'Ajouter', 'href' => 'gallery/addimg?Admin&option=pages', 'ico'  => 'fa-solid fa-file-image');
-        $menu[] = array('title' => 'catégories', 'href' => 'gallery/categories?Admin&option=pages', 'ico'  => 'fa-solid fa-list');
-        $menu[] = array('title' => 'Sous-Catégories', 'href' => 'gallery/subcat?Admin&option=pages', 'ico'  => 'fa-solid fa-table-cells-large');
-        $menu[] = array('title' => 'A validé', 'href' => 'gallery/valid?Admin&option=pages', 'ico'  => 'fa-solid fa-check-double');
+        $menu[] = array('title' => 'Ajouter', 'href' => 'gallery/addimg?Admin&option=pages', 'color'  => 'alert-solid-primary');
+        $menu[] = array('title' => 'Catégories', 'href' => 'gallery/categories?Admin&option=pages', 'color'  => 'alert-solid-warning');
+        $menu[] = array('title' => 'Sous-Catégories', 'href' => 'gallery/subcat?Admin&option=pages', 'color'  => 'alert-solid-danger');
+        //$menu[] = array('title' => 'A validé', 'href' => 'gallery/valid?Admin&option=pages', 'color'  => 'text-bg-info p-3');
 
         $a['screen'] = $this->models->getGallery ();
 
@@ -42,9 +42,9 @@ class Gallery extends AdminPages
     }
     public function valid ()
     {
-        $menu[] = array('title' => 'Accueil', 'href' => 'gallery?Admin&option=pages', 'ico'  => 'fa-solid fa-igloo');
-        $menu[] = array('title' => 'Ajouté une image', 'href' => 'gallery/addImg/?Admin&option=pages', 'ico'  => 'fa-solid fa-image');
-        $menu[] = array('title' => 'Liste de(s) catégorie(s)', 'href' => 'gallery/categories/?Admin&option=pages', 'ico'  => 'fa-solid fa-layer-group');
+        $menu[] = array('title' => 'Accueil', 'href' => 'gallery?Admin&option=pages', 'color'  => 'text-bg-info p-3');
+        $menu[] = array('title' => 'Ajouté une image', 'href' => 'gallery/addImg/?Admin&option=pages', 'color'  => 'alert-solid-warning');
+        $menu[] = array('title' => 'Liste de(s) catégorie(s)', 'href' => 'gallery/categories/?Admin&option=pages', 'color'  => 'alert-solid-dangerp');
         $a['gallery'] = $this->models->getGalleryValid();
         foreach ($a['gallery'] as $key => $v) {
             $a['gallery'][$key]->id_cat = $this->models->getcat($v->id_cat);

@@ -1,1300 +1,372 @@
-@use "variables";
-/* Sales Dashbaord */
-@media(min-width: 1400px) and (max-width: 1600px) {
-  .card.custom-card.recent-activity-card {
-    .card-body {
-      padding-inline: 1rem !important;
-    }
-  }
-}
-.dashboard-banner-image {
-  svg {
-    width: 200px;
-    position: absolute;
-    height: 200px;
-    inset-inline-end: -50px;
-    inset-block-end: -50px;
-  }
-}
-.card.custom-card.dashboard-banner-card {
-  position: relative;
-  z-index: 1;
-  .dashboard-banner-card-background {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    inset-inline-start: 0;
-    inset-block-start: 0;
-    z-index: -1;
-    opacity: 0.2;
-    img { 
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  }
-}
-#visitors-report {
-  .apexcharts-yaxis .apexcharts-text {
-    fill: variables.$default-text-color;
-  }
-}
-.recent-activity-list {
-  position: relative;
-  margin-block-end: 0;
-  &::before {
-    content: "";
-    position: absolute;
-    width: 1px;
-    height: 100%;
-    border-inline-start: 1px solid variables.$default-border;
-    inset-inline-start: 5rem;
-    inset-block-start: 10px;
-  }
-  li {  
-    margin-block-end: 1.35rem;
-    padding-inline-start: 6.5rem;
-    position: relative;
-    &:last-child {
-      margin-block-end: 0;
-    }
-    &::before {
-      content: "";
-      position: absolute;
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      inset-block-start: 9px;
-      inset-inline-start: 4.8125rem;
-    }
-    &:nth-child(1)::before {
-      background-color: variables.$primary;
-      box-shadow: 0px 0px 0px 4px rgba(var(--primary-rgb), 0.2);
-    }
-    &:nth-child(2)::before {
-      background-color: variables.$warning;
-      box-shadow: 0px 0px 0px 4px rgba(var(--warning-rgb), 0.2);
-    }
-    &:nth-child(3)::before {
-      background-color: variables.$info;
-      box-shadow: 0px 0px 0px 4px rgba(var(--info-rgb), 0.2);
-    }
-    &:nth-child(4)::before {
-      background-color: variables.$success;
-      box-shadow: 0px 0px 0px 4px rgba(var(--success-rgb), 0.2);
-    }
-    &:nth-child(5)::before {
-      background-color: variables.$orange;
-      box-shadow: 0px 0px 0px 4px rgba(var(--orange-rgb), 0.2);
-    }
-    .recent-activity-time {
-      position: absolute;
-      inset-inline-start: 0;
-      inset-block-start: 3px;
-      font-size: 13px;
-    }
-  }
-}
-.card.custom-card.dashboard-main-card{
-  .avatar {
-    &.bg-primary-transparent {
-      background-color: rgba(var(--primary-rgb), 0.05) !important;
-      svg {
-        filter: drop-shadow(0 6px 6px rgba(var(--primary-rgb), 0.4));
-      }
-    }
-    &.bg-warning-transparent {
-      background-color: rgba(var(--warning-rgb), 0.05) !important;
-      svg {
-        filter: drop-shadow(0 6px 6px rgba(var(--warning-rgb), 0.4));
-      }
-    }
-    &.bg-secondary-transparent {
-      background-color: rgba(var(--secondary-rgb), 0.05) !important;
-      svg {
-        filter: drop-shadow(0 6px 6px rgba(var(--secondary-rgb), 0.4));
-      }
-    }
-    &.bg-success-transparent {
-      background-color: rgba(var(--success-rgb), 0.05) !important;
-      svg {
-        filter: drop-shadow(0 6px 6px rgba(var(--success-rgb), 0.4));
-      }
-    }
-    &.bg-info-transparent {
-      background-color: rgba(var(--info-rgb), 0.05) !important;
-      svg {
-        filter: drop-shadow(0 6px 6px rgba(var(--info-rgb), 0.4));
-      }
-    }
-    &.bg-danger-transparent {
-      background-color: rgba(var(--danger-rgb), 0.05) !important;
-      svg {
-        filter: drop-shadow(0 6px 6px rgba(var(--danger-rgb), 0.4));
-      }
-    }
-    &.bg-pink-transparent {
-      background-color: rgba(var(--pink-rgb), 0.05) !important;
-      svg {
-        filter: drop-shadow(0 6px 6px rgba(var(--pink-rgb), 0.4));
-      }
-    }
-    &.bg-purple-transparent {
-      background-color: rgba(var(--purple-rgb), 0.05) !important;
-      svg {
-        filter: drop-shadow(0 6px 6px rgba(var(--purple-rgb), 0.4));
-      }
-    }
-  }
-  &::before {
-    content: "";
-    width: 3px;
-    height: 100%;
-    position: absolute;
-    inset-inline-start: 0;
-    inset-block-start: 0;
-    border-radius: 10px 0 0 10px;
-  }
-  &.primary::before {
-    background-color: rgba(var(--primary-rgb), 1);
-  }
-  &.warning::before {
-    background-color: rgba(var(--warning-rgb), 1);
-  }
-  &.secondary::before {
-    background-color: rgba(var(--secondary-rgb), 1);
-  }
-  &.success::before {
-    background-color: rgba(var(--success-rgb), 1);
-  }
-  &.info::before {
-    background-color: rgba(var(--info-rgb), 1);
-  }
-  &.danger::before {
-    background-color: rgba(var(--danger-rgb), 1);
-  }
-  &.pink::before {
-    background-color: rgba(var(--pink-rgb), 1);
-  }
-  &.purple::before {
-    background-color: rgba(var(--purple-rgb), 1);
-  }
-  &.dark::before {
-    background-color: rgba(var(--dark-rgb), 1);
-  }
-}
-.top-selling-products-list {
-  margin-block-end: 0;
-  li {
-    margin-block-end: 0.78rem;
-    padding: 0.5rem;
-    border: 1px solid var(--default-border);
-    border-radius: 0.5rem;
-    &:last-child {
-      margin-block-end: 0;
-    }
-  }
-} 
-ul.recent-transactions-list {
-  margin-block-end: 0;
-  li {
-    margin-block-end: 1.62rem;
-    &:last-child {
-      margin-block-end: 0;
-    }
-  }
-}
-ul.top-customers-list {
-  margin-block-end: 0;
-  li {
-    margin-bottom: 0.65rem;
-    &:last-child {
-      margin-bottom: 0;
-    }
-    >div {
-      padding: 0.65rem;
-      border-radius: 10px;
-      // background-color: variables.$light;
-      border: 1px dashed variables.$default-border;
-    }
-  }
-}
-ul.top-user-channels-list {
-  margin-block-end: 0;
-  li {
-    margin-block-end: 1.36rem;
-    &:last-child {
-      margin-block-end: 0;
-    }
-  }
-}
-ul.top-selling-categories-list {
-  .avatar {
-    &.bg-primary-transparent {
-      background-color: rgba(var(--primary-rgb), 0.05) !important;
-      svg {
-        filter: drop-shadow(0 6px 6px rgba(var(--primary-rgb), 0.4));
-      }
-    }
-    &.bg-secondary-transparent {
-      background-color: rgba(var(--secondary-rgb), 0.05) !important;
-      svg {
-        filter: drop-shadow(0 6px 6px rgba(var(--secondary-rgb), 0.4));
-      }
-    }
-    &.bg-warning-transparent {
-      background-color: rgba(var(--warning-rgb), 0.05) !important;
-      svg {
-        filter: drop-shadow(0 6px 6px rgba(var(--warning-rgb), 0.4));
-      }
-    }
-    &.bg-info-transparent {
-      background-color: rgba(var(--info-rgb), 0.05) !important;
-      svg {
-        filter: drop-shadow(0 6px 6px rgba(var(--info-rgb), 0.4));
-      }
-    }
-    &.bg-success-transparent {
-      background-color: rgba(var(--success-rgb), 0.05) !important;
-      svg {
-        filter: drop-shadow(0 6px 6px rgba(var(--success-rgb), 0.4));
-      }
-    }
-  }
-}
-/* Sales Dashbaord */
-
-/* Analytics Dashboard */
-ul.browser-insights-list {
-  margin-block-end: 0;
-  li {
+.counter-icon {
     margin-block-end: 1rem;
-    &:last-child {
-      margin-block-end: 0;
-    }
-  }
+    width: 4rem;
+    height: 4rem;
+    line-height: 4rem;
+    text-align: center;
+    font-size: 24px;
 }
-.top-referral-pages li {
-  position: relative;
-  margin-block-end: 1rem;
-  margin-inline-start: 1rem;
 
-  &:last-child {
-    margin-block-end: 0;
-  }
+.icon-rocket:before {
+    content: "\e05c";
+}
 
-  &:before {
+.number-font {
+    font-weight: 600 !important;
+}
+
+.activity1 {
+    .activity-blog:last-child {
+        &::before {
+            border: none !important;
+        }
+    }
+}
+
+.activity-blog:before {
     content: "";
     position: absolute;
-    width: 0.5rem;
-    height: 0.5rem;
-    inset-block-start: 7px;
-    inset-inline-start: -1rem;
+    inset-block-start: 45px;
+    inset-block-end: 0;
+    inset-inline-start: 23px;
+    border-inline-start: 1px solid $default-border;
+}
+
+.activity-blog {
+    display: flex;
+    position: relative;
+    min-height: 70px;
+}
+
+.activity-img {
+    width: 45px;
+    height: 45px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid;
+}
+
+.activity-details {
+    margin-inline-start: 15px;
+    width: 80%;
+    margin-block-start: 6px;
+}
+
+.browser-stats .logo-icon {
+    font-size: 22px;
+    width: 45px;
+    height: 45px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 50%;
-  }
+}
 
-  &.primary {
-    &:before {
-      background-color: variables.$primary;
-    }
-  }
-
-  &.info {
-    &:before {
-      background-color: variables.$info;
-    }
-  }
-
-  &.warning {
-    &:before {
-      background-color: variables.$warning;
-    }
-  }
-
-  &.success {
-    &:before {
-      background-color: variables.$success;
-    }
-  }
+.browser-stats {
+    min-height: 71px;
+    display: flex;
 }
-.sales-stats {
-  padding-left: 50px;
-}
-.custom-border-end{
-  border-inline-end: 1px solid variables.$default-border !important;
-}
-@media(min-width: 320px) and (max-width: 415px) {
-  .custom-border-end{
-    border-inline-end: 0px solid variables.$default-border !important;
-  }
-}
-@media(min-width: 1401px) and (max-width: 1828px) {
-  .custom-border-end{
-    border-inline-end: 0px solid variables.$default-border !important;
-  }
-}
-/* Analytics Dashboard */
-
-/* Ecommerce Dashboard */
-ul.ecommerce-recent-orders-list {
-  margin-block-end: 0;
-  li {
-    margin-block-end: 1.25rem;
-    &:last-child {
-      margin-block-end: 0;
-    }
-  }
-}
-.card.custom-card.atm-card {
-  z-index: 1;
-  .atm-card-background-container {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    inset-inline-start: 0;
-    inset-block-start: 0;
-    z-index: -1;
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  }
-}
-#top-categories {
-  .apexcharts-pie circle {
-    stroke: transparent;
-  }
-}
-ul.top-categories-list {
-  margin-block-end: 0;
-  li {
-    margin-block-end: 1rem;
-    padding-inline-start: 1.5rem;
-    position: relative;
-    &::before {
-      content: "";
-      position: absolute;
-      width: 8px;
-      height: 8px;
-      inset-inline-start: 0;
-      inset-block-start: 7px;
-      border-radius: 0.25rem;
-    }
-    &:nth-child(1)::before {
-      background-color: variables.$primary;
-    }
-    &:nth-child(2)::before {
-      background-color: variables.$secondary;
-    }
-    &:nth-child(3)::before {
-      background-color: variables.$success;
-    }
-    &:nth-child(4)::before {
-      background-color: variables.$warning;
-    }
-    &:last-child {
-      margin-block-end: 0;
-    }
-  }
-}
-.top-country-name {
-  width: 4.5rem;
-} 
-ul.top-country-sales-list {
-  margin-block-end: 0;
-  li {
-    margin-block-end: 1.1rem;
-    &:last-child {
-      margin-block-end: 0;
-    }
-  }
-}
-ul.transaction-history-list {
-  margin-block-end: 0;
-  li {
-    margin-block-end: 1.22rem;
-    &:last-child {
-      margin-block-end: 0;
-    }
-  }
-}
-/* Ecommerce Dashboard */
-
-/* Crypto Dashboard */
-ul.crypto-transaction-history-list {
-  margin-block-end: 0;
-  li {
-    margin-block-end: 1.76rem;
-    &:last-child {
-      margin-block-end: 0;
-    }
-  }
-}
-ul.recent-activity-crypto-list {
-  margin-block-end: 0;
-  li {
-    margin-block-end: 1.76rem;
-    &:last-child {
-      margin-block-end: 0;
-    }
-  }
-}
-/* Crypto Dashboard */
-
-/* Crm Dashboard */
-ul.leads-source-list {
-  li {
-    position: relative;
-    padding-inline-start: 2rem;
-    &:before {
-      content: "";
-      position: absolute;
-      width: 8px;
-      height: 8px;
-      border-radius: 0.25rem;
-      inset-inline-start: 14px;
-      inset-block-start: 23px;
-    }
-    &:nth-child(1):before {
-      background-color: variables.$primary;
-    }
-    &:nth-child(2):before {
-      background-color: variables.$secondary;
-    }
-    &:nth-child(3):before {
-      background-color: variables.$success;
-    }
-    &:nth-child(4):before {
-      background-color: variables.$orange;
-    }
-    &:nth-child(5):before {
-      background-color: variables.$info;
-    }
-    &:nth-child(6):before {
-      background-color: variables.$warning;
-    }
-  }
-}
-ul.task-list-tab {
-  margin-block-end: 0;
-  li {
-    margin-block-end: 1.5rem;
-    &:last-child {
-      margin-block-end: 0;
-    }
-  }
-}
-.crm-task-name {
-  max-width: 200px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-}
-.lead-title {
-  position: relative;
-  padding-inline-start: 1.5rem;
-  &:before {
-    content: "";
-    position: absolute;
-    width: 12px;
-    height: 6px;
-    inset-inline-start: 0;
-    inset-block-start: 8px;
-    border-radius: 2px;
-  }
-  &.total:before {
-    background-color: variables.$primary;
-  }
-  &.target:before {
-    background-color: variables.$success;
-  }
-}
-ul.crm-top-deals-list {
-  margin-block-end: 0;
-  li {
-    margin-block-end: 1.25rem;
-    &:last-child {
-      margin-block-end: 0;
-    }
-  }  
-}
-.crm-top-deals {
-  margin-block-end: 0;
-  li {
-    margin-block-end: 0.93rem;
-    &:last-child {
-      margin-block-end: 0;
-    }
-  }
-}
-/* Crm Dashboard */
-
-/* Projects Dashboard */
-ul.project-task-activity-list {
-  li .task-type {
-    padding-inline-start: 1rem;
-    position: relative;
-    &:before {
-      content: "";
-      position: absolute;
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      inset-inline-start: 0;
-      inset-block-start: 7px;
-    }
-    &.on-going:before {
-      background-color: variables.$primary;
-    }
-    &.completed:before {
-      background-color: variables.$secondary;
-    }
-    &.todo:before {
-      background-color: variables.$success;
-    }
-    &.pending:before {
-      background-color: variables.$warning;
-    }
-  }
-}
-ul.projects-recent-activity-list {
-  margin-block-end: 0;
-  position: relative;
-  &:before {
-    content: "";
-    position: absolute;
-    width: .0938rem;
-    height: 100%;
-    background-color: variables.$default-border;
-    inset-inline-start: 20px;
-    inset-block-start: -3px;
-  }
-  li {
-    margin-block-end: .875rem;
-    &:last-child {
-      margin-block-end: 0;
-    }
-    .descrption {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      font-size: 13px;
-      color: variables.$text-muted;
-    }
-  }
-}
-.urgent-task-title {
-  display: block;
-  max-width: 150px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-ul.projects-recent-transactions-list {
-  margin-block-end: 0;
-  li {
-    margin-block-end: 1.25rem;
-    &:last-child {
-      margin-block-end: 0;
-    }
-  }
-}
-/* Projects Dashboard */
-
-/* HRM Dashboard */
-#attendance-overview {
-  .apexcharts-pie circle {
-    stroke: transparent;
-  }
-}
-.hrm-attendance-overview-list {
-  margin-block-end: 0;
-  li {
-    margin-block-end: 1rem;
-    &:last-child {
-      margin-block-end: 0;
-    }
-    .attendance-type {
-      margin-inline-start: 1.05rem;
-      position: relative;
-      &::before {
-        content: "";
-        position: absolute;
-        width: 8px;
-        height: 8px;
-        inset-inline-start: -1rem;
-        inset-block-start: 7px;
-        border-radius: 50%;
-      }
-      &.present:before {
-        background-color: variables.$primary;
-      }
-      &.late:before {
-        background-color: variables.$success;
-      }
-      &.permission:before {
-        background-color: variables.$warning;
-      }
-      &.absent:before {
-        background-color: variables.$danger;
-      }
-    }
-  }
-}
-.employee-status-marker {
-  position: relative;
-  padding-inline-start: 1rem;
-  &:before {
-    content: "";
-    position: absolute;
+.legend {
     width: 8px;
     height: 8px;
-    inset-inline-start: 0;
-    inset-block-start: 6px;
-    border-radius: 50%;
-  }
-  &.remote:before {
-    background-color: variables.$primary;
-  }
-  &.probation:before {
-    background-color: variables.$success;
-  }
-  &.contract:before {
-    background-color: variables.$warning;
-  }
-  &.work-home:before {
-    background-color: variables.$danger;
-  }
+    display: inline-block;
+    border-radius: 100%;
+    margin-inline-end: 5px;
+    margin-top: 6px;
 }
-ul.hrm-employee-list {
-  margin-block-end: 0;
-  li {
-    margin-block-end: 1.55rem;
-    &:last-child {
-      margin-block-end: 0;
-    }
-  }
-}
-@media (min-width: 1199px) {
-  .border-md-end{
-    border-inline-end: 1px solid variables.$default-border !important;
-  }
-}
-/* HRM Dashboard */
-
-/* Courses Dashboard */
-ul.top-course-categories-list {
-    margin-block-end: 0;
-    li {
-      margin-block-end: 1.6rem;
-      &:last-child {
-        margin-block-end: 0;
-      }
-    }
-} 
-ul.ongoing-courses-list {
-  margin-block-end: 0;
-  li {
-    margin-block-end: 1.5rem;
-    &:last-child {
-      margin-block-end: 0;
-    }
-  }
-}
-ul.top-instructors-list {
-  margin-block-end: 0;
-  li {
-    margin-block-end: 1.35rem;
-    &:last-child {
-       margin-block-end: 0;
-     }
-  }
-}
-ul.upcoming-schedules-list {
-  margin-block-end: 0;
-  li {
-    margin-block-end: 1.95rem;
-    padding-inline-start: 1rem;
+.task-list {
+    list-style: none;
     position: relative;
-    &:before {
-      content: "";
-      position: absolute;
-      width: 4px;
-      height: 100%;
-      inset-inline-start: 0;
-      inset-block-start: 0;
-      border-radius: 10px;
-    }
-    &:nth-child(1):before {
-      background-color: variables.$primary;
-    }
-    &:nth-child(2):before {
-      background-color: variables.$secondary;
-    }
-    &:nth-child(3):before {
-      background-color: variables.$warning;
-    }
-    &:nth-child(4):before {
-      background-color: variables.$info;
-    }
-    &:nth-child(5):before {
-      background-color: variables.$success;
-    }
-    &:nth-child(6):before {
-      background-color: variables.$danger;
-    }
-    &:last-child {
-      margin-block-end: 0;
-    }
-  }
+    margin: 0;
+    padding: 0px 0 0;
+    color: $default-text-color;
 }
-/* Courses Dashboard */
-
-/* Stocks Dashboard */
-ul.stocks-watchlist {
-  margin-block-end: 0;
-  li {
-    margin-block-end: 1.42rem;
-    &:last-child {
-      margin-block-end: 0;
-    }
-  }
-}
-ul.stocks-recent-activities-list {
-  margin-block-end: 0;
-  li {
-    margin-block-end: 1.7rem;
-    &:last-child {
-      margin-block-end: 0;
-    }
-  }
-}
-/* Stocks Dashboard */
-
-/* NFT Dashboard */
-.card.custom-card.nft-main-banner-card {
-  position: relative;
-  border: 0;
-  box-shadow: none;
-  z-index: 1;
-  overflow: hidden;
-  .card-body {
-    padding: 2.5rem;
-    color: variables.$white;
-    .nft-main-bannr-background {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      inset-inline-start: 0;
-      inset-block-start: 0;
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-    }
-    &:after {
-      content: "";
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background-image: linear-gradient(to right, var(--primary-color), var(--primary-color), transparent);
-      inset-inline-start: 0;
-      inset-block-start: 0;
-      z-index: -1;
-    }
-  }
-}
-.nft-auction-time {
-  position: absolute;
-  top: 2.5rem;
-  inset-inline-end: 1rem;
-  padding: .25rem .5rem;
-  background-color: variables.$light;
-  border-radius: .3rem;
-  font-size: 12px;
-}
-.nft-like-badge {
-  background-color: variables.$light;
-}
-.nft-like-section {
-  position: absolute;
-  inset-block-start: 1rem;
-}
-ul.nft-top-collectors-list {
-  margin-block-end: 0;
-  li {
-    margin-block-end: 1.2rem;
-    &:last-child {
-      margin-block-end: 0;
-    }
-  }
-}
-ul.nft-top-drops-list {
-  margin-block-end: 0;
-  li {
-    margin-block-end: 1.75rem;
-    &:last-child {
-      margin-block-end: 0;
-    }
-  }
-}
-@media (max-width: 768px) {
-.nft-main-banner-card{
-  .card-body:after {
-  background-image: none;
-  background-color: variables.$primary;
-  }
-}
-}
-[dir="rtl"]{
-  .card.custom-card.nft-main-banner-card .card-body:after {
-    transform: scaleX(-1);
-  }
-
-  .nft-main-bannr-background {
-    transform: scaleX(-1);
-  }
-}
-
-/* NFT Dashboard */
-
-/* Jobs Dashboard */
-ul.jobs-recent-activity-list {
-  margin-block-end: 0;
-  li {
-    margin-block-end: 1.25rem;
-    &:last-child {
-      margin-block-end: 0;
-    }
-    .description {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-    }
-  }
-}
-ul.acquisitions-list {
-  li {
-    padding-inline-start: 2rem;
-    position: relative;
-    &:before {
-      content: "";
-      position: absolute;
-      width: 8px;
-      height: 8px;
-      inset-inline-start: 1rem;
-      inset-block-start: 1.4rem;
-      border-radius: 50%;
-    }
-    &:nth-child(1):before {
-      background-color: variables.$primary;
-    }
-    &:nth-child(2):before {
-      background-color: variables.$secondary;
-    }
-    &:nth-child(3):before {
-      background-color: variables.$success;
-    }
-    &:nth-child(4):before {
-      background-color: variables.$warning;
-    }
-    &:nth-child(5):before {
-      background-color: variables.$danger;
-    }
-  }
-}
-#recent-jobs {
-  max-height: 356px;
-}
-/* Jobs Dashboard */
-
-/* Podcast Dashboard */
-.card.custom-card.podcast-banner-card {
-  position: relative;
-  background-color: var(--primary01);
-  z-index: 1;
-  .card-body {
-    padding: 2rem;
-  }
-  .podcast-banner-card-background {
+.task-list:before {
+    content: "";
     position: absolute;
-    width: 100%;
-    height: 100%;
-    inset-inline-start: 0;
-    inset-block-start: 0;
-    z-index: -1;
-    opacity: 0.2;
-    img {
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-    }
-  }
-  .podcast-banner-img {
-    position: absolute;
-    inset-inline-end: 1rem;
+    inset-block-start: 4px;
     inset-block-end: 0;
-  }
+    height: 90%;
+    inset-inline-start: 15px;
+    border-inline-start: 1px solid $default-border;
 }
-ul.top-podcasters-list {
-  margin-block-end: 0;
-  li {
-    margin-block-end: 1.25rem;
-    &:last-child {
-      margin-block-end: 0;
-    }
-  }
-}
-.avatar.podcast-playing-now-avatar {
-  width: 9.5rem;
-  height: 9.5rem;
-}
-.podcast-playing-progress {
-  width: 100%;
-  background-color: rgba(255, 255, 255, 0.3);
-}
-.podcast-playing-progress.progress-custom .progress-bar:after {
-  content: "";
-  width: 0.75rem;
-  height: 0.75rem;
-  border-radius: 50%;
-  box-shadow: 0 0.313rem 0.313rem rgba(var(--success-rgb), 0.2);
-  background: #fff;
-  position: absolute;
-  inset-inline-end: -0.375rem;
-  inset-block-start: -4px;
-  border: 0.25rem solid rgb(var(--success-rgb));
-}
-.nft-tag .nft-tag-text.podcast-category-text {
-  padding: 0px 1.25rem 0px 0.5rem;
-}
-ul.podcast-top-charts-list {
-  margin-block-end: 0;
-  li {
-    margin-block-end: 1.25rem;
-    &:last-child {
-      margin-block-end: 0;
-    }
-  }
-}
-[data-width="boxed"]{
-  .podcast-banner-img{
-    display: none !important;
-  }
-}
-[dir="rtl"]{
-  .podcast-banner-img{
-    transform: scaleX(-1);
-  }
-  .ri-skip-forward-fill, .ri-skip-back-fill{
-    transform: rotate(180deg);
-  }
-}
-/* Podcast Dashboard */
-
-/* POS System */
-.pos-orders-swiper {
-  .swiper-button-next, .swiper-button-prev {
-    background-color: variables.$black-1;
-  }
-}
-.pos-categories-list {
-  .nft-tag-icon {
-    padding: 0;
-    img {
-      width: 26px;
-      height: 26px;
-    }
-  }
-}
-.nft-tag.nft-tag-primary:hover, .nft-tag.nft-tag-primary.active {
-  border: 1px dashed rgba(var(--primary-rgb), 0.5);
-  a{
-    color: var(--primary-color);
-  }
-} 
-.nft-tag.nft-tag-secondary:hover, .nft-tag.nft-tag-secondary.active {
-  border: 1px dashed rgba(var(--secondary-rgb), 0.5);
-  a{
-    color: rgb(var(--secondary-rgb));
-  }
-} 
-.nft-tag.nft-tag-warning:hover, .nft-tag.nft-tag-warning.active {
-  border: 1px dashed rgba(var(--warning-rgb), 0.5);
-  a{
-    color: rgb(var(--warning-rgb));
-  }
-} 
-.nft-tag.nft-tag-info:hover, .nft-tag.nft-tag-info.active {
-  border: 1px dashed rgba(var(--info-rgb), 0.5);
-  a{
-    color: rgb(var(--info-rgb));
-  }
-} 
-.nft-tag.nft-tag-success:hover, .nft-tag.nft-tag-success.active {
-  border: 1px dashed rgba(var(--success-rgb), 0.5);
-  a{
-    color: rgb(var(--success-rgb));
-  }
-} 
-.nft-tag.nft-tag-danger:hover, .nft-tag.nft-tag-danger.active {
-  border: 1px dashed rgba(var(--danger-rgb), 0.5);
-  a{
-    color: rgb(var(--danger-rgb));
-  }
-} 
-.nft-tag.nft-tag-purple:hover, .nft-tag.nft-tag-purple.active {
-  border: 1px dashed rgba(var(--purple-rgb), 0.5);
-  a{
-    color: rgb(var(--purple-rgb));
-  }
-} 
-ul.pos-system-orders-list {
-  margin-block-end: 0;
-  li {
-    margin-block-end: 1.75rem;
-    &:last-child {
-      margin-block-end: 0;
-    }
-  }
-}
-/* POS System */
-
-/* Social Media Dashboard */
-ul.social-recent-activity-list {
-  margin-block-end: 0;
-  li {
-    margin-block-end: 1.25rem;
-    &:last-child {
-      margin-block-end: 0;
-    }
-  }
-}
-.social-activity {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-}
-ul.social-suggestions-list {
-  margin-block-end: 0;
-  li {
-    margin-block-end: 1.25rem;
-    &:last-child {
-      margin-block-end: 0;
-    }
-  }
-}
-/* Social Media Dashboard */
-
-/* School Dashboard */
-.card.custom-card.dashboard-main-card.school-card {
-  &.primary {
-    background-image: linear-gradient(to right, rgba(var(--primary-rgb), 0.1), transparent);
-    border: 1px dashed rgba(var(--primary-rgb), 0.1);
-  }
-  &.secondary {
-    background-image: linear-gradient(to right, rgba(var(--secondary-rgb), 0.1), transparent);
-    border: 1px dashed rgba(var(--secondary-rgb), 0.1);
-  }
-  &.success {
-    background-image: linear-gradient(to right, rgba(var(--success-rgb), 0.1), transparent);
-    border: 1px dashed rgba(var(--success-rgb), 0.1);
-  }
-  &.warning {
-    background-image: linear-gradient(to right, rgba(var(--warning-rgb), 0.1), transparent);
-    border: 1px dashed rgba(var(--warning-rgb), 0.1);
-  }
-}
-ul.school-events-list {
-  margin-block-end: 0;
-  li {
-    margin-block-end: 1.15rem;
-    &:last-child {
-      margin-block-end: 0;
-    }
-    .event-description {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-    }
-  }
-}
-ul.students-activity-list {
-  margin-block-end: 0;
-  li {
+.task-list li {
     position: relative;
-    margin-block-end: 0.98rem;
-    &:last-child {
-      margin-block-end: 0;
-      &::before {
+}
+.task-list li {
+    margin-block-end: 26px;
+    padding-inline-start: 55px;
+    position: relative;
+}
+.task-list li .task-icon {
+    position: absolute;
+    left: 10px;
+    top: 5px;
+    border-radius: 50%;
+    padding: 2px;
+    width: 12px;
+    height: 12px;
+    z-index: 2;
+}
+// ================================================sidebar
+.offcanvas.offcanvas-end.offcanvas-sidebar {
+    max-width: 329px;
+}
+
+.offcanvas-sidebar {
+    .profile-status {
+        content: "";
+        position: absolute;
+        inset-block-end: 0;
+        inset-inline-end: 106px;
+        width: 10px;
+        height: 10px;
+        background-color: #00d48f;
+        border-radius: 100%;
+        inset-block-start: 73px;
+        border: 2px solid #fff;
+    }
+
+    .user-pro-body img {
+        display: block;
+        margin: 0 auto 0px;
+        border: 2px solid $primary !important;
+        box-shadow: 0px 5px 5px 0px rgba(44, 44, 44, 0.2);
+        padding: 3px;
+        background: #e8e9f5;
+    }
+
+    .card-title {
+        font-size: 1rem;
+        font-weight: 500;
+        margin-block-end: 1.5rem;
+    }
+
+    .tab-heading {
+        .card-header {
+            background-color: $primary !important;
+            color: $white;
+        }
+    }
+
+    .nav-tabs {
+        .nav-item {
+            margin-inline-end: 0.2rem
+        }
+    }
+}
+
+.offcanvas-sidebar .user-pro-body img {
+    display: block;
+    margin: 0 auto 0px;
+    border: 2px solid var(--primary-bg-color);
+    box-shadow: 0px 5px 5px 0px rgba(44, 44, 44, 0.2);
+    padding: 3px;
+    background: #e8e9f5;
+}
+
+.offcanvas-sidebar .user-pro-body .profile-status {
+    top: 52px;
+}
+// ===========sidebar
+
+// =====Dashboard-1====== //
+.index-card{
+    height: 180px;
+}
+#candidates-chart,#radialbar-multiple {
+    .apexcharts-datalabels-group text {
+        fill: $default-text-color !important;
+    }
+    svg{
+        overflow: inherit;
+    }
+}
+    
+// =====Dashboard-1====== //
+
+// =====Dashboard-2====== //
+#customer-retention{
+    width:  100% !important;
+    direction: ltr;
+    .apexcharts-canvas, .apexcharts-inner, .apexcharts-pie{
+        width: 100%!important;
+    }
+    foreignObject, svg{
+        // overflow: inherit;
+        width: 100% !important;
+    }
+}
+#total-purchase ,#total-profit,#total-sales,#total-returns{
+    .apexcharts-datalabels,.apexcharts-tooltip{
+        display: none;
+    }
+}
+
+#visitors-countries {
+    height: 22.9rem;
+    svg{
+        width: 100%;
+    }
+  
+    #jvm-markers-labels-group {
+      display: none;
+    }
+  }
+  
+  #visitors-countries circle:nth-child(1) {
+    fill: $primary;
+    stroke: $primary-03;
+    stroke-width: 15;
+  }
+  
+  #visitors-countries circle:nth-child(2) {
+    fill: $secondary;
+    stroke: rgba(var(--secondary-rgb), 0.2);
+    stroke-width: 15;
+  }
+  
+  #visitors-countries circle:nth-child(3) {
+    fill: $danger;
+    stroke: rgba(var(--danger-rgb), 0.2);
+    stroke-width: 15;
+  }
+  
+  #visitors-countries circle:nth-child(4) {
+    fill: $info;
+    stroke: rgba(var(--info-rgb), 0.2);
+    stroke-width: 15;
+  }
+  
+  #visitors-countries circle:nth-child(5) {
+    fill: $orange;
+    stroke: rgba(var(--orange-rgb), 0.2);
+    stroke-width: 15;
+  }
+  
+  #visitors-countries circle:nth-child(6) {
+    fill: $warning;
+    stroke: rgba(var(--warning-rgb), 0.2);
+    stroke-width: 15;
+  }
+  
+  #visitors-countries circle:nth-child(7) {
+    fill: $success;
+    stroke: rgba(var(--success-rgb), 0.2);
+    stroke-width: 15;
+  }
+  
+  #visitors-countries circle:nth-child(8) {
+    fill: $pink;
+    stroke: rgba(var(--pink-rgb), 0.2);
+    stroke-width: 15;
+  }
+  
+  #visitors-countries circle:nth-child(9) {
+    fill: $dark;
+    stroke: rgba(var(--dark-rgb), 0.2);
+    stroke-width: 15;
+  }
+  
+  #visitors-countries circle:nth-child(10) {
+    fill: $indigo;
+    stroke: rgba($indigo, 0.2);
+    stroke-width: 15;
+  }
+  #mixed-linearea{
+    .apexcharts-toolbar{
+        display: none;
+    }
+  }
+  #customer-retention,#morrisBar9,#customer-satisfaction{
+    text {
+      fill: #fff !important;
+    }
+  
+  }
+// =====Dashboard-2====== //
+
+// =====Dashboard-4====== //
+.product-timeline ul.timeline-1 {
+    list-style-type: none;
+    position: relative;
+}
+#customer-satisfaction{
+    width: auto !important;
+    .apexcharts-canvas, .apexcharts-inner, .apexcharts-pie{
+        width: 100% !important;
+    }
+    svg{
+        // overflow: inherit;
+        width: 100% !important;
+    }
+}
+#statistics .apexcharts-toolbar{
+    display: none;
+}
+.timeline-1 {
+    padding-inline-start: revert !important;
+}
+.product-timeline ul.timeline-1:before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    inset-inline-start: 15px;
+    inset-block-start: 27px;
+    height: 73%;
+    z-index: 0;
+    position: absolute;
+    bottom: 0;
+    border-inline-start: 2px dotted rgba(0, 0, 0, 0.1);
+}
+.product-timeline ul.timeline-1>li {
+    margin-block-end: 1.15rem;
+    position: relative;
+}
+.product-timeline ul.timeline-1>li .product-icon {
+    position: absolute;
+    inset-inline-start: -40px;
+    font-size: 16px;
+}
+// =====Dashboard-4====== //
+
+// =====Dashboard-5====== //
+#leadschart,#leadschart2,#leadschart3,#leadschart4,#leadschart5{
+    .apexcharts-grid {
         display: none;
       }
-    }
-    &:before {
-      content: "";
-      position: absolute;
-      width: 1px;
-      height: 100%;
-      background-color: variables.$default-border;
-      inset-inline-start: 1.25rem;
-      inset-block-start: 2rem;
-    }
-  }
 }
-.student-overview-type {
-  position: relative;
-  &:before {
-    content: "";
-    position: absolute;
-    width: 7px;
-    height: 7px;
-    inset-inline-start: -1rem;
-    inset-block-start: 6px;
-    border-radius: 50%;
-  }
-  &.boys:before {
-    background-color: variables.$primary;
-  }
-  &.girls:before {
-    background-color: variables.$secondary;
-  }
-}
-ul.upcoming-assignments-list {
-  margin-block-end: 0;
-  li {
-    margin-block-end: 1.25rem;
-    &:last-child {
-      margin-block-end: 0;
-    }
-  }
-}
-/* School Dashboard */
 
-/* Medical Dashboard */
-.card.custom-card.medical-main-card {
-  position: relative;
-  &:before {
-    content: "";
-    position: absolute;
-    width: 5px;
-    height: 50%;
-    inset-inline-start: 0;
-    inset-block-start: 1.85rem;
-    border-radius: 0 20px 20px 0;
+#barOne{
+    .apexcharts-toolbar{
+        display: none;
+    }
   }
-  &.primary:before {
-    background-color: variables.$primary;
-  }
-  &.secondary:before {
-    background-color: variables.$secondary;
-  }
-  &.warning:before {
-    background-color: variables.$warning;
-  }
-  &.success:before {
-    background-color: variables.$success;
-  }
-}
-ul.availabe-doctors-list {
-  margin-block-end: 0;
-  li {
-    margin-block-end: 1.5rem;
+.card-bgimg {
+    background: url(../images/media/bg-img5.jpg) center center;
+    background-size: cover;
     position: relative;
-    padding-inline-start: 1rem;
+    z-index: -9999;
     &:before {
-      content: "";
-      position: absolute;
-      width: 4px;
-      height: 100%;
-      inset-inline-start: 0;
-      inset-block-start: 0;
-      border-radius: 20px;
+        content: "";
+        opacity: 0.9;
+        border-radius: 7px;
+        background: linear-gradient(125deg, $primary 35%, #9258f1 65%);
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        right: 0;
+        display: block;
+        top: 0;
+        z-index: 1;
+        border-radius: 7px;
     }
-    &:nth-child(1):before {
-      background-color: variables.$primary;
+     .card-body {
+        z-index: 10;
+        border-inline-end: 1px solid rgba(255, 255, 255, 0.1);
+        position: relative;
     }
-    &:nth-child(2):before {
-      background-color: variables.$secondary;
-    }
-    &:nth-child(3):before {
-      background-color: variables.$warning;
-    }
-    &:nth-child(4):before {
-      background-color: variables.$success;
-    }
-    &:nth-child(5):before {
-      background-color: variables.$info;
-    }
-    &:nth-child(6):before {
-      background-color: variables.$danger;
-    }
-    &:last-child {
-      margin-block-end: 0;
-    }
-  }
 }
-#available-doctors {
-  height: 240px;
-}
-.card.custom-card.available-treatments-card {
-  .btn.btn-icon {
-    // width: 6rem;
-    height: 6rem;
-    padding: 2rem;
-    width: 100%;
-    i {
-      font-size: 30px;
-    }
-  }
-}
-ul.patients-reports-list {
-  margin-block-end: 0;
-  li {
-    margin-block-end: 0.53rem;
-    padding: 0.5rem;
-    border-radius: 0.3rem;
-    border: 1px dashed variables.$default-border;
-    &:last-child {
-      margin-block-end: 0;
-    }
-  }
-}
-@media (min-width: 1400px) {
-  [data-width="boxed"] {
-    .col-xxl-3.col-md-6.boxed-col-3,.col-xxl-3.col-xl-6.boxed-col-3 {
-      flex: 0 0 auto;
-      width: 50%;
-    }
-  }
-}
-/* Medical Dashboard */
-
-#sessions-device, #top-categories, #attendance-overview, #candidates-overview, #students-overview {
-  .apexcharts-pie text {
-    fill: variables.$default-text-color !important;
-  }
-}
-#task-activity, #patients-visits, #top-categories1, #recent-orders {
-  .apexcharts-datalabels-group text {
-    fill: variables.$default-text-color !important;
-  }
-}
-.custom-drop .btn-light.show {
-  border: 1px solid variables.$default-border !important;
-}
-@media (max-width: 1199px) {
-  .dashboard-main-card.dashboard-main-border{
-    border-bottom: 1px solid variables.$default-border !important;
-  }
-}
+// =====Dashboard-5====== //

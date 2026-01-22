@@ -14,7 +14,7 @@
                 enabled: false
             }
         },
-        colors: ['#985ffd'],
+        colors: ['#6259ca'],
         dataLabels: {
             enabled: false
         },
@@ -88,7 +88,7 @@
                 show: false
             }
         },
-        colors: ['#985ffd', '#ff49cd'],
+        colors: ['#6259ca', '#fb6b25'],
         dataLabels: {
             enabled: true,
         },
@@ -154,7 +154,9 @@
         legend: {
             position: 'top',
             horizontalAlign: 'right',
-            offsetX: -10
+            floating: true,
+            offsetY: -25,
+            offsetX: -5
         }
     };
     var chart = new ApexCharts(document.querySelector("#line-chart-datalabels"), options);
@@ -215,7 +217,7 @@
         grid: {
             borderColor: '#f2f5f7',
         },
-        colors: ["#985ffd"],
+        colors: ["#6259ca"],
         yaxis: {
             labels: {
                 formatter: function (val) {
@@ -267,7 +269,7 @@
         series: [{
             data: series.monthDataSeries2.prices
         }],
-        colors: ["#985ffd"],
+        colors: ["#6259ca"],
         chart: {
             height: 320,
             type: 'line',
@@ -424,7 +426,7 @@
         dataLabels: {
             enabled: false
         },
-        colors: ["#985ffd"],
+        colors: ["#6259ca"],
         title: {
             text: 'Stepline Chart',
             align: 'left'
@@ -505,12 +507,11 @@
                 color: '#8c9097'
             },
         },
-        colors: ["#ff49cd"],
         fill: {
             type: 'gradient',
             gradient: {
                 shade: 'dark',
-                gradientToColors: ['#985ffd'],
+                gradientToColors: ['#6259ca'],
                 shadeIntensity: 1,
                 type: 'horizontal',
                 opacityFrom: 1,
@@ -564,7 +565,7 @@
             width: [3, 3, 2],
             curve: 'straight'
         },
-        colors: ["#985ffd", "#ff49cd", "#fdaf22"],
+        colors: ["#6259ca", "#fb6b25", "#f5b849"],
         labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
         title: {
             text: 'Missing data (null values)',
@@ -678,7 +679,7 @@
             type: 'line',
             height: 160
         },
-        colors: ['#985ffd'],
+        colors: ['#6259ca'],
         stroke: {
             curve: 'straight',
             width: 3,
@@ -730,7 +731,7 @@
             curve: 'straight',
             width: 3,
         },
-        colors: ['#ff49cd'],
+        colors: ['#fb6b25'],
         grid: {
             borderColor: '#f2f5f7',
         },
@@ -778,7 +779,7 @@
             curve: 'straight',
             width: 3,
         },
-        colors: ['#fdaf22'],
+        colors: ['#f5b849'],
         grid: {
             borderColor: '#f2f5f7',
         },
@@ -839,7 +840,7 @@
             curve: 'straight',
             dashArray: [0, 8, 5]
         },
-        colors: ["#985ffd", "#ff49cd", "#fdaf22"],
+        colors: ["#6259ca", "#fb6b25", "#f5b849"],
         title: {
             text: 'Page Statistics',
             align: 'left',
@@ -983,7 +984,7 @@
         dataLabels: {
             enabled: false
         },
-        colors: ["#985ffd"],
+        colors: ["#6259ca"],
         stroke: {
             curve: 'smooth',
             width: 3,
@@ -1072,7 +1073,7 @@
                 show: false
             }
         },
-        colors: ['#985ffd'],
+        colors: ['#6259ca'],
         stroke: {
             width: 3
         },
@@ -1135,7 +1136,7 @@
         dataLabels: {
             enabled: false,
         },
-        colors: ['#ff49cd'],
+        colors: ['#fb6b25'],
         fill: {
             type: 'gradient',
             gradient: {

@@ -17,7 +17,7 @@
             icon: 'error',
             title: 'Oops...',
             text: 'Something went wrong!',
-            footer: '<a href="javascript:void(0);">Why do I have this issue?</a>'
+            footer: '<a href="">Why do I have this issue?</a>'
         })
     }
     document.getElementById('long-window').onclick = function () {
@@ -33,7 +33,7 @@
             icon: 'info',
             html:
                 'You can use <b>bold text</b>, ' +
-                '<a href="https://sweetalert2.github.io/" target="blank">links</a> ' +
+                '<a href="//sweetalert2.github.io">links</a> ' +
                 'and other HTML tags',
             showCloseButton: true,
             showCancelButton: true,
@@ -130,7 +130,7 @@
         Swal.fire({
             title: 'Sweet!',
             text: 'Modal with a custom image.',
-            imageUrl: '../assets/images/media/media-59.jpg',
+            imageUrl: '../assets/images/media/9.jpg',
             imageWidth: 400,
             imageHeight: 200,
             imageAlt: 'Custom image',
@@ -139,10 +139,10 @@
     document.getElementById('alert-custom-bg').onclick = function () {
         Swal.fire({
             title: 'Custom width, padding, color, background.',
-            width: 600,
+            width: 470,
             padding: '3em',
             color: '#716add',
-            background: 'url(../assets/images/media/media-19.jpg)',
+            background: 'url(../assets/images/media/1.jpg)',
             backdrop: `
               rgba(0,0,0,0.3)
               url(../assets/images/gif's/1.gif)

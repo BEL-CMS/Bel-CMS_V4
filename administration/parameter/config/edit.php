@@ -123,7 +123,7 @@ $checked = Config::GetConfigPage($data->name)->active == 1 ? 'checked' : "";
                         </div>
                         <div class="mb-3">
                             <label for="key">Mot clé</label>
-                            <input id="key" value="<?= $data->keywords; ?>" class="form-control" type="text" name="keywords" placeholder="Mot clé de la page">
+                            <input id="key" value="<?= $data->key_seo; ?>" class="form-control" type="text" name="key_seo" placeholder="Mot clé de la page">
                         </div>
                     </div>
                 </div>

@@ -1,28 +1,27 @@
-@use "variables";
 /* Start::Popovers */
 .custom-popover {
   --bs-popover-max-width: 12.5rem;
-  --bs-popover-border-color: #{variables.$primary};
-  --bs-popover-header-bg: #{variables.$primary};
-  --bs-popover-header-color: #{variables.$white};
+  --bs-popover-border-color: #{$primary};
+  --bs-popover-header-bg: #{$primary};
+  --bs-popover-header-color: #{$white};
   --bs-popover-body-padding-x: 1rem;
   --bs-popover-body-padding-y: 0.5rem;
 }
 /* End::Popovers */
 
 .popover {
-  background-color: variables.$custom-white;
-  border: 1px solid variables.$default-border;
-  box-shadow: variables.$box-shadow;
+  background-color: $custom-white;
+  border: 1px solid $default-border;
+  box-shadow: $box-shadow;
   font-size: 0.8rem;
-  border-radius: variables.$default-radius;
-  z-index: 999;
+  border-radius: $default-radius;
+  z-index: 9999;
   .popover-header {
-    background-color: variables.$custom-white;
-    border-block-end: 1px solid variables.$default-border;
+    background-color: $custom-white;
+    border-block-end: 1px solid $default-border;
   }
   .popover-body {
-    color: variables.$default-text-color;
+    color: $default-text-color;
   }
   &.only-body {
     border-radius: 0.3rem;
@@ -32,19 +31,19 @@
 .bs-popover-top > .popover-arrow::after,
 .bs-popover-auto[data-popper-placement^="top"] > .popover-arrow::before,
 .bs-popover-top > .popover-arrow::before {
-  border-top-color: variables.$light;
+  border-top-color: $light;
 }
 .bs-popover-auto[data-popper-placement^="right"] > .popover-arrow::after,
 .bs-popover-end > .popover-arrow::after,
 .bs-popover-auto[data-popper-placement^="right"] > .popover-arrow::before,
 .bs-popover-end > .popover-arrow::before {
-  border-right-color: variables.$light;
+  border-right-color: $light;
 }
 .bs-popover-auto[data-popper-placement^="left"] > .popover-arrow::after,
 .bs-popover-start > .popover-arrow::after,
 .bs-popover-auto[data-popper-placement^="left"] > .popover-arrow::before,
 .bs-popover-start > .popover-arrow::before {
-  border-left-color: variables.$light;
+  border-left-color: $light;
 }
 .bs-popover-auto[data-popper-placement^="bottom"] > .popover-arrow::after,
 .bs-popover-bottom > .popover-arrow::after,
@@ -52,13 +51,13 @@
 .bs-popover-bottom > .popover-arrow::before,
 .bs-popover-auto[data-popper-placement^="bottom"] .popover-header::before,
 .bs-popover-bottom .popover-header::before {
-  border-bottom-color: variables.$light;
+  border-bottom-color: $light;
 }
 
 @mixin pop-header-color($color) {
   .popover-header {
     background-color: $color;
-    color: variables.$white;
+    color: $white;
   }
   &.bs-popover-auto[data-popper-placement^="bottom"] > .popover-arrow::after,
   &.bs-popover-auto[data-popper-placement^="bottom"] .popover-header::before {
@@ -66,22 +65,22 @@
   }
 }
 .header-primary {
-  @include pop-header-color(variables.$primary);
+  @include pop-header-color($primary);
 }
 .header-secondary {
-  @include pop-header-color(variables.$secondary);
+  @include pop-header-color($secondary);
 }
 .header-warning {
-  @include pop-header-color(variables.$warning);
+  @include pop-header-color($warning);
 }
 .header-info {
-  @include pop-header-color(variables.$info);
+  @include pop-header-color($info);
 }
 .header-success {
-  @include pop-header-color(variables.$success);
+  @include pop-header-color($success);
 }
 .header-danger {
-  @include pop-header-color(variables.$danger);
+  @include pop-header-color($danger);
 }
 
 @mixin pop-bgcolor($color) {
@@ -90,12 +89,12 @@
     .popover-header {
       background-color: $color;
       border-block-end: 1px solid rgba(255, 255, 255, 0.1);
-      color: variables.$white;
+      color: $white;
       border-radius: 0.3rem 0.3rem 0 0;
     }
     .popover-body {
       background-color: $color;
-      color: variables.$white;
+      color: $white;
       border-radius: 0 0 0.3rem 0.3rem;
     }
   }
@@ -127,61 +126,61 @@
   }
 }
 .popover-primary {
-  @include pop-bgcolor(variables.$primary);
+  @include pop-bgcolor($primary);
 }
 .popover-secondary {
-  @include pop-bgcolor(variables.$secondary);
+  @include pop-bgcolor($secondary);
 }
 .popover-warning {
-  @include pop-bgcolor(variables.$warning);
+  @include pop-bgcolor($warning);
 }
 .popover-info {
-  @include pop-bgcolor(variables.$info);
+  @include pop-bgcolor($info);
 }
 .popover-success {
-  @include pop-bgcolor(variables.$success);
+  @include pop-bgcolor($success);
 }
 .popover-danger {
-  @include pop-bgcolor(variables.$danger);
+  @include pop-bgcolor($danger);
 }
 .popover-purple {
-  @include pop-bgcolor(variables.$purple);
+  @include pop-bgcolor($purple);
 }
 .popover-teal {
-  @include pop-bgcolor(variables.$teal);
+  @include pop-bgcolor($teal);
 }
 
 .popover-primary-light {
     &.popover {
-        border: 1px solid variables.$primary-01;
+        border: 1px solid $primary-01;
       .popover-header {
-        background-color: variables.$primary-01;
-        border-block-end: 1px solid variables.$primary-01;
-        color: variables.$primary;
+        background-color: $primary-01;
+        border-block-end: 1px solid $primary-01;
+        color: $primary;
         border-radius: 0;
       }
       .popover-body {
-        background-color: variables.$primary-01;
-        color: variables.$primary;
+        background-color: $primary-01;
+        color: $primary;
       }
     }
     &.bs-popover-auto[data-popper-placement^="top"] > .popover-arrow::after,
     &.bs-popover-top > .popover-arrow::after,
     &.bs-popover-auto[data-popper-placement^="top"] > .popover-arrow::before,
     &.bs-popover-top > .popover-arrow::before {
-      border-top-color: variables.$primary-01;
+      border-top-color: $primary-01;
     }
     &.bs-popover-auto[data-popper-placement^="right"] > .popover-arrow::after,
     &.bs-popover-end > .popover-arrow::after,
     &.bs-popover-auto[data-popper-placement^="right"] > .popover-arrow::before,
     &.bs-popover-end > .popover-arrow::before {
-      border-right-color: variables.$primary-01;
+      border-right-color: $primary-01;
     }
     &.bs-popover-auto[data-popper-placement^="left"] > .popover-arrow::after,
     &.bs-popover-start > .popover-arrow::after,
     &.bs-popover-auto[data-popper-placement^="left"] > .popover-arrow::before,
     &.bs-popover-start > .popover-arrow::before {
-      border-left-color: variables.$primary-01;
+      border-left-color: $primary-01;
     }
     &.bs-popover-auto[data-popper-placement^="bottom"] > .popover-arrow::after,
     &.bs-popover-bottom > .popover-arrow::after,
@@ -189,7 +188,7 @@
     &.bs-popover-bottom > .popover-arrow::before,
     &.bs-popover-auto[data-popper-placement^="bottom"] .popover-header::before,
     &.bs-popover-bottom .popover-header::before {
-      border-bottom-color: variables.$primary-01;
+      border-bottom-color: $primary-01;
     }
 }
 .popover-secondary-light {
@@ -198,12 +197,12 @@
       .popover-header {
         background-color: rgba(var(--secondary-rgb),0.1);
         border-block-end: 1px solid rgba(var(--secondary-rgb),0.1);
-        color: variables.$secondary;
+        color: $secondary;
         border-radius: 0;
       }
       .popover-body {
         background-color: rgba(var(--secondary-rgb),0.1);
-        color: variables.$secondary;
+        color: $secondary;
       }
     }
     &.bs-popover-auto[data-popper-placement^="top"] > .popover-arrow::after,
@@ -239,12 +238,12 @@
       .popover-header {
         background-color: rgba(var(--warning-rgb),0.1);
         border-block-end: 1px solid rgba(var(--warning-rgb),0.1);
-        color: variables.$warning;
+        color: $warning;
         border-radius: 0;
       }
       .popover-body {
         background-color: rgba(var(--warning-rgb),0.1);
-        color: variables.$warning;
+        color: $warning;
       }
     }
     &.bs-popover-auto[data-popper-placement^="top"] > .popover-arrow::after,
@@ -280,12 +279,12 @@
       .popover-header {
         background-color: rgba(var(--info-rgb),0.1);
         border-block-end: 1px solid rgba(var(--info-rgb),0.1);
-        color: variables.$info;
+        color: $info;
         border-radius: 0;
       }
       .popover-body {
         background-color: rgba(var(--info-rgb),0.1);
-        color: variables.$info;
+        color: $info;
       }
     }
     &.bs-popover-auto[data-popper-placement^="top"] > .popover-arrow::after,
@@ -321,12 +320,12 @@
       .popover-header {
         background-color: rgba(var(--success-rgb),0.1);
         border-block-end: 1px solid rgba(var(--success-rgb),0.1);
-        color: variables.$success;
+        color: $success;
         border-radius: 0;
       }
       .popover-body {
         background-color: rgba(var(--success-rgb),0.1);
-        color: variables.$success;
+        color: $success;
       }
     }
     &.bs-popover-auto[data-popper-placement^="top"] > .popover-arrow::after,
@@ -362,12 +361,12 @@
       .popover-header {
         background-color: rgba(var(--danger-rgb),0.1);
         border-block-end: 1px solid rgba(var(--danger-rgb),0.1);
-        color: variables.$danger;
+        color: $danger;
         border-radius: 0;
       }
       .popover-body {
         background-color: rgba(var(--danger-rgb),0.1);
-        color: variables.$danger;
+        color: $danger;
       }
     }
     &.bs-popover-auto[data-popper-placement^="top"] > .popover-arrow::after,
@@ -403,12 +402,12 @@
       .popover-header {
         background-color: rgba(var(--purple-rgb),0.1);
         border-block-end: 1px solid rgba(var(--purple-rgb),0.1);
-        color: variables.$purple;
+        color: $purple;
         border-radius: 0;
       }
       .popover-body {
         background-color: rgba(var(--purple-rgb),0.1);
-        color: variables.$purple;
+        color: $purple;
       }
     }
     &.bs-popover-auto[data-popper-placement^="top"] > .popover-arrow::after,
@@ -444,12 +443,12 @@
       .popover-header {
         background-color: rgba(var(--teal-rgb),0.1);
         border-block-end: 1px solid rgba(var(--teal-rgb),0.1);
-        color: variables.$teal;
+        color: $teal;
         border-radius: 0;
       }
       .popover-body {
         background-color: rgba(var(--teal-rgb),0.1);
-        color: variables.$teal;
+        color: $teal;
       }
     }
     &.bs-popover-auto[data-popper-placement^="top"] > .popover-arrow::after,

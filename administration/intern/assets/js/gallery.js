@@ -11,16 +11,4 @@
         const { slideIndex, slideNode, slideConfig, player } = current;
     });
 
-    var lightboxDescription = GLightbox({
-        selector: '.glightbox2'
-    });
-
-    var lightboxVideo = GLightbox({
-        selector: '.glightbox3'
-    });
-
-    var lightboxInlineIframe = GLightbox({
-        selector: '.glightbox4'
-    });
-
 })();

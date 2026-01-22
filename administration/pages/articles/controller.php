@@ -33,11 +33,7 @@ class Articles extends AdminPages
         $a = $this->models->getCatArticles ();
         foreach ($a as $key => $value) {
             $a[$key]->countpage   = $this->models->countArticleForID($value->id_articles);
-            if (empty($value->description)) {
-                $value->description = 'Aucune description';
-            } else {
-                $a[$key]->description = Common::truncate_3(Common::VarSecure($value->description,null), 95);
-            }
+            $a[$key]->description = isset($value->description) ? Common::truncate_3(Common::VarSecure($value->description,null), 95) : '';
         }
         $d['cat'] = $a;
         if (count($a) == 0) {
@@ -216,5 +212,10 @@ class Articles extends AdminPages
                 $this->redirect('articles?admin&option=pages', 2);
             }
         }
+    }
+
+    public function editdls ()
+    {
+        
     }
 }

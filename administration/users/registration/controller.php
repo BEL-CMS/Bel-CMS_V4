@@ -43,7 +43,7 @@ class Registration extends AdminPages
         if ($id == false or $id == 0) {
             $inter = new Interaction();
             $a['interaction'] = $inter->get($this->data[2]);
-            $a['user']        = User::getInfosUserAll($this->data[2]);
+            $a['user']  = User::getInfosUserAll($this->data[2]);
             #######################################################
             $this->set($a);
             $this->render('edit');
@@ -107,35 +107,6 @@ class Registration extends AdminPages
                 #######################################################
                 $this->redirect('registration?admin&option=users', 2);
             }
-        } else {
-            Notification::error('Un administrateur a reçu des informations sur une situation alarmante relative à l\'ID.', get_class($this));
-            #######################################################
-            $interaction = new Interaction();
-            $interaction->status('red');
-            $interaction->message(constant('ID_ERROR_MSG'));
-            $interaction->title('Usurpation d\'identité');
-            $interaction->author($_SESSION['USER']->user->hash_key);
-            $interaction->setAdmin();
-            #######################################################
-            $this->redirect('registration?admin&option=users', 2);
-        }
-    }
-
-    public function updategroups ()
-    {
-        $id = strlen($_POST['hash_key']) == 32 ? true : false;
-        if ($id === true) {
-            $root = ($_SESSION['USER']->user->root == '1') ? true : false;
-            if ($root === true) {
-                $this->models->sendMainGroups(1, $_POST['hash_key']);
-            } else {
-                $main_groups = (int) $_POST['main_groups'];
-                $this->models->sendMainGroups($main_groups, $_POST['hash_key']);
-            }
-            $access = implode('|',$_POST['access']);
-            $this->models->sendSecondGroups($access, $_POST['hash_key']);
-            Notification::success('La modification des groupes a été réalisée avec succès.', get_class($this));
-            $this->redirect('registration?admin&option=users', 2);
         } else {
             Notification::error('Un administrateur a reçu des informations sur une situation alarmante relative à l\'ID.', get_class($this));
             #######################################################

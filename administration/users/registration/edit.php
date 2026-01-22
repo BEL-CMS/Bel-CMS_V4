@@ -1,8 +1,5 @@
 <?php
 
-use BelCMS\Core\groups;
-use BelCMS\Core\Secure;
-use BelCMS\Core\Security;
 use BelCMS\Requires\Common;
 
 include ROOT . DS . 'assets/country.php';
@@ -23,7 +20,6 @@ $password = Common::randomString(8);
                         <button class="nav-link text-start" id="main-security-tab" data-bs-toggle="pill" data-bs-target="#main-security" type="button" role="tab" aria-controls="main-security" aria-selected="false" tabindex="-1"><i class="ri-lock-2-line me-2 align-center d-inline-block"></i>Sécurité</button>
                         <button class="nav-link text-start" id="main-social-tab" data-bs-toggle="pill" data-bs-target="#main-social" type="button" role="tab" aria-controls="main-social" aria-selected="false" tabindex="-1"><i class="ri-contacts-book-2-line me-2 align-middle d-inline-block"></i>Plateforme de médias sociaux</button>
                         <button class="nav-link text-start" id="main-notifications-tab" data-bs-toggle="pill" data-bs-target="#main-notifications" type="button" role="tab" aria-controls="main-notifications" aria-selected="false" tabindex="-1"><i class="ri-notification-3-line me-2 align-center d-inline-block"></i>Notifications</button>
-                        <button class="nav-link text-start" id="main-groups-tab" data-bs-toggle="pill" data-bs-target="#main-groups" type="button" role="tab" aria-controls="main-groups" aria-selected="false" tabindex="-1"><i class="ri-notification-3-line me-2 align-center d-inline-block"></i>Groupes</button>
                     </div>
                 </div>
                 <div class="col-md-9">
@@ -333,45 +329,6 @@ $password = Common::randomString(8);
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
-                        <div class="tab-pane" id="main-groups" role="tabpanel" tabindex="0" aria-labelledby="main-groups-tab">
-                            <form action="registration/updategroups?admin&option=users" method="post">
-                                <p><b>Groupe principal</b></p>
-                                <select name="main_groups" class="form-select" tabindex="-1">
-                                    <?php
-                                    foreach (Security::getGroups() as $key => $value):
-                                    $title = defined(strtoupper($value)) ? constant(strtoupper($value)) : $value;
-                                    $main_groups = $key == $user->groups->user_group ? 'selected="selected"': '';
-                                    ?>
-                                    <option <?=$main_groups?> value="<?=$key?>"><?=$title?></option>
-                                    <?php
-                                    endforeach;
-                                    ?>
-                                </select>
-                                <br>
-                                <p><b>Groupe secondaire</b></p><br>
-                                <?php
-                                $arrayAccess = $user->groups->all_groups;
-                                $groups = groups::getGroups();
-                                foreach ($groups as $key => $value):
-                                    $name = defined($value->name) ? constant($value->name) : $value->name;
-                                    $checked = (in_array($value->id_group, $arrayAccess)) ? "checked" : '';
-                                ?>
-                                    <div class="custom-toggle-switch d-flex align-items-center mb-4">
-                                        <input value="<?= $value->id_group; ?>" name="access[]" id="toggleswitchLight_<?= $value->id_group; ?>" type="checkbox" <?= $checked; ?>>
-                                        <label for="toggleswitchLight_<?= $value->id_group; ?>" class="label-warning"></label>
-                                        <span class="ms-3">Activer <?= $name; ?></span>
-                                    </div>
-                                <?php
-                                endforeach;
-                                ?>
-                                <div class="card-footer">
-                                    <input type="hidden" name="hash_key"  value="<?=$user->user->hash_key; ?>">
-                                    <div class="btn-list">
-                                        <button type="submit" class="btn btn-orange-gradient btn-wave">Enregistrer</button>
-                                    </div>
-                                </div>
-                            </form>
                         </div>
                     </div>
                 </div>

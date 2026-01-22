@@ -1,4 +1,3 @@
-@use "variables";
 [data-nav-layout="horizontal"][data-nav-style="icon-hover"],
 [data-nav-style="icon-hover"][data-toggled="icon-hover-closed"] {
     @extend .icon-hover;
@@ -13,14 +12,13 @@
             }
             .main-sidebar-header {
                 width: 5rem;
-                justify-content: center;
                 .header-logo {
                     .toggle-logo {
                         display: block;
                     }
                     .desktop-dark,
                     .desktop-logo,
-                    .toggle-dark {
+                    .toggle-dark,.desktop-white,.toggle-white {
                         display: none;
                     }
                 }
@@ -46,7 +44,7 @@
                     width: 0.35rem;
                     border-radius: 3.125rem;
                     height: 0.35rem;
-                    border: 1px solid variables.$menu-prime-color;
+                    border: 1px solid $menu-prime-color;
                     opacity: 1;
                 }
             }
@@ -69,14 +67,14 @@
         .slide.side-menu__label1 {
             display: block;
             padding: 0.5rem 1rem !important;
-            border-block-end: 1px solid variables.$default-border;
+            border-block-end: 1px solid $default-border;
         }
         .slide.has-sub .slide-menu {
             position: absolute !important;
             inset-inline-start: 5rem !important;
             background: var(--menu-bg);
             inset-block-start: auto !important;
-            box-shadow: 0 0 .375rem variables.$black-1;
+            box-shadow: 0.125rem 0.063rem 0.5rem $black-1;
             transition: none !important;
             &.child2,
             &.child3 {
@@ -91,9 +89,6 @@
                 .slide {
                     .side-menu__item {
                         text-align: start;
-                        &:before {
-                            display: none;
-                        }
                     }
                 }
                 .side-menu__angle {
@@ -127,14 +122,10 @@
 }
 [data-nav-layout="vertical"][data-nav-style="icon-hover"] {
     @media (min-width: 992px) {
-        .app-sidebar .main-menu .slide .side-menu__item:hover > .side-menu__item .side-menu__icon {
-            color: #fff;
-            fill: #fff;
-        }
         &[data-toggled="icon-hover-closed"] {
             .app-sidebar .main-menu{
                 >.slide {
-                    padding: 0 0.6rem;
+                    padding: 0 1.2rem;
                 }
             }
             .app-sidebar {
@@ -162,7 +153,7 @@
                             }
                             .desktop-dark,
                             .desktop-logo,
-                            .toggle-logo {
+                            .toggle-logo,.desktop-white,.toggle-white {
                                 display: none;
                             }
                         }
@@ -186,31 +177,5 @@
                 }
             }
         }
-    }
-}
-@media (min-width: 992px) {
-    [data-nav-layout="vertical"] {
-        &[data-nav-style="icon-hover"][data-toggled="icon-hover-closed"] { 
-            .app-sidebar {
-                .slide .side-menu__label {
-                    .badge {
-                        display: none;
-                    }
-                }
-            }
-            &[data-bg-img="bgimg1"],&[data-bg-img="bgimg2"],&[data-bg-img="bgimg3"],&[data-bg-img="bgimg4"],&[data-bg-img="bgimg5"] {
-                .app-sidebar {
-                    .main-sidebar-header {
-                        backdrop-filter: blur(30px);
-                    }
-                }
-            }
-        }
-    }
-}
-@media (min-width: 992px) {
-    .icon-hover .app-sidebar .side-menu__icon, [data-nav-layout=horizontal][data-nav-style=icon-hover] .app-sidebar .side-menu__icon, [data-nav-style=icon-hover][data-toggled=icon-hover-closed] .app-sidebar .side-menu__icon {
-        color: var(--menu-prime-color);
-        fill: var(--menu-prime-color);
     }
 }

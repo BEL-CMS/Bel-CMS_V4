@@ -1,4 +1,5 @@
 $(function (e) {
+    'use strict';
 
     // basic datatable
     $('#datatable-basic').DataTable({
@@ -7,7 +8,7 @@ $(function (e) {
             sSearch: '',
         },
         "pageLength": 10,
-        // scrollX: true
+        scrollX: true
     });
     // basic datatable
 
@@ -36,12 +37,7 @@ $(function (e) {
                     tableClass: 'table'
                 })
             }
-        },
-        language: {
-            searchPlaceholder: 'Search...',
-            sSearch: '',
-        },
-        "pageLength": 10,
+        }
     });
     // responsive modal datatable
 
@@ -51,10 +47,7 @@ $(function (e) {
         buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'
         ],
-        language: {
-            searchPlaceholder: 'Search...',
-            sSearch: '',
-        },
+        scrollX: true
     });
     // file export datatable
 
@@ -79,18 +72,14 @@ $(function (e) {
     });
     // delete row datatable
 
-    // scroll vertical
+    // scroll vertical 
     $('#scroll-vertical').DataTable({
         scrollY: '265px',
         scrollCollapse: true,
         paging: false,
         scrollX: true,
-        language: {
-            searchPlaceholder: 'Search...',
-            sSearch: '',
-        },
     });
-    // scroll vertical
+    // scroll vertical 
 
     // hidden columns
     $('#hidden-columns').DataTable({
@@ -105,23 +94,13 @@ $(function (e) {
                 visible: false,
             },
         ],
-        language: {
-            searchPlaceholder: 'Search...',
-            sSearch: '',
-        },
         "pageLength": 10,
-        // scrollX: true
+        scrollX: true
     });
     // hidden columns
     
     // add row datatable
-    var t = $('#add-row').DataTable({
-        
-        language: {
-            searchPlaceholder: 'Search...',
-            sSearch: '',
-        },
-    });
+    var t = $('#add-row').DataTable();
     var counter = 1;
     $('#addRow').on('click', function () {
         t.row.add([counter + '.1', counter + '.2', counter + '.3', counter + '.4', counter + '.5']).draw(false);

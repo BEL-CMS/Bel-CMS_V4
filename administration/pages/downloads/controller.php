@@ -65,7 +65,6 @@ class Downloads extends AdminPages
 
         if (!empty($_POST['link'])) {
             $send['download'] = Common::VarSecure($_POST['link'], 'url');
-            $send['size'] =  (int) ($_POST['size']);
         } else {
             if ($_FILES['download']['error'] == 4) {
                 $array = array(
@@ -85,7 +84,7 @@ class Downloads extends AdminPages
 
         if (isset($_FILES['screen'])) {
             $screen         = Common::Upload('screen', 'uploads/downloads/screen','img',true);
-            $send['screen'] = '/uploads/downloads/screen/' . $screen;
+            $send['screen'] = 'uploads/downloads/screen/' . $screen;
         }
 
         $send['idcat'] = $_POST['idcat'] == is_numeric(($_POST['idcat'])) ? $_POST['idcat'] : 0;
@@ -142,7 +141,7 @@ class Downloads extends AdminPages
             if (isset($_FILES['screen']['name'])) {
                 if ($_FILES['screen']['error'] != 4) {
                     $screen           = Common::Upload('screen', 'uploads/downloads/screen','img',true);
-                    $insert['screen'] = '/uploads/downloads/screen/' . $screen;
+                    $insert['screen'] = 'uploads/downloads/screen/' . $screen;
                 }
             }
             $insert['access']         = implode('|', $_POST['access']);

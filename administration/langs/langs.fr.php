@@ -58,6 +58,9 @@ Common::constant(array(
 	'UNKNOW_MODELS'               => 'Fichier models manquant.',
 	'SAVE_BDD_SUCCESS'            => 'Sauvegarde effectuée avec succès',
 	'SAVE_BDD_ERROR'              => 'Données corrompues, la sauvegarde n\'a pas eu lieu',
+	'MAIN_CAT'                    => 'Catégorie principal',
+	'CAT_SUB'                     => 'Catégorie secondaire',
+	'ADD_MAIN_CAT'                => 'Ajouter une catégorie primaire',
 	#####################################
 	# UPLOAD
 	#####################################

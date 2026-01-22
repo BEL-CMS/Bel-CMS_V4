@@ -21,10 +21,8 @@ Common::constant(array(
     #####################################
     # Fichier lang en français - Groupes
     #####################################
-    'ALL_MSG_POST'       => 'Tout les sujets',
-    'ALL_MSG_REP'        => 'Tout les postes',
-    'MAIN_CAT'           => 'Catégorie Principal',
-	'CAT_SUB'            => 'Catégorie secondaire',
-	'ADD_MAIN_CAT'       => 'Ajouter une catégorie principale',
+    'ALL_MSG_POST' => 'Tout les sujets',
+    'ALL_MSG_REP'  => 'Tout les postes',
+    'ADD_CAT_SUB'  => 'Ajouter une catégorie principal',
     'ADD_CAT_SUB_SECOND' => 'Ajouter une catégorie secondaire',
 ));

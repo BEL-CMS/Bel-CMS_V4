@@ -1,10 +1,9 @@
-@use "variables";
 .alert {
     padding: 0.625rem 0.85rem;
-    border-radius: variables.$default-radius;
+    border-radius: $default-radius;
     font-size: 0.8125rem;
     &.alert-dismissible {
-        padding: 0.625rem 3rem 0.625rem 0.85rem;
+        padding: 0.625rem 2.25rem 0.625rem 0.85rem;
     }
     .btn-close {
         background-image: none;
@@ -21,133 +20,133 @@
         margin-bottom: 0;
     }
     .alert-link {
-        font-weight: 400;
+        font-weight: 600;
     }
 }
 [dir="rtl"] {
     .alert.alert-dismissible {
-        padding: 0.625rem 0.85rem 0.625rem 3rem;
+        padding: 0.625rem 0.85rem 0.625rem 2.25rem;
     }
 }
 
 /* Basic Alerts */
 @mixin custom-close($color) {
     background-color: $color;
-    color: variables.$white;
+    color: $white;
     opacity: 1;
     border-radius: 50px;
-    box-shadow: variables.$box-shadow;
+    box-shadow: $box-shadow;
     padding: 0.85rem;
 }
 .alert-warning {
     background-color: rgba(var(--warning-rgb),0.1);
-    color: variables.$warning;
+    color: $warning;
     border-color:  rgba(var(--warning-rgb),0.1);
     .alert-link {
-        color: variables.$warning;
+        color: $warning;
     }
     .btn-close {
-        color: variables.$warning;
+        color: $warning;
         &.custom-close {
-            @include custom-close(variables.$warning);
+            @include custom-close($warning);
         }
     }
 }
 .alert-primary {
-    background-color: variables.$primary-01;
-    color: variables.$primary;
-    border-color:  variables.$primary-01;
+    background-color: $primary-01;
+    color: $primary;
+    border-color:  $primary-01;
     .alert-link {
-        color: variables.$primary;
+        color: $primary;
     }
     .btn-close {
-        color: variables.$primary;
+        color: $primary;
         &.custom-close {
-            @include custom-close(variables.$primary);
+            @include custom-close($primary);
         }
     }
 }
 .alert-secondary {
     background-color: rgba(var(--secondary-rgb),0.1);
-    color: variables.$secondary;
+    color: $secondary;
     border-color:  rgba(var(--secondary-rgb),0.1);
     .alert-link {
-        color: variables.$secondary;
+        color: $secondary;
     }
     .btn-close {
-        color: variables.$secondary;
+        color: $secondary;
         &.custom-close {
-            @include custom-close(variables.$secondary);
+            @include custom-close($secondary);
         }
     }
 }
 .alert-success {
     background-color: rgba(var(--success-rgb),0.1);
-    color: variables.$success;
+    color: $success;
     border-color:  rgba(var(--success-rgb),0.1);
     .alert-link {
-        color: variables.$success;
+        color: $success;
     }
     .btn-close {
-        color: variables.$success;
+        color: $success;
         &.custom-close {
-            @include custom-close(variables.$success);
+            @include custom-close($success);
         }
     }
 }
 .alert-info {
     background-color: rgba(var(--info-rgb),0.1);
-    color: variables.$info;
+    color: $info;
     border-color:  rgba(var(--info-rgb),0.1);
     .alert-link {
-        color: variables.$info;
+        color: $info;
     }
     .btn-close {
-        color: variables.$info;
+        color: $info;
         &.custom-close {
-            @include custom-close(variables.$info);
+            @include custom-close($info);
         }
     }
 }
 .alert-danger {
     background-color: rgba(var(--danger-rgb),0.1);
-    color: variables.$danger;
+    color: $danger;
     border-color:  rgba(var(--danger-rgb),0.1);
     .alert-link {
-        color: variables.$danger;
+        color: $danger;
     }
     .btn-close {
-        color: variables.$danger;
+        color: $danger;
         &.custom-close {
-            @include custom-close(variables.$danger);
+            @include custom-close($danger);
         }
     }
 }
 .alert-light {
-    background-color: variables.$light;
-    color: variables.$default-text-color;
-    border-color:  variables.$light;
+    background-color: $light;
+    color: $default-text-color;
+    border-color:  $light;
     .alert-link {
-        color: variables.$default-text-color;
+        color: $default-text-color;
     }
     .btn-close {
-        color: variables.$default-text-color;
+        color: $default-text-color;
         &.custom-close {
-            @include custom-close(variables.$light);
+            @include custom-close($light);
         }
     }
 }
 .alert-dark {
     background-color: rgba(var(--dark-rgb),0.1);
-    color: variables.$default-text-color;
+    color: $default-text-color;
     border-color:  rgba(var(--dark-rgb),0.1);
     .alert-link {
-        color: variables.$default-text-color;
+        color: $default-text-color;
     }
     .btn-close {
-        color: variables.$white;
+        color: $white;
         &.custom-close {
-            @include custom-close(variables.$dark);
+            @include custom-close($dark);
         }
     }
 }
@@ -156,43 +155,43 @@
 /* Solid Colored Alerts */
 @mixin alert-solid-color($color) {
     background-color: $color;
-    color: variables.$white;
+    color: $white;
     border-color:  $color;
     .btn-close {
-        color: variables.$white;
+        color: $white;
     }
 }
 .alert-solid-primary {
-    @include alert-solid-color(variables.$primary);
+    @include alert-solid-color($primary);
 }
 .alert-solid-secondary {
-    @include alert-solid-color(variables.$secondary);
+    @include alert-solid-color($secondary);
 }
 .alert-solid-warning {
-    @include alert-solid-color(variables.$warning);
+    @include alert-solid-color($warning);
 }
 .alert-solid-info {
-    @include alert-solid-color(variables.$info);
+    @include alert-solid-color($info);
 }
 .alert-solid-success {
-    @include alert-solid-color(variables.$success);
+    @include alert-solid-color($success);
 }
 .alert-solid-danger {
-    @include alert-solid-color(variables.$danger);
+    @include alert-solid-color($danger);
 }
 .alert-solid-light {
-    background-color: variables.$light;
-    color: variables.$default-text-color;
-    border-color:  variables.$default-border;
+    background-color: $light;
+    color: $default-text-color;
+    border-color:  $default-border;
 }
 .alert-solid-dark {
-    @include alert-solid-color(variables.$dark);
+    @include alert-solid-color($dark);
 }
 /* Solid Colored Alerts */
 
 /* Outline Alerts */
 @mixin outline-alert($color) {
-    background-color: variables.$custom-white;
+    background-color: $custom-white;
     color: $color;
     border-color: $color;
     .btn-close {
@@ -200,80 +199,80 @@
     }
 }
 .alert-outline-primary {
-    @include outline-alert(variables.$primary);
+    @include outline-alert($primary);
 }
 .alert-outline-secondary {
-    @include outline-alert(variables.$secondary);
+    @include outline-alert($secondary);
 }
 .alert-outline-info {
-    @include outline-alert(variables.$info);
+    @include outline-alert($info);
 }
 .alert-outline-warning {
-    @include outline-alert(variables.$warning);
+    @include outline-alert($warning);
 }
 .alert-outline-success {
-    @include outline-alert(variables.$success);
+    @include outline-alert($success);
 }
 .alert-outline-danger {
-    @include outline-alert(variables.$danger);
+    @include outline-alert($danger);
 }
 .alert-outline-light {
-    background-color: variables.$custom-white;
-    color: variables.$default-text-color;
-    border-color: variables.$light;
+    background-color: $custom-white;
+    color: $default-text-color;
+    border-color: $light;
 }
 .alert-outline-dark {
-    @include outline-alert(variables.$dark);
+    @include outline-alert($dark);
 }
 /* Outline Alerts */
 
 /* Customized Alerts */
 @mixin custom-alert($color) {
     border-inline-start: 0.313rem solid $color !important;
-    color: variables.$text-muted;
-    background-color: variables.$custom-white;
-    border: 1px solid variables.$default-border;
+    color: $text-muted;
+    background-color: $custom-white;
+    border: 1px solid $default-border;
     font-size: 0.813rem;
     .btn-close {
-        color: variables.$default-text-color;
+        color: $default-text-color;
     }
 }
 .alert-primary.custom-alert-icon {
-    @include custom-alert(variables.$primary);
+    @include custom-alert($primary);
 }
 .alert-secondary.custom-alert-icon {
-    @include custom-alert(variables.$secondary);
+    @include custom-alert($secondary);
 }
 .alert-warning.custom-alert-icon {
-    @include custom-alert(variables.$warning);
+    @include custom-alert($warning);
 }
 .alert-danger.custom-alert-icon {
-    @include custom-alert(variables.$danger);
+    @include custom-alert($danger);
 }
 .alert-success.custom-alert-icon {
-    @include custom-alert(variables.$success);
+    @include custom-alert($success);
 }
 .alert-info.custom-alert-icon {
-    @include custom-alert(variables.$info);
+    @include custom-alert($info);
 }
 .alert-light.custom-alert-icon {
-    @include custom-alert(variables.$light);
+    @include custom-alert($light);
 }
 .alert-dark.custom-alert-icon {
-    @include custom-alert(variables.$dark);
+    @include custom-alert($dark);
 }
 /* Customized Alerts */
 
 /* Customized Alerts1 */
 .custom-alert1 {
     margin-block-end: 0;
-    background-color: variables.$custom-white;
+    background-color: $custom-white;
     border: 0;
     padding: 1.25rem;
-    color: variables.$default-text-color;
+    color: $default-text-color;
     p {
         margin-block-end: 2.5rem;
-        color: variables.$text-muted;
+        color: $text-muted;
         font-size: 0.8rem;
     }
     .custom-alert-icon {
@@ -286,16 +285,16 @@
         margin-block-end: 1rem;
     }
     &.alert-primary {
-        border-block-start: 0.313rem solid variables.$primary;
+        border-block-start: 0.313rem solid $primary;
     }
     &.alert-secondary {
-        border-block-start: 0.313rem solid variables.$secondary;
+        border-block-start: 0.313rem solid $secondary;
     }
     &.alert-warning {
-        border-block-start: 0.313rem solid variables.$warning;
+        border-block-start: 0.313rem solid $warning;
     }
     &.alert-danger {
-        border-block-start: 0.313rem solid variables.$danger;
+        border-block-start: 0.313rem solid $danger;
     }
 }
 /* Customized Alerts1 */
@@ -310,8 +309,12 @@
 }
 /* Image alerts */
 
-@media screen and (max-width:400px) {
-    .btn-close.custom-close {
-        margin: 9px 9px 9px 0;
-    }  
+@media (max-width: 425px){
+    .alert.alert-dismissible .btn-close{
+        width: 0em !important;
+        height: 0em !important;
+    }
+    .alert .btn-close {
+        padding: 1.5rem;
+    }
 }

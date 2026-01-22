@@ -162,6 +162,16 @@ class AdminPages
             <?php
             if (!empty($menu)):
                 foreach ($menu as $key => $value):
+                    if (isset($value['bg'])) {
+                        $bgColor = $value['bg'];
+                    } else {
+                        $bgColor = '';
+                    }
+                    if (isset($value['color'])) {
+                        $color = $value['color'];
+                    } else {
+                        $color = '';
+                    }
             ?>
                     <div class="col-xxl-2 col-xl-6 col-lg-6 col-md-6">
                         <div class="card custom-card">
@@ -169,11 +179,11 @@ class AdminPages
                             <div class="top-right"></div>
                             <div class="bottom-left"></div>
                             <div class="bottom-right"></div>
-                            <div class="card-body p-3 hovermenu">
+                            <div class="card-body p-3 hovermenu <?= $bgColor; ?>">
                                 <a href="<?= $value['href']; ?>">
                                     <div class="text-center">
-                                        <div class="file-format-icon text-primary"> <i class="<?= $value['ico']; ?>"></i></div>
-                                        <div> <span class="fw-medium mb-1"><?= $value['title']; ?></span></div>
+                                        <div class="file-format-icon text-primary"></div>
+                                        <div><span class="fw-medium mb-1" style="color: <?= $color; ?>"><?= $value['title']; ?></span></div>
                                     </div>
                                 </a>
                             </div>
@@ -228,7 +238,7 @@ class AdminPages
         ?>
         </div>
 
-<?php
+        <?php
         if (ob_get_length() != 0) {
             ob_end_clean();
         }

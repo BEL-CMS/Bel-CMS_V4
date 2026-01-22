@@ -1,4 +1,3 @@
-@use "variables";
 /* Start::border */
 .border-container {
     display: inline-block;
@@ -9,7 +8,7 @@
   }
 /*Start::border */
 .border {
-    border: 1px solid variables.$default-border !important;
+    border: 1px solid $default-border !important;
 
     /* Start:: Border Style */
     &.border-dashed {
@@ -22,26 +21,26 @@
 
     /* Start::Border Colors */
     &.border-primary {
-        border: 1px solid variables.$primary !important;
+        border: 1px solid $primary !important;
         opacity: 1;
         &.border-opacity-10 {
-            border-color: variables.$primary-01 !important;
+            border-color: $primary-01 !important;
         }
         &.border-opacity-25 {
-            border-color: variables.$primary-03 !important;
+            border-color: $primary-03 !important;
         }
         &.border-opacity-50 {
-            border-color: variables.$primary-05 !important;
+            border-color: $primary-05 !important;
         }
         &.border-opacity-75 {
-            border-color: variables.$primary-08 !important;
+            border-color: $primary-08 !important;
         }
         &.border-opacity-100 {
-            border-color: variables.$primary !important;
+            border-color: $primary !important;
         }
     }
     &.border-secondary {
-        border: 1px solid variables.$secondary !important;
+        border: 1px solid $secondary !important;
         opacity: 1;
         &.border-opacity-10 {
             border-color: rgba(var(--secondary-rgb),0.1) !important;
@@ -60,7 +59,7 @@
         }
     }
     &.border-info {
-        border: 1px solid variables.$info !important;
+        border: 1px solid $info !important;
         opacity: 1;
         &.border-opacity-10 {
             border-color: rgba(var(--info-rgb),0.1) !important;
@@ -79,7 +78,7 @@
         }
     }
     &.border-success {
-        border: 1px solid variables.$success !important;
+        border: 1px solid $success !important;
         opacity: 1;
         &.border-opacity-10 {
             border-color: rgba(var(--success-rgb),0.1) !important;
@@ -98,7 +97,7 @@
         }
     }
     &.border-warning {
-        border: 1px solid variables.$warning !important;
+        border: 1px solid $warning !important;
         opacity: 1;
         &.border-opacity-10 {
             border-color: rgba(var(--warning-rgb),0.1) !important;
@@ -117,7 +116,7 @@
         }
     }
     &.border-danger {
-        border: 1px solid variables.$danger !important;
+        border: 1px solid $danger !important;
         opacity: 1;
         &.border-opacity-10 {
             border-color: rgba(var(--danger-rgb),0.1) !important;
@@ -135,84 +134,27 @@
             border-color: rgba(var(--danger-rgb),1) !important;
         }
     }
-    &.border-pink {
-        border: 1px solid variables.$pink !important;
-        opacity: 1;
-        &.border-opacity-10 {
-            border-color: rgba(var(--pink-rgb),0.1) !important;
-        }
-        &.border-opacity-25 {
-            border-color: rgba(var(--pink-rgb),0.25) !important;
-        }
-        &.border-opacity-50 {
-            border-color: rgba(var(--pink-rgb),0.50) !important;
-        }
-        &.border-opacity-75 {
-            border-color: rgba(var(--pink-rgb),0.75) !important;
-        }
-        &.border-opacity-100 {
-            border-color: rgba(var(--pink-rgb),1) !important;
-        }
-    }
-    &.border-teal {
-        border: 1px solid variables.$teal !important;
-        opacity: 1;
-        &.border-opacity-10 {
-            border-color: rgba(var(--teal-rgb),0.1) !important;
-        }
-        &.border-opacity-25 {
-            border-color: rgba(var(--teal-rgb),0.25) !important;
-        }
-        &.border-opacity-50 {
-            border-color: rgba(var(--teal-rgb),0.50) !important;
-        }
-        &.border-opacity-75 {
-            border-color: rgba(var(--teal-rgb),0.75) !important;
-        }
-        &.border-opacity-100 {
-            border-color: rgba(var(--teal-rgb),1) !important;
-        }
-    }
-    &.border-orange {
-        border: 1px solid variables.$orange !important;
-        opacity: 1;
-        &.border-opacity-10 {
-            border-color: rgba(var(--orange-rgb),0.1) !important;
-        }
-        &.border-opacity-25 {
-            border-color: rgba(var(--orange-rgb),0.25) !important;
-        }
-        &.border-opacity-50 {
-            border-color: rgba(var(--orange-rgb),0.50) !important;
-        }
-        &.border-opacity-75 {
-            border-color: rgba(var(--orange-rgb),0.75) !important;
-        }
-        &.border-opacity-100 {
-            border-color: rgba(var(--orange-rgb),1) !important;
-        }
-    }
     &.border-white {
-        border: 1px solid variables.$white !important;
+        border: 1px solid $white !important;
         opacity: 1;
         &.border-opacity-10 {
-            border-color: rgba(variables.$white,0.1) !important;
+            border-color: rgba($white,0.1) !important;
         }
         &.border-opacity-25 {
-            border-color: rgba(variables.$white,0.25) !important;
+            border-color: rgba($white,0.25) !important;
         }
         &.border-opacity-50 {
-            border-color: rgba(variables.$white,0.50) !important;
+            border-color: rgba($white,0.50) !important;
         }
         &.border-opacity-75 {
-            border-color: rgba(variables.$white,0.75) !important;
+            border-color: rgba($white,0.75) !important;
         }
         &.border-opacity-100 {
-            border-color: rgba(variables.$white,1) !important;
+            border-color: rgba($white,1) !important;
         }
     }
     &.border-light {
-        border: 1px solid variables.$light !important;
+        border: 1px solid $light !important;
         opacity: 1;
         &.border-opacity-10 {
             border-color: rgba(var(--light-rgb),0.1) !important;
@@ -231,7 +173,7 @@
         }
     }
     &.border-dark {
-        border: 1px solid variables.$dark !important;
+        border: 1px solid $dark !important;
         opacity: 1;
         &.border-opacity-10 {
             border-color: rgba(var(--dark-rgb),0.1) !important;
@@ -333,7 +275,7 @@
     /* End::subtractive border */
 }
 .border-top {
-    border-top: 1px solid variables.$default-border !important;
+    border-top: 1px solid $default-border !important;
     &.border-block-start-dashed {
         border-top-style: dashed !important;
     }
@@ -341,32 +283,32 @@
         border-top-style: dotted !important;
     }
     &.border-primary {
-        border-color: variables.$primary !important;
+        border-color: $primary !important;
     }
     &.border-secondary {
-        border-color: variables.$secondary !important;
+        border-color: $secondary !important;
     }
     &.border-warning {
-        border-color: variables.$warning !important;
+        border-color: $warning !important;
     }
     &.border-info {
-        border-color: variables.$info !important;
+        border-color: $info !important;
     }
     &.border-success {
-        border-color: variables.$success !important;
+        border-color: $success !important;
     }
     &.border-danger {
-        border-color: variables.$danger !important;
+        border-color: $danger !important;
     }
     &.border-light {
-        border-color: variables.$light !important;
+        border-color: $light !important;
     }
     &.border-dark {
-        border-color: variables.$dark !important;
+        border-color: $dark !important;
     }
 }
 .border-end {   
-    border-inline-end: 1px solid variables.$default-border !important;
+    border-inline-end: 1px solid $default-border !important;
     &.border-inline-end-dashed {
         border-inline-end-style: dashed !important;
     }
@@ -374,32 +316,32 @@
         border-inline-end-style: dotted !important;
     }
     &.border-primary {
-        border-color: variables.$primary !important;
+        border-color: $primary !important;
     }
     &.border-secondary {
-        border-color: variables.$secondary !important;
+        border-color: $secondary !important;
     }
     &.border-warning {
-        border-color: variables.$warning !important;
+        border-color: $warning !important;
     }
     &.border-info {
-        border-color: variables.$info !important;
+        border-color: $info !important;
     }
     &.border-success {
-        border-color: variables.$success !important;
+        border-color: $success !important;
     }
     &.border-danger {
-        border-color: variables.$danger !important;
+        border-color: $danger !important;
     }
     &.border-light {
-        border-color: variables.$light !important;
+        border-color: $light !important;
     }
     &.border-dark {
-        border-color: variables.$dark !important;
+        border-color: $dark !important;
     }
 }
 .border-bottom {
-    border-bottom: 1px solid variables.$default-border !important;
+    border-bottom: 1px solid $default-border !important;
     &.border-block-end-dashed {
         border-bottom-style: dashed !important;
     }
@@ -407,32 +349,32 @@
         border-bottom-style: dotted !important;
     }
     &.border-primary {
-        border-color: variables.$primary !important;
+        border-color: $primary !important;
     }
     &.border-secondary {
-        border-color: variables.$secondary !important;
+        border-color: $secondary !important;
     }
     &.border-warning {
-        border-color: variables.$warning !important;
+        border-color: $warning !important;
     }
     &.border-info {
-        border-color: variables.$info !important;
+        border-color: $info !important;
     }
     &.border-success {
-        border-color: variables.$success !important;
+        border-color: $success !important;
     }
     &.border-danger {
-        border-color: variables.$danger !important;
+        border-color: $danger !important;
     }
     &.border-light {
-        border-color: variables.$light !important;
+        border-color: $light !important;
     }
     &.border-dark {
-        border-color: variables.$dark !important;
+        border-color: $dark !important;
     }
 }
 .border-start {
-    border-inline-start: 1px solid variables.$default-border !important;
+    border-inline-start: 1px solid $default-border !important;
     &.border-inline-start-dashed {
         border-inline-start-style: dashed !important;
     }
@@ -440,67 +382,75 @@
         border-inline-start-style: dotted !important;
     }
     &.border-primary {
-        border-color: variables.$primary !important;
+        border-color: $primary !important;
     }
     &.border-secondary {
-        border-color: variables.$secondary !important;
+        border-color: $secondary !important;
     }
     &.border-warning {
-        border-color: variables.$warning !important;
+        border-color: $warning !important;
     }
     &.border-info {
-        border-color: variables.$info !important;
+        border-color: $info !important;
     }
     &.border-success {
-        border-color: variables.$success !important;
+        border-color: $success !important;
     }
     &.border-danger {
-        border-color: variables.$danger !important;
+        border-color: $danger !important;
     }
     &.border-light {
-        border-color: variables.$light !important;
+        border-color: $light !important;
     }
     &.border-dark {
-        border-color: variables.$dark !important;
+        border-color: $dark !important;
     }
 }
 /*End::additive border */
 
 /* Start::border radius */
+.br-0 {
+    border-radius: 0;
+}
+.br-1 {
+    border-radius: 0.0625rem;
+}
+.br-2 {
+    border-radius: 0.125rem;
+}
+.br-3 {
+    border-radius: 0.1875rem;
+}
+.br-4 {
+    border-radius: 0.25rem;
+}
+.br-5 {
+    border-radius: 0.3125rem;
+}
+.br-6 {
+    border-radius: 0.375rem;
+}
+.br-7 {
+    border-radius: 0.4375rem;
+}
+.br-8 {
+    border-radius: 0.5rem;
+}
+.br-9 {
+    border-radius: 0.5625rem;
+}
+.br-10 {
+    border-radius: 0.625rem;
+}
+.br-15 {
+    border-radius: 0.9375rem;
+}
+.br-20 {
+    border-radius: 1.25rem;
+}
 .rounded {
-    border-radius: variables.$default-radius !important;
+    border-radius: $default-radius !important;
 }
 /* End::border radius */
 
-/* Start:: border white */
-.border-white-1 {
-    border-color: rgba(255, 255, 255, 0.1) !important;
-}
-/* End:: border white */
-
-/* Start::vr */
-.vr {
-    background-color: variables.$default-border;
-    opacity: 1;
-}
-/* End::vr */
-@media (min-width: 1200px) {
-    .border-lg-end{
-      border-right: 1px solid  variables.$default-border !important;
-    }
-}
-
-[dir="rtl"]{
-    @media (min-width: 1200px) {
-        .border-lg-end{
-            border-left: 1px solid  variables.$default-border !important;
-            border-right: 0px solid  variables.$default-border !important;
-        }
-    }
-}
-@media (min-width: 576px) {
-.border-sm-end{
-    border-inline-end: 1px solid variables.$default-border ;
-}
-}
 

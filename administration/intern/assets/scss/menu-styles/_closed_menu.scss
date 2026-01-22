@@ -1,4 +1,3 @@
-@use "variables";
 [data-vertical-style="closed"] {
     &[data-toggled="close-menu-close"] {
         .app-sidebar {
@@ -19,10 +18,10 @@
         }
         @media (min-width: 992px) {
             .app-content {
-                margin-inline-start: 16rem;
+                margin-inline-start: 15rem;
             }
             .app-header {
-                padding-inline-start: 16rem;
+                padding-inline-start: 15rem;
             }
         }    
     }    

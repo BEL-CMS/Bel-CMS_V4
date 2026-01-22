@@ -50,10 +50,6 @@ endif;
                             <span class="input-group-text">Fichier torrent</span>
                             <input type="file" accept=".torrent" name="torrent" class="form-control">
                         </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">Taille en bit * si vous envoyer par le FTP. **pas obligatoire</span>
-                            <input type="number" min="0" name="size" class="form-control">
-                        </div>
                         <div class="mb-3">
                             <select name="idcat" class="form-control">
                                 <?php

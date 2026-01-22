@@ -10,6 +10,9 @@
  * @author as Stive - stive@determe.be
  */
 
+use BelCMS\Core\User;
+use BelCMS\Requires\Common;
+
 if (!defined('CHECK_INDEX')):
     header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
     exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
@@ -30,7 +33,7 @@ endif;
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered text-nowrap w-100" id="DataTableBelCMS">
+                        <table class="table table-bordered text-nowrap w-100 DataTableBelCMS">
                             <thead>
                                 <tr>
                                     <th>Icône</th>
@@ -51,10 +54,10 @@ endif;
                                         <td><?= $v->subtitle; ?></td>
                                         <td><?= $active; ?></td>
                                         <td>
-                                            <button class="btn btn-info label-btn rounded-pill" onclick="location.href='forum/editmaincat/<?= $v->id; ?>?admin&option=pages'">
+                                            <button class="btn btn-info label-btn rounded-pill" onclick="location.href='registration/edit/<?= $v->id; ?>?admin&option=users'">
                                                 <i class="ri-settings-4-line label-btn-icon me-2"></i>Edition
                                             </button>&nbsp; &nbsp;
-                                            <button class="btn btn-danger label-btn label-end rounded-pill" onclick="location.href='forum/deleditmaincat/<?= $v->id; ?>?admin&option=pages'">Supprimer
+                                            <button class="btn btn-danger label-btn label-end rounded-pill" onclick="location.href='registration/del/<?= $v->id; ?>?admin&option=users'">Supprimer
                                                 <i class="ri-close-line label-btn-icon ms-2 rounded-pill"></i>
                                             </button>
                                         </td>

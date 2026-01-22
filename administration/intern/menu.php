@@ -33,11 +33,11 @@ final class Menu
     public function settings()
     {
         $array = array(
-            '. Préférences Générales'   => array('prefgen?admin&option=parameter', ''),
-            '. Contact'                 => array('contact?admin&option=parameter', ''),
-            '. Configuration e-mail'    => array('mail?admin&option=parameter', ''),
-            '. Maintenance'             => array('unavailable?admin&option=parameter', ''),
-            '. Configuration des pages' => array('config?admin&option=parameter', '')
+            'Préférences Générales'   => array('prefgen?admin&option=parameter', ''),
+            //'Contact'                 => array('contact?admin&option=parameter', ''),
+            'Configuration e-mail'    => array('mail?admin&option=parameter', ''),
+            'Maintenance'             => array('unavailable?admin&option=parameter', ''),
+            'Configuration des pages' => array('config?admin&option=parameter', '')
         );
         ksort($array);
         self::getLayout($array);
@@ -46,8 +46,8 @@ final class Menu
     public function template()
     {
         $array = array(
-            '. Styles'              => array('styles?admin&option=templates', ''),
-            '. Gestions des Thèmes' => array('themes?admin&option=templates', '')
+            'Styles'              => array('styles?admin&option=templates', ''),
+            'Gestions des Thèmes' => array('themes?admin&option=templates', '')
         );
         ksort($array);
         self::getLayout($array);
@@ -56,9 +56,9 @@ final class Menu
     public function user()
     {
         $array = array(
-            '. Bannissement'   => array('banishment?admin&option=users', ''),
-            '. Groupe(s)'      => array('groups?admin&option=users', ''),
-            '. Enregistrement' => array('registration?admin&option=users', '')
+            'Bannissement'   => array('banishment?admin&option=users', ''),
+            'Groupe(s)'      => array('groups?admin&option=users', ''),
+            'Enregistrement' => array('registration?admin&option=users', '')
         );
         ksort($array);
         self::getLayout($array);
@@ -67,19 +67,19 @@ final class Menu
     public function pages()
     {
         $array = array(
-            '. Articles'            => array('articles?admin&amp;option=pages', ''),
-            '. Calendrier'          => array('calendar?admin&amp;option=pages', ''),
-            '. Commentaires'        => array('comments?admin&amp;option=pages', ''),
+            'Articles'            => array('articles?admin&amp;option=pages', ''),
+            'Calendrier'          => array('calendar?admin&amp;option=pages', ''),
+            'Commentaires'        => array('comments?admin&amp;option=pages', ''),
             //'Donation'            => array('donations?admin&amp;option=pages', ''),
-            '. Téléchargements'     => array('downloads?admin&amp;option=pages', ''),
+            'Téléchargements'     => array('downloads?admin&amp;option=pages', ''),
             //'Foire aux questions' => array('faq?admin&amp;option=pages', ''),
-            '. Forum'               =>array('forum?admin&amp;option=pages', ''),
-            '. Galerie d\'images'   =>array('gallery?admin&amp;option=pages', ''),
-            '. Livre d\'or'         =>array('guestbook?admin&amp;option=pages', ''),
-            '. Liens'               =>array('links?admin&amp;option=pages', ''),
+            'Forum'               =>array('forum?admin&amp;option=pages', ''),
+            'Galerie d\'images'   =>array('gallery?admin&amp;option=pages', ''),
+            'Livre d\'or'         =>array('guestbook?admin&amp;option=pages', ''),
+            'Liens'               =>array('links?admin&amp;option=pages', ''),
             //'Boutique'            => array('market?admin&amp;option=pages', ''),
-            '. Actualités'          => array('news?admin&amp;option=pages', ''),
-            '. Newsletter'          => array('newsletter?admin&amp;option=pages', ''),
+            'Actualités'          => array('news?admin&amp;option=pages', ''),
+            'Newsletter'          => array('newsletter?admin&amp;option=pages', ''),
             //'Tarifs'              => array('pricing?admin&amp;option=pages', ''),
             //'Recherche'           => array('search?admin&amp;option=pages', ''),
             //'Tickets'             => array('tickets?admin&amp;option=pages, ''),
@@ -91,10 +91,10 @@ final class Menu
     public function  Widgets()
     {
         $array = array(
-            '. Newsletter'     =>  array('newsletter?management&option=widgets', ''),
-            '. T\'chat'        =>  array('stats?management&option=widgets', ''),
-            '. Statistiques'   =>  array('shoutbox?management&option=widgets', ''),
-            '. Sondages'       =>  array('survey?management&option=widgets', '')
+            'Newsletter'     =>  array('newsletter?management&option=widgets', ''),
+            'T\'chat'        =>  array('stats?management&option=widgets', ''),
+            'Statistiques'   =>  array('shoutbox?management&option=widgets', ''),
+            'Sondages'       =>  array('survey?management&option=widgets', '')
         );
         ksort($array);
         self::getLayout($array);
@@ -103,10 +103,11 @@ final class Menu
     public function extras()
     {
         $array = array(
-            '. Upload Fichier'   =>  array('files?management&option=extras', ''),
-            '. Backup'           =>  array('file_manager?management&option=extras', ''),
-            '. Serveur'          =>  array('server?management&option=extras', ''),
-            '. Mot interdit'     =>  array('forbidden?management&option=extras', '')
+            'Upload Fichier'   =>  array('files?management&option=extras', ''),
+            'Backup'           =>  array('file_manager?management&option=extras', ''),
+            'Serveur'          =>  array('server?management&option=extras', ''),
+            'Mails interdits'  =>  array('forbidden?management&option=extras', ''),
+            'ASEH'            =>  array('aseh?management&option=extras', ''), 
         );
         ksort($array);
         self::getLayout($array);

@@ -1,87 +1,60 @@
-@use "variables";
 .page-link {
-    color: variables.$default-text-color;
-    background-color: variables.$custom-white;
-    border: 1px solid variables.$default-border;
+    color: $default-text-color;
+    background-color: $custom-white;
+    border: 1px solid $default-border;
     &:focus {
         box-shadow: none;
-        background-color: variables.$light;
+        background-color: $light;
     }
     &:hover {
-        color: variables.$primary;
-        background-color: variables.$light;
-        border-color: variables.$default-border;
+        color: $primary;
+        background-color: $light;
+        border-color: $default-border;
     }
 }
 .page-item.active .page-link {
-    color: variables.$white;
-    background-color: variables.$primary;
-    border-color: variables.$primary;
+    color: $white;
+    background-color: $primary;
+    border-color: $primary;
 }
 .disabled>.page-link, .page-link.disabled {
-    color: variables.$default-text-color;
-    background-color: variables.$custom-white;
-    border-color: variables.$default-border;
+    color: $default-text-color;
+    background-color: $custom-white;
+    border-color: $default-border;
     opacity: 0.7;
 }
 
-[dir="rtl"] { 
-    .pagination{
-        .page-link{
-            .bx-chevron-left::before{
-                content: "\ea50";
-            }
-            .bx-chevron-right::before{
-                content: "\ea4d";
-            }
-            .ri-arrow-right-s-line:before{
-                content: "\ea64";
-            }
-            .ri-arrow-left-s-line:before{
-                content: "\ea6e";
-            }
-        }
-    }
-}
 /* Start:: pagination-style-1 */
 .pagination-style-1 .pagination {
     .page-item {
-        margin: 0 0.25rem;
+        margin: 0 0.225rem;
         .page-link {
             border: 0;
-            border-radius: variables.$default-radius;
+            border-radius: $default-radius;
             font-size: 0.8125rem;
             i {
-                font-weight: 400;
+                font-weight: 600;
             }
         }
         &.active {
             .page-link {
-                border-radius: variables.$default-radius;
-                background-color: variables.$primary;
-                color: variables.$white;
+                border-radius: $default-radius;
+                background-color: $primary;
+                color: $white;
             }
             &:hover {
                 .page-link {
-                    border-radius: variables.$default-radius;
-                    background-color: variables.$primary;
-                    color: variables.$white;
+                    border-radius: $default-radius;
+                    background-color: $primary;
+                    color: $white;
                 }
             } 
         }
         &:hover {
             .page-link {
-                background-color: variables.$light;
-                color: variables.$default-text-color;
+                background-color: $light;
+                color: $default-text-color;
             }
-        }
-    }
-}
-
-[dir=rtl] {
-    .pagination-style-1{
-        .ri-arrow-right-s-line {
-            rotate: 360deg;
         }
     }
 }
@@ -89,7 +62,7 @@
 
 /* Start:: pagination-style-2 */
 .pagination-style-2 .pagination {
-    border-radius: variables.$default-radius;
+    border-radius: $default-radius;
     .page-item {
         margin: 0 0.25rem;
         .page-link {
@@ -98,8 +71,8 @@
         }
         &.active {
             .page-link {
-                background-color: variables.$custom-white;
-                color: variables.$primary;
+                background-color: $custom-white;
+                color: $primary;
                 position: relative;
                 font-weight: bold;
                 &:before {
@@ -108,9 +81,8 @@
                     inset-block-end: 0;
                     inset-inline-start: 0;
                     width: 100%;
-                    height: .1875rem;
-                    border-radius: 10px;
-                    background-color: variables.$primary;
+                    height: 0.1rem;
+                    background-color: $primary;
                 }
             }
         }
@@ -134,24 +106,25 @@
             border: 0;
             border-radius: 50px;
             font-size: 0.8125rem;
+            padding: 6px 0.85rem;
             i {
-                font-weight: 400;
+                font-weight: 600;
             }
         }
         &.active {
             .page-link {
-                background-color: variables.$primary;
-                color: variables.$white;
+                background-color: $primary;
+                color: $white;
             }
             &:hover {
                 .page-link {
-                    background-color: variables.$primary;
+                    background-color: $primary;
                 }
             }
         }
         &:hover {
             .page-link {
-                background-color: variables.$light;
+                background-color: $light;
             }
         }
     }
@@ -164,21 +137,21 @@
         .page-link {
             border: 0 !important;
             font-size: 0.8125rem;
-            border-radius: variables.$default-radius;
+            border-radius: $default-radius;
             i {
-                font-weight: 400;
+                font-weight: 600;
             }
         }
         &.active {
             .page-link {
                 border: 0;
-                border-radius: variables.$default-radius;
-                background-color: variables.$primary;
-                color: variables.$white;
+                border-radius: $default-radius;
+                background-color: $primary;
+                color: $white;
             }
             &:hover {
                 .page-link {
-                    background-color: variables.$primary;
+                    background-color: $primary;
                 }
             }
         }
@@ -190,9 +163,11 @@
     }
 }
 /* End:: pagination-style-4 */
-
-@media (max-width: 334px) {
-    nav .pagination.custom-pagination {
-        transform: translate(10px, 0px);
+[dir=rtl] .pagination .page-link {
+    .ri-arrow-right-s-line:before {
+        content: "\ea64";
+    }
+    .ri-arrow-left-s-line:before {
+        content: "\ea6e";
     }
 }

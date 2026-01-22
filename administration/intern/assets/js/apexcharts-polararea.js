@@ -15,13 +15,9 @@
             opacity: 0.8
         },
         legend: {
-            position: 'bottom',
-            // name: {
-            //     show: true,
-            //     offsetY: -200
-            // },
+            position: 'bottom'
         },
-        colors: ['#985ffd', '#ff49cd', '#fdaf22', '#32d484', '#00c9ff', '#ff6757', 'rgba(53, 181, 170,1)','rgb(190, 43, 235)'],
+        colors: ["#6259ca", "#fb6b25", "#f5b849", "#49b6f5", "#e6533c", "#26bf94", "#a65e76", "#49b6f5", "#5b67c7"],
         responsive: [{
             breakpoint: 480,
             options: {
@@ -29,7 +25,7 @@
                     width: 200
                 },
                 legend: {
-                    position: 'bottom',
+                    position: 'bottom'
                 }
             }
         }]
@@ -73,7 +69,7 @@
                 enabled: true,
                 shadeTo: 'light',
                 shadeIntensity: 0.6,
-                color: "#985ffd",
+                color: "#6259ca",
             }
         }
     };

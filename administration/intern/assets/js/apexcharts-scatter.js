@@ -27,7 +27,7 @@
         grid: {
             borderColor: '#f2f5f7',
         },
-        colors: ['#985ffd', '#ff49cd', "#fdaf22"],
+        colors: ["#6259ca", "#fb6b25", "#f5b849"],
         xaxis: {
             tickAmount: 10,
             labels: {
@@ -118,7 +118,7 @@
         dataLabels: {
             enabled: false
         },
-        colors: ["#985ffd", "#ff49cd", "#fdaf22", '#32d484', '#00c9ff'],
+        colors: ["#6259ca", "#fb6b25", "#f5b849", "#e6533c", "#49b6f5"],
         grid: {
             borderColor: '#f2f5f7',
         },

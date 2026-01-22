@@ -10,8 +10,6 @@
  * @author as Stive - stive@determe.be
  */
 
-use BelCMS\Core\groups;
-
 if (!defined('CHECK_INDEX')):
     header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
     exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
@@ -44,55 +42,6 @@ endif;
                             <label for="caticon" class="form-label">Icon <span style="color:red;font-weight:bold;">* <a style="color:red;" href="https://fontawesome.com/search?ic=free" target="_blank">Voir ici</a></span></label>
                             <input id="caticon" type="text" class="form-control" name="icon" placeholder="fa-solid fa-house">
                         </div>
-                        <div class="mb-3">
-                            <span class="mb-3">Activation de la catégorie</span>
-                            <div class="custom-toggle-switch d-flex align-items-center mb-4 mt-3">
-                                <input value="1" name="activate" id="toggleswitchLight" type="checkbox">
-                                <label for="toggleswitchLight" class="label-warning"></label>
-                                <span class="ms-3">Activer</span>
-                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <span class="mb-3">Groupes qui ont accès</span>
-                            <?php
-                            $groups = groups::getGroups();
-                            $groups[] = (object) array('id_group' => 0, 'name' => 'VISITOR');
-                            foreach ($groups as $key => $value):
-                                $name = defined($value->name) ? constant($value->name) : $value->name;
-                                if ($value->name != 'ADMINISTRATOR'):
-                            ?>
-                                <div class="custom-toggle-switch d-flex align-items-center mb-4 mt-3">
-                                    <input value="<?= $value->id_group; ?>" name="access_groups[]" id="toggleswitchLight_<?= $value->id_group; ?>" type="checkbox">
-                                    <label for="toggleswitchLight_<?= $value->id_group; ?>" class="label-warning"></label>
-                                    <span class="ms-3">Activer <?= $name; ?></span>
-                                </div>
-                            <?php
-                                endif;
-                            endforeach;
-                            ?>
-                        </div>
-                        <div class="mb-3">
-                            <span class="mb-3">Groupes administrateur(s)</span>
-                            <?php
-                            $groups = groups::getGroups();
-                            foreach ($groups as $key => $value):
-                                $name = defined($value->name) ? constant($value->name) : $value->name;
-                                if ($value->name != 'ADMINISTRATOR'):
-                            ?>
-                                <div class="custom-toggle-switch d-flex align-items-center mb-4 mt-3">
-                                    <input value="<?= $value->id_group; ?>" name="access_admin[]" id="toggleswitchLight_admmin_<?= $value->id_group; ?>" type="checkbox">
-                                    <label for="toggleswitchLight_admmin_<?= $value->id_group; ?>" class="label-warning"></label>
-                                    <span class="ms-3">Activer <?= $name; ?></span>
-                                </div>
-                            <?php
-                                endif;
-                            endforeach;
-                            ?>
-                        </div>
-                        <div class="mb-3">
-                            <span>Ordre</span>
-                            <input type="number" min="1" value="1" name="orderby" class="form-control">
-                        </div>
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-secondary-gradient btn-wave">Ajouter</button>
@@ -101,4 +50,3 @@ endif;
             </div>
         </div>
     </div>
-</form>

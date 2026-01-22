@@ -57,8 +57,8 @@
         plotOptions: {
             boxPlot: {
                 colors: {
-                    upper: '#985ffd',
-                    lower: '#ff49cd'
+                    upper: '#6259ca',
+                    lower: '#fb6b25'
                 }
             }
         },
@@ -152,7 +152,7 @@
             type: 'boxPlot',
             height: 320
         },
-        colors: ['#985ffd', '#ff49cd'],
+        colors: ['#6259ca', '#fb6b25'],
         grid: {
             borderColor: '#f2f5f7',
         },
@@ -168,8 +168,8 @@
         plotOptions: {
             boxPlot: {
                 colors: {
-                    upper: '#985ffd',
-                    lower: '#ff49cd'
+                    upper: '#6259ca',
+                    lower: '#fb6b25'
                 }
             }
         },
@@ -204,9 +204,6 @@
         tooltip: {
             shared: false,
             intersect: true
-        },
-        legend: {
-            show: false
         }
     };
     var chart = new ApexCharts(document.querySelector("#boxplot-scatter"), options);

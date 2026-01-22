@@ -2,6 +2,7 @@
   "use strict";
 
   /* page loader */
+  
   function hideLoader() {
     const loader = document.getElementById("loader");
     loader.classList.add("d-none")
@@ -17,7 +18,6 @@
   const tooltipList = [...tooltipTriggerList].map(
     (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
   );
-
   /* popover  */
   const popoverTriggerList = document.querySelectorAll(
     '[data-bs-toggle="popover"]'
@@ -26,405 +26,271 @@
     (popoverTriggerEl) => new bootstrap.Popover(popoverTriggerEl)
   );
 
-  /* breadcrumb date range picker */
-  // Get today's date
-  const today = new Date();
+  //switcher color pickers
+  const pickrContainerPrimary = document.querySelector(
+    ".pickr-container-primary"
+  );
+  const themeContainerPrimary = document.querySelector(
+    ".theme-container-primary"
+  );
+  const pickrContainerBackground = document.querySelector(
+    ".pickr-container-background"
+  );
+  const themeContainerBackground = document.querySelector(
+    ".theme-container-background"
+  );
 
-  // Calculate the start date (today) and end date (30 days from today)
-  const startDate = today.toISOString().split('T')[0]; // Format: YYYY-MM-DD
-  const endDate = new Date(today);
-  endDate.setDate(today.getDate() + 30); // Add 30 days
-  const endDateFormatted = endDate.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+  /* for theme primary */
+  const nanoThemes = [
+    [
+      "nano",
+      {
+        defaultRepresentation: "RGB",
+        components: {
+          preview: true,
+          opacity: false,
+          hue: true,
 
-  flatpickr("#daterange", {
-    mode: "range",
-    dateFormat: "Y-m-d",
-    defaultDate: [startDate, endDateFormatted],
-    onReady: function (selectedDates, dateStr, instance) {
-      updateInputDisplay([startDate, endDateFormatted], instance);
-    },
-    onChange: function (selectedDates, dateStr, instance) {
-      updateInputDisplay(selectedDates, instance);
-    }
-  });
-
-  // Function to update the input display with formatted date range
-  function updateInputDisplay(dates, instance) {
-    if (dates.length === 2) {
-      const startDateFormatted = formatDate(dates[0]);
-      const endDateFormatted = formatDate(dates[1]);
-      instance.input.value = `${startDateFormatted} to ${endDateFormatted}`;
-    } else {
-      instance.input.value = ''; // Clear value if less than 2 dates
-    }
-  }
-
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, '0'); // Get day and pad with leading zero if necessary
-    const month = date.toLocaleString('default', { month: 'short' }); // Get the short month name
-    const year = date.getFullYear(); // Get the year
-    return `${day}, ${month} ${year}`; // Return formatted date
-  }
-  /* breadcrumb date range picker */
-
-  if (document.querySelector("#switcher-canvas")) {
-
-    //switcher color pickers
-    const pickrContainerPrimary = document.querySelector(
-      ".pickr-container-primary"
-    );
-    const themeContainerPrimary = document.querySelector(
-      ".theme-container-primary"
-    );
-    const pickrContainerBackground = document.querySelector(
-      ".pickr-container-background"
-    );
-    const themeContainerBackground = document.querySelector(
-      ".theme-container-background"
-    );
-
-    /* for theme primary */
-    const nanoThemes = [
-      [
-        "nano",
-        {
-          defaultRepresentation: "RGB",
-          components: {
-            preview: true,
-            opacity: false,
-            hue: true,
-
-            interaction: {
-              hex: false,
-              rgba: true,
-              hsva: false,
-              input: true,
-              clear: false,
-              save: false,
-            },
+          interaction: {
+            hex: false,
+            rgba: true,
+            hsva: false,
+            input: true,
+            clear: false,
+            save: false,
           },
         },
-      ],
-    ];
-    const nanoButtons = [];
-    let nanoPickr = null;
-    for (const [theme, config] of nanoThemes) {
-      const button = document.createElement("button");
-      button.innerHTML = theme;
-      nanoButtons.push(button);
+      },
+    ],
+  ];
+  const nanoButtons = [];
+  let nanoPickr = null;
+  for (const [theme, config] of nanoThemes) {
+    const button = document.createElement("button");
+    button.innerHTML = theme;
+    nanoButtons.push(button);
 
-      button.addEventListener("click", () => {
-        const el = document.createElement("p");
-        pickrContainerPrimary.appendChild(el);
+    button.addEventListener("click", () => {
+      const el = document.createElement("p");
+      pickrContainerPrimary.appendChild(el);
 
-        /* Delete previous instance */
-        if (nanoPickr) {
-          nanoPickr.destroyAndRemove();
-        }
+      /* Delete previous instance */
+      if (nanoPickr) {
+        nanoPickr.destroyAndRemove();
+      }
 
-        /* Apply active class */
-        for (const btn of nanoButtons) {
-          btn.classList[btn === button ? "add" : "remove"]("active");
-        }
+      /* Apply active class */
+      for (const btn of nanoButtons) {
+        btn.classList[btn === button ? "add" : "remove"]("active");
+      }
 
-        /* Create fresh instance */
-        nanoPickr = new Pickr(
-          Object.assign(
-            {
-              el,
-              theme,
-              default: "#985ffd",
-            },
-            config
-          )
+      /* Create fresh instance */
+      nanoPickr = new Pickr(
+        Object.assign(
+          {
+            el,
+            theme,
+            default: "#6259ca",
+          },
+          config
+        )
+      );
+
+      /* Set events */
+      nanoPickr.on("changestop", (source, instance) => {
+        let color = instance.getColor().toRGBA();
+        let html = document.querySelector("html");
+        html.style.setProperty(
+          "--primary-rgb",
+          `${Math.floor(color[0])}, ${Math.floor(color[1])}, ${Math.floor(
+            color[2]
+          )}`
         );
-
-        /* Set events */
-        nanoPickr.on("changestop", (source, instance) => {
-          let color = instance.getColor().toRGBA();
-          let html = document.querySelector("html");
-          html.style.setProperty(
-            "--primary-rgb",
-            `${Math.floor(color[0])}, ${Math.floor(color[1])}, ${Math.floor(
-              color[2]
-            )}`
-          );
-          /* theme color picker */
-          localStorage.setItem(
-            "primaryRGB",
-            `${Math.floor(color[0])}, ${Math.floor(color[1])}, ${Math.floor(
-              color[2]
-            )}`
-          );
-          // updateColors();
-        });
+        /* theme color picker */
+        localStorage.setItem(
+          "primaryRGB",
+          `${Math.floor(color[0])}, ${Math.floor(color[1])}, ${Math.floor(
+            color[2]
+          )}`
+        );
+        updateColors();
       });
+    });
 
-      themeContainerPrimary.appendChild(button);
-    }
-    nanoButtons[0].click();
-    /* for theme primary */
+    themeContainerPrimary.appendChild(button);
+  }
+  nanoButtons[0].click();
+  /* for theme primary */
 
-    /* for theme background */
-    const nanoThemes1 = [
-      [
-        "nano",
-        {
-          defaultRepresentation: "RGB",
-          components: {
-            preview: true,
-            opacity: false,
-            hue: true,
+  /* for theme background */
+  const nanoThemes1 = [
+    [
+      "nano",
+      {
+        defaultRepresentation: "RGB",
+        components: {
+          preview: true,
+          opacity: false,
+          hue: true,
 
-            interaction: {
-              hex: false,
-              rgba: true,
-              hsva: false,
-              input: true,
-              clear: false,
-              save: false,
-            },
+          interaction: {
+            hex: false,
+            rgba: true,
+            hsva: false,
+            input: true,
+            clear: false,
+            save: false,
           },
         },
-      ],
-    ];
-    const nanoButtons1 = [];
-    let nanoPickr1 = null;
-    for (const [theme, config] of nanoThemes) {
-      const button = document.createElement("button");
-      button.innerHTML = theme;
-      nanoButtons1.push(button);
+      },
+    ],
+  ];
+  const nanoButtons1 = [];
+  let nanoPickr1 = null;
+  for (const [theme, config] of nanoThemes) {
+    const button = document.createElement("button");
+    button.innerHTML = theme;
+    nanoButtons1.push(button);
 
-      button.addEventListener("click", () => {
-        const el = document.createElement("p");
-        pickrContainerBackground.appendChild(el);
+    button.addEventListener("click", () => {
+      const el = document.createElement("p");
+      pickrContainerBackground.appendChild(el);
 
-        /* Delete previous instance */
-        if (nanoPickr1) {
-          nanoPickr1.destroyAndRemove();
-        }
+      /* Delete previous instance */
+      if (nanoPickr1) {
+        nanoPickr1.destroyAndRemove();
+      }
 
-        /* Apply active class */
-        for (const btn of nanoButtons) {
-          btn.classList[btn === button ? "add" : "remove"]("active");
-        }
+      /* Apply active class */
+      for (const btn of nanoButtons) {
+        btn.classList[btn === button ? "add" : "remove"]("active");
+      }
 
-        /* Create fresh instance */
-        nanoPickr1 = new Pickr(
-          Object.assign(
-            {
-              el,
-              theme,
-              default: "#985ffd",
-            },
-            config
-          )
+      /* Create fresh instance */
+      nanoPickr1 = new Pickr(
+        Object.assign(
+          {
+            el,
+            theme,
+            default: "#6259ca",
+          },
+          config
+        )
+      );
+
+      /* Set events */
+      nanoPickr1.on("changestop", (source, instance) => {
+        let color = instance.getColor().toRGBA();
+        let html = document.querySelector("html");
+        html.style.setProperty(
+          "--body-bg-rgb",
+          `${color[0]}, ${color[1]}, ${color[2]}`
         );
-
-        /* Set events */
-        nanoPickr1.on("changestop", (source, instance) => {
-          let color = instance.getColor().toRGBA();
-          let html = document.querySelector("html");
-          html.style.setProperty(
-            "--body-bg-rgb",
-            `${color[0]}, ${color[1]}, ${color[2]}`
-          );
-          document
-            .querySelector("html")
-            .style.setProperty(
-              "--body-bg-rgb2",
-              `${color[0] + 14}, ${color[1] + 14}, ${color[2] + 14}`
-            );
-          document
-            .querySelector("html")
-            .style.setProperty(
-              "--light-rgb",
-              `${color[0] + 14}, ${color[1] + 14}, ${color[2] + 14}`
-            );
-          document
-            .querySelector("html")
-            .style.setProperty(
-              "--form-control-bg",
-              `rgb(${color[0] + 14}, ${color[1] + 14}, ${color[2] + 14})`
-            );
-          document
-            .querySelector("html")
-            .style.setProperty(
-              "--gray-3",
-              `rgb(${color[0] + 14}, ${color[1] + 14}, ${color[2] + 14})`
-            );
-          localStorage.removeItem("bgtheme");
-          // updateColors();
-          html.setAttribute("data-theme-mode", "dark");
-          html.setAttribute("data-menu-styles", "dark");
-          html.setAttribute("data-header-styles", "dark");
-          document.querySelector('#switcher-menu-dark').checked = true;
-          document.querySelector('#switcher-header-dark').checked = true;
-          document.querySelector("#switcher-dark-theme").checked = true;
-          localStorage.setItem(
-            "bodyBgRGB",
-            `${color[0]}, ${color[1]}, ${color[2]}`
-          );
-          localStorage.setItem(
-            "bodylightRGB",
+        document
+          .querySelector("html")
+          .style.setProperty(
+            "--body-bg-rgb2",
             `${color[0] + 14}, ${color[1] + 14}, ${color[2] + 14}`
           );
-        });
+        document
+          .querySelector("html")
+          .style.setProperty(
+            "--light-rgb",
+            `${color[0] + 14}, ${color[1] + 14}, ${color[2] + 14}`
+          );
+        document
+          .querySelector("html")
+          .style.setProperty(
+            "--form-control-bg",
+            `rgb(${color[0] + 14}, ${color[1] + 14}, ${color[2] + 14})`
+          );
+        localStorage.removeItem("bgtheme");
+        updateColors();
+        html.setAttribute("data-theme-mode", "dark");
+        html.setAttribute("data-menu-styles", "dark");
+        html.setAttribute("data-header-styles", "dark");
+        document.querySelector("#switcher-dark-theme").checked = true;
+        localStorage.setItem(
+          "bodyBgRGB",
+          `${color[0]}, ${color[1]}, ${color[2]}`
+        );
+        localStorage.setItem(
+          "bodylightRGB",
+          `${color[0] + 14}, ${color[1] + 14}, ${color[2] + 14}`
+        );
       });
-      themeContainerBackground.appendChild(button);
-    }
-    nanoButtons1[0].click();
-    /* for theme background */
-
+    });
+    themeContainerBackground.appendChild(button);
   }
+  nanoButtons1[0].click();
+  /* for theme background */
 
   /* header theme toggle */
   function toggleTheme() {
     let html = document.querySelector("html");
     if (html.getAttribute("data-theme-mode") === "dark") {
       html.setAttribute("data-theme-mode", "light");
-      html.setAttribute("data-header-styles", "transparent");
-      html.setAttribute("data-menu-styles", "transparent");
+      html.setAttribute("data-header-styles", "light");
+      html.setAttribute("data-menu-styles", "light");
       if (!localStorage.getItem("primaryRGB")) {
         html.setAttribute("style", "");
       }
       html.removeAttribute("data-bg-theme");
-      
-      if (document.querySelector("#switcher-canvas")) {
-        document.querySelector("#switcher-light-theme").checked = true;
-        document.querySelector("#switcher-menu-transparent").checked = true;
-      }
-      document
-        .querySelector("html")
-        .style.removeProperty("--body-bg-rgb", localStorage.bodyBgRGB);
-      // checkOptions();
-      html.style.removeProperty("--body-bg-rgb2");
+      document.querySelector("#switcher-light-theme").checked = true;
+      document.querySelector("#switcher-menu-light").checked = true;
+      document.querySelector("html") .style.removeProperty("--body-bg-rgb", localStorage.bodyBgRGB);
+      checkOptions();
+      html.style.removeProperty('--body-bg-rgb2');
       html.style.removeProperty("--light-rgb");
       html.style.removeProperty("--form-control-bg");
       html.style.removeProperty("--input-border");
-      if (document.querySelector("#switcher-canvas")) {
-        document.querySelector("#switcher-header-transparent").checked = true;
-        document.querySelector("#switcher-menu-transparent").checked = true;
-        document.querySelector("#switcher-light-theme").checked = true;
-        document.querySelector("#switcher-background4").checked = false;
-        document.querySelector("#switcher-background3").checked = false;
-        document.querySelector("#switcher-background2").checked = false;
-        document.querySelector("#switcher-background1").checked = false;
-        document.querySelector("#switcher-background").checked = false;
-      }
-      localStorage.removeItem("vyzordarktheme");
-      localStorage.removeItem("vyzorMenu");
-      localStorage.removeItem("vyzorHeader");
+      html.style.removeProperty('--body-bg-rgb');
+      
+      document.querySelector("#switcher-header-light").checked = true;
+      document.querySelector("#switcher-menu-light").checked = true;
+      document.querySelector("#switcher-light-theme").checked = true;
+      document.querySelector("#switcher-background4").checked = false;
+      document.querySelector("#switcher-background3").checked = false;
+      document.querySelector("#switcher-background2").checked = false;
+      document.querySelector("#switcher-background1").checked = false;
+      document.querySelector("#switcher-background").checked = false;
+      localStorage.removeItem("Hogodarktheme");
+      localStorage.removeItem("HogoMenu");
+      localStorage.removeItem("HogoHeader");
       localStorage.removeItem("bodylightRGB");
       localStorage.removeItem("bodyBgRGB");
-      html.setAttribute("data-header-styles", "transparent");
+      if (localStorage.getItem("Hogolayout") != "horizontal") {
+        html.setAttribute("data-menu-styles", "light");
+      }
+      html.setAttribute("data-header-styles", "light");
     } else {
       html.setAttribute("data-theme-mode", "dark");
-      html.setAttribute("data-header-styles", "transparent");
+      html.setAttribute("data-header-styles", "dark");
       if (!localStorage.getItem("primaryRGB")) {
         html.setAttribute("style", "");
       }
-      html.setAttribute("data-menu-styles", "transparent");
-      
-      if (document.querySelector("#switcher-canvas")) {
-        document.querySelector("#switcher-dark-theme").checked = true;
-        document.querySelector("#switcher-menu-transparent").checked = true;
-        document.querySelector("#switcher-header-transparent").checked = true;
-        // checkOptions();
-        document.querySelector("#switcher-menu-transparent").checked = true;
-        document.querySelector("#switcher-header-transparent").checked = true;
-        document.querySelector("#switcher-dark-theme").checked = true;
-        document.querySelector("#switcher-background4").checked = false;
-        document.querySelector("#switcher-background3").checked = false;
-        document.querySelector("#switcher-background2").checked = false;
-        document.querySelector("#switcher-background1").checked = false;
-        document.querySelector("#switcher-background").checked = false;
-      }
-      localStorage.setItem("vyzordarktheme", "true");
-      localStorage.setItem("vyzorMenu", "transparent");
-      localStorage.setItem("vyzorHeader", "transparent");
+      html.setAttribute("data-menu-styles", "dark");
+      document.querySelector("#switcher-dark-theme").checked = true;
+      document.querySelector("#switcher-menu-dark").checked = true;
+      document.querySelector("#switcher-header-dark").checked = true;
+      checkOptions();
+      document.querySelector("#switcher-menu-dark").checked = true;
+      document.querySelector("#switcher-header-dark").checked = true;
+      document.querySelector("#switcher-dark-theme").checked = true;
+      document.querySelector("#switcher-background4").checked = false;
+      document.querySelector("#switcher-background3").checked = false;
+      document.querySelector("#switcher-background2").checked = false;
+      document.querySelector("#switcher-background1").checked = false;
+      document.querySelector("#switcher-background").checked = false;
+      localStorage.setItem("Hogodarktheme", "true");
+      localStorage.setItem("HogoMenu", "dark");
+      localStorage.setItem("HogoHeader", "dark");
       localStorage.removeItem("bodylightRGB");
       localStorage.removeItem("bodyBgRGB");
     }
   }
   let layoutSetting = document.querySelector(".layout-setting");
   layoutSetting.addEventListener("click", toggleTheme);
-  /* header theme toggle */
-
-  /* header theme toggle */
-  let html = document.querySelector("html");
-  if (html.getAttribute('data-vertical-style') === 'doublemenu') {
-    function toggleTheme1() {
-      let html = document.querySelector("html");
-      if (html.getAttribute("data-theme-mode") === "dark") {
-        html.setAttribute("data-theme-mode", "light");
-        html.setAttribute("data-header-styles", "transparent");
-        html.setAttribute("data-menu-styles", "transparent");
-        if (!localStorage.getItem("primaryRGB")) {
-          html.setAttribute("style", "");
-        }
-        html.removeAttribute("data-bg-theme");
-        if (document.querySelector("#switcher-canvas")) {
-          document.querySelector("#switcher-light-theme").checked = true;
-          document.querySelector("#switcher-menu-transparent").checked = true;
-        }
-        document
-          .querySelector("html")
-          .style.removeProperty("--body-bg-rgb", localStorage.bodyBgRGB);
-        // checkOptions();
-        html.style.removeProperty("--body-bg-rgb2");
-        html.style.removeProperty("--light-rgb");
-        html.style.removeProperty("--form-control-bg");
-        html.style.removeProperty("--input-border");
-        if (document.querySelector("#switcher-canvas")) {
-          document.querySelector("#switcher-header-transparent").checked = true;
-          document.querySelector("#switcher-menu-transparent").checked = true;
-          document.querySelector("#switcher-light-theme").checked = true;
-          document.querySelector("#switcher-background4").checked = false;
-          document.querySelector("#switcher-background3").checked = false;
-          document.querySelector("#switcher-background2").checked = false;
-          document.querySelector("#switcher-background1").checked = false;
-          document.querySelector("#switcher-background").checked = false;
-        }
-        localStorage.removeItem("vyzordarktheme");
-        localStorage.removeItem("vyzorMenu");
-        localStorage.removeItem("vyzorHeader");
-        localStorage.removeItem("bodylightRGB");
-        localStorage.removeItem("bodyBgRGB");
-        html.setAttribute("data-header-styles", "transparent");
-      } else {
-        html.setAttribute("data-theme-mode", "dark");
-        html.setAttribute("data-header-styles", "transparent");
-        if (!localStorage.getItem("primaryRGB")) {
-          html.setAttribute("style", "");
-        }
-        html.setAttribute("data-menu-styles", "transparent");
-        if (document.querySelector("#switcher-canvas")) {
-          document.querySelector("#switcher-dark-theme").checked = true;
-          document.querySelector("#switcher-menu-transparent").checked = true;
-          document.querySelector("#switcher-header-transparent").checked = true;
-          // checkOptions();
-          document.querySelector("#switcher-menu-transparent").checked = true;
-          document.querySelector("#switcher-header-transparent").checked = true;
-          document.querySelector("#switcher-dark-theme").checked = true;
-          document.querySelector("#switcher-background4").checked = false;
-          document.querySelector("#switcher-background3").checked = false;
-          document.querySelector("#switcher-background2").checked = false;
-          document.querySelector("#switcher-background1").checked = false;
-          document.querySelector("#switcher-background").checked = false;
-        }
-        localStorage.setItem("vyzordarktheme", "true");
-        localStorage.setItem("vyzorMenu", "transparent");
-        localStorage.setItem("vyzorHeader", "transparent");
-        localStorage.removeItem("bodylightRGB");
-        localStorage.removeItem("bodyBgRGB");
-      }
-    }
-    let layoutSetting1 = document.querySelector(".layout-setting-doublemenu");
-    layoutSetting1.addEventListener("click", toggleTheme1);
-
-  }
   /* header theme toggle */
 
   /* Choices JS */
@@ -468,10 +334,10 @@
 
   /* card with fullscreen */
   let cardFullscreenBtn = document.querySelectorAll(
-    '[data-bs-toggle="card-fullscreen"]'
-  );
-  cardFullscreenBtn.forEach((ele) => {
-    ele.addEventListener("click", function (e) {
+    '[data-bs-toggle="card-fullscreen"]',
+    );
+    cardFullscreenBtn.forEach((ele) => {
+      ele.addEventListener("click", function (e) {
       let $this = this;
       let card = $this.closest(DIV_CARD);
       card.classList.toggle("card-fullscreen");
@@ -494,15 +360,6 @@
   }, 10);
   /* count-up */
 
-  /* Progressbar Top */
-  window.addEventListener('scroll', () => {
-    var widnowScroll = document.body.scrollTop || document.documentElement.scrollTop,
-      height = document.documentElement.scrollHeight - document.documentElement.clientHeight,
-      scrollAmount = (widnowScroll / height) * 100;
-    document.querySelector(".progress-top-bar").style.width = scrollAmount + "%";
-  })
-  /* Progressbar Top */
-
   /* back to top */
   const scrollToTop = document.querySelector(".scrollToTop");
   const $rootElement = document.documentElement;
@@ -521,43 +378,6 @@
   };
   /* back to top */
 
-  /* header dropdowns scroll */
-  var myHeadernotification = document.getElementById("header-notification-scroll");
-  new SimpleBar(myHeadernotification, { autoHide: true });
-
-  var myHeaderCart = document.getElementById("header-cart-items-scroll");
-  new SimpleBar(myHeaderCart, { autoHide: true });
-  /* header dropdowns scroll */
-
-  const autoCompleteJS = new autoComplete({
-    selector: "#header-search",
-    data: {
-      src: [
-        "How do plants adapt to different environments?",
-        "What makes the ocean's tides rise and fall?",
-        "How do our brains process emotions?",
-        "What factors contribute to the creation of a rainbow?",
-        "Who invented the telephone?",
-        "What role does the moon play in Earth's ecosystem?",
-        "How do animals communicate with each other?",
-        "What causes earthquakes to happen?",
-        "What is the significance of the Great Barrier Reef?",
-        "How do human bones regenerate after an injury?"
-      ],
-      cache: true,
-    },
-    resultItem: {
-      highlight: true
-    },
-    events: {
-      input: {
-        selection: (event) => {
-          const selection = event.detail.selection.value;
-          autoCompleteJS.input.value = selection;
-        }
-      }
-    }
-  });
 })();
 
 /* full screen */
@@ -565,13 +385,13 @@ var elem = document.documentElement;
 function openFullscreen() {
   let open = document.querySelector(".full-screen-open");
   let close = document.querySelector(".full-screen-close");
-
+  
   if (
     !document.fullscreenElement &&
     !document.webkitFullscreenElement &&
     !document.msFullscreenElement
-  ) {
-    if (elem.requestFullscreen) {
+    ) {
+      if (elem.requestFullscreen) {
       elem.requestFullscreen();
     } else if (elem.webkitRequestFullscreen) {
       /* Safari */
@@ -589,6 +409,7 @@ function openFullscreen() {
     } else if (document.webkitExitFullscreen) {
       /* Safari */
       document.webkitExitFullscreen();
+      console.log("working");
     } else if (document.msExitFullscreen) {
       /* IE11 */
       document.msExitFullscreen();
@@ -612,6 +433,52 @@ customSwitch.forEach((e) =>
 
 /* header dropdown close button */
 
+
+/* for notifications dropdown */
+const headerbtn1 = document.querySelectorAll(".dropdown-item-close2");
+headerbtn1.forEach((button) => {
+  button.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    button.parentNode.parentNode.parentNode.parentNode.remove();
+    document.getElementById("notifiation-data").innerText = `${
+      document.querySelectorAll(".dropdown-item-close2").length
+    }`;
+    // document.getElementById("notifiation-badge").innerText = `${
+    //   document.querySelectorAll(".dropdown-item-close2").length
+    // }`;
+    if (document.querySelectorAll(".dropdown-item-close2").length == 0) {
+      let elementHide1 = document.querySelector(".empty-header-item2");
+      let elementShow1 = document.querySelector(".empty-item2");
+      elementHide1.classList.add("d-none");
+      elementShow1.classList.remove("d-none");
+    }
+  });
+});
+/* for notifications dropdown */
+
+/* for message dropdown */
+const headerbtn2 = document.querySelectorAll(".dropdown-item-close3");
+headerbtn2.forEach((button) => {
+  button.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    button.parentNode.parentNode.parentNode.parentNode.remove();
+    document.getElementById("message-data").innerText = `${
+      document.querySelectorAll(".dropdown-item-close3").length
+    } `;
+    // document.getElementById("notification-icon-badge").innerText = `${
+    //   document.querySelectorAll(".dropdown-item-close3").length
+    // }`;
+    if (document.querySelectorAll(".dropdown-item-close3").length == 0) {
+      let elementHide2 = document.querySelector(".empty-header-item1");
+      let elementShow2 = document.querySelector(".empty-item1");
+      elementHide2.classList.add("d-none");
+      elementShow2.classList.remove("d-none");
+    }
+  });
+});
+/* for notifications dropdown */
 /* for cart dropdown */
 const headerbtn = document.querySelectorAll(".dropdown-item-close");
 headerbtn.forEach((button) => {
@@ -619,13 +486,12 @@ headerbtn.forEach((button) => {
     e.preventDefault();
     e.stopPropagation();
     button.parentNode.parentNode.parentNode.parentNode.parentNode.remove();
-    document.getElementById("cart-data").innerText = `${document.querySelectorAll(".dropdown-item-close").length
-      } `;
-    document.getElementById("cart-icon-badge").innerText = `${document.querySelectorAll(".dropdown-item-close").length
-      }`;
-    console.log(
-      document.getElementById("header-cart-items-scroll").children.length
-    );
+    document.getElementById("cart-data").innerText = `${
+      document.querySelectorAll(".dropdown-item-close").length
+    }`;
+    document.getElementById("cart-badge").innerText = `${
+      document.querySelectorAll(".dropdown-item-close").length
+    }`;
     if (document.querySelectorAll(".dropdown-item-close").length == 0) {
       let elementHide = document.querySelector(".empty-header-item");
       let elementShow = document.querySelector(".empty-item");
@@ -636,47 +502,22 @@ headerbtn.forEach((button) => {
 });
 /* for cart dropdown */
 
-/* for notifications dropdown */
-const headerbtn1 = document.querySelectorAll(".dropdown-item-close1");
-headerbtn1.forEach((button) => {
-  button.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    button.parentNode.parentNode.parentNode.parentNode.remove();
-    document.getElementById("notifiation-data").innerText = `${document.querySelectorAll(".dropdown-item-close1").length
-      } Unread`;
-    if (document.querySelectorAll(".dropdown-item-close1").length == 0) {
-      let elementHide1 = document.querySelector(".empty-header-item1");
-      let elementShow1 = document.querySelector(".empty-item1");
-      elementHide1.classList.add("d-none");
-      elementShow1.classList.remove("d-none");
-    }
-  });
+  /* sidebar modal  scroll */
+  var myHeaderShortcut = document.getElementById("msg_card_body");
+  new SimpleBar(myHeaderShortcut, { autoHide: true });
+
+  /* sidebar modal scroll */
+
+  document.addEventListener('DOMContentLoaded', function () {
+    // Add click event to the search button
+    document.getElementById('searchButton').addEventListener('click', function () {
+        // Toggle active class on the navbar-form
+        document.getElementById('myNavbarForm').classList.toggle('active');
+    });
+
+    // Add click event to the close button
+    document.querySelector('.close-btn').addEventListener('click', function () {
+        // Remove active class from the navbar-form
+        document.getElementById('myNavbarForm').classList.remove('active');
+    });
 });
-/* for notifications dropdown */
-
-/* for cart items quantity */
-var value = 1,
-  minValue = 0,
-  maxValue = 30;
-
-let productMinusBtn = document.querySelectorAll(".product-quantity-minus")
-let productPlusBtn = document.querySelectorAll(".product-quantity-plus")
-productMinusBtn.forEach((element) => {
-  element.onclick = () => {
-    value = Number(element.parentElement.childNodes[3].value)
-    if (value > minValue) {
-      value = Number(element.parentElement.childNodes[3].value) - 1;
-      element.parentElement.childNodes[3].value = value;
-    }
-  }
-})
-productPlusBtn.forEach((element) => {
-  element.onclick = () => {
-    if (value < maxValue) {
-      value = Number(element.parentElement.childNodes[3].value) + 1;
-      element.parentElement.childNodes[3].value = value;
-    }
-  }
-})
-/* for cart items quantity */

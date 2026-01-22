@@ -16,7 +16,7 @@
         }
     },
     {
-        name: 'Greenland',
+        name: 'Geenland',
         coords: [72, -42],
         style: {
             fill: '#ff9251'
@@ -97,7 +97,7 @@
             coords: [61, 105],
         },
         {
-            name: 'greenland',
+            name: 'Geenland',
             coords: [72, -42],
         },
         {
@@ -203,7 +203,7 @@
             initial: {
                 stroke: "#e9e9e9",
                 strokeWidth: .15,
-                fill: "var(--primary-color)",
+                fill: "#6259ca",
                 fillOpacity: 1
             }
         },
@@ -217,7 +217,7 @@
             initial: {
                 stroke: "#e9e9e9",
                 strokeWidth: .15,
-                fill: "#fe7c58",
+                fill: "#a65e76",
                 fillOpacity: 1
             }
         },
@@ -231,7 +231,7 @@
             initial: {
                 stroke: "#e9e9e9",
                 strokeWidth: .15,
-                fill: "#d77cf7",
+                fill: "#fb6b25",
                 fillOpacity: 1
             }
         },
@@ -245,7 +245,7 @@
             initial: {
                 stroke: "#e9e9e9",
                 strokeWidth: .15,
-                fill: "rgba(var(--warning-rgb))",
+                fill: "#f5b849",
                 fillOpacity: 1
             }
         },

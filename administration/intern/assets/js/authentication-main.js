@@ -1,17 +1,17 @@
 (function () {
     'use strict';
-    if (localStorage.getItem("vyzordarktheme")) {
+    if (localStorage.getItem("Hogodarktheme")) {
         document.querySelector("html").setAttribute("data-theme-mode", "dark")
         document.querySelector("html").setAttribute("data-menu-styles", "dark")
         document.querySelector("html").setAttribute("data-header-styles", "dark")
     }
-    if (localStorage.vyzorrtl) {
+    if (localStorage.Hogortl) {
         let html = document.querySelector('html');
         html.setAttribute("dir", "rtl");
         document.querySelector("#style")?.setAttribute("href", "../assets/libs/bootstrap/css/bootstrap.rtl.min.css");
             // rtlFn();
     }
-    if (localStorage.getItem("vyzorlayout") == "horizontal") {
+    if (localStorage.getItem("Hogolayout") == "horizontal") {
         document.querySelector("html").setAttribute("data-nav-layout", "horizontal") 
     }
     function localStorageBackup() {
@@ -31,7 +31,7 @@
             document.querySelector('html').style.setProperty('--body-bg-rgb', localStorage.bodyBgRGB);
             document.querySelector('html').style.setProperty('--body-bg-rgb2', localStorage.bodylightRGB);
             document.querySelector('html').style.setProperty('--light-rgb', localStorage.bodylightRGB);
-            document.querySelector('html').style.setProperty('--form-control-bg', `rgb(${localStorage.bodylightRGB})`);
+            // document.querySelector('html').style.setProperty('--form-control-bg', `rgb(${localStorage.bodylightRGB})`);
             document.querySelector('html').style.setProperty('--input-border', "rgba(255,255,255,0.1)");
             let html = document.querySelector('html');
             html.setAttribute('data-theme-mode', 'dark');
@@ -40,11 +40,11 @@
 
 
         }
-        if (localStorage.vyzordarktheme) {
+        if (localStorage.Hogodarktheme) {
             let html = document.querySelector('html');
             html.setAttribute('data-theme-mode', 'dark');
         }
-        if (localStorage.vyzorrtl) {
+        if (localStorage.Hogortl) {
             let html = document.querySelector('html');
             html.setAttribute('dir', 'rtl');
             document.querySelector("#style")?.setAttribute("href", "../assets/libs/bootstrap/css/bootstrap.rtl.min.css");

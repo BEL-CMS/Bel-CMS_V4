@@ -1,69 +1,61 @@
-@use "variables";
 @mixin tablecolor($color-bg) {
-  background-color: variables.$white;
-  color: variables.$white;
+  background-color: $white;
+  color: $black;
   border-color: var(--bs-table-border-color);
   --bs-table-bg: rgba(#{$color-bg}, 0.1);
-  --bs-table-border-color: rgba(#{$color-bg}, 0.1);
+  --bs-table-border-color: rgba(#{$color-bg}, 0.05);
   --bs-table-striped-bg: rgba(#{$color-bg}, 0.2);
   --bs-table-active-bg: rgba(#{$color-bg}, 0.2);
   --bs-table-hover-bg: rgba(#{$color-bg}, 0.2);
-
-  & > :not(caption) > * > * {
-    --bs-table-bg: rgba(#{$color-bg}, 0.1);
-    color: variables.$black;
-  }
   &.table-striped > tbody > tr:nth-of-type(odd) > * {
     background-color: var(--bs-table-accent-bg);
     --bs-table-accent-bg: rgba(#{$color-bg}, 0.2);
-    color:  variables.$default-text-color;
+    color: $black;
   }
   &.table.table-hover > tbody > tr:hover > * {
     background-color: var(--bs-table-accent-bg);
     --bs-table-accent-bg: rgba(#{$color-bg}, 0.4);
-    color: variables.$white;
+    color: $white;
   }
   .table-active {
     background-color: var(--bs-table-accent-bg);
     --bs-table-accent-bg: rgb(#{$color-bg});
-    color: variables.$white;
+    color: $white;
   }
 }
 caption {
-  color: variables.$text-muted;
-  font-weight: 700;
+  color: $text-muted;
 }
 @mixin tablehead($color-bg) {
-  background-color: variables.$white;
+  background-color: $white;
   color: var(--bs-table-color);
-  --bs-table-color: #{variables.$black} !important;
-  --bs-table-bg: rgba(#{$color-bg}, 0.1) !important;
+  --bs-table-color: #{$black};
+  --bs-table-bg: rgba(#{$color-bg}, 0.1);
   --bs-table-border-color: rgba(#{$color-bg}, 0.1);
   --bs-table-striped-bg: rgba(#{$color-bg}, 0.5);
-  --bs-table-striped-color: #{variables.$black};
+  --bs-table-striped-color: #{$black};
   --bs-table-active-bg: rgba(#{$color-bg}, 0.5);
   --bs-table-hover-bg: rgba(#{$color-bg}, 0.5);
   color: var(--bs-table-color);
   border-color: var(--bs-table-border-color);
 }
 @mixin table-color($color-bg) {
-  --bs-table-color: #{variables.$black};
+  --bs-table-color: #{$black};
   --bs-table-bg: rgba(#{$color-bg}, 0.1);
   --bs-table-border-color: rgba(#{$color-bg}, 0.1);
   --bs-table-striped-bg: rgba(#{$color-bg}, 0.3);
-  --bs-table-striped-color: #{variables.$black};
+  --bs-table-striped-color: #{$black};
   --bs-table-active-bg: rgba(#{$color-bg}, 0.3);
-  --bs-table-active-color: #{variables.$black};
+  --bs-table-active-color: #{$black};
   --bs-table-hover-bg: rgba(#{$color-bg}, 0.3);
-  --bs-table-hover-color: #{variables.$black};
-  color: #{variables.$black};
+  --bs-table-hover-color: #{$black};
+  color: #{$black};
   border-color: rgba(#{$color-bg}, 0.1);
-  background-color: #{variables.$white};
+  background-color: #{$white};
 }
 .table {
-  --bs-table-bg: var(--custom-white);
-  color: variables.$default-text-color;
-  border-color: variables.$default-border;
+  color: $default-text-color;
+  border-color: $default-border;
   margin-block-end: 0;
   tbody {
     tr {
@@ -74,22 +66,22 @@ caption {
   }
   th,
   td {
-    padding: 1rem 1.25rem;
+    padding: 0.75rem;
     vertical-align: middle;
     line-height: 1.462;
-    font-size: 0.875rem;
-    font-weight: 400;
+    font-size: 0.813rem;
+    font-weight: 500;
   }
   thead tr th {
-    font-weight: 500;
+    font-weight: 600;
     font-size: 0.85rem;
   }
   &.table-sm > :not(caption) > * > * {
     padding: 0.3rem;
   }
   &.table-dark {
-    color: variables.$white-7;
-    border-color: rgba(variables.$white, 0.1);
+    color: $white-7;
+    border-color: rgba($white, 0.1);
   }
   &.table-primary {
     @include tablecolor(var(--primary-rgb));
@@ -178,26 +170,23 @@ caption {
     }
   }
   &.table-striped > tbody > tr:nth-of-type(odd) > * {
-    --bs-table-accent-bg: rgba(var(--light-rgb), 0.5);
-    color: variables.$default-text-color;
-    --bs-table-bg-type: rgba(var(--light-rgb), 0.5);
+    --bs-table-accent-bg: rgba(var(--dark-rgb),0.0125);
+    color: $default-text-color;
   }
   &.table-striped-columns > :not(caption) > tr > :nth-child(2n) {
-    --bs-table-accent-bg: rgba(var(--dark-rgb), 0.025);
-    color: variables.$default-text-color;
+    --bs-table-accent-bg: rgba(var(--dark-rgb),0.025);
+    color: $default-text-color;
   }
   tbody.table-group-divider {
-    border-top: 1px solid variables.$default-border;
+    border-top: 1px solid $default-border;
   }
   &.table-hover > tbody > tr:hover > * {
-    --bs-table-accent-bg: #{variables.$default-background};
-    --bs-table-bg-state: #{variables.$default-background};
-    color: variables.$default-text-color;
+    --bs-table-accent-bg: #{$default-background};
+    color: $default-text-color;
   }
   .table-active {
-    --bs-table-accent-bg: #{variables.$light};
-    color: variables.$default-text-color;
-    --bs-table-bg-state: #{variables.$light};
+    --bs-table-accent-bg: #{$light};
+    color: $default-text-color;
   }
   thead {
     &.table-primary {
@@ -219,17 +208,7 @@ caption {
       @include tablehead(var(--info-rgb));
     }
     &.table-light {
-      background-color: variables.$white;
-      color: var(--bs-table-color);
-      --bs-table-color: #{variables.$black} !important;
-      --bs-table-bg: rgba(var(--light-rgb), 1) !important;
-      --bs-table-border-color: rgba(var(--light-rgb), 0.1);
-      --bs-table-striped-bg: rgba(var(--light-rgb), 0.5);
-      --bs-table-striped-color: #{variables.$black};
-      --bs-table-active-bg: rgba(var(--light-rgb), 0.5);
-      --bs-table-hover-bg: rgba(var(--light-rgb), 0.5);
-      color: var(--bs-table-color);
-      border-color: var(--bs-table-border-color);
+      @include tablehead(var(--light-rgb));
     }
     &.table-dark {
       @include tablehead(var(--dark-rgb));
@@ -262,26 +241,6 @@ caption {
 }
 [data-theme-mode="dark"] {
   .table-dark {
-    border-color: rgba(0, 0, 0, 0.025);
-  }
-  div.dtr-modal div.dtr-modal-display {
-    background-color: variables.$custom-white;
-  }
-}
-
-.table > :not(caption) > * > * {
-  --bs-body-bg: var(--custom-white);
-  // color: variables.$default-text-color;
-  color: inherit;
-}
-.table-striped-columns>:not(caption)>tr>:nth-child(2n) {
-  --bs-table-bg-type: rgba(var(--light-rgb), 0.5);
-}
-
-.table-light{
-  tr{
-    th{
-      color:variables.$default-text-color !important;
-    }
+    border-color: rgba(0,0,0,0.025);
   }
 }

@@ -55,7 +55,6 @@ final class ModelsForum
     {
         $sql = new BDD;
         $sql->table('TABLE_FORUM_NAME');
-        $sql->orderby(array(array('name' => 'id_forum', 'type' => 'ASC')));
         $sql->queryAll();
         $return = $sql->data;
         return $return;
@@ -70,7 +69,7 @@ final class ModelsForum
     }
     public function AddCatMain ($data) : array
     {
-        $sql = new BDD;
+        $sql =new BDD;
         $sql->table('TABLE_FORUM');
         $sql->insert($data);
         if ($sql->rowCount == true) {
@@ -85,93 +84,5 @@ final class ModelsForum
             );
         }
         return $array;
-    }
-
-    public function getMainCat ($id)
-    {
-        $sql = new BDD;
-        $sql->table('TABLE_FORUM');
-        $sql->where(array('name' => 'id', 'value' => $id));
-        $sql->queryOne();
-        $return = $sql->data;
-        return $return;
-    }
-
-    public function editmaincat ($data, $id) : bool
-    {
-        $sql = new BDD;
-        $sql->table('TABLE_FORUM');
-        $sql->where(array('name' => 'id', 'value' => $id));
-        $sql->update($data);
-        $return = $sql->data;
-        if ($return === true) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function delMainCat ($id) : bool
-    {
-        $sql = new BDD;
-        $sql->table('TABLE_FORUM');
-        $sql->where(array('name' => 'id', 'value' => $id));
-        $sql->delete();
-        $return = $sql->data;
-        if ($return === true) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function sendNewCattSup ($data) : bool
-    {
-        $sql = new BDD;
-        $sql->table('TABLE_FORUM_NAME');
-        $sql->insert($data);
-        if ($sql->rowCount == 1) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function subForumDelete ($id) : bool
-    {
-        $sql = new BDD;
-        $sql->table('TABLE_FORUM_NAME');
-        $sql->where(array('name' => 'id', 'value' => $id));
-        $sql->delete();
-        $return = $sql->data;
-        if ($return === true) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function getForumID ($id) : object
-    {
-        $sql = new BDD;
-        $sql->table('TABLE_FORUM_NAME');
-        $sql->where(array('name' => 'id', 'value' => $id));
-        $sql->queryOne();
-        $return = $sql->data;
-        return $return;
-    }
-
-    public function editSubForum ($data, $id)
-    {
-        $sql = new BDD;
-        $sql->table('TABLE_FORUM_NAME');
-        $sql->where(array('name' => 'id', 'value' => $id));
-        $sql->update($data);
-        $return = $sql->data;
-        if ($return === true) {
-            return true;
-        } else {
-            return false;
-        }
     }
 }

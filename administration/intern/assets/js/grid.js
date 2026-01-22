@@ -3,6 +3,7 @@
 
     // basic example
     new gridjs.Grid({
+        resizable: true,
         columns: [{
             name: "Date",
             width: "150px",
