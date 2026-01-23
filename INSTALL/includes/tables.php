@@ -5,7 +5,7 @@
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
- * @copyright 2015-2025 Bel-CMS
+ * @copyright 2015-2026 Bel-CMS
  * @author as Stive - stive@determe.be
  */
 
@@ -378,6 +378,35 @@ switch ($_POST['table']) {
 			PRIMARY KEY (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 	break;
+
+	case 'inbox':
+		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
+		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
+			`id` int NOT NULL AUTO_INCREMENT,
+			`name` varchar(64) DEFAULT NULL,
+			`send` varchar(32) DEFAULT NULL,
+			`sendto` varchar(32) NOT NULL,
+			`date_insert` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			`hash_key` varchar(16) DEFAULT NULL,
+			`close` varchar(1) DEFAULT '0',
+			`read_msg_send` varchar(1) DEFAULT NULL,
+			`read_msg_receive` int DEFAULT '0',
+			`archive` tinyint(1) DEFAULT '0',
+			PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
+	break;
+
+	case 'inbox_msg':
+		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
+		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (	
+			`id` int NOT NULL AUTO_INCREMENT,
+			`hash_key` varchar(16) DEFAULT NULL,
+			`author` varchar(32) DEFAULT NULL,
+			`date_insert` datetime DEFAULT CURRENT_TIMESTAMP,
+			`content` mediumtext,
+			PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
+	break;	
 
 	case 'interaction':
 		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
@@ -755,6 +784,7 @@ switch ($_POST['table']) {
 			`visits` int DEFAULT NULL,
 			`gravatar` tinyint(1) NOT NULL DEFAULT '0',
 			`profils` tinyint(1) NOT NULL DEFAULT '0',
+			`phone` varchar(30) DEFAULT NULL,
 			PRIMARY KEY (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 	break;

@@ -5,7 +5,7 @@
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
- * @copyright 2015-2025 Bel-CMS
+ * @copyright 2015-2026 Bel-CMS
  * @author as Stive - stive@determe.be
  */
 
@@ -123,7 +123,7 @@ class BelCMS
 								<div class="col-lg-12">
 									<div class="art-section-title">
 									<div class="art-title-frame">
-										<h4>Bel-CMS V4.0 : Installation</h4>
+										<h4>Bel-CMS V4.0.0 : Installation</h4>
 									</div>
 									</div>
 								</div>
@@ -148,7 +148,7 @@ class BelCMS
 									<div class="art-table p-15-15">
 										<ul>
 										<li>
-											<h6>Date MAJ :</h6><span>21.10.2025</span>
+											<h6>Date MAJ :</h6><span>23.01.2026</span>
 										</li>
 										<li>
 											<h6>Version :</h6><span>4.0.0</span>
@@ -173,7 +173,7 @@ class BelCMS
 							</div>
 							<div class="container-fluid">
 								<footer>
-								<div>© <?=date('Y');?> Bel-CMS v4.0</div>
+								<div>© <?=date('Y');?> Bel-CMS v4.0.0</div>
 								</footer>
 							</div>
 							</div>
@@ -281,6 +281,8 @@ class BelCMS
 		'gallery_vote',
 		'groups',
 		'guestbook',
+		'inbox',
+		'inbox_msg',
 		'interaction',
 		'interaction_admin',
 		'like',

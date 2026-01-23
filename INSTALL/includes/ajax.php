@@ -1,4 +1,13 @@
 <?php
+/**
+ * Bel-CMS [Content management system]
+ * @version 4.0.0 [PHP8.4]
+ * @link https://bel-cms.dev
+ * @link https://determe.be
+ * @license MIT License
+ * @copyright 2015-2026 Bel-CMS
+ * @author as Stive - stive@determe.be
+ */
 	header('Content-Type: application/json');
 	$ajax = Array(
 		'articles',
@@ -22,6 +31,8 @@
 		'gallery_vote',
 		'groups',
 		'guestbook',
+		'inbox',
+		'inbox_msg',
 		'interaction',
 		'interaction_admin',
 		'like',

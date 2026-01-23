@@ -1,11 +1,11 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 3.1.0 [PHP8.3]
+ * @version 4.0.0 [PHP8.4]
  * @link https://bel-cms.dev
  * @link https://determe.be
- * @license http://opensource.org/licenses/GPL-3.-copyleft
- * @copyright 2015-2024 Bel-CMS
+ * @license MIT License
+ * @copyright 2015-2026 Bel-CMS
  * @author as Stive - stive@determe.be
  */
 
@@ -13,7 +13,7 @@ $checkpdo = checkPDOConnect($_POST);
 if ($checkpdo != true):
 ?>
 <div id="main_content" style="clear: both;width:100%;">
-	<h1>Bienvenue sur l'installation de Bel-CMS V.3.1.0</h1>
+	<h1>Bienvenue sur l'installation de Bel-CMS V.4.0.0</h1>
     <div class="alert alert-danger" role="alert">Erreur de connexion à la base de données MySQL/MariaDB</div>
 	<ul id="menu">
 		<li><a href="index.php?page=pdo">Retour</a></li>

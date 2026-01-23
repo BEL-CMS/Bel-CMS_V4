@@ -5,7 +5,7 @@
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
- * @copyright 2015-2025 Bel-CMS
+ * @copyright 2015-2026 Bel-CMS
  * @author as Stive - stive@determe.be
  */
 
@@ -154,11 +154,11 @@ function configIncPhp ()
 	$content  = "<?php".PHP_EOL;
 	$content .= "/**".PHP_EOL;
 	$content .= "* Bel-CMS [Content management system]".PHP_EOL;
-	$content .= "* @version 3.1.0 [PHP8.3]".PHP_EOL;
+	$content .= "* @version 4.0.0 [PHP8.4]".PHP_EOL;
 	$content .= "* @link https://bel-cms.dev".PHP_EOL;
 	$content .= "* @link https://determe.be".PHP_EOL;
-	$content .= "* @license http://opensource.org/licenses/GPL-3.0.-copyleft".PHP_EOL;
-	$content .= "* @copyright 2015-2024 Bel-CMS".PHP_EOL;
+	$content .= "* @license MIT License".PHP_EOL;
+	$content .= "* @copyright 2015-2026 Bel-CMS".PHP_EOL;
 	$content .= "* @author as Stive - stive@determe.be".PHP_EOL;
 	$content .= "*/".PHP_EOL;
 	$content .= "\$BDD = 'server';".PHP_EOL;
