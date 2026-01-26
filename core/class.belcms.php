@@ -5,7 +5,7 @@
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
- * @copyright 2015-2025 Bel-CMS
+ * @copyright 2015-2026 Bel-CMS
  * @author as Stive - stive@determe.be
 */
 
@@ -35,7 +35,7 @@ final class BelCMS
         self::getLangs();
         new Visitors();
 		$this->link      = Dispatcher::page($_SESSION['CONFIG']['CMS_DEFAULT_PAGE']);
-        $this->widgets   = self::WidgetsContent ();
+        $this->widgets   = self::getWidgets ();
         $this->page      = self::PageContent();
         $this->templates = self::Templates ();
         self::statsPages();
@@ -89,8 +89,12 @@ final class BelCMS
         return $content;
     }
 
-    public function WidgetsContent ()
-    {
+ 	##################################################
+	# Récupère la widgets mis dans la variable.
+	# $this->widgets[x][nom] = array();
+	##################################################
+	private function getWidgets ()
+	{
 		$return  = array();
 		$listWidgetsActive = self::getWidgetsActive ();
 		foreach ($listWidgetsActive as $value) {
@@ -122,7 +126,7 @@ final class BelCMS
 			}
 		}
 		return $return;
-    }
+	}
 	##################################################
 	# Récupère la widgets actif
 	# ne récupère pas les widgets dont les groupes
@@ -145,12 +149,6 @@ final class BelCMS
 		$sql->queryAll();
 		if (!empty($sql->data)) {
 			foreach ($sql->data as $k => $v) {
-				$a = explode('|', $v->pages);
-				if (in_array($page, $a)) {
-					$b[$k] = $v;
-				}
-			}
-			foreach ($b as $k => $v) {
 				if (isset($_SESSION['USER']) and !empty($_SESSION['USER'])) {
 					if ($v->groups_access == 0 or in_array(1, $_SESSION['USER']->groups->all_groups)) {
 						$return[$k] = $v;
@@ -161,15 +159,15 @@ final class BelCMS
 						}
 					}
 				} else {
-					if ($v->groups_access == 0) {
+					$groups = explode('|', $v->groups_access);
+					if (in_array(0, $groups)) {
 						$return[$k] = $v;
 					}
 				}
 			}
 		}
-		return $return;
+		return $return;	
 	}
-
     #########################################
     # Récupère les vrais utilisateurs
     #########################################

@@ -5,7 +5,7 @@
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
- * @copyright 2015-2025 Bel-CMS
+ * @copyright 2015-2026 Bel-CMS
  * @author as Stive - stive@determe.be
 */
 
@@ -409,7 +409,7 @@ class User
 					'name'  => 'hash_key',
 					'value' => $hash_key
 				));
-				$profils->fields(array('gender','public_mail','websites','list_ip','avatar','info_text','birthday','country','hight_avatar','friends', 'date_registration', 'visits','gravatar', 'profils'));
+				$profils->fields(array('gender','public_mail','websites','list_ip','avatar','info_text','birthday','country','hight_avatar','friends', 'date_registration', 'visits','phone', 'gravatar', 'profils'));
 				$profils->isObject(false);
 				$profils->queryOne();
 				if ($profils->data['gravatar'] == '1') {

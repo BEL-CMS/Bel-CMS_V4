@@ -5,7 +5,7 @@
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
- * @copyright 2015-2025 Bel-CMS
+ * @copyright 2015-2026 Bel-CMS
  * @author as Stive - stive@determe.be
 */
 
@@ -36,6 +36,7 @@ final class Comment
 		$where[] = array('name' => 'page', 'value' => $dispatcher->link[0]);
 		$where[] = array('name' => 'page_sub', 'value' => $dispatcher->link[1]);
 		$where[] = array('name' => 'page_id', 'value' => $dispatcher->link[2]);
+		$sql->limit(5);
 		$sql->where($where);
 		$sql->queryAll();
 

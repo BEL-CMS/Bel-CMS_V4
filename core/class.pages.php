@@ -5,7 +5,7 @@
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
- * @copyright 2015-2025 Bel-CMS
+ * @copyright 2015-2026 Bel-CMS
  * @author as Stive - stive@determe.be
 */
 
@@ -79,24 +79,44 @@ class Pages
         extract($this->vars);
         // Démarre la mémoire tampon
         ob_start();
-        // Si il y a un template 
         if (!empty($_SESSION)) {
-            // S'il y a un template avec une page custom
-            $dir = constant('DIR_TPL'). $_SESSION['CONFIG']['CMS_TEMPLATE'].DS.'custom'.DS.strtolower($this->pageName).'.'.strtolower($filename).'.php';
-            // Si le fichier existe, on inclut
-            if (is_file($dir)) {
-                include $dir;
-            // Autrement on test de prendre la page par default
-            } else {
-                $dir = constant('DIR_PAGES').strtolower($this->pageName).DS.$filename.'.php';
-                // test si le fichier exsite dans la page (normalement oui, c'est un fichier d'origine).
+            // Si il y  pas de template 
+            if (empty($_SESSION['CONFIG']['CMS_TEMPLATE'])) {
+                $dir = 'assets'.DS.'templates'.DS.'default'.DS.'custom'.DS.strtolower($this->pageName).'.'.strtolower($filename).'.php';
+                // Si le fichier existe, on inclut
                 if (is_file($dir)) {
                     include $dir;
-                // Autrement une page d'erreur se met en route.
+                // Autrement on test de prendre la page par default
                 } else {
-                    $error_text = $dir. ' Introuvable';
-                    $this->errorInfos = array('warning', $error_text, constant('NOT_FOUND'), true);
-                    return false;
+                    $dir = constant('DIR_PAGES').strtolower($this->pageName).DS.$filename.'.php';
+                    // test si le fichier exsite dans la page (normalement oui, c'est un fichier d'origine).
+                    if (is_file($dir)) {
+                        include $dir;
+                    // Autrement une page d'erreur se met en route.
+                    } else {
+                        $error_text = $dir. ' Introuvable';
+                        $this->errorInfos = array('warning', $error_text, constant('NOT_FOUND'), true);
+                        return false;
+                    }
+                }
+            } else {
+                // S'il y a un template avec une page custom
+                $dir = constant('DIR_TPL'). $_SESSION['CONFIG']['CMS_TEMPLATE'].DS.'custom'.DS.strtolower($this->pageName).'.'.strtolower($filename).'.php';
+                // Si le fichier existe, on inclut
+                if (is_file($dir)) {
+                    include $dir;
+                // Autrement on test de prendre la page par default
+                } else {
+                    $dir = constant('DIR_PAGES').strtolower($this->pageName).DS.$filename.'.php';
+                    // test si le fichier exsite dans la page (normalement oui, c'est un fichier d'origine).
+                    if (is_file($dir)) {
+                        include $dir;
+                    // Autrement une page d'erreur se met en route.
+                    } else {
+                        $error_text = $dir. ' Introuvable';
+                        $this->errorInfos = array('warning', $error_text, constant('NOT_FOUND'), true);
+                        return false;
+                    }
                 }
             }
         // S'il n'y a pas de template
