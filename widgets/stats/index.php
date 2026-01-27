@@ -1,11 +1,11 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 3.0.5 [PHP8.3]
+ * @version 4.0.0 [PHP8.4]
  * @link https://bel-cms.dev
  * @link https://determe.be
- * @license http://opensource.org/licenses/GPL-3.-copyleft
- * @copyright 2015-2024 Bel-CMS
+ * @license MIT License
+ * @copyright 2015-2026 Bel-CMS
  * @author as Stive - stive@determe.be
  */
 
@@ -27,8 +27,8 @@ $countPage = number_format($page, 0, ',', '.');
 		<li>Articles<span><?= $articles; ?></span></li>
 		<li>Commentaire<span><?= $comments; ?></span></li>
 		<li>Fichiers<span><?= $files; ?></span></li>
-		<li>Liens<span><?= $links; ?></span></li>'
-		<li>Images<span><?= $img; ?></span></li>'
+		<li>Liens<span><?= $links; ?></span></li>
+		<li>Images<span><?= $img; ?></span></li>
 	</ul>
 	<ul>
 		<li>
@@ -69,8 +69,8 @@ $countPage = number_format($page, 0, ',', '.');
 					$page = defined(strtoupper($v->visitor_page)) ? constant(strtoupper($v->visitor_page)) : $v->visitor_page;
 					?>
 					<li>
-						<span><?=$visitor;?></span>
-						<span><?=$page?></span>
+						<span><?= $visitor; ?></span>
+						<span><?= $page; ?></span>
 					</li>
 					<?php
 					if ($i++ == 5) {
