@@ -1,0 +1,1 @@
+document.addEventListener("DOMContentLoaded",(function(){document.getElementById("snowEditor")&&new Quill("#snowEditor",{theme:"snow",modules:{toolbar:!0},placeholder:"Compose your content here..."}),document.getElementById("bubbleEditor")&&new Quill("#bubbleEditor",{theme:"bubble",placeholder:"Compose an epic..."})}));

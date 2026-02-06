@@ -6,5 +6,3 @@
 	Developper: Determe Stive
 	Contact: contact [at] bel-cms.dev
 	From: Belgium
-
-	Designer: Spruko

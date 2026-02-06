@@ -6,7 +6,7 @@
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
- * @copyright 2015-2025 Bel-CMS
+ * @copyright 2015-2026 Bel-CMS
  * @author as Stive - stive@determe.be
  */
 
@@ -14,6 +14,7 @@ namespace Belcms\Administration;
 
 use BelCMS\Core\Dispatcher;
 use BelCMS\Core\encrypt;
+use BelCMS\Core\Interaction;
 use BelCMS\Core\Notification;
 use BelCMS\Core\Secure;
 use BelCMS\Core\User as CoreUser;
@@ -30,12 +31,9 @@ final class Administration
     var 	$page,
             $view,
             $link;
-
     public  $render,
             $data;
-
     private $controller;
-
     #########################################
     # redirige l'utilisateur si loguer ou pas
     #########################################
@@ -53,6 +51,18 @@ final class Administration
                 if (isset($_SESSION['USER']->user->hash_key) && strlen($_SESSION['USER']->user->hash_key) == 32) {
                     if (isset($_SESSION['LOGIN_MANAGEMENT']) and $_SESSION['LOGIN_MANAGEMENT'] === true) {
                         require_once ROOT . DS . 'administration' . DS . 'intern' . DS . 'adminpages.php';
+                        ############################################
+                        if (isset($_SESSION['ADMIN']['LOG']) and $_SESSION['ADMIN']['LOG'] !== true) {
+                            $msg = 'L\'utilisateur '.$_SESSION['USER']->user->username.' s\'est connecté à l\'administration.';
+                            $interaction = new Interaction();
+                            $interaction->status('green');
+                            $interaction->message($msg);
+                            $interaction->title('Connexion à l\'administration');
+                            $interaction->author($_SESSION['USER']->user->hash_key);
+                            $interaction->setAdmin();
+                            $_SESSION['ADMIN']['LOG'] = true;
+                        }
+                        ############################################
                         self::base();
                     } else {
                         self::login();
@@ -61,12 +71,33 @@ final class Administration
                     Common::Redirect('User/Login&echo');
                 }
             } else {
+                ############################################
+                 # Notifier la commande
+                ############################################
+                $msg   = 'L\'utilisateur '.$_SESSION['USER']->user->username.' ne peut pas accéder à l\'administration.';
+                $interaction = new Interaction();
+                $interaction->status('orange');
+                $interaction->message($msg);
+                $interaction->title('Connexion à l\'administration');
+                $interaction->author($_SESSION['USER']->user->hash_key);
+                $interaction->setAdmin();
+                #######################################################
                 Notification::error('Vous n\'êtes pas autorisé à entrer dans l\'administration.', 'access', true);
                 Common::Redirect('User/Login&echo', 3);
             }
         } else {
-            Notification::error('Il est nécessaire d\'être connecté afin d\'accéder à l\'administration.', 'Utilisateur', true);
-            Common::Redirect('User/Login&echo', 3);
+            ############################################
+            # Tentative de connexion sans être logué
+            ############################################
+            $msg   = Common::GetIp(). ' à tenter de se connecter l\'administration sans être logué.';
+            $interaction = new Interaction();
+            $interaction->status('orange');
+            $interaction->message($msg);
+            $interaction->title('Connexion à l\'administration');
+            $interaction->author(Common::GetIp());
+            $interaction->setAdmin();
+            #######################################################
+            Notification::error(constant('ADMIN_CONNECT_LOSE'), 'Utilisateur', true);
         }
     }
     #########################################
@@ -182,25 +213,7 @@ final class Administration
 
         if (in_array($page, $scan)) {
             if (self::getAccessPage($page) === false) {
-?>
-                <div class="card custom-card">
-
-                    <div class="top-left">
-                    </div>
-
-                    <div class="top-right">
-                    </div>
-
-                    <div class="bottom-left">
-                    </div>
-
-                    <div class="bottom-right">
-                    </div>
-                    <?php
-                    Notification::error(constant('NO_ACCESS_GROUP_PAGE'), 'Page');
-                    ?>
-                </div>
-                <?php
+                Notification::error(constant('NO_ACCESS_GROUP_PAGE'), 'Page');
                 $page = defined(strtoupper($page)) ? constant(strtoupper($page)) : $page;
             } else {
                 $require = ROOT.DS.'administration'.DS . $request . DS . $page . DS . 'controller.php';
@@ -215,29 +228,9 @@ final class Administration
                     if (method_exists($this->controller, $this->view)) {
                         call_user_func_array(array($this->controller, $this->view), $this->link);
                     } else {
-                ?>
-                        <div class="card custom-card">
-
-                            <div class="top-left">
-                            </div>
-
-                            <div class="top-right">
-                            </div>
-
-                            <div class="bottom-left">
-                            </div>
-
-                            <div class="bottom-right">
-                            </div>
-                            <?php
-                            Notification::error(constant('THE_REQUESTED_SUBPAGE') . '<strong>' . $this->view . '</strong> ' . constant('IS_NOT_AVAILABLE_ON_THE_PAGE') . ' <strong>' . $page . '</strong>', constant('FILE'));
-                            ?>
-                        <?php
+                        Notification::error(constant('THE_REQUESTED_SUBPAGE') . '<strong>' . $this->view . '</strong> ' . constant('IS_NOT_AVAILABLE_ON_THE_PAGE') . ' <strong>' . $page . '</strong>', constant('FILE'));
                     }
                     echo $this->controller->render;
-                    ?>
-                        </div>
-                    <?php
                 }
             }
         } else {
@@ -460,7 +453,7 @@ final class Administration
     {
         $sql = new BDD();
         $sql->table('TABLE_USERS');
-        $sql->where(array('name' => 'email', 'value' => $_REQUEST['mail']));
+        $sql->where(array('name' => 'mail', 'value' => $_REQUEST['mail']));
         $sql->queryOne();
         $data = $sql->data;
     }

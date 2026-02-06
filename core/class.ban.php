@@ -242,7 +242,7 @@ final class Ban
 		$currentDate  =  new \DateTimeImmutable('now');
 		$currentDate  = $currentDate->format('Y-m-d H:i:s');
 		$insert['endban']   = $insert['endban']->format('Y-m-d H:i:s');
-		$insert['who']      = $_SESSION['USER']->user->hash_key;
+		$insert['who']      = isset($_SESSION['USER']->user->hash_key) ? $_SESSION['USER']->user->hash_key : Common::GetIp();
 		$insert['author']   = empty($author) ? $_SESSION['USER']->user->hash_key : $author;
 		$insert['ip']       = empty($ip) ? Common::GetIp() : Secure::isIp($ip);
 		$insert['email']    = $email;

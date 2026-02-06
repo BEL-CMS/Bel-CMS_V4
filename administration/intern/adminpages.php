@@ -6,7 +6,7 @@
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
- * @copyright 2015-2025 Bel-CMS
+ * @copyright 2015-2026 Bel-CMS
  * @author as Stive - stive@determe.be
  */
 
@@ -158,7 +158,7 @@ class AdminPages
             }
         }
         ?>
-        <div class="row mb-2">
+        <div class="mb-5">
             <?php
             if (!empty($menu)):
                 foreach ($menu as $key => $value):
@@ -172,28 +172,16 @@ class AdminPages
                     } else {
                         $color = '';
                     }
+                    $bgColor = isset($bgColor) && !empty($bgColor) ? $bgColor : 'btn-primary';
             ?>
-                    <div class="col-xxl-2 col-xl-6 col-lg-6 col-md-6">
-                        <div class="card custom-card">
-                            <div class="top-left"></div>
-                            <div class="top-right"></div>
-                            <div class="bottom-left"></div>
-                            <div class="bottom-right"></div>
-                            <div class="card-body p-3 hovermenu <?= $bgColor; ?>">
-                                <a href="<?= $value['href']; ?>">
-                                    <div class="text-center">
-                                        <div class="file-format-icon text-primary"></div>
-                                        <div><span class="fw-medium mb-1" style="color: <?= $color; ?>"><?= $value['title']; ?></span></div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                    <button onclick="location.href='<?= $value['href']; ?>'"  type="button" class="btn <?= $bgColor; ?>">
+                        <span class="fw-medium mb-1" style="color: <?= $color; ?>"><?= $value['title']; ?></span>
+                    </button>
             <?php
                 endforeach;
             endif;
             ?>
-        </div>
+            </div>
         <?php
 
         switch ($_REQUEST['option']) {
@@ -236,8 +224,6 @@ class AdminPages
 
         $this->render = ob_get_contents();
         ?>
-        </div>
-
         <?php
         if (ob_get_length() != 0) {
             ob_end_clean();

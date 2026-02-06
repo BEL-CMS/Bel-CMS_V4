@@ -6,7 +6,7 @@
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
- * @copyright 2015-2025 Bel-CMS
+ * @copyright 2015-2026 Bel-CMS
  * @author as Stive - stive@determe.be
  */
 
@@ -22,7 +22,9 @@ Common::constant(array(
     #####################################
 	# Nom Administration
 	#####################################
-	'ADMINISTRATORS'      => 'Administrateur',
-	'MEMBERS'             => 'Membres',
-	'ADMIN_TEXT_FALSE_ID' => 'Un administrateur a reçu des informations sur une situation alarmante relative à l\'ID.'
+	'ADMINISTRATORS'        => 'Administrateur',
+	'MEMBERS'               => 'Membres',
+	'ADMIN_TEXT_FALSE_ID'   => 'Un administrateur a reçu des informations sur une situation alarmante relative à l\'ID.',
+	'INITIALIZATION_ADMIN'  => 'Initialisation du système...',
+
 ));

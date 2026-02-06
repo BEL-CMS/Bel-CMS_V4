@@ -30,7 +30,8 @@ $interaction->status('red', 'blue', 'green', 'orange', 'grey');
 $interaction->message($msg);
 $interaction->title('Titre de l'interaction');
 $interaction->author($_SESSION['USER']->user->hash_key);
-$interaction->set();
+    $interaction->set();
+or  $interaction->setAdmin();
 #######################################################
 */
 
@@ -206,7 +207,7 @@ final class Interaction
         if ($this->status == 'red') {
             Ban::addBan($insert['author'], Common::GetIp(), null, $this->time,$insert['message']);
         } else if ($this->status == 'orange') {
-            Ban::addBan($insert['author'], Common::GetIp(), null, 'PT1H', $insert['message']);
+            Ban::addBan($insert['author'], Common::GetIp(), null, 'PT15M', $insert['message']);
         }
     }
 

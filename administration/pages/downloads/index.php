@@ -5,7 +5,7 @@
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
- * @copyright 2015-2025 Bel-CMS
+ * @copyright 2015-2026 Bel-CMS
  * @author as Stive - stive@determe.be
  */
 
@@ -42,11 +42,13 @@ endif;
                             <tbody>
                                 <?php
                                 foreach ($downloads as $value):
-                                    if (!is_file(ROOT.$value->screen)) {
-                                        $file = '/assets/img/no-image-png.png';
-                                    } else {
-                                        $file = $value->screen;
-                                    }
+                                   if (file_exists($value->screen)) {
+                                        $file = '/'.$value->screen;
+                                   } else {
+                                        $file = 'assets/img/no-image-png.png';
+                                   }
+                                   $view = empty($value->view) ? 0 : $value->view;
+                                   $dls  = empty($value->dls) ? 0 : $value->dls;
                                 ?>
                                 <tr>
                                     <td style="text-align:center !important;" class="sorting_1">
@@ -56,8 +58,8 @@ endif;
                                     <td><?=$value->name;?></td>
                                     <td><?=Common::ConvertSize($value->size);?></td>
                                     <td><?=Common::TransformDate($value->date, 'FULL', 'MEDIUM');?></td>
-                                    <td style="text-align:center !important;"><?=$value->view;?></td>
-                                    <td style="text-align:center !important;"><?=$value->dls;?></td>
+                                    <td style="text-align:center !important;"><?= $view; ?></td>
+                                    <td style="text-align:center !important;"><?= $dls; ?></td>
                                     <td>
                                         <a href="downloads/delete/<?= $value->id; ?>?admin&option=pages" class="btn btn-danger label-btn label-end rounded-pill">
                                             Supprimer

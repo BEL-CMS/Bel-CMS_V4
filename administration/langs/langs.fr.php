@@ -5,7 +5,7 @@
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
- * @copyright 2015-2025 Bel-CMS
+ * @copyright 2015-2026 Bel-CMS
  * @author as Stive - stive@determe.be
  */
 
@@ -36,6 +36,7 @@ Common::constant(array(
 	'DEL_BDD_ERROR'               => 'Erreur lors du transfert en base de données',
 	'SEND_BDD_PARTIEL'            => 'Envoie en base de données partiellement',
 	'NO_CATEGORY'                 => 'Aucune catégorie',
+	'COPYRIGHT'                   => 'Bel-CMS',
 	'NO_ACCESS_ADMIN'             => 'Cette page n\'est accessible qu\'aux administrateurs de premier niveau.',
 	'EDITING_SUCCESS'             => 'Édition effectue avec succès',
 	'EDIT_ERROR'                  => 'Erreur lors de la sauvegarde ou rien à changer dans le formulaire.',
@@ -172,4 +173,5 @@ Common::constant(array(
 	'NO_ACCESS_GROUP_PAGE'                => 'Vous n\'avez pas les autorisations nécessaires pour consulter cette page .',
 	'ADD'                                 => 'Ajouter',
 	'VALID_SUCCESS'                       => 'Validation du lien effectué avec succès',
+	'ADMIN_CONNECT_LOSE'                  => 'Il est nécessaire d\'être connecté afin d\'accéder à l\'administration.<br><a href="User/Login&echo" title="Connexion"><connexion</a>',
 ));

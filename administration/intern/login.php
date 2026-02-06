@@ -1,70 +1,73 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>Administration</title>
-    <link rel="icon" type="image/x-icon" href="../src/assets/img/favicon.ico"/>
-    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
-    <link href="assets/plugins/bootstrap-5.3.3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="administration/intern/auth-cover.css" rel="stylesheet" type="text/css" />
+    <title>Login Administration</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta content="Bel-CMS" name="author" />
+    <script type="module" src="administration/assets/js/layout-setup.js"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="administration/assets/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="administration/assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="administration/assets/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="administration/assets/images/favicon/site.webmanifest">
+    <link rel="shortcut icon" href="administration/assets/images/favicon/favicon.png">
+    <link href="administration/assets/libs/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="administration/assets/libs/nouislider/nouislider.min.css" rel="stylesheet">
+    <link href="administration/assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css">
+    <link href="administration/assets/css/icons.min.css" rel="stylesheet" type="text/css">
+    <link href="administration/assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css">
 </head>
-<body class="form">
-    <div class="auth-container d-flex">
-        <div class="container mx-auto align-self-center">
-            <div class="row">
-                <div class="col-6 d-lg-flex d-none h-100 my-auto top-0 start-0 text-center justify-content-center flex-column">
-                    <div class="auth-cover-bg-image"></div>
-                    <div class="auth-overlay"></div>
-                    <div class="auth-cover">
-                        <div class="position-relative">
-                            <img src="administration/intern/auth.webp" alt="auth-img">
-                        </div>
+
+<body>
+    <div class="min-vh-100 d-flex align-items-center justify-content-center py-10 px-5 auth-bg">
+        <div class="main-wrapper border bg-white rounded-4 d-flex flex-column flex-lg-row gap-xl-5 position-relative overflow-hidden w-100 shadow">
+            <div class="decoration-section m-5 bg-dark-subtle rounded-3 me-0 mb-0 mb-lg-5 mb-0 mb-lg-5"></div>
+            <div class="login-section bg-white rounded-4 p-6 px-xl-12">
+            <a href="https://bel-cms.dev" class="d-flex justify-content-end align-items-center gap-2 logo-main mt-lg-2 mb-10">
+                <img height="33" width="33" class="logo-dark" alt="Dark Logo" src="administration/assets/images/logo-md.png">
+                <h3 class="mb-0 lh-base fw-semibold">Bel-CMS</h3>
+            </a>
+            <div class="mb-12">
+                <h5 class="mb-2">Bienvenue <?= $_SESSION['USER']->user->username; ?></h5>
+                <p class="text-muted mb-0">Connectez-vous pour accéder à l'administration</p>
+            </div>
+            <form id="sendLogin" action="Login?management" method="post">
+                <div class="mb-4">
+                <input type="text" class="form-control" id="name" readonly value="<?= $_SESSION['USER']->user->username; ?>">
+                </div>
+                <div class="mb-4">
+                <input type="email" class="form-control" name="mail" id="email" placeholder="e-mail priver" required>
+                </div>
+                <div class="mb-4">
+                <div class="position-relative">
+                    <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
+                    <button type="button" class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted toggle-password" id="toggle-password" data-target="password"> <i class="ri-eye-off-line align-middle"></i> </button>
+                </div>
+                </div>
+                <div class="mb-10">
+                <div class="d-flex flex-wrap justify-content-between align-items-center">
+                    <div class="form-text ms-auto">
+                    <a href="auth-forgot-password.html" class="link link-primary">Mot de passe perdu ?</a>
                     </div>
                 </div>
-                <form id="sendLogin" action="Login?management" method="post" class="col-xxl-4 col-xl-5 col-lg-5 col-md-8 col-12 d-flex flex-column align-self-center ms-lg-auto me-lg-0 mx-auto">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-12 mb-3">
-                                    <h2>Login</h2>
-                                    <p>Saisissez votre adresse e-mail et votre mot de passe pour vous connecter.</p>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="mb-3">
-                                        <label class="form-label">Email</label>
-                                        <input name="mail" type="email" class="form-control" required>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="mb-4">
-                                        <label class="form-label">Password</label>
-                                        <input name="password" type="password" class="form-control" required>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="mb-1">
-                                        <button class="btn btn-secondary w-100">Se connecter</button>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <span><div class="btn btn-warning w-100" id="loading"><span>Identification en attente</span></div></span>
-                                </div>
-                                <div class="col-12">
-                                    <div class="text-center">
-                                        <p class="mb-0">Un probleme avec vous connecté ? <a href="/forum" class="text-warning">Forum</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+                </div>
+                <div class="text-center mb-3">
+                    <button type="submit" class="btn btn-primary w-100" id=""><span>Login</span></button>
+                </div>
+                <div>
+                    <div class="btn btn-warning w-100" id="loading"><span>Identification en attente</span></div>
+                </div>
+            </form>
             </div>
         </div>
     </div>
-    <script src="/assets/plugins/jQuery/jquery-3.7.1.min.js"></script>
-    <script src="/administration/intern/login.js"></script>
-    <script src="assets/plugins/bootstrap-5.3.3/js/bootstrap.min.js"></script>
+    <script src="assets/plugins/jQuery/jquery-3.7.1.min.js"></script>
+    <script src="administration/intern/login.js"></script>
+    <script src="administration/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="administration/assets/libs/gsap/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/robin-dela/hover-effect@latest/dist/hover-effect.umd.js"></script>
+    <script src="administration/assets/js/pages/common.init.js"></script>
+    <script src="administration/assets/js/auth/auth.init.js"></script>
 </body>
 </html>

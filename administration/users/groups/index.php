@@ -5,7 +5,7 @@
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
- * @copyright 2015-2025 Bel-CMS
+ * @copyright 2015-2026 Bel-CMS
  * @author as Stive - stive@determe.be
  */
 
@@ -24,7 +24,7 @@ endif;
                 <div class="bottom-right"></div>
                 <div class="card-header">
                     <div class="card-title">
-                        Liste des bannissements
+                        Liste des groupes
                     </div>
                 </div>
                 <div class="card-body">
@@ -51,17 +51,16 @@ endif;
                                 ?>
                                 <tr>
                                     <th scope="row">
-                                        <?=$value->id_group;?>
+                                        <?= $value->id_group;?>
                                     </th>
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <span class="avatar avatar-xs me-2 online avatar-rounded">
-                                                <img src="<?=$img;?>" alt="img">
                                             </span><?=$name;?>
                                         </div>
                                     </td>
                                     <td style="background-color:<?=$value->color;?>;">Couleur</td>
-                                    <td><?=$value->description;?></td>
+                                    <td><?= $value->description;?></td>
                                     <td>
                                         <a type="button" class="btn btn-secondary-gradient rounded-pill btn-wave" onclick='location.href="groups/edit/<?=$value->id;?>?admin&option=users"'><i class="fa-solid fa-pen-to-square align-middle me-2 d-inline-block"></i>Edition</a>
                                         <?php
