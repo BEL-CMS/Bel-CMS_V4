@@ -170,23 +170,19 @@ if (is_file('assets/templates/default/config/config.tpl.php')) {
                                     <div>
                                         <div class="row">
                                             <div class="col-lg-8">
-                                                <div class="post-container fix_bar_container_init">
-                                                    <?=$this->page;?>
-                                                    <?php 
-                                                    
+                                                <div class="post-container">
+                                                    <?php
+                                                    if (isset($var->widgets['top'])):
+                                                        foreach ($var->widgets['top'] as $title => $content):
+                                                          echo $content['view'];
+                                                        endforeach;
+                                                    endif;
+                                                    echo $this->page;
                                                     ?>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="sb-container fixed-bar">
-                                                    <div class="main-sidebar-widget">
-                                                        <div class="search-widget">
-                                                            <form action="#">
-                                                                <input name="se" id="se" type="text" class="search-inpt-item" placeholder="Search.." value="Search...">
-                                                                <button class="search-submit color-bg" id="submit_btn"><i class="fa-regular fa-magnifying-glass"></i> </button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
                                                     <?php
                                                     if (isset($var->widgets['left'])):
                                                         foreach ($var->widgets['left'] as $title => $content):
@@ -253,7 +249,7 @@ if (is_file('assets/templates/default/config/config.tpl.php')) {
                                             <a href="<?= $social['facebook']; ?>" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
                                             <a href="<?= $social['twitter']; ?>" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
                                             <a href="<?= $social['instagram']; ?>" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-                                            <a href="<?= $social['discord']; ?>" target="_blank"><i class="fa-brands fa-discord"></i></a>										 
+                                            <a href="<?= $social['discord']; ?>" target="_blank"><i class="fa-brands fa-discord"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -323,6 +319,7 @@ if (is_file('assets/templates/default/config/config.tpl.php')) {
                 <div class="progress-bar color-bg"></div>
             </div>
         </div>
+         <?=$this->js;?>
         <script  src="assets/templates/default/js/jquery.min.js"></script>
         <script  src="assets/templates/default/js/plugins.js"></script>
         <script  src="assets/templates/default/js/scripts.js"></script>
