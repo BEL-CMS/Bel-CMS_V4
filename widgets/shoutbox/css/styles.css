@@ -1,0 +1,93 @@
+#belcms_widgets_shoutbox {
+    height: 380px;
+    width: 100%;
+    border: 1px solid rgba(0, 0, 0, .2);
+    border-bottom: 0 !important;
+    border-radius: 8px;
+}
+#belcms_widgets_shoutbox_id {
+    background-image: url('/assets/img/chatbg.png');
+    background-repeat: repeat;
+    height: 320px;
+    overflow: auto;
+}
+.belcms_widgets_shoutbox_id_msg {
+    display: flex;
+    margin-bottom: 10px;
+}
+.belcms_widgets_shoutbox_id_msg .badge {
+    margin-left: 15px;
+    margin-top: -3px;
+    padding: 9px 11px;
+    font-size: 11px;
+    display: table;
+    width: auto;
+    border-radius: 18px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.belcms_widgets_shoutbox_id_msg > img {
+    display: flow-root;
+    width: 35px;
+    height: 35px;
+}
+.belcms_widgets_shoutbox_msg {
+    text-align: left;
+    display: block;
+    margin-left: 15px;
+    background-color: #f3f2f2;
+    margin-top: 26px;
+    padding: 10px;
+    color: #000;
+    text-align: justify;
+    border-radius: 20px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+#belcms_shoutbox_form {
+    display: block;
+    background: #f9f9f9;
+    overflow: hidden;
+    padding: 0px;
+    border-top: 1px solid rgba(0, 0, 0, 0.25);
+    clear: both;
+    margin-top: 15px;
+    border-radius: 4px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+#belcms_shoutbox_input {
+    display: block;
+    width: calc(100% - 60px);
+    float: left;
+    height: 40px;
+    padding: 0 15px;
+    line-height: 40px;
+    background: #f9f9f9;
+    opacity: 0.65;
+    border: none;
+    border-radius: 0;
+    color: darkslategrey;
+    padding: 0 15px;
+}
+
+#shoutbox_form_file,
+#shoutbox_form_image {
+    display: block;
+    float: right;
+    width: 25px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    margin-bottom: 0;
+    margin-right: 5px;
+}
+
+#shoutbox_form_file>input,
+#shoutbox_form_image>input {
+    display: none;
+}
+.belcms_widgets_shoutbox_id_msg_id {
+    width: 100%;
+    margin-bottom: 6px;
+}
