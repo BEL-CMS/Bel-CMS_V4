@@ -1,0 +1,11 @@
+#belcms_page_contact {
+    background-color: #FFF;
+    display: block;
+    width: 100%;
+    padding: 15px;
+    position: relative;
+}
+#belcms_page_contact h2,
+#belcms_page_contact > p {
+  text-align: center !important;
+}

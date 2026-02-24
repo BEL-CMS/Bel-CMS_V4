@@ -1,11 +1,11 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.3]
+ * @version 4.0.0 [PHP8.4]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
- * @copyright 2015-2025 Bel-CMS
+ * @copyright 2015-2026 Bel-CMS
  * @author as Stive - stive@determe.be
  */
 
@@ -27,9 +27,10 @@ $tables = array(
     'TABLE_BAN'                 => $DB_PREFIX.'ban',
     'TABLE_CAPTCHA'             => $DB_PREFIX.'captcha',
     'TABLE_COMMENTS'            => $DB_PREFIX.'comments',
-    'TABLE_WIDGETS'             => $DB_PREFIX.'widgets',
     'TABLE_CONFIG'              => $DB_PREFIX.'config',
     'TABLE_CONFIG_PAGES'        => $DB_PREFIX.'config_pages',
+    'TABLE_CONTACT'             => $DB_PREFIX.'contact',
+    'TABLE_CONTACT_CAT'         => $DB_PREFIX.'contact_cat',
     'TABLE_DOWNLOADS'           => $DB_PREFIX.'downloads',
     'TABLE_DOWNLOADS_CAT'       => $DB_PREFIX.'downloads_cat',
     'TABLE_EVENTS'              => $DB_PREFIX.'events',
@@ -61,6 +62,11 @@ $tables = array(
     'TALBE_NEWSLETTER_SEND'     => $DB_PREFIX.'newsletter_send',
     'TALBE_NEWSLETTER_TPL'      => $DB_PREFIX.'newsletter_tpl',
     'TABLE_STATS'               => $DB_PREFIX.'stats',
+    'TABLE_SURVEY'              => $DB_PREFIX.'survey',
+    'TABLE_SURVEY_QUEST'        => $DB_PREFIX.'survey_quest',
+    'TABLE_SURVEY_VOTE'         => $DB_PREFIX.'survey_vote',
+    'TABLE_SHOUTBOX'            => $DB_PREFIX.'shoutbox',
+    'TEMPLATE'                  => $DB_PREFIX.'template',
     'TABLE_TICKET'              => $DB_PREFIX.'ticket',
     'TABLE_TICKET_CAT'          => $DB_PREFIX.'ticket_cat',
     'TABLE_TICKET_REP'          => $DB_PREFIX.'ticket_rep',
@@ -76,6 +82,7 @@ $tables = array(
     'TABLE_USERS_SOCIAL'        => $DB_PREFIX.'users_social',
     'TABLE_USERS_HARDWARE'      => $DB_PREFIX.'users_hardware',
     'TABLE_VISITORS'            => $DB_PREFIX.'visitors',
+    'TABLE_WIDGETS'             => $DB_PREFIX.'widgets',
     #####################################################
 );
 #####################################################

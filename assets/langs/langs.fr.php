@@ -5,7 +5,7 @@
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
- * @copyright 2015-2025 Bel-CMS
+ * @copyright 2015-2026 Bel-CMS
  * @author as Stive - stive@determe.be
  */
 
@@ -73,6 +73,8 @@ $array = array(
 	'NO_USER_CONNECT'                     => 'Il est important d\'établir des connexions avec le site',
 	'NO_VALID_TOKEN_USER'                 => 'La clé "Token" ou l\'adresse e-mail n\'est pas valide',
 	'GET_PASSWORD_TOKEN'                  => 'Récupération de mot de passe',
+	'CALENDAR'                            => "Calendrier",
+	'ADMIN_CONNECT_LOSE'                  => 'Il est nécessaire d\'être connecté afin d\'accéder à l\'administration.',
  	#####################################
 	# Fichier lang en français - Social
 	#####################################
@@ -437,6 +439,7 @@ $array = array(
 	'SURVEY'                              => 'Sondages',
 	'MARKET'                              => 'Boutique',
 	'PRICING'                             => 'Tarifs',
+	'CONTACT'                             => 'Contact',
 	
 	#####################################
 	# USER
@@ -495,12 +498,18 @@ $array = array(
 	#####################################
 	# LANG
 	# ###################################
-	'FRENCH'                              => 'fr',
-	'ENGLISH'                             => 'eng',
-	'NETHERLANDS'                         => 'nl',
-	'DEUTCH'                              => 'de',
-	'FR_LANG'                             => 'français',
-	'FR_ENGLISH'                          => 'english',
+	'FRENCH'                             => 'fr',
+	'ENGLISH'                            => 'eng',
+	'NETHERLANDS'                        => 'nl',
+	'DEUTCH'                             => 'de',
+	'FR_LANG'                            => 'français',
+	'FR_ENGLISH'                         => 'english',
+	#####################################
+	# Fichier lang - Pages Contac
+	#####################################
+	'SUCCESS_SEND_CONTACT'               => 'Votre message a été correctement transmis.',
+	'ERROR_EMAIL_CONTACT'                => 'Il est indispensable de fournir votre e-mail !',
+	'ERROR_TEXT_CONTACT'                 => 'Le texte doit impérativement contenir des informations.'
 );
 foreach ($array as $constant => $value) {
 	if (!defined($constant)) {

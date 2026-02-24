@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.4]
+ * @version 4.0.1 [PHP8.4]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -17,6 +17,24 @@ endif;
 use BelCMS\Requires\Common;
 
 Common::constant(array(
+    #####################################
+	# Nom Administration
+	#####################################
+	'ADMINISTRATORS'        => 'Administrateur',
+	'MEMBERS'               => 'Membres',
+	'ADMIN_TEXT_FALSE_ID'   => 'Un administrateur a reçu des informations sur une situation alarmante relative à l\'ID.',
+	'INITIALIZATION_ADMIN'  => 'Initialisation du système...',
+    #####################################
+    # Fichier lang en français - Forum
+    #####################################
+    'ALL_MSG_POST'         => 'Tout les sujets',
+    'ALL_MSG_REP'          => 'Tout les postes',
+    'ADD_CAT_SUB'          => 'Ajouter une catégorie principal',
+    'ADD_CAT_SUB_SECOND'   => 'Ajouter une catégorie secondaire',
+	#####################################
+	# Fichier lang en français - Groupes
+	#####################################
+    'GROUP_NAME_RESERVED' => 'Le nom est réservé.',
 	#####################################
 	# Fichier lang en français - Pages
 	#####################################
