@@ -14,6 +14,7 @@ if (!defined('CHECK_INDEX')):
 	exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
 endif;
 
+use Belcms\Administration\Administration;
 use BelCMS\Requires\Common;
 
 Common::constant(array(
@@ -192,4 +193,11 @@ Common::constant(array(
 	'ADD'                                 => 'Ajouter',
 	'VALID_SUCCESS'                       => 'Validation du lien effectué avec succès',
 	'ADMIN_CONNECT_LOSE'                  => 'Il est nécessaire d\'être connecté afin d\'accéder à l\'administration.<br><a href="User/Login&echo" title="Connexion"><connexion</a>',
+	'DELETE'                              => 'Supprimer',
+	'READ'                                => 'Lire',
+	'EDIT'                                => 'Editer',
+	'MAIL_FAILS'                          => 'Veuillez configurer les e-mails depuis l\'Administration',
+	'REPLY'                               => 'Répondre',
+	'REPLY_MSG'                           => 'Réponse au message',
+	'CAT_NULL'                            => 'Il est nécessaire que le nom de la catégorie soit renseigné.',
 ));

@@ -32,6 +32,17 @@ final class modelsContact
         $return = $sql->data;
         return $return;
     }
+
+    public function getMailsForID ($id)
+    {
+        $sql = new BDD();
+        $sql->table('TABLE_CONTACT');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->queryOne();
+        $return = $sql->data;
+        return $return;
+    }
+
     public function getCat ()
     {
         $sql = new BDD();
@@ -47,6 +58,62 @@ final class modelsContact
         $sql->table('TABLE_CONTACT_CAT');
         $sql->where(array('name' => 'id', 'value' => $id));
         $sql->queryOne();
+        $return = $sql->data;
+        return $return;
+    }
+
+    public function getCatForID ($id)
+    {
+        $sql = new BDD();
+        $sql->table('TABLE_CONTACT_CAT');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->queryOne();
+        $return = $sql->data;
+        return $return;
+    }
+
+    public function sendcat ($data): bool
+    {
+        $sql = new BDD();
+        $sql->table('TABLE_CONTACT_CAT');
+        $sql->insert($data);
+        if ($sql->rowCount == true) {
+            $return = true;
+        } else {
+            $return = false;
+        }
+        return $return;
+    }
+
+    public function sendeditcat ($id, $content): bool
+    {
+        $sql = new BDD();
+        $sql->table('TABLE_CONTACT_CAT');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->update($content);
+        $return = $sql->rowCount;
+        if ($sql->rowCount == true) {
+            $return = true;
+        } else {
+            $return = false;
+        }
+        return $return;
+    }
+
+    public function readMail ($id)
+    {
+        $d['read_mail'] = 1;
+        $sql = new BDD();
+        $sql->table('TABLE_CONTACT');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->update($d);
+    }
+
+    public function configMails ()
+    {
+        $sql = new BDD();
+        $sql->table('TABLE_MAIL_CONFIG');
+        $sql->queryAll();
         $return = $sql->data;
         return $return;
     }

@@ -41,13 +41,13 @@ endif;
                                     <td><?= $value->id; ?></td>
                                     <td><?= $value->content; ?></td>
                                     <td>
-                                        <a href="downloads/delete/<?= $value->id; ?>?admin&option=pages" class="btn btn-danger label-btn label-end rounded-pill">
-                                            Supprimer
+                                        <a href="contact/delete/<?= $value->id; ?>?admin&option=pages" class="btn btn-danger label-btn label-end rounded-pill">
+                                            <?= constant(name: 'DELETE'); ?>
                                             <i class="ri-close-line label-btn-icon ms-2 rounded-pill"></i>
                                         </a>
-                                        <a href="downloads/read/<?= $value->id; ?>?admin&option=pages" class="btn btn-warning label-btn rounded-pill">
+                                        <a href="contact/edit/<?= $value->id; ?>?admin&option=pages" class="btn btn-warning label-btn rounded-pill">
                                             <i class="ri-chat-smile-line label-btn-icon me-2"></i>
-                                            Editer
+                                            <?= constant(name: 'EDIT'); ?>
                                         </a>
                                     </td>
                                 </tr>
