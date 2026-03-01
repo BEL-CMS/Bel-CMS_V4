@@ -97,13 +97,31 @@ endif;
                                 </tr>
                                 </tbody>
                             </table>
+                            <table style="
+                                box-sizing: border-box;
+                                width: 100%;
+                                padding: 0;
+                                margin: 0;
+                                font-size: 12px;
+                                line-height: 20px;
+                                background: #f5f5f5;
+                                border-radius: 4px;
+                                padding: 10px;
+                                color: #000;
+                                margin-top: 20px;
+                                ">
+                                <tr>
+                                    <td><?= $mails->message; ?></td>
+                                </tr>
+                            </table>
                         </textarea>
+                        <div class="mb-3 row p-3">
+                            <input type="hidden" name="id" value="<?= $mails->id; ?>">
+                            <button type="submit" class="btn btn-primary"><?= constant('REPLY') ?></button>
+                        </div>
                     </form>
-                    <div class="mb-3 row p-3">
-                        <input type="hidden" name="id" value="<?= $mails->id; ?>">
-                        <button type="submit" class="btn btn-primary"><?= constant('REPLY') ?></button>
-                    </div>
                 </div>
             </div>
         </div>
+    </div>
 </div>

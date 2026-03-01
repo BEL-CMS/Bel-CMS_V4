@@ -100,13 +100,51 @@ final class modelsContact
         return $return;
     }
 
-    public function readMail ($id)
+    public function deleteCat ($id): bool
+    {
+        $sql = new BDD();
+        $sql->table('TABLE_CONTACT_CAT');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->delete();
+        $return = $sql->rowCount;
+        if ($sql->rowCount == true) {
+            $return = true;
+        } else {
+            $return = false;
+        }
+        return $return;
+    }
+
+    public function readMail ($id): bool
     {
         $d['read_mail'] = 1;
         $sql = new BDD();
         $sql->table('TABLE_CONTACT');
         $sql->where(array('name' => 'id', 'value' => $id));
         $sql->update($d);
+        $return = $sql->rowCount;
+        if ($sql->rowCount == true) {
+            $return = true;
+        } else {
+            $return = false;
+        }
+        return $return;
+    }
+
+    public function mailSend ($id): bool
+    {
+        $d['send_reply'] = 1;
+        $sql = new BDD();
+        $sql->table('TABLE_CONTACT');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->update($d);
+        $return = $sql->rowCount;
+        if ($sql->rowCount == true) {
+            $return = true;
+        } else {
+            $return = false;
+        }
+        return $return;
     }
 
     public function configMails ()

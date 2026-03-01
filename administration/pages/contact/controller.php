@@ -35,7 +35,11 @@ class Contact extends AdminPages
         $d['mails'] = $this->models->getMails();
 
         foreach ($d['mails'] as $key => $value) {
-            $d['mails'][$key]->category = $this->models->getCatName($value->category)->content;
+            if (!empty($this->models->getCatName($value->category)->content)) {
+                $d['mails'][$key]->category = $this->models->getCatName($value->category)->content;
+            } else {
+                $d['mails'][$key]->category = constant('CAT_DELETE');
+            }
         }
 
         $this->set($d);
@@ -115,31 +119,13 @@ class Contact extends AdminPages
                 $this->redirect('contact?admin&option=pages', 3);
             }
         }
-        //EDITING_SUCCESS
     }
 
     public function addnewcat ()
     {
-        if (ctype_digit($this->data[2])) {
-            $id = $this->data[2];
-            $d['name'] = $this->models->getCatForID($id);
-            $this->set($d);
-            $menu[] = array('title' => 'Accueil', 'href' => 'contact?Admin&option=pages', 'ico'  => 'fa-solid fa-igloo');
-            $menu[] = array('title' => 'Accueil Catégories', 'href' => 'contact/category?Admin&option=pages', 'ico'  => 'fa-solid fa-igloo');
-            $this->render('addnewcat', $menu);
-        } else {
-            #######################################################
-            $msg = $_SESSION['USER']->user->username . ' à tenter de changer l\'ID : ' . $this->data[2];
-            $interaction = new Interaction();
-            $interaction->status('red');
-            $interaction->message($msg);
-            $interaction->title('Modification d\'ID');
-            $interaction->author($_SESSION['USER']->user->hash_key);
-            $interaction->setAdmin();
-            #######################################################
-            Notification::error(text: constant('ID_ERROR'), title: constant('CONTACT'));
-            $this->redirect('contact?admin&option=pages', 3);
-        }
+        $menu[] = array('title' => 'Accueil', 'href' => 'contact?Admin&option=pages', 'ico'  => 'fa-solid fa-igloo');
+        $menu[] = array('title' => 'Accueil Catégories', 'href' => 'contact/category?Admin&option=pages', 'ico'  => 'fa-solid fa-igloo');
+        $this->render('addnewcat', $menu);
     }
 
     public function sendcat ()
@@ -158,6 +144,34 @@ class Contact extends AdminPages
         } else {
             Notification::warning(text: constant('DEL_BDD_ERROR'), title: constant('CONTACT'));
             $this->redirect('contact/category?Admin&option=pages', 3); 
+        }
+    }
+
+    public function delete ()
+    {
+        $id = $this->data[2];
+        if (ctype_digit($id)) {
+            $return = $this->models->deleteCat($id);
+            if ($return === true) {
+                Notification::success(text: constant('DEL_SUCCESS'), title: constant('CONTACT'));
+                $this->redirect('contact/category?admin&option=pages', 3);
+            } else {
+                Notification::warning(text: constant('DEL_ERROR'), title: constant('CONTACT'));
+                $referer = (!empty($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : constant('CONTACT');
+                $this->redirect($referer, 3);
+            }
+        } else {
+            #######################################################
+            $msg = $_SESSION['USER']->user->username . ' à tenter de changer l\'ID : ' . $this->data[2];
+            $interaction = new Interaction();
+            $interaction->status('red');
+            $interaction->message($msg);
+            $interaction->title('Modification d\'ID');
+            $interaction->author($_SESSION['USER']->user->hash_key);
+            $interaction->setAdmin();
+            #######################################################
+            Notification::error(text: constant('ID_ERROR'), title: constant('CONTACT'));
+            $this->redirect('contact?admin&option=pages', 3);
         }
     }
 
@@ -180,7 +194,11 @@ class Contact extends AdminPages
 
         if (ctype_digit($this->data[2])) {
             $d['mails'] = $this->models->getMailsForID($this->data[2]);
-            $d['mails']->category = $this->models->getCatName($d['mails']->category)->content;
+            if (!empty($this->models->getCatName($d['mails']->category)->content)) {
+                $d['mails']->category = $this->models->getCatName($d['mails']->category)->content;
+            } else {
+                $d['mails']->category = constant('CAT_DELETE');
+            }
             $this->models->readMail($this->data[2]);
             $this->set($d);
             $this->render('readmsg', $menu);
@@ -201,22 +219,38 @@ class Contact extends AdminPages
 
     public function sendreply ()
     {
-        if (ctype_digit($this->data[2])) {
-            $infos = $this->models->getMailsForID($this->data[2]);
-            debug($infos);
+        if (ctype_digit($_POST['id'])) {
+            $infos = $this->models->getMailsForID($_POST['id']);
+            $setFrom = $_SESSION['CONFIG']['CMS_MAIL'];
+            $userMail = $infos->mail_user;
+            $subject = $infos->object;
+            $tpl = $_POST['content'];
+            //Common::SendMail();
+            self::templateMail($setFrom, $userMail, $subject, $tpl);
+            $this->models->mailSend($_POST['id']);
         } else {
-            //self::templateMail();
+            #######################################################
+            $msg = $_SESSION['USER']->user->username . ' à tenter de changer l\'ID : ' . $this->data[2];
+            $interaction = new Interaction();
+            $interaction->status('red');
+            $interaction->message($msg);
+            $interaction->title('Modification d\'ID');
+            $interaction->author($_SESSION['USER']->user->hash_key);
+            $interaction->setAdmin();
+            #######################################################
+            Notification::error(text: constant('ID_ERROR'), title: constant('CONTACT'));
+            $this->redirect('contact?admin&option=pages', 3);
         }
     }
     private function templateMail ($setFrom, $userMail, $subject, $tpl)
     {
         #########################################
-        $email = new eMail;
-        $email->setFrom($setFrom);
-        $email->addAdress($userMail, $userMail);
-        $email->subject($subject);
-        $email->body($tpl);
-        $email->submit();
+        require_once ROOT.DS.'core'.DS.'class.mail.php';
+        $mail = new eMail;
+        $mail->addAdress($userMail);
+        $mail->subject($subject);
+        $mail->body($tpl);
+        $mail->submit();
         #########################################
     }
 }
