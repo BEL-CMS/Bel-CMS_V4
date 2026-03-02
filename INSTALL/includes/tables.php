@@ -169,7 +169,35 @@ switch ($_POST['table']) {
 			(7, 'members', 0, 1, NULL, NULL, NULL, '0', '1', 'MAX_PPR=8', '1.0.0', '2025-04-09 15:46:59'),
 			(8, 'downloads', 0, 1, NULL, NULL, NULL, '0', '1', 'MAX_PPR=6', '1.0.0', '2025-04-11 16:59:39'),
 			(9, 'articles', 0, 1, NULL, NULL, NULL, '0', '1', '', '1.0.0', '2025-04-13 09:49:11'),
-			(10, 'guestbook', 0, 1, NULL, NULL, NULL, '0', '1|2', '', '1.0.0', '2025-04-14 12:27:04');";
+			(10, 'guestbook', 0, 1, NULL, NULL, NULL, '0', '1|2', '', '1.0.0', '2025-04-14 12:27:04'),
+			(11, 'shoutbox', 0, 1, NULL, NULL, NULL, '0', '1|2', '', '1.0.0', '2025-04-14 12:27:04'),
+			(13, 'contact', 0, 1, NULL, NULL, NULL, '0', '1|2', '', '1.0.0', '2025-04-14 12:27:04');";
+	break;
+
+	case 'contact':
+		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
+		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
+			`id` int NOT NULL AUTO_INCREMENT,
+			`user` text,
+			`mail_user` varchar(128) DEFAULT NULL,
+			`ip_user` varchar(45) DEFAULT NULL,
+			`category` int DEFAULT NULL,
+			`object` varchar(64) DEFAULT NULL,
+			`message` text,
+			`read_mail` int DEFAULT '0',
+			`send_reply` int NOT NULL DEFAULT '0',
+			`date_mail` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
+	break;
+
+	case 'contact_cat':
+		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
+		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
+			`id` int NOT NULL AUTO_INCREMENT,
+			`content` varchar(128) DEFAULT NULL,
+			PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 	break;
 
 	case 'downloads':
@@ -430,14 +458,14 @@ switch ($_POST['table']) {
 		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
 			`id` int NOT NULL AUTO_INCREMENT,
 			`title` tinytext,
-			`author` varchar(32) NOT NULL,
+			`author` varchar(45) DEFAULT NULL,
 			`date_insert` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			`message` text,
 			`status` tinytext,
 			`IP` tinytext,
 			`machine` varchar(64) DEFAULT NULL,
 			`navigateur` varchar(128) DEFAULT NULL,
-			`referer` tinytext,
+			`referer` tinytext DEFAULT NULL,
 			PRIMARY KEY (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 	break;
@@ -644,6 +672,19 @@ switch ($_POST['table']) {
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 	break;
 
+	case 'shoutbox':
+		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
+		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
+			`id` int NOT NULL AUTO_INCREMENT,
+			`hash_key` varchar(32) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+			`msg` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci,
+			`date_msg` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			`file` text,
+			`image` text,
+			PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
+	break;
+
 	case 'stats':
 		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
 		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
@@ -677,7 +718,8 @@ switch ($_POST['table']) {
 			(21, 0, 'shoutbox'),
 			(22, 0, 'survey'),
 			(23, 0, 'teams'),
-			(24, 0, 'user');";
+			(24, 0, 'user');
+			(25, 0, 'contact')";
 	break;
 
 	case 'users':
