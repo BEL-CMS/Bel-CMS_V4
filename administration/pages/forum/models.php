@@ -67,22 +67,104 @@ final class ModelsForum
         $return = $sql->data;
         return $return;
     }
-    public function AddCatMain ($data) : array
+    public function AddCatMain ($data) : bool
     {
-        $sql =new BDD;
+        $sql = new BDD;
         $sql->table('TABLE_FORUM');
         $sql->insert($data);
         if ($sql->rowCount == true) {
-            $array = array(
-                'type' => 'success',
-                'text' => constant('SEND_SUCCESS')
-            );
+            $return = true;
         } else {
-            $array = array(
-                'type' => 'warning',
-                'text' => constant('EDIT_ERROR')
-            );
+            $return = false;
         }
-        return $array;
+        return $return;
+    }
+
+    public function sendEditMain ($id, $data): bool
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_FORUM');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->update($data);
+        if ($sql->rowCount == true) {
+            $return = true;
+        } else {
+            $return = false;
+        }
+        return $return;
+    }
+
+    public function DeltMainCat ($id):bool
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_FORUM');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->delete();
+        if ($sql->rowCount == true) {
+            $return = true;
+        } else {
+            $return = false;
+        }
+        return $return;
+    }
+
+    public function sendSecondCat ($data): bool
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_FORUM_NAME');
+        $sql->insert($data);
+        if ($sql->rowCount == true) {
+            $return = true;
+        } else {
+            $return = false;
+        }
+        return $return;
+    }
+
+    public function getNameForumID ($id)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_FORUM');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->queryOne();
+        $return = $sql->data;
+        return $return;
+    }
+
+    public function getSecCat ($id)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_FORUM_NAME');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->queryOne();
+        $return = $sql->data;
+        return $return;
+    }
+
+    public function sendEditSecondCat($id, $data) : bool {
+        $sql = new BDD;
+        $sql->table('TABLE_FORUM_NAME');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->update($data);
+        if ($sql->rowCount == true) {
+            $return = true;
+        } else {
+            $return = false;
+        }
+        return $return;
+    }
+
+    public function DeltSecondMainCat ($id): bool
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_FORUM_NAME');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->delete();
+        if ($sql->rowCount == true) {
+            $return = true;
+        } else {
+            $return = false;
+        }
+        return $return;
     }
 }
