@@ -149,6 +149,7 @@ switch ($_POST['table']) {
 			`visits` int NOT NULL DEFAULT '0',
 			`active` tinyint(1) NOT NULL DEFAULT '1',
 			`description` text COLLATE utf8mb3_unicode_ci,
+			`key_seo` tinytext,
 			`infos_sup` text COLLATE utf8mb3_unicode_ci,
 			`keywords` varchar(64) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
 			`access_groups` text COLLATE utf8mb3_unicode_ci,
@@ -295,7 +296,7 @@ switch ($_POST['table']) {
 		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
 			`id` int NOT NULL AUTO_INCREMENT,
 			`id_forum` int NOT NULL,
-			`id_supp` int DEFAULT NULL,
+			`id_supp` varchar(8) DEFAULT NULL,
 			`title` varchar(128) NOT NULL,
 			`subtitle` varchar(128) DEFAULT NULL,
 			`orderby` int DEFAULT NULL,

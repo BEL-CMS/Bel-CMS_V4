@@ -107,6 +107,7 @@ if (is_file('assets/templates/default/config/config.tpl.php')) {
                                         ?>
                                         </ul>
                                     </li>
+                                    <li><a href="index.php?admin" title="Administration">Administration</a></li>
                                 </ul>
                             </nav>
                         </div>
