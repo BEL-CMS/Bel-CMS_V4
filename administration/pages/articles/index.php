@@ -47,7 +47,7 @@ endif;
                                     </div>
                                     <div class="dropdown">
                                         <a aria-label="anchor" href="javascript:void(0);" class="btn btn-icon btn-sm btn-outline-light" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="fe fe-more-vertical align-middle"></i>
+                                            <i class="bi bi-bar-chart-steps"></i>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu-end">
                                             <li><a href="articles/view/<?= $v->id_articles; ?>?admin&option=pages" class="dropdown-item" href="javascript:void(0);"><i class="ri-eye-line me-1 align-middle d-inline-block"></i>Voir</a></li>
@@ -63,15 +63,6 @@ endif;
                                         <div class="fs-11"><i class="ri-progress-5-line me-1 align-middle d-inline-block op-7"></i>Nb° pages: <span class="text-warning"><?= $v->countpage; ?></span></div>
                                     </div>
                                     <div class="kanban-task-description op-8 mb-1" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;max-width: 550px;n"><?= $description; ?></div>
-                                </div>
-                            </div>
-                            <div class="p-3 border-top border-block-start-dashed">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div class="avatar-list-stacked">
-                                        <span class="avatar avatar-sm avatar-rounded">
-                                            <img src="<?= $avatar; ?>" alt="<?= $username; ?>">
-                                        </span>
-                                    </div>
                                 </div>
                             </div>
                         </div>

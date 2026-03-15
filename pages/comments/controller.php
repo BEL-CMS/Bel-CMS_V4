@@ -11,6 +11,7 @@
 
 namespace Belcms\Pages\Controller;
 
+use BelCMS\Core\Notification;
 use BelCMS\Core\Pages;
 
 if (!defined('CHECK_INDEX')):
@@ -24,28 +25,26 @@ class Comments extends Pages
 
 	public function send ()
 	{
+		$referer = (!empty($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : 'news';
 		if (isset($_SESSION['USER']->user->hash_key) and strlen($_SESSION['USER']->user->hash_key) == 32) {
 			if (empty($_POST['text'])) {
-				$this->error = true;
-				$this->errorInfos = array('error', constant('COMMENT_EMPTY'), 'Commentaires', false);
+				Notification::error(constant('COMMENT_EMPTY'), 'Commentaires');
+				$this->redirect($referer, 3);
 				return;
 			}
 			if (empty($_POST['url'])) {
-				$this->error = true;
-				$this->errorInfos = array('error', constant('URL_EMPTY'), 'Commentaires', false);
+				Notification::error(constant('URL_EMPTY'), 'Commentaires');
+				$this->redirect($referer, 3);
 				return;
 			}
 			$insert = $this->models->insertComment($this->data);
 			if ($insert === false) {
-				$this->error = true;
-				$this->errorInfos = array($insert['type'], $insert['text'], 'Commentaires', false);
+				Notification::warning($insert['text'], 'Commentaires' );
 			} else {
-				$this->error = true;
-				$this->errorInfos = array($insert['type'], $insert['text'], 'Commentaires', false);
+				Notification::success($insert['text'], 'Commentaires');
 			}
+			$this->redirect($referer, 3);
 		}
-
 		$referer = (!empty($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : 'news';
-		$this->redirect($referer, 3);
 	}
 }

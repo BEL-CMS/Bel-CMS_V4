@@ -189,6 +189,7 @@ class Forum extends AdminPages
         $data['subtitle'] = Common::VarSecure($_POST['subtitle'], null);
         $data['orderby']  = (int) $_POST['orderby'];
         $data['icon']     = Common::VarSecure($_POST['icon'], null);
+        $data['id_supp']  = Common::randomString(8);
 
         $return = $this->models->sendSecondCat ($data);
 

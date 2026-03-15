@@ -228,6 +228,8 @@ class Contact extends AdminPages
             //Common::SendMail();
             self::templateMail($setFrom, $userMail, $subject, $tpl);
             $this->models->mailSend($_POST['id']);
+            Notification::error(text: constant('ID_ERROR'), title: constant('CONTACT'));
+            $this->redirect('contact?admin&option=pages', 3);
         } else {
             #######################################################
             $msg = $_SESSION['USER']->user->username . ' à tenter de changer l\'ID : ' . $this->data[2];
@@ -238,7 +240,7 @@ class Contact extends AdminPages
             $interaction->author($_SESSION['USER']->user->hash_key);
             $interaction->setAdmin();
             #######################################################
-            Notification::error(text: constant('ID_ERROR'), title: constant('CONTACT'));
+            Notification::error(text: constant('CAT_SEND'), title: constant('CONTACT'));
             $this->redirect('contact?admin&option=pages', 3);
         }
     }

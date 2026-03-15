@@ -6,7 +6,7 @@
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
- * @copyright 2015-2025 Bel-CMS
+ * @copyright 2015-2026 Bel-CMS
  * @author as Stive - stive@determe.be
  */
 
@@ -21,7 +21,7 @@ if (!defined('CHECK_INDEX')):
     exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
 endif;
 
-if (file_exists(constant('ROOT') . $data->screen)) {
+if (is_readable(constant('ROOT'). DS. $data->screen)) {
     $img = $data->screen;
     $img = '<img src="' . $img . '" class="card-img-top" alt="image ' . $data->name . '">';
 } else {

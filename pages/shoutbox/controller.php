@@ -41,6 +41,16 @@ class Shoutbox extends Pages
             return (array('msg' => 'Aucun texte écrit...'));
         }
 
+		if (isset($_FILES['file']) and !empty($_FILES['file'])) {
+            $return = Common::Upload ('file', 'uploads/shoutbox', $ext = 'all', $random = true);
+            $data['file'] = '/uploads/shoutbox'.$return;
+		}
+
+		if (isset($_FILES['img']) and !empty($_FILES['img'])) {
+            $return = Common::Upload ('img', 'uploads/shoutbox', $ext = 'img', $random = false);
+            $data['image'] = '/uploads'/'shoutbox'.$return;
+		}
+
         if (!empty($d['msg']) and $d['user'] !== false) {
             $data['hash_key'] = $d['user'];
             $data['msg']      = $d['msg'];

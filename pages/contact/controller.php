@@ -48,10 +48,14 @@ class Contact extends Pages
     {
         $data['user']      = Common::VarSecure($_POST['user'], null);
         $data['mail_user'] = CoreSecure::isMail($_POST['mail_user']);
-        $data['category']  = CoreSecure::isBool($_POST['category']);
         $data['object']    = Common::VarSecure($_POST['object'], null);
         $data['ip_user']   = Common::GetIp();
         $data['message']   = Common::VarSecure($_POST['message'], 'html');
+        if (ctype_digit($_POST['category'])) {
+            $data['category'] = $_POST['category'];
+        } else {
+            $data['category'] = null;
+        }
 
         if (empty($data['mail_user'])) {
             Notification::error(text: constant('ERROR_EMAIL_CONTACT'), title: constant('CONTACT'));
@@ -67,7 +71,6 @@ class Contact extends Pages
             }
         }
 
-        $referer = (!empty($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : 'contact';
-        $this->redirect($referer, 3);
+        $this->redirect('/index.php', 3);
     }
 }

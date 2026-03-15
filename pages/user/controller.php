@@ -5,7 +5,7 @@
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
- * @copyright 2015-2025 Bel-CMS
+ * @copyright 2015-2026 Bel-CMS
  * @author as Stive - stive@determe.be
 */
 
@@ -316,8 +316,7 @@ class User extends Pages
                 </html>';
         require_once ROOT . DS . 'core' . DS . 'class.mail.php';
         $email = new eMail;
-        $email->setFrom($_SESSION['CONFIG']['CMS_NAME']);
-        $email->addAdress($mail, $mail);
+        $email->addAdress($mail);
         $email->subject(constant('GET_PASSWORD_TOKEN'));
         $email->body($body);
         $email->submit();
@@ -325,26 +324,22 @@ class User extends Pages
 
     public function sendToken ()
     {
-        if (CoreUser::isLogged() == false) {
+        if (CoreUser::isLogged() === false) {
             if (Secure::isMail($_GET['data'])) {
                 $generator = self::generatePass();
                 $mailSecureBDD = $this->models->mailSecureBDD ($_GET['data']);
                 if ($mailSecureBDD === true) {
                     $getUser = $this->models->getUserInfo ($_GET['data']);
                     $this->models->updateLostPassword ($getUser->mail, $generator);
-                    
                     require_once ROOT.DS.'core'.DS.'class.mail.php';
                     $mail = new eMail;
-                    $mail->setFrom($_SESSION['CONFIG']['CMS_NAME']);
-                    $mail->addAdress($getUser->mail, $getUser->username);
+                    $mail->addAdress($_GET['data']);
                     $mail->subject(constant('ACCOUNT_REGISTRATION'));
                     $mail->body(self::sendHtmlBody($getUser->username, $generator));
                     $mail->submit();
-                    
-                    echo 'true';
                 } else {
                     echo "Ce mail ne figure pas dans notre base de données.";
-                }   
+                }
             }
         }
     }

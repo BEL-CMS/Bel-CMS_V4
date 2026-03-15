@@ -3760,9 +3760,11 @@ $.magnificPopup.registerModule(RETINA_NS, {
 		if(text) {
 			// Get num of word
 			var text_array = text.split(' ');
+			/*
 			if (text_array.length > num) {
 				return text_array.slice(0, num).join(' ') + ' ...';
 			}
+			*/
 			return text;
 		}
 		return '';

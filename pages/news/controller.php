@@ -5,7 +5,7 @@
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
- * @copyright 2015-2025 Bel-CMS
+ * @copyright 2015-2026 Bel-CMS
  * @author as Stive - stive@determe.be
 */
 
@@ -27,7 +27,7 @@ class News extends Pages
     function index ()
     {
 		$config = Config::GetConfigPage('news');
-		$data['pagination'] = $this->pagination($config->config['MAX_NEWS'], 'news', constant('TABLE_ARTICLES'));
+		$data['pagination'] = $this->pagination($config->config['MAX_NEWS'], 'news', constant('TABLE_NEWS'));
         $data['news'] = $this->models->getNews();
         $this->set($data);
         $this->render('index');

@@ -8,10 +8,10 @@
     ###################################################################
     ##                                                               ##
     ##                           Bel-CMS                             ##
-    ##                      Bel-CMS Version 4.0.0                    ##
+    ##                      Bel-CMS Version 4.0.1                    ##
     ##                  Systeme de gestion de contenue               ##
     ##                            PHP 8.4                            ##
-    ##                  Copyright 2014-2025 by Bel-CMS               ##
+    ##                  Copyright 2014-2026 by Bel-CMS               ##
     ##                 Développement par : Determe Stive             ##
     ##                                                               ##
     ###################################################################

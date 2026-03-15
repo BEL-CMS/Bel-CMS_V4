@@ -1,0 +1,92 @@
+input {
+    all: unset;
+}
+#belcms_section_inbox {
+    background: #fff;
+    display: flex;
+    height: 100%;
+    max-height: 100%;
+    overflow: hidden;
+    border: 1px solid #2125291a;
+    padding: 15px 0;
+}
+#belcms_inbox_sidebar {
+    flex-shrink: 0;
+    padding: 1rem;
+    width: calc(15rem + 1px);
+    border-right: 1px solid #2125291a;
+}
+    #belcms_inbox_sidebar > button {
+        width: 100%;
+        border: 1px solid #000;
+    }
+    #belcms_inbox_sidebar > button:hover {
+        border: 1px solid #2125291a;
+    }
+    #belcms_inbox_sidebar > a {
+        display: block;
+        width: 100%;
+        background: #f0f2f5;
+        margin-top: 10px;
+        line-height: 38px;
+        text-align: left;
+        color: #6c757d;
+        padding-left: 10px;
+        border: 1px solid rgba(0, 0, 0, 0);
+    }
+    #belcms_inbox_sidebar > a:hover {
+        border: 1px solid rgba(0, 0, 0, .15);
+    }
+#belcms_inbox_body {
+    display: block;
+    width: calc(100% - 15rem);
+    overflow: hidden;
+    padding: 1rem;
+}
+    #belcms_inbox_items {
+
+    }
+        #belcms_inbox_body > table {
+            border: none !important;
+            margin: 0;
+        }
+        .belcms_inbox_items_msg {
+            border-bottom: 1px solid rgba(0, 0, 0, .15) !important;
+            padding: 0 !important;
+            padding: 5px 10px !important;
+            line-height: 36px;
+            transition: all .500ms linear;
+        }
+        .belcms_inbox_items_date {
+            display: block;
+            float: right;
+            line-height: 30px;
+        }
+        table#belcms_inbox_items tbody tr td.belcms_inbox_items_msg.bg-secondary.bg-gradient label.form-check-label {
+            margin: 0 !important;
+        }
+        #belcms_inbox_items > table td label span {
+            display: inline-block;
+        }
+        .belcms_inbox_items_msg:hover {
+            background-color:  #f0f2f5 !important;
+            transition: all .500ms linear;
+        }
+        table#belcms_inbox_items tbody tr td span.badge {
+            position: relative !important;
+            top: 0 !important;
+            margin-right: 5px;
+            right: 0 !important;
+            min-width: 40px;
+        }
+        #recipient-name.form-control {
+            padding: 0 !important;
+        }
+        table#belcms_inbox_items tbody tr td a {
+            margin-left: 5px;
+        }
+    .belcms_inbox_avatar {
+        width: 30px !important;
+        height: 30px !important;
+        border-radius: 50% !important;
+    }

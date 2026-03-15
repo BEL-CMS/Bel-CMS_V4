@@ -71,7 +71,6 @@ final class Forum
     {
         $sql = new BDD;
         $sql->table('TABLE_FORUM');
-        $sql->orderby(array(array('name' => 'orderby', 'type' => 'ASC')));
         $sql->queryAll();
         $return = $sql->data;
         return $return;
@@ -82,7 +81,6 @@ final class Forum
         $sql = new BDD;
         $sql->table('TABLE_FORUM_NAME');
         $sql->where(array('name' => 'id_forum', 'value' => $id));
-        $sql->orderby(array(array('name' => 'orderby', 'type' => 'ASC')));
         $sql->queryAll();
         $return = $sql->data;
         return $return;
@@ -92,7 +90,6 @@ final class Forum
     {
         $sql = new BDD;
         $sql->table('TABLE_FORUM_NAME');
-        $sql->orderby(array(array('name' => 'orderby', 'type' => 'ASC')));
         $sql->queryAll();
         $return = $sql->data;
         return $return;

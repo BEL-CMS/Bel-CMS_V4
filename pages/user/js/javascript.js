@@ -61,7 +61,7 @@ function generer_password(champ_cible) {
         });
     });
 
-    $(document).on('click','#requestTokenBt',function(){
+    $(document).on('click','#requestTokenBt',function() {
         var mail = $("#email").val();
         if (!mail) {
             alert("Veuillez entrer votre adresse e-mail avant de demander le token.");

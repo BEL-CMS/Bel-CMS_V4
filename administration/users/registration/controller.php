@@ -29,12 +29,21 @@ class Registration extends AdminPages
 
     public function index ()
     {
+        $menu[] = array('title' => 'Accueil', 'href' => 'registration?admin&option=users', 'ico'  => 'fa-solid fa-igloo');
+        $menu[] = array('title' => 'Créer un utilisateur', 'href' => 'registration/add?admin&option=users', 'ico'  => 'fa-solid fa-pen-to-square');
+
         $d['users'] = $this->models->getUsers();
         foreach ($d['users'] as $key => $value) {
             $d['users'][$key]->profils = User::getInfosUserAll($value->hash_key);
         }
         $this->set($d);
-        $this->render('index');
+        $this->render('index', $menu);
+    }
+
+    public function add ()
+    {
+        $menu[] = array('title' => 'Accueil', 'href' => 'registration?admin&option=users', 'ico'  => 'fa-solid fa-igloo');
+        $this->render('add', $menu);
     }
 
     public function edit ()

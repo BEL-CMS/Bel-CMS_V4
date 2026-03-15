@@ -1,5 +1,20 @@
+<?php
+
+/**
+ * Bel-CMS [Content management system]
+ * @version 4.0.0 [PHP8.4]
+ * @link https://bel-cms.dev
+ * @link https://determe.be
+ * @license MIT License
+ * @copyright 2015-2026 Bel-CMS
+ * @author as Stive - stive@determe.be
+ */
+
+use BelCMS\Requires\Common;
+
+?>
 <section id="belcms_downloads">
-    <table class="table table-striped table-hover">
+    <table class="table table-striped table-hover" id="DataTableBelCMS">
         <thead>
             <tr>
                 <th scope="col">
@@ -17,15 +32,14 @@
                 <th scope="col">
                     Télécharger
                 </th>
+                <th scope="col">
+                </th>
             </tr>
         </thead>
         <tbody>
             <?php
-
-            use BelCMS\Requires\Common;
-
             foreach ($data as $data):
-                if (is_file(ROOT.$data->screen)) {
+                if (is_readable($data->screen)) {
                     $img = $data->screen;
                     $img = '<img src="' . $img . '" class="card-img-top" alt="image ' . $data->name . '">';
                 } else {
@@ -48,3 +62,6 @@
         </tbody>
     </table>
 </section>
+<script src="/assets/plugins/jQuery/jquery-3.7.1.min.js"></script>
+<script src="/assets/plugins/DataTables-2.3.4/datatables.min.js"></script>
+<script src="/assets/plugins/DataTables-2.3.4/datatable.fr.js"></script>
