@@ -35,17 +35,20 @@ class Widgets
 		// Démarre la mémoire tampon
 		ob_start();
 		$this->content = self::getContent();
-		$custom = constant('DIR_TPL').$_SESSION['CONFIG']['CMS_TEMPLATE'].DS.'widgets'.DS.$this->pos.'.php';
-		$dir    = 'assets'.DS.'widgets'.DS.$this->pos.'.php';
+        if (empty($_SESSION['CONFIG']['CMS_TEMPLATE'])) {
+			$custom = 'assets'.DS.'templates'.DS.'default'.DS.'widgets'.DS.$this->pos.'.php';
+        } else {
+            $custom = constant('DIR_TPL').$_SESSION['CONFIG']['CMS_TEMPLATE'].DS.'widgets'.DS.$this->pos.'.php';
+        }
+		$dir = 'assets'.DS.'templates'.DS.'widgets'.DS.$this->pos.'.php';
 		// Si le fichier existe, on inclut le fichier custom depuis le template (/templates/NomDuTemplate/widgets/)
-		if (is_file($custom)) {
+		if (file_exists($custom)) {
 			include $custom;
 		// Si pas, on essaye d'inclure le fichier par défaut (il doit exister normalement !)
 		} else if (is_file($dir)) {
 			include $dir;
 		// Vraiment, au cas où le fichier a été effacé, j'inclus une erreur
 		} else {
-            debug($dir);
             echo 'error';
         }
 		// Met en le tampon dans une variable ($this->page);

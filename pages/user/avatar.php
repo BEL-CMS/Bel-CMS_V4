@@ -2,7 +2,7 @@
 
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.4]
+ * @version 4.0.1 [PHP8.4]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -17,6 +17,9 @@ $list = array();
 $path = "uploads/users/" . $_SESSION['USER']->user->hash_key . "/avatar/";
 $list = Common::ScanFiles($path);
 $i    = 0;
+foreach ($avatar as $key => $value) {
+    $defaultAvatar[] = 'assets'.DS.'img'.DS.'avatar'.DS.$value;
+}
 ?>
 <div class="row">
     <div class="col-sm-4">
@@ -59,7 +62,6 @@ $i    = 0;
                         ?>
                                 <form>
                                     <tr>
-                                        <td><?= $i; ?></td>
                                         <td><?= $extension; ?></td>
                                         <td>
                                             <picture>
@@ -79,7 +81,23 @@ $i    = 0;
                                         </td>
                                         <td><a class="btn btn-success active_img" data-file="<?= $img; ?>"><i class="fa-solid fa-display"></i></a></td>
                                         <td><a class="btn btn-danger delete_img" data-file="<?= $img; ?>"><i class="fa-solid fa-trash-can"></i></a></td>
+                                        
                                     </tr>
+                                    <?php 
+                                    foreach ($defaultAvatar as $key => $value):
+                                    ?>
+                                    <tr>
+                                        <td><?= $extension; ?></td>
+                                        <td>
+                                            <picture>
+                                                <img src="<?= $value; ?>" class="glightbox">
+                                            </picture>
+                                        </td>
+                                        <td><a class="btn btn-success active_img" data-file="<?= $value; ?>"><i class="fa-solid fa-display"></i></a></td>
+                                    </tr>
+                                    <?php
+                                    endforeach;
+                                    ?>
                                 </form>
                         <?php
                             endif;

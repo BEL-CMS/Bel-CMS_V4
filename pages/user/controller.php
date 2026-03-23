@@ -517,6 +517,8 @@ class User extends Pages
     #########################################
     public function avatar ()
     {
+        $d['avatar'] = Common::ScanFiles('assets/img/avatar',true,true,true);
+        $this->set($d);
         $this->render('avatar');
     }
     public function deleteAvatar()

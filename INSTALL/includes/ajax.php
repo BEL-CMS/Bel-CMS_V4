@@ -50,6 +50,7 @@
 		'news_cat',
 		'shoutbox',
 		'stats',
+		'templates',
 		'users',
 		'users_gaming',
 		'users_groups',

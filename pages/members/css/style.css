@@ -1,18 +1,20 @@
 .belcms_main_members {
-    -webkit-box-shadow: 0px 0px 5px 0px var(--bs-gray-200);
-    -moz-box-shadow: 0px 0px 5px 0px var(--bs-gray-200);
-    box-shadow: 0px 0px 5px 0px var(--bs-gray-200);
-    padding:40px;
     text-align: center;
-    background-color: var(--white-75-color);
     border-radius: 8px;
     width: 100%;
     height: 100%;
+}
+.belcms_main_background_img {
+    height: 98px;
+    width: 100%;
+    border-top-right-radius: 12px;
+    border-top-left-radius: 12px;
 }
 .belcms_main_members picture {
     display: block;
     margin: auto;
     text-align: center;
+    margin-top: -40px;
 }
 .belcms_main_members picture img {
     display: block;
@@ -21,13 +23,28 @@
     margin: auto;
     cursor: pointer;
 }
+.belcms_main_listing {
+    padding: 20px;
+    text-align: left;
+    font-weight: bold;
+}
+.belcms_main_listing li:last-child {
+    display: block;
+    text-align: center;
+    margin: 3px auto;
+}
+.belcms_main_listing span {
+  display: block;
+  float: right;
+  font-weight: normal;
+}
 .belcms_main_members > h2 {
     display: block;
     text-align: center;
     font-size: 1.5rem !important;
     margin-top: 10px !important;
     margin-bottom: 10px !important;
-    color: var(--black-50-color);
+    font-weight: bold;
 }
 .belcms_main_members > hr {
     margin: 1rem 0;

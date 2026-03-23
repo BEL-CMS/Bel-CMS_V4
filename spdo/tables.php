@@ -62,6 +62,7 @@ $tables = array(
     'TALBE_NEWSLETTER_SEND'     => $DB_PREFIX.'newsletter_send',
     'TALBE_NEWSLETTER_TPL'      => $DB_PREFIX.'newsletter_tpl',
     'TABLE_STATS'               => $DB_PREFIX.'stats',
+    'TABLE_TPL'                 => $DB_PREFIX.'templates',
     'TABLE_SURVEY'              => $DB_PREFIX.'survey',
     'TABLE_SURVEY_QUEST'        => $DB_PREFIX.'survey_quest',
     'TABLE_SURVEY_VOTE'         => $DB_PREFIX.'survey_vote',

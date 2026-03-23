@@ -723,6 +723,23 @@ switch ($_POST['table']) {
 			(25, 0, 'contact')";
 	break;
 
+	case 'templates':
+		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
+		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
+			`id` int NOT NULL AUTO_INCREMENT,
+			`name` varchar(64) DEFAULT NULL,
+			`value` text,
+			PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
+
+		$insert = "INSERT INTO `".$_SESSION['prefix'].$table."`(`id`, `nb_view`, `page`) VALUES
+			(1, 'color_1', '#f8f8f8'),
+			(2, 'background', '#FFF'),
+			(3, 'border', '0.175'),
+			(4, 'text', '#252529'),
+			(5, 'links', '#252529')";
+	break;
+
 	case 'users':
 		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
 		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (

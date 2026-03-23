@@ -297,6 +297,7 @@ class BelCMS
 		'newsletter_tpl',
 		'news_cat',
 		'stats',
+		'templates',
 		'users',
 		'users_gaming',
 		'users_groups',

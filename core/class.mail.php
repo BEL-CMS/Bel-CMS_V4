@@ -17,9 +17,7 @@ require ROOT.DS.'core'.DS.'PHPMailer'.DS.'PHPMailer.php';
 require ROOT.DS.'core'.DS.'PHPMailer'.DS.'SMTP.php';
 
 use BelCMS\PDO\BDD;
-use BelCMS\Requires\Common;
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 class eMail

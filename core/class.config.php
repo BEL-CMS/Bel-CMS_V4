@@ -30,12 +30,24 @@ final class Config
 				define($name, $value);
 			}
 		}
+		$_SESSION['TEMPLATE'] = self::getSqlTpl ();
     }
 
     private function getSqlConfig () : array
     {
         $sql = new BDD;
         $sql->table('TABLE_CONFIG');
+        $sql->queryAll();
+        foreach ($sql->data as $key => $value) {
+            $return[$value->name] =  $value->value;
+        }
+        return $return;
+    }
+
+    private function getSqlTpl () : array
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_TPL');
         $sql->queryAll();
         foreach ($sql->data as $key => $value) {
             $return[$value->name] =  $value->value;

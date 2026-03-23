@@ -117,6 +117,53 @@ class Templates
             return true;
         }
     }
+	private function getCssWidgets ()
+	{
+		$return = array();
+		$a      = array();
+		$b      = array();
+
+		$sql = new BDD;
+		$sql->table('TABLE_WIDGETS');
+		$sql->where(array(
+			'name'  => 'active',
+			'value' => 1
+		));
+		$sql->orderby(array('name' => 'orderby', 'value' => 'ASC'));
+		$sql->queryAll();
+		if (!empty($sql->data)) {
+			foreach ($sql->data as $k => $v) {
+				if (empty($v->page)) {
+					$b[$k] = $v;
+				} else {
+					$a = explode('|', $v->pages);
+					if (empty($v->page)) {
+						if (!in_array($this->configTPL->link, $a)) {
+							$b[$k] = $v;
+						}	
+					}
+				}
+			}
+			foreach ($b as $k => $v) {
+				if (isset($_SESSION['USER'])) {
+					if ($v->groups_access == 0 or in_array(1, $_SESSION['USER']->groups->all_groups)) {
+						$return[$k] = $v;
+					} else {
+						$a = explode('|', $v->groups_access);
+						if (in_array($_SESSION['USER']->groups->all_groups, $a)) {
+							$return[$k] = $v;
+						}
+					}
+				} else {
+					$groups = explode('|', $v->groups_access);
+					if (in_array(0, $groups)) {
+						$return[$k] = $v;
+					}
+				}
+			}
+		}
+		return $return;
+	}
     #########################################
     # Gestions des styles (css)
     #########################################
@@ -140,7 +187,14 @@ class Templates
         if ($link == 'articles') {
             $files[] = 'assets/plugins/prism/prism.css';
         }
-
+		/* widgets css */
+		foreach (self::getCssWidgets() as $v) {
+			/* widgets css default */
+			$dirWidgets = constant('DIR_WIDGETS').strtolower($v->name).DS.'css'.DS.'styles.css';
+			if (is_file($dirWidgets)) {
+				$files[] = 'widgets/'.strtolower($v->name).'/css/styles.css';
+			}
+		}
         /* pages css */
         $dirPage = constant('DIR_PAGES').strtolower($var).DS.'css'.DS.'style.css';
 
@@ -177,7 +231,15 @@ class Templates
         $files[] = 'assets/plugins/tooltip/popper.min.js';
         $files[] = 'assets/plugins/tooltip/tippy-bundle.umd.min.js';
         $files[] = 'assets/plugins/tooltip/tooltip.js';
-     /* jQuery BEL-CMS */
+        /* jQuery Widgets */
+		foreach (self::getCssWidgets() as $v) {
+			/* widgets css default */
+			$dirWidgets = constant('DIR_WIDGETS').strtolower($v->name).DS.'js'.DS.'javascripts.js';
+			if (is_file($dirWidgets)) {
+				$files[] = 'widgets/'.strtolower($v->name).'/js/javascripts.js';
+			}
+		}
+        /* jQuery BEL-CMS */
         $files[] = 'assets/js/belcms.core.js';
         /* pages js */
 

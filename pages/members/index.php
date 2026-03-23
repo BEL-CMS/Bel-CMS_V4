@@ -16,7 +16,6 @@ endif;
 
 use BelCMS\Core\User;
 use BelCMS\Requires\Common;
-
 ?>
 <div class="container text-center">
     <div class="row">
@@ -29,14 +28,17 @@ use BelCMS\Requires\Common;
             $avatar    = $user->profils->avatar;
         ?>
             <div class="col-lg-6 col-sm-4 col-xsm-6">
-                <div class="belcms_main_members">
+                <div class="belcms_main_members" style="background-color: <?= $_SESSION['TEMPLATE']['background']; ?> !important;">
+                    <img class="belcms_main_background_img" src="assets/img/bg_cover.webp" alt="background_user_<?= $username; ?>">
                     <picture>
-                        <img class="glightbox" src="<?= $avatar; ?>" alt="Avatar de <?= $username; ?>">
+                        <img src="<?= $avatar; ?>" class="glightbox rounded-circle" alt="Avatar de <?= $username; ?>">
                     </picture>
-                    <h2 style="color: <?= $color; ?>"><?= $username; ?></h2>
-                    <span><small style="color:#FFF;">Enregistré le : <?= $datedeReg; ?></small></span>
-                    <hr>
-                    <a href="Members/detail/<?= $username; ?>" title="Membre <?= $username; ?>" class="bg-info text-dark">Visualiser la fiche publique</a>
+                    <h2 style="color: <?= $color; ?> !important;"><?= $username; ?></h2>
+                    <ul class="belcms_main_listing">
+                        <li>Enregistré le<span>12.06.2025</span></li>
+                        <li>Poste<span>256</span></li>
+                        <li><a href="" class="color: <?= $_SESSION['TEMPLATE']['links']; ?> !important;" title="Message a <?= $username; ?>">Message</a> - <a href="Members/detail/<?= $username; ?>" title="Profil de <?= $username; ?>">Profile</a></li>
+                    </ul>
                 </div>
             </div>
         <?php
