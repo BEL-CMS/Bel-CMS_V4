@@ -261,12 +261,12 @@ final class ModelsUser
 		$sql->queryOne();
 		$results = $sql->data;
 
-        $passwordDeCrypt =  new encrypt($results->password, constant('CMS_API_CLEF'));
+        $passwordDeCrypt =  new encrypt($results->password, constant('CMS_KEY_ADMIN'));
         $a = $passwordDeCrypt->decrypt();
 		$b = $data['password_old'];
 
 		if ($a == $b) {
-			$new = new encrypt($data['password_new'], constant('CMS_API_CLEF'));
+			$new = new encrypt($data['password_new'], constant('CMS_KEY_ADMIN'));
 			$new = $new->encrypt();
 			$insert['password'] = $new;
 			$sql = New BDD();
