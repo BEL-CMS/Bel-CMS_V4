@@ -69,6 +69,9 @@ final class BelCMS
             $newPage = new $require;
             if (method_exists($newPage, $view)) {
                 call_user_func_array(array($newPage,$view),Dispatcher::link());
+				if (isset($_GET['json'])) {
+                    die;
+				}
                 if (!empty($newPage->errorInfos) and is_array($newPage->errorInfos)) {
                     self::error($newPage->errorInfos[0], $newPage->errorInfos[1] , $newPage->errorInfos[2], $newPage->errorInfos[3]);
                 } else {

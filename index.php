@@ -5,7 +5,7 @@
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
- * @copyright 2015-2025 Bel-CMS
+ * @copyright 2015-2026 Bel-CMS
  * @author as Stive - stive@determe.be
 */
 
@@ -51,7 +51,7 @@ $_SESSION['CMS_DEBUG']      = true;                   #
 # Install                                             #
 #######################################################
 if (is_file(ROOT.DS.'INSTALL'.DS.'index.php')) {      #
-	header('Location: INSTALL/index.php');            #
+	header('Location: INSTALL/index.php');    #
 	die();                                            #
 }                                                     #
 #######################################################
@@ -83,7 +83,7 @@ if (Dispatcher::isManagement() === true) {
 		echo $belcms->page;
 	} else if (isset($_GET['json'])) {
 		header('Content-Type: application/json; charset=UTF-8');
-		echo json_encode($belcms->page);
+		echo $belcms->page;
 	} else if (isset($_GET['text'])) {
 		echo $belcms->page;
 	} else {
