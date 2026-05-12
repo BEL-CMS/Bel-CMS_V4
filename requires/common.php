@@ -5,7 +5,7 @@
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
- * @copyright 2015-2025 Bel-CMS
+ * @copyright 2015-2026 Bel-CMS
  * @author as Stive - stive@determe.be
 */
 
@@ -96,10 +96,12 @@ final class Common
             'Ò' => 'o', 'Ó' => 'o', 'Ô' => 'o', 'Ö' => 'o', 'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'ö' => 'o',
             'Ù' => 'u', 'Ú' => 'u', 'Û' => 'u', 'Ü' => 'u', 'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ü' => 'u', 'µ' => 'u',
             'Œ' => 'oe', 'œ' => 'oe',
-            '$' => 's', '&' => '_AND_', '?' => '%3F', ' ' => '_');
+            '$' => 's', '&' => '_AND_', '?' => '%3F', ' ' => '_', '"' => '-');
+
         $return = strtr($d, $chr);
         $return = preg_replace('#[^A-Za-z0-9]+#', '_', $return);
         $return = trim($return, '-');
+
         if ($c == 'upper') {
             $return = strtoupper($return);
         } else if ($c == 'lower'){
@@ -226,11 +228,12 @@ final class Common
     #########################################
     # Localisation géographique par IP
     #########################################
-    /*
+
     public static function GeoIP ($ip)
     {
         if (function_exists('\geoip_country_name_by_name')) {
             $country = \geoip_country_name_by_name($ip);
+            debug($country);
                 if ($country) {
                     $return = $country;
                 } else {
@@ -519,32 +522,83 @@ final class Common
     #########################################
     # Secure PHP - HTML Var
     #########################################
-    public static function VarSecure ($data = null, $authorised = 'html') {
-        $return = null;
-        $base_html = '<p><hr><em><big><a><b><u><s><i><div><img><pre><br><ul><li><ol><tr><td><th><table><tbody><thead><tfoot><colgroup><span><strong><blockquote><iframe><font><h1><h2><h3><h4><h5><h6><font><sup><sub><section><article><button><figure><form><input><video><code>';
-
-        if ($authorised == 'html') {
-            $authorised = $base_html;
-        } else if ($authorised == null) {
-            $authorised = '';
+    public static function VarSecure($data = null, $allowHtml = false)
+    {
+        if ($data === null) {
+            return null;
         }
 
-        if ($data != null) {
-            if (is_array($data)) {
-                foreach ($data as $k => $v) {
-                    $return[$k] = strip_tags($v, $authorised);
-                    $return[$k] = trim($return[$k]);
-                }
-            } else {
-                $return = $data;
-                $return = strip_tags($return);
-                $return = strip_tags($return, "<br/>");
-                $return = strip_tags($data, $authorised);
+        $allowedTags = '<p><br><b><strong><i><em><u><ul><ol><li><blockquote><code><pre>';
+
+        $clean = function ($value) use ($allowHtml, $allowedTags) {
+
+            if (!is_string($value)) {
+                return '';
             }
+
+            $value = trim($value);
+
+            // Force UTF-8 valide
+            $value = mb_convert_encoding($value, 'UTF-8', 'UTF-8');
+
+            // Supprime caractères invisibles
+            $value = preg_replace('/[\x00-\x1F\x7F]/u', '', $value);
+
+            if ($allowHtml) {
+
+                // Decode entités HTML
+                $value = html_entity_decode($value, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+                // Tags autorisés
+                $value = strip_tags($value, $allowedTags);
+
+                // Supprime attributs JS
+                $value = preg_replace(
+                    '/\son\w+\s*=\s*(".*?"|\'.*?\'|[^\s>]+)/iu',
+                    '',
+                    $value
+                );
+
+                // Supprime styles inline
+                $value = preg_replace(
+                    '/\sstyle\s*=\s*(".*?"|\'.*?\'|[^\s>]+)/iu',
+                    '',
+                    $value
+                );
+
+                // Protocoles dangereux
+                $value = preg_replace(
+                    '/(javascript|vbscript|data)\s*:/iu',
+                    '',
+                    $value
+                );
+
+            } else {
+
+                $value = htmlspecialchars(
+                    $value,
+                    ENT_QUOTES | ENT_HTML5,
+                    'UTF-8'
+                );
+            }
+
+            return $value;
+        };
+
+        if (is_array($data)) {
+
+            $return = [];
+
+            foreach ($data as $k => $v) {
+                $return[$k] = $clean($v);
+            }
+
+            return $return;
         }
 
-        return $return;
+        return $clean($data);
     }
+
     public static function removeBlank ($data = null)
     {
         $return = null;
@@ -657,7 +711,8 @@ final class Common
                 '.png', '.bmp', '.gif', '.jpg', '.ico', '.svg', '.tiff', '.webp', '.jpeg', '.doc', '.txt', '.pdf', '.rar',
                 '.zip', '.7zip', '.exe', '.tar', '.psd', '.jar','.avi', '.mpg', '.mpeg', '.av4', '.ac3', '.docx', '.doc', '.mp3',
                 '.mp4', '.svg', '.tif', '.tiff', '.txt', '.3gp', '.3g2', '.xml', '.xls', '.xlsx', '.ppt', '.pptx', '.pkg',
-                '.iso', '.torrent','.apk', '.webp','.jpe','.jpg','.jpeg','gif','png','.bmp','.ico','.svg','.svgz','.tif','.tiff','.ai','.drw','.pct','.psp','.xcf','.psd','.raw','.webp','.heic');
+                '.iso', '.torrent','.apk', '.webp','.jpe','.jpg','.jpeg','gif','png','.bmp','.ico','.svg','.svgz',
+                '.tif','.tiff','.ai','.drw','.pct','.psp','.xcf','.psd','.raw','.webp','.heic', '.nfo');
             }
             if ($ext == false) {
                 $extensions = array();
@@ -2117,5 +2172,62 @@ final class Common
         ];
     
         return $media_types[$extension] ?? 'application/octet-stream';
+    }
+}
+if (!function_exists('esc_html')) {
+    /**
+     * Escape HTML output
+     * @param string $string The string to escape
+     * @return string Escaped string
+     */
+    function esc_html($string) {
+        return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
+    }
+}
+
+if (!function_exists('esc_attr')) {
+    /**
+     * Escape HTML attribute
+     * @param string $string The string to escape
+     * @return string Escaped string
+     */
+    function esc_attr($string) {
+        return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
+    }
+}
+
+if (!function_exists('esc_url')) {
+    /**
+     * Escape URL
+     * @param string $url The URL to escape
+     * @return string Escaped URL
+     */
+    function esc_url($url) {
+        return htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
+    }
+}
+
+if (!function_exists('sanitize_filename')) {
+    /**
+     * Sanitize filename
+     * @param string $filename The filename to sanitize
+     * @return string Sanitized filename
+     */
+    function sanitize_filename($filename) {
+        return preg_replace('/[^a-zA-Z0-9._-]/', '', $filename);
+    }
+}
+
+if (!function_exists('sanitize_input')) {
+    /**
+     * Sanitize user input
+     * @param mixed $input The input to sanitize
+     * @return mixed Sanitized input
+     */
+    function sanitize_input($input) {
+        if (is_array($input)) {
+            return array_map('sanitize_input', $input);
+        }
+        return htmlspecialchars(strip_tags(trim($input)), ENT_QUOTES, 'UTF-8');
     }
 }

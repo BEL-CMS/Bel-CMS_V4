@@ -88,6 +88,21 @@ if (Dispatcher::isManagement() === true) {
 		echo $belcms->page;
 	} else {
 		header('Content-Type: text/html; charset=UTF-8');
+		header('X-Frame-Options: SAMEORIGIN');
+		header('X-Content-Type-Options: nosniff');
+		header('Referrer-Policy: strict-origin-when-cross-origin');
+		$csp = [
+			"default-src 'self'",
+			"img-src 'self' data: https:",
+			"script-src 'self' 'unsafe-inline' https:",
+			"style-src 'self' 'unsafe-inline' https:",
+			"font-src 'self' data: https:",
+			"connect-src 'self'",
+			"frame-ancestors 'self'",
+			"base-uri 'self'",
+			"form-action 'self'"
+		];
+		header('Content-Security-Policy: ' . implode('; ', $csp));
 		echo $belcms->templates;
 	}
 }
