@@ -5,7 +5,7 @@
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
- * @copyright 2015-2025 Bel-CMS
+ * @copyright 2015-2026 Bel-CMS
  * @author as Stive - stive@determe.be
 */
 
@@ -26,6 +26,7 @@ $files = array (
 	ROOT.DS.'core'.DS.'class.constant.php',
 	ROOT.DS.'spdo'.DS.'spdo.class.php',
 	ROOT.DS.'assets'.DS.'templates'.DS.'maintenance'.DS.'index.php',
+	ROOT.DS.'core'.DS.'class.uploads_files.php',
 	ROOT.DS.'core'.DS.'class.encrypt.php',
 	ROOT.DS.'core'.DS.'class.mail.php',
 	ROOT.DS.'core'.DS.'class.secure.php',
@@ -44,6 +45,7 @@ $files = array (
 	ROOT.DS.'core'.DS.'class.visitors.php',
 	ROOT.DS.'core'.DS.'class.pages.php',
 	ROOT.DS.'core'.DS.'class.notification.php',
+	ROOT.DS.'core'.DS.'class.widgets.php',
 	ROOT.DS.'core'.DS.'class.templates.php',
 	ROOT.DS.'core'.DS.'class.belcms.php',
 );
