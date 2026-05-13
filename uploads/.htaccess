@@ -1,0 +1,83 @@
+```apache
+# =========================
+# Bel-CMS Upload Security
+# =========================
+
+# Désactive listing dossiers
+Options -Indexes
+
+# Désactive exécution CGI
+Options -ExecCGI
+
+# Désactive moteur PHP
+php_flag engine off
+
+# =========================
+# Bloquer extensions PHP
+# =========================
+
+<FilesMatch "\.(php|php5|php7|php8|phtml|phar|inc|cgi|pl|py|sh|bash)$">
+    Require all denied
+</FilesMatch>
+
+# =========================
+# Supprime handlers PHP
+# =========================
+
+RemoveHandler .php
+RemoveHandler .php5
+RemoveHandler .php7
+RemoveHandler .php8
+RemoveHandler .phtml
+RemoveHandler .phar
+
+RemoveType .php
+RemoveType .php5
+RemoveType .php7
+RemoveType .php8
+RemoveType .phtml
+RemoveType .phar
+
+# =========================
+# Sécurité headers
+# =========================
+
+<IfModule mod_headers.c>
+
+    Header set X-Content-Type-Options "nosniff"
+
+    Header set X-Frame-Options "DENY"
+
+    Header set Referrer-Policy "strict-origin"
+
+</IfModule>
+
+# =========================
+# Bloquer fichiers sensibles
+# =========================
+
+<FilesMatch "(\.env|composer\.json|composer\.lock|package\.json|yarn\.lock|\.git)">
+    Require all denied
+</FilesMatch>
+
+# =========================
+# Empêche interprétation scripts
+# =========================
+
+AddType text/plain .php .php5 .php7 .php8 .phtml .phar .sh .cgi .pl .py
+
+# =========================
+# Cache fichiers statiques
+# =========================
+
+<IfModule mod_expires.c>
+
+    ExpiresActive On
+
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+    ExpiresByType application/zip "access plus 1 month"
+
+</IfModule>
+```
