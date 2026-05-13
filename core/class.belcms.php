@@ -43,54 +43,101 @@ final class BelCMS
     #########################################
     # inclus le contenu de la page
     #########################################
-    public function PageContent ()
-    {
-        ob_start();
-        $require = ucfirst($this->link);
-        $view    = Dispatcher::view();
-		$unavailable = new \Maintenance;
-		if ($unavailable->status() == 'close') {
-			if (User::isLogged()) {
-				if (in_array(1, $_SESSION['USER']->groups->all_groups)) {
-					Notification::alert($unavailable->description(), constant('WARNING'), false);
-				}
-			} else {
-				if (empty($_SESSION['CONFIG_CMS']['CMS_WEBSITE_NAME'])) {
-					$_SESSION['CONFIG_CMS']['CMS_WEBSITE_NAME'] = constant('NO_NAME');
-				}
-                require ROOT.DS.'assets'.DS.'templates'.DS.'maintenance'.DS.'tpl'.DS.'index.php';
-				die();
-			}
-		}
-        $dir = constant('DIR_PAGES').strtolower($this->link).DS.'controller.php';
-        if (file_exists($dir)) {
-            require_once $dir;
-            $require = "Belcms\Pages\Controller\\".$require;
-            $newPage = new $require;
-            if (method_exists($newPage, $view)) {
-                call_user_func_array(array($newPage,$view),Dispatcher::link());
-				if (isset($_GET['json'])) {
-                    die;
-				}
-                if (!empty($newPage->errorInfos) and is_array($newPage->errorInfos)) {
-                    self::error($newPage->errorInfos[0], $newPage->errorInfos[1] , $newPage->errorInfos[2], $newPage->errorInfos[3]);
-                } else {
-                    echo $newPage->page;
-                }
-            } else {
-                self::error('error', 'La page sollicitée ne peut pas être trouvée !', 'ERREUR 404', true);
-                die();
-            }
+public function PageContent()
+{
+    ob_start();
+
+    $this->link = preg_replace('/[^a-zA-Z0-9_-]/', '', $this->link);
+
+    $require = ucfirst($this->link);
+    $view    = Dispatcher::view();
+
+    $unavailable = new \Maintenance;
+
+    if ($unavailable->status() == 'close') {
+
+        if (User::isLogged() && in_array(1, $_SESSION['USER']->groups->all_groups)) {
+
+            Notification::alert(
+                $unavailable->description(),
+                constant('WARNING'),
+                false
+            );
+
         } else {
-           self::error404('ERREUR 404', 'La page que vous souhaitez consulter est introuvable.', true);
+
+            $_SESSION['CONFIG_CMS']['CMS_WEBSITE_NAME']
+                ??= constant('NO_NAME');
+
+            require ROOT.DS.'assets'.DS.'templates'.DS.'maintenance'.DS.'tpl'.DS.'index.php';
+
+            return ob_get_clean();
         }
-        $content = ob_get_contents();
-        echo $content;
-        if (ob_get_length() != 0) {
-            ob_end_clean();
-        }
-        return $content;
     }
+
+    $dir = constant('DIR_PAGES')
+        . strtolower($this->link)
+        . DS
+        . 'controller.php';
+
+    if (!file_exists($dir)) {
+
+        self::error404(
+            'ERREUR 404',
+            'La page que vous souhaitez consulter est introuvable.',
+            true
+        );
+
+        return ob_get_clean();
+    }
+
+    require_once $dir;
+
+    $require = "Belcms\\Pages\\Controller\\$require";
+
+    if (!class_exists($require)) {
+
+        self::error404(
+            'ERREUR 404',
+            'Controller introuvable.',
+            true
+        );
+
+        return ob_get_clean();
+    }
+
+    $newPage = new $require;
+
+    if (!method_exists($newPage, $view)) {
+
+        self::error(
+            'error',
+            'La page sollicitée ne peut pas être trouvée !',
+            'ERREUR 404',
+            true
+        );
+
+        return ob_get_clean();
+    }
+
+    call_user_func_array([$newPage, $view], Dispatcher::link());
+
+    if (!empty($newPage->errorInfos) && is_array($newPage->errorInfos)) {
+
+        self::error(
+            $newPage->errorInfos[0],
+            $newPage->errorInfos[1],
+            $newPage->errorInfos[2],
+            $newPage->errorInfos[3]
+        );
+
+    } else {
+
+        echo $newPage->page;
+    }
+
+    return ob_get_clean();
+}
 
  	##################################################
 	# Récupère la widgets mis dans la variable.
