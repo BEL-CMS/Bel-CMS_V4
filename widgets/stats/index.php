@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.4]
+ * @version 4.0.1 [PHP8.4]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -9,15 +9,18 @@
  * @author as Stive - stive@determe.be
  */
 
-use BelCMS\Core\Visitors;
 use BelCMS\Requires\Common;
 use BelCMS\Core\User;
+use BelCMS\Core\Visitors;
+
 
 if (!defined('CHECK_INDEX')):
     header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
     exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
 endif;
 $countPage = number_format($page, 0, ',', '.');
+$visitor = Visitors::dataVisitors();
+//debug($visitor);
 ?>
 <div id="bel_cms_widgets_connected" class="widget">
 	<p>Pages vues <b><i><?=$countPage;?></i></b>  depuis le <br><?=Common::TransformDate($_SESSION['CONFIG']['CMS_DATE_INSTALL'], 'FULL', 'MEDIUM');?></p>
@@ -32,52 +35,42 @@ $countPage = number_format($page, 0, ',', '.');
 	</ul>
 	<ul>
 		<li>
-			<span>Hier</span>
-			<span><strong><?=Visitors::getVisitorYesterday()->count?></strong></span>
+			<span>Cette année</span>
+			<span><strong><?= $visitor['visitorsYear']; ?></strong></span>
+		</li>
+		<li>
+			<span>Durant le mois en cours</span>
+			<span><strong><?= $visitor['visitorsMonth']; ?></strong></span>
 		</li>
 		<li>
 			<span>Aujourd'hui</span>
-			<span><strong><?=Visitors::getVisitorDay()->count?></strong></span>
+			<span><strong><?= $visitor['visitorsToday'];?></strong></span>
 		</li>
 		<li>
 			<span>Maintennant</span>
-			<span><strong><?=Visitors::getVisitorConnected()->count?></strong></span>
+			<span><strong><?= $visitor['visitors']; ?></strong></span>
 		</li>
 		<li>
-			<ul id="getVisitorConnected">
-				<?php
-				$i = 0;
-				$visitor = null;
-				foreach (Visitors::getVisitorConnected()->data as $k => $v):
-					if (User::ifUserExist($v->visitor_user)) {
-						if (User::getInfosUserAll($v->visitor_user)) {
-							$visitor = User::getInfosUserAll($v->visitor_user)->user->username;
-						}
-					} else {
-						if ($visitor != null) {
-							$visitor = strtolower($v->visitor_user);
-							$pos = strpos($visitor, 'bot') or Common::isBot($visitor) === false ? true : false; 
-							if ($pos !== false) {
-								$visitor = constant('VISITOR');
-							} else {
-								$visitor = constant('BOT');
-							}
-						} else {
-							$visitor = strtolower($v->visitor_user);
-						}
-					}
-					$page = defined(strtoupper($v->visitor_page)) ? constant(strtoupper($v->visitor_page)) : $v->visitor_page;
-					?>
-					<li>
-						<span><?= $visitor; ?></span>
-						<span><?= $page; ?></span>
-					</li>
-					<?php
-					if ($i++ == 5) {
-						break;
-					}
-				endforeach;
-				?>
+			<span>Les robots / bots</span>
+			<span><strong><?= $visitor['visitorsBots']; ?></strong></span>
+		</li>
+		<li><span style="display: block;width:100%;font-weight: bold;text-align:center;">Les membres</span></li>
+		<li>
+			<ul style="list-style: none;">
+			<?php
+			foreach ($visitor['users'] as $key => $value):
+				$flag = strtolower($value['country']);
+				$value['username'] = empty($value['username']) ? 'Bot' : htmlspecialchars($value['username']);
+				if ($value['username'] != 'bot') {
+			?>
+			<li class="belcms_flags">
+				<img src="assets/img/country/<?= $flag;?>.png" class="belcms-flag" alt="pays_<?= $value['country']; ?>"> <i><?= htmlspecialchars($value['username']); ?></i>
+				<span style="text-align: right;float:right;display:block"><?= $value['page']; ?></span>
+			</li>
+			<?php
+				}
+			endforeach;
+			?>
 			</ul>
 		</li>
 	</ul>

@@ -25,6 +25,11 @@ $tables = array(
     'TABLE_ARTICLES'            => $DB_PREFIX.'articles',
     'TABLE_ARTICLES_CONTENT'    => $DB_PREFIX.'articles_content',
     'TABLE_BAN'                 => $DB_PREFIX.'ban',
+    'BUY_PLANT_MAILS'           => $DB_PREFIX.'buy_mails',
+    'BUY_PLANT_NDD'             => $DB_PREFIX.'buy_ndd',
+    'BUY_PLANT'                 => $DB_PREFIX.'buy_plan',
+    'BUY_PLANT_USERS'           => $DB_PREFIX.'buy_users',
+    'BUY_PLANT_INFOS'           => $DB_PREFIX.'buy_plan_infos',
     'TABLE_CAPTCHA'             => $DB_PREFIX.'captcha',
     'TABLE_COMMENTS'            => $DB_PREFIX.'comments',
     'TABLE_CONFIG'              => $DB_PREFIX.'config',
@@ -84,6 +89,8 @@ $tables = array(
     'TABLE_USERS_HARDWARE'      => $DB_PREFIX.'users_hardware',
     'TABLE_VISITORS'            => $DB_PREFIX.'visitors',
     'TABLE_WIDGETS'             => $DB_PREFIX.'widgets',
+    'TABLE_VISITORS_ONLINE'     => $DB_PREFIX.'visitors_online',
+    'TABLE_VISITORS_STATS'      => $DB_PREFIX.'visitors_stats'
     #####################################################
 );
 #####################################################
