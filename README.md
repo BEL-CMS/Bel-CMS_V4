@@ -54,7 +54,7 @@ Feel free to contribute to the greatest CMS already made, share your ideas, and 
 - For more information [Bel-CMS](https://bel-cms.dev)
 - For issues/bugs : https://github.com/Stive1987/Bel-CMS/issues
 
-Stay tuned on social medias : [@Facebook/Bel-CMS](https://www.facebook.com/Bel.CMS/)
+Stay tuned on social medias : [@Facebook/Bel-CMS](https://www.facebook.com/BelCMS.DEV)
 
 Copyleft 2015 - 2026
 
