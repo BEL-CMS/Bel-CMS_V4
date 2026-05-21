@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.4]
+ * @version 4.0.1 [PHP8.4]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -77,6 +77,71 @@ switch ($_POST['table']) {
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 	break;
 
+	case 'buy_mails':
+		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
+		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
+			`id` int NOT NULL AUTO_INCREMENT,
+			`mails` varchar(256) DEFAULT NULL,
+			PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
+	break;
+
+	case 'buy_ndd':
+		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
+		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
+			`id` int NOT NULL AUTO_INCREMENT,
+			`websites` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+			PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
+	break;
+
+	case 'buy_plan':
+		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
+		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
+			`id` int NOT NULL AUTO_INCREMENT,
+			`name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+			`price_unique` varchar(7) DEFAULT NULL,
+			PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
+	break; 
+
+	case 'buy_plan_infos':
+		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
+		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
+			`id` int NOT NULL AUTO_INCREMENT,
+			`name` varchar(255) DEFAULT NULL,
+			`value` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+			PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
+	break;
+
+	case 'buy_users':
+		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
+		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
+			`id` int NOT NULL AUTO_INCREMENT,
+			`mail_user` varchar(128) DEFAULT NULL,
+			`dateinsert` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			`ip` varchar(40) DEFAULT NULL,
+			`plan` tinyint DEFAULT NULL,
+			`currency` varchar(6) NOT NULL,
+			`website_1` varchar(128) DEFAULT NULL,
+			`website_2` varchar(128) DEFAULT NULL,
+			`website_3` varchar(128) DEFAULT NULL,
+			`emailbelcms_1` varchar(128) DEFAULT NULL,
+			`emailbelcms_2` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+			`emailbelcms_3` varchar(128) DEFAULT NULL,
+			`emailbelcms_4` varchar(128) DEFAULT NULL,
+			`emailbelcms_5` varchar(128) DEFAULT NULL,
+			`phpversion` varchar(10) NOT NULL DEFAULT 'PHP-8.4',
+			`comment` text,
+			`active` tinyint(1) DEFAULT '0',
+			`date_end` datetime DEFAULT CURRENT_TIMESTAMP,
+			`file` varchar(256) DEFAULT NULL,
+			`unique_key` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+			PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
+	break;
+
 	case 'captcha':
 		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
 		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
@@ -106,73 +171,77 @@ switch ($_POST['table']) {
 		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
 		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
 			`id` int NOT NULL AUTO_INCREMENT,
-			`name` varchar(32) COLLATE utf8mb3_unicode_ci NOT NULL,
-			`value` text COLLATE utf8mb3_unicode_ci,
+			`name` varchar(32) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+			`value` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
 			PRIMARY KEY (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 
-		$insert = "INSERT INTO `".$_SESSION['prefix'].$table."` (`id`, `name`, `value`) VALUES
-			('', 'CMS_VERSION', '4.0.0'),
-			('', 'CMS_NAME', 'Bel-CMS Installation'),
-			('', 'CMS_HIGHLIGHT', '1'),
-			('', 'CMS_FONTAWSOME', '1'),
-			('', 'CMS_JQUERY', '1'),
-			('', 'CMS_BOOTSTRAP', '1'),
-			('', 'CMS_DEFAULT_PAGE', 'news'),
-			('', 'CMS_WEBSITE_LANG', 'fr'),
-			('', 'CMS_TEMPLATE', ''),
-			('', 'CMS_TPL_FULL', 'readmore|downloads|members[forum|articles'),
-			('', 'CMS_DESCRIPTION', ''),
-			('', 'CMS_COOKIES', '".randomString(6)."'),
-			('', 'CMS_LOG_MAX', '1 MONTH'),
-			('', 'CMS_WEBSITE_KEYWORDS', ''),
-			('', 'CMS_DATE_INSTALL', '".$date."'),
-			('', 'CMS_KEY_ADMIN', '".randomString(32)."'),
-			('', 'CMS_LOGO', '/assets/img/logo.png'),
-			('', 'CMS_CHARTE', 'En poursuivant votre navigation sur ce site, vous acceptez nos conditions générales d\'utilisation et notamment que des cookies soient utilisés afin de vous connecter automatiquement.'),
-			('', 'CMS_VALIDATION_TIME', '3'),
-			('', 'CMS_KEYWORDS', ''),
-			('', 'CMS_MAIL', 'contact@ndd.com'),
-			('', 'CMS_VALIDATION', '0'),
-			('', 'CMS_FUSEAU', '2'),
-			('', 'CMS_LANDING', 'true'),
-			('', 'CMS_LANG', 'fr'),
-			('', 'CMS_CAPTCHA_TIME', '2'),
-			('', 'CMS_CUSTOM_CSS', '1');";
+		$insert = "INSERT INTO `".$_SESSION['prefix'].$table."`(`id`, `name`, `value`) VALUES
+			(1, 'CMS_VERSION', '4.0.1'),
+			(2, 'CMS_NAME', 'Bel-CMS Installation'),
+			(3, 'CMS_HIGHLIGHT', '1'),
+			(4, 'CMS_FONTAWSOME', '1'),
+			(5, 'CMS_JQUERY', '1'),
+			(6, 'CMS_BOOTSTRAP', '1'),
+			(7, 'CMS_DEFAULT_PAGE', 'news'),
+			(8, 'CMS_WEBSITE_LANG', 'fr'),
+			(9, 'CMS_TEMPLATE', ''),
+			(10, 'CMS_TPL_FULL', 'readmore|downloads|members|forum|articles'),
+			(11, 'CMS_DESCRIPTION', ''),
+			(12, 'CMS_COOKIES', '".randomString(6)."'),
+			(13, 'CMS_LOG_MAX', '1 YEAR'),
+			(14, 'CMS_WEBSITE_KEYWORDS', ''),
+			(15, 'CMS_DATE_INSTALL', '".$date."'),
+			(16, 'CMS_KEY_ADMIN', '".randomString(32)."'),
+			(17, 'CMS_LOGO', ''),
+			(18, 'CMS_CHARTE', 'En poursuivant votre navigation sur ce site, vous acceptez nos conditions générales d\'utilisation et notamment que des cookies soient utilisés afin de vous connecter automatiquement.'),
+			(19, 'CMS_VALIDATION_TIME', '3'),
+			(20, 'CMS_KEYWORDS', ''),
+			(21, 'CMS_MAIL', 'contact@ndd.com'),
+			(22, 'CMS_VALIDATION', '0'),
+			(23, 'CMS_FUSEAU', '2'),
+			(24, 'CMS_LANDING', 'true'),
+			(25, 'CMS_LANG', 'fr'),
+			(26, 'CMS_CAPTCHA_TIME', '2'),
+			(27, 'CMS_CUSTOM_CSS', '1');";
 	break;
 
 	case 'config_pages':
 		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
 		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
 			`id` int NOT NULL AUTO_INCREMENT,
-			`name` varchar(64) COLLATE utf8mb3_unicode_ci NOT NULL,
+			`name` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
 			`visits` int NOT NULL DEFAULT '0',
 			`active` tinyint(1) NOT NULL DEFAULT '1',
-			`description` text COLLATE utf8mb3_unicode_ci,
+			`description` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
 			`key_seo` tinytext,
-			`infos_sup` text COLLATE utf8mb3_unicode_ci,
-			`keywords` varchar(64) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
-			`access_groups` text COLLATE utf8mb3_unicode_ci,
-			`access_admin` text COLLATE utf8mb3_unicode_ci,
-			`config` text COLLATE utf8mb3_unicode_ci NOT NULL,
-			`ver` varchar(6) COLLATE utf8mb3_unicode_ci NOT NULL DEFAULT '1.0.0',
+			`infos_sup` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+			`keywords` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+			`access_groups` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+			`access_admin` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
+			`config` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+			`ver` varchar(6) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL DEFAULT '1.0.0',
 			`date_page` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			PRIMARY KEY (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 
-		$insert = "INSERT INTO `".$_SESSION['prefix'].$table."` (`id`, `name`, `visits`, `active`, `description`, `infos_sup`, `keywords`, `access_groups`,`access_admin`, `config`, `ver`, `date_page`) VALUES
-			(1, 'news', 0, 1, NULL, NULL, NULL, '0', '1', 'MAX_NEWS=4', '1.0.0', '2025-02-12 22:22:37'),
-			(2, 'user', 0, 1, NULL, NULL, NULL, '0', '1', '', '1.0.0', '2025-02-12 22:22:37'),
-			(3, 'forum', 0, 1, '', NULL, NULL, '2', '1', 'MAX_PAGE=6', '1.0.0', '2025-03-21 15:09:18'),
-			(4, 'newsletter', 0, 1, NULL, NULL, NULL, '0', '1', '', '1.0.0', '2025-03-21 15:09:18'),
-			(5, 'gallery', 0, 1, NULL, NULL, NULL, '0', '1', 'MAX_PAGE=6', '1.0.0', '2025-04-04 15:00:16'),
-			(6, 'links', 0, 1, NULL, NULL, NULL, '0', '1', 'MAX_PAGE=6', '1.0.0', '2025-04-09 08:52:33'),
-			(7, 'members', 0, 1, NULL, NULL, NULL, '0', '1', 'MAX_PPR=8', '1.0.0', '2025-04-09 15:46:59'),
-			(8, 'downloads', 0, 1, NULL, NULL, NULL, '0', '1', 'MAX_PPR=6', '1.0.0', '2025-04-11 16:59:39'),
-			(9, 'articles', 0, 1, NULL, NULL, NULL, '0', '1', '', '1.0.0', '2025-04-13 09:49:11'),
-			(10, 'guestbook', 0, 1, NULL, NULL, NULL, '0', '1|2', '', '1.0.0', '2025-04-14 12:27:04'),
-			(11, 'shoutbox', 0, 1, NULL, NULL, NULL, '0', '1|2', '', '1.0.0', '2025-04-14 12:27:04'),
-			(13, 'contact', 0, 1, NULL, NULL, NULL, '0', '1|2', '', '1.0.0', '2025-04-14 12:27:04');";
+		$insert = "INSERT INTO `".$_SESSION['prefix'].$table."`(`id`, `name`, `visits`, `active`, `description`, `key_seo`, `infos_sup`, `keywords`, `access_groups`, `access_admin`, `config`, `ver`, `date_page`) VALUES
+			('', 'news', 0, 1, NULL, NULL, NULL, NULL, '0', '1', 'MAX_NEWS=4', '1.0.0', '2025-02-12 22:22:37'),
+			('', 'user', 0, 1, NULL, NULL, NULL, NULL, '0', '1', '', '1.0.0', '2025-02-12 22:22:37'),
+			('', 'forum', 0, 1, '', NULL, NULL, NULL, '2', '1', 'MAX_PAGE=6', '1.0.0', '2025-03-21 15:09:18'),
+			('', 'newsletter', 0, 1, NULL, NULL, NULL, NULL, '0', '1', '', '1.0.0', '2025-03-21 15:09:18'),
+			('', 'gallery', 0, 1, NULL, NULL, NULL, NULL, '0', '1', 'MAX_PAGE=6', '1.0.0', '2025-04-04 15:00:16'),
+			('', 'links', 0, 1, NULL, NULL, NULL, NULL, '0', '1', 'MAX_PAGE=6', '1.0.0', '2025-04-09 08:52:33'),
+			('', 'members', 0, 1, NULL, NULL, NULL, NULL, '0', '1', 'MAX_PPR=8', '1.0.0', '2025-04-09 15:46:59'),
+			('', 'downloads', 0, 1, NULL, NULL, NULL, NULL, '0', '1', 'MAX_PPR=6', '1.0.0', '2025-04-11 16:59:39'),
+			('', 'articles', 0, 1, NULL, NULL, NULL, NULL, '0', '1', '', '1.0.0', '2025-04-13 09:49:11'),
+			('', 'guestbook', 0, 1, NULL, NULL, NULL, NULL, '0', '1|2', '', '1.0.0', '2025-04-14 12:27:04'),
+			('', 'shoutbox', 0, 1, NULL, NULL, NULL, NULL, '0', '1|2', '', '1.0.0', '2025-04-14 12:27:04'),
+			('', 'contact', 0, 1, NULL, NULL, NULL, NULL, '0', '1|2', '', '1.0.0', '2025-04-14 12:27:04'),
+			('', 'calendar', 0, 1, NULL, NULL, NULL, NULL, '0', '1', '', '1.0.0', '2026-03-10 14:52:12'),
+			('', 'inbox', 0, 1, NULL, NULL, NULL, NULL, '1|2', '1', '', '1.0.0', '2026-03-10 14:52:12'),
+			('', 'buyPlan', 0, 1, NULL, NULL, NULL, NULL, '2', '1', '', '1.0.0', '2026-04-30 12:12:44'),
+			('', 'typoghrapy', 0, 1, NULL, NULL, NULL, NULL, '0', '0', '', '1.0.0', '2026-05-16 15:33:37');";
 	break;
 
 	case 'contact':
@@ -298,10 +367,10 @@ switch ($_POST['table']) {
 			`id_forum` int NOT NULL,
 			`id_supp` varchar(8) DEFAULT NULL,
 			`title` varchar(128) NOT NULL,
-			`subtitle` varchar(128) DEFAULT NULL,
+			`subtitle` varchar(256) NOT NULL,
 			`orderby` int DEFAULT NULL,
 			`lock` tinyint(1) DEFAULT NULL,
-			`icon` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci,
+			`icon` text NOT NULL,
 			`access_groups` text,
 			`access_admin` text,
 			PRIMARY KEY (`id`)
@@ -392,7 +461,7 @@ switch ($_POST['table']) {
 			UNIQUE KEY `id_group` (`id_group`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 
-		$insert = "INSERT INTO `".$_SESSION['prefix'].$table."` (`id`, `name`, `id_group`, `image`, `color`, `description`) VALUES
+		$insert = "INSERT INTO `".$_SESSION['prefix'].$table."`(`id`, `name`, `id_group`, `image`, `color`, `description`) VALUES
 			(1, 'ADMINISTRATOR', 1, '', '#a54c76ff', 'Administrateur principal'),
 			(2, 'MEMBERS', 2, '', '#2381c0ff', 'Membres');";
 	break;
@@ -401,7 +470,7 @@ switch ($_POST['table']) {
 		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
 		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
 			`id` int NOT NULL AUTO_INCREMENT,
-			`author` varchar(32) DEFAULT NULL,
+			`mail` varchar(128) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
 			`message` text,
 			`date_insert` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			PRIMARY KEY (`id`)
@@ -412,8 +481,7 @@ switch ($_POST['table']) {
 		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
 		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
 			`id` int NOT NULL AUTO_INCREMENT,
-			`name` varchar(64) DEFAULT NULL,
-			`send` varchar(32) DEFAULT NULL,
+			`object` varchar(32) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
 			`sendto` varchar(32) NOT NULL,
 			`date_insert` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			`hash_key` varchar(16) DEFAULT NULL,
@@ -421,21 +489,26 @@ switch ($_POST['table']) {
 			`read_msg_send` varchar(1) DEFAULT NULL,
 			`read_msg_receive` int DEFAULT '0',
 			`archive` tinyint(1) DEFAULT '0',
+			`key_crypt` varchar(32) DEFAULT NULL,
+			`key_mail` varchar(32) NOT NULL,
+			`unique_key` varchar(32) DEFAULT NULL,
 			PRIMARY KEY (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 	break;
 
+
 	case 'inbox_msg':
 		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
-		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (	
+		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
 			`id` int NOT NULL AUTO_INCREMENT,
 			`hash_key` varchar(16) DEFAULT NULL,
-			`author` varchar(32) DEFAULT NULL,
 			`date_insert` datetime DEFAULT CURRENT_TIMESTAMP,
 			`content` mediumtext,
+			`key_mail` varchar(32) DEFAULT NULL,
+			`unique_key` varchar(32) DEFAULT NULL,
 			PRIMARY KEY (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
-	break;	
+	break;
 
 	case 'interaction':
 		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
@@ -466,7 +539,7 @@ switch ($_POST['table']) {
 			`IP` tinytext,
 			`machine` varchar(64) DEFAULT NULL,
 			`navigateur` varchar(128) DEFAULT NULL,
-			`referer` tinytext DEFAULT NULL,
+			`referer` tinytext,
 			PRIMARY KEY (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 	break;
@@ -520,7 +593,8 @@ switch ($_POST['table']) {
 			PRIMARY KEY (`id`),
 			UNIQUE KEY `name` (`name`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
-		$insert = "INSERT INTO `".$_SESSION['prefix'].$table."` (`id`, `name`) VALUES
+
+		$insert = "INSERT INTO `".$_SESSION['prefix'].$table."`(`id`, `name`) VALUES
 			(1, '0-mail'),
 			(2, '10minutemail'),
 			(3, 'brefmail'),
@@ -581,17 +655,17 @@ switch ($_POST['table']) {
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 
 		$insert = "INSERT INTO `".$_SESSION['prefix'].$table."`(`id`, `name`, `config`) VALUES
-			(1, 'host', 'localhost'),
+			(1, 'host', ''),
 			(2, 'Port', '587'),
 			(3, 'SMTPAuth', 'true'),
 			(4, 'SMTPAutoTLS', '1'),
 			(6, 'WordWrap', '65'),
 			(7, 'IsHTML', 'true'),
-			(9, 'setFrom', 'contact@ndd.com'),
-			(10, 'fromName', 'NDD'),
+			(9, 'setFrom', ''),
+			(10, 'fromName', ''),
 			(11, 'charset', 'UTF-8'),
-			(12, 'username', 'username'),
-			(13, 'Password', 'password');";
+			(12, 'username', ''),
+			(13, 'Password', '');";
 	break;
 
 	case 'maintenance':
@@ -602,11 +676,11 @@ switch ($_POST['table']) {
 			`value` varchar(256) DEFAULT NULL,
 			PRIMARY KEY (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
-		
-		$insert = "INSERT INTO `".$_SESSION['prefix'].$table."` (`id`, `name`, `value`) VALUES
-			(1, 'status', 'open'),
-			(2, 'title', 'Le site est temporairement inaccessible'),
-			(3, 'description', 'En raison de travaux de maintenance prévus, le site est temporairement indisponible.');";
+
+	$insert = "INSERT INTO `".$_SESSION['prefix'].$table."`(`id`, `name`, `value`) VALUES
+		(1, 'status', 'open'),
+		(2, 'title', 'Le site est temporairement inaccessible'),
+		(3, 'description', 'En raison de travaux de maintenance prévus, le site est temporairement indisponible.');";
 	break;
 
 	case 'news':
@@ -668,7 +742,7 @@ switch ($_POST['table']) {
 		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
 		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
 			`id` int NOT NULL AUTO_INCREMENT,
-			`value` text COLLATE utf8mb3_unicode_ci,
+			`value` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
 			PRIMARY KEY (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 	break;
@@ -696,31 +770,34 @@ switch ($_POST['table']) {
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 
 		$insert = "INSERT INTO `".$_SESSION['prefix'].$table."`(`id`, `nb_view`, `page`) VALUES
-			(1, 0, 'articles'),
-			(2, 0, 'calendar'),
-			(3, 0, 'comments'),
-			(4, 0, 'contact'),
-			(5, 0, 'cookies'),
-			(6, 0, 'donations'),
-			(7, 0, 'downloads'),
-			(8, 0, 'faq'),
-			(9, 0, 'forum'),
-			(10, 0, 'gallery'),
-			(11, 0, 'games'),
-			(12, 0, 'groups'),
-			(13, 0, 'guestbook'),
-			(14, 0, 'links'),
-			(15, 0, 'mails'),
-			(16, 0, 'market'),
-			(17, 0, 'members'),
-			(18, 0, 'news'),
-			(19, 0, 'newsletter'),
-			(20, 0, 'search'),
-			(21, 0, 'shoutbox'),
-			(22, 0, 'survey'),
-			(23, 0, 'teams'),
-			(24, 0, 'user');
-			(25, 0, 'contact')";
+			('', 0, 'articles'),
+			('', 0, 'buyPlan'),
+			('', 0, 'calendar'),
+			('', 0, 'comments'),
+			('', 0, 'contact'),
+			('', 0, 'cookies'),
+			('', 0, 'donations'),
+			('', 0, 'downloads'),
+			('', 0, 'faq'),
+			('', 0, 'forum'),
+			('', 0, 'gallery'),
+			('', 0, 'inbox'),
+			('', 0, 'games'),
+			('', 0, 'groups'),
+			('', 0, 'guestbook'),
+			('', 0, 'links'),
+			('', 0, 'mails'),
+			('', 0, 'market'),
+			('', 0, 'members'),
+			('', 0, 'news'),
+			('', 0, 'newsletter'),
+			('', 0, 'search'),
+			('', 0, 'shoutbox'),
+			('', 0, 'survey'),
+			('', 0, 'teams'),
+			('', 0, 'user'),
+			('', 0, 'typoghrapy'),
+			('', 0, 'contact');";
 	break;
 
 	case 'templates':
@@ -732,12 +809,26 @@ switch ($_POST['table']) {
 			PRIMARY KEY (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 
-		$insert = "INSERT INTO `".$_SESSION['prefix'].$table."`(`id`, `nb_view`, `page`) VALUES
-			(1, 'color_1', '#f8f8f8'),
-			(2, 'background', '#FFF'),
-			(3, 'border', '0.175'),
-			(4, 'text', '#252529'),
-			(5, 'links', '#252529')";
+		$insert = "INSERT INTO `".$_SESSION['prefix'].$table."`(`id`, `name`, `value`) VALUES
+			('', 'color_1', '#f8f8f8'),
+			('', 'background', '#FFF'),
+			('', 'border', '0.175'),
+			('', 'text', '#252529'),
+			('', 'links', '#252529')";
+	break;
+
+	case 'tickets':
+		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
+		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
+			`id` int NOT NULL AUTO_INCREMENT,
+			`email` varchar(128) DEFAULT NULL,
+			`date_msg` datetime DEFAULT CURRENT_TIMESTAMP,
+			`status` tinyint(1) NOT NULL DEFAULT '0',
+			`content` text,
+			`object_tickets` varchar(128) DEFAULT NULL,
+			`ip_user` varchar(45) DEFAULT NULL,
+			PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 	break;
 
 	case 'users':
@@ -890,6 +981,37 @@ switch ($_POST['table']) {
 			`visitor_year` smallint NOT NULL,
 			`visitor_refferer` varchar(255) DEFAULT NULL,
 			`visitor_page` text,
+			`visitor_country` varchar(100) DEFAULT NULL,
+			`visitor_city` varchar(100) DEFAULT NULL,
+			PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
+	break;
+
+	case 'visitors_online':
+		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
+		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
+			`id` int NOT NULL AUTO_INCREMENT,
+			`session_id` varchar(255) NOT NULL,
+			`ip` varchar(45) NOT NULL,
+			`country` varchar(10) DEFAULT 'UN',
+			`user_id` int DEFAULT '0',
+			`username` varchar(255) DEFAULT NULL,
+			`user_agent` text,
+			`page` text,
+			`is_bot` tinyint(1) DEFAULT '0',
+			`last_activity` int NOT NULL,
+			PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
+	break;
+
+	case 'visitors_stats':
+		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
+		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
+			`id` int NOT NULL AUTO_INCREMENT,
+			`date_visit` date NOT NULL,
+			`month_visit` varchar(7) NOT NULL,
+			`year_visit` varchar(4) NOT NULL,
+			`ip` varchar(45) NOT NULL,
 			PRIMARY KEY (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 	break;
@@ -910,6 +1032,11 @@ switch ($_POST['table']) {
 			PRIMARY KEY (`id`),
 			UNIQUE KEY `name` (`name`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
+
+		$insert = "INSERT INTO `".$_SESSION['prefix'].$table."`(`id`, `name`, `title`, `groups_access`, `groups_admin`, `active`, `pos`, `orderby`, `pages`, `opttions`) VALUES
+			(1, 'stats', 'statistiques', '0', '0', 1, 'right', 1, '', NULL),
+			(2, 'Survey', 'Sondages', '0', '0', 0, 'right', 0, '', NULL),
+			(3, 'Shoutbox', 'T\'chat', '0', '1', 1, 'right', 1, '', NULL);";
 	break;
 }
 

@@ -1,13 +1,14 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 3.1.0 [PHP8.3]
+ * @version 4.0.1 [PHP8.4]
  * @link https://bel-cms.dev
  * @link https://determe.be
- * @license http://opensource.org/licenses/GPL-3.-copyleft
- * @copyright 2015-2024 Bel-CMS
+ * @license MIT License
+ * @copyright 2015-2026 Bel-CMS
  * @author as Stive - stive@determe.be
  */
+
 ?>
 <div id="main_content" style="clear: both;width:100%;">
 	<h1>Installation fini</h1>

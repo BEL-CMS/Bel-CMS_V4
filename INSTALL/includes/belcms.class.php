@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.4]
+ * @version 4.0.1 [PHP8.4]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -72,7 +72,7 @@ class BelCMS
 				<link rel="stylesheet" href="css/plugins/fancybox.min.css">
 				<link rel="stylesheet" href="css/style.css">
 				<link rel="stylesheet" href="css/color-3.css">
-				<title>Bel-CMS v 4.0.0 :: Installation</title>
+				<title>Bel-CMS v 4.0.1 :: Installation</title>
 				</head>
 				<body>
 				<div class="art-app">
@@ -100,10 +100,10 @@ class BelCMS
 										<h6>Discord :</h6><span><a href="https://discord.gg/mV7ZPZgR4z">Redjoindre</a></span>
 									</li>
 									<li>
-										<h6>X (Twitter) :</h6><span><a href="https://x.com/BelCMS_V3">X</a></span>
+										<h6>X (Twitter) :</h6><span><a href="https://x.com/BelCMS">X</a></span>
 									</li>
 									<li>
-										<h6>Facebook :</h6><span><a href="https://www.facebook.com/Bel.CMS">Lien</a></span>
+										<h6>Facebook :</h6><span><a href="https://www.facebook.com/BelCMS.DEV">Lien</a></span>
 									</li>
 									</ul>
 								</div>
@@ -123,7 +123,7 @@ class BelCMS
 								<div class="col-lg-12">
 									<div class="art-section-title">
 									<div class="art-title-frame">
-										<h4>Bel-CMS V4.0.0 : Installation</h4>
+										<h4>Bel-CMS V-4.0.1 : Installation</h4>
 									</div>
 									</div>
 								</div>
@@ -148,10 +148,10 @@ class BelCMS
 									<div class="art-table p-15-15">
 										<ul>
 										<li>
-											<h6>Date MAJ :</h6><span>23.01.2026</span>
+											<h6>Date MAJ :</h6><span>21.05.2026</span>
 										</li>
 										<li>
-											<h6>Version :</h6><span>4.0.0</span>
+											<h6>Version :</h6><span>4.0.1</span>
 										</li>
 										</ul>
 									</div>
@@ -173,7 +173,7 @@ class BelCMS
 							</div>
 							<div class="container-fluid">
 								<footer>
-								<div>© <?=date('Y');?> Bel-CMS v4.0.0</div>
+								<div>© <?=date('Y');?> Bel-CMS v4.0.1</div>
 								</footer>
 							</div>
 							</div>
@@ -206,27 +206,16 @@ class BelCMS
 					</div>
 
 				</div>
-  				<!-- jquery js -->
 				<script src="js/plugins/jquery.min.js"></script>
-				<!-- anime js -->
 				<script src="js/plugins/anime.min.js"></script>
-				<!-- swiper js -->
 				<script src="js/plugins/swiper.min.js"></script>
-				<!-- progressbar js -->
 				<script src="js/plugins/progressbar.min.js"></script>
-				<!-- smooth scrollbar js -->
 				<script src="js/plugins/smooth-scrollbar.min.js"></script>
-				<!-- overscroll js -->
 				<script src="js/plugins/overscroll.min.js"></script>
-				<!-- typing js -->
 				<script src="js/plugins/typing.min.js"></script>
-				<!-- isotope js -->
 				<script src="js/plugins/isotope.min.js"></script>
-				<!-- fancybox js -->
 				<script src="js/plugins/fancybox.min.js"></script>
-				<!-- swup js -->
 				<script src="js/plugins/swup.min.js"></script>
-				<!-- main js -->
 				<script src="js/main.js"></script>
 				</body>
 				</html>
@@ -260,53 +249,64 @@ class BelCMS
 
 	public static function TABLES () {
 		$tables = array(
-		'articles',
-		'articles_content',
-		'ban',
-		'captcha',
-		'comments',
-		'config',
-		'config_pages',
-		'downloads',
-		'downloads_cat',
-		'events',
-		'events_cat',
-		'forum',
-		'forum_msg',
-		'forum_name',
-		'forum_threads',
-		'gallery',
-		'gallery_cat',
-		'gallery_sub_cat',
-		'gallery_vote',
-		'groups',
-		'guestbook',
-		'inbox',
-		'inbox_msg',
-		'interaction',
-		'interaction_admin',
-		'like',
-		'links',
-		'links_cat',
-		'mails_blacklist',
-		'mails_config',
-		'maintenance',
-		'news',
-		'newsletter',
-		'newsletter_send',
-		'newsletter_tpl',
-		'news_cat',
-		'stats',
-		'templates',
-		'users',
-		'users_gaming',
-		'users_groups',
-		'users_hardware',
-		'users_page',
-		'users_profils',
-		'users_social',
-		'visitors',
-		'widgets'
+			'articles',
+			'articles_content',
+			'ban',
+			'buy_mails',
+			'buy_ndd',
+			'buy_plan',
+			'buy_plan_infos',
+			'buy_users',
+			'captcha',
+			'comments',
+			'config',
+			'config_pages',
+			'contact',
+			'contact_cat',
+			'downloads',
+			'downloads_cat',
+			'events',
+			'events_cat',
+			'forum',
+			'forum_msg',
+			'forum_name',
+			'forum_threads',
+			'gallery',
+			'gallery_cat',
+			'gallery_sub_cat',
+			'gallery_vote',
+			'groups',
+			'guestbook',
+			'inbox',
+			'inbox_msg',
+			'interaction',
+			'interaction_admin',
+			'like',
+			'links',
+			'links_cat',
+			'mails_blacklist',
+			'mails_config',
+			'maintenance',
+			'news',
+			'newsletter',
+			'newsletter_send',
+			'newsletter_tpl',
+			'news_cat',
+			'shoutbox',
+			'stats',
+			'templates',
+			'tickets',
+			'users',
+			'users_gaming',
+			'users_groups',
+			'users_hardware',
+			'users_page',
+			'users_profils',
+			'users_social',
+			'visitors',
+			'visitors_online',
+			'visitors_stats',
+			'widgets'
 		);
 		return $tables;
 	}

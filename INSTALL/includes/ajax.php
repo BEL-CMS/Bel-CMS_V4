@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.4]
+ * @version 4.0.1 [PHP8.4]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -13,6 +13,11 @@
 		'articles',
 		'articles_content',
 		'ban',
+		'buy_mails',
+		'buy_ndd',
+		'buy_plan',
+		'buy_plan_infos',
+		'buy_users',
 		'captcha',
 		'comments',
 		'config',
@@ -45,12 +50,13 @@
 		'maintenance',
 		'news',
 		'newsletter',
-		'newsletter_tpl',
 		'newsletter_send',
+		'newsletter_tpl',
 		'news_cat',
 		'shoutbox',
 		'stats',
 		'templates',
+		'tickets',
 		'users',
 		'users_gaming',
 		'users_groups',
@@ -59,6 +65,8 @@
 		'users_profils',
 		'users_social',
 		'visitors',
+		'visitors_online',
+		'visitors_stats',
 		'widgets'
 	);
 	echo json_encode($ajax);
