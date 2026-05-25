@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.4]
+ * @version 4.0.1 [PHP8.4]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -9,68 +9,51 @@
  * @author as Stive - stive@determe.be
  */
 use BelCMS\Core\User;
-use BelCMS\Requires\Common;
 
-if (User::isLogged()) {
-    $user   = $_SESSION['USER']->user->hash_key;
-    $avatar = $_SESSION['USER']->profils->avatar;
-    if (!empty($user)) {
-        $read = 'readonly';
+if (user::isLogged()) {
+    $username = $_SESSION['USER']->user->username;
+    $email    = $_SESSION['USER']->user->mail;
+    $readonly = 'readonly';
+    $avatar   = $_SESSION['USER']->profils->avatar;
+    if ($avatar == 'assets/img/default_avatar.jpg') {
+        $avatar = constant('DEFAULT_AVATAR');
     }
 } else {
-    $user   = '';
+    $username = null;
+    $email     = null;
+    $readonly = null;
     $avatar = constant('DEFAULT_AVATAR');
-    $read = '';
 }
 ?>
-<div class="belcms_guestbook_container">
-    <div class="belcms_guestbook_title">Livre d'or</div>
-    <?php
-    foreach ($guest as $key => $value):
-    ?>
-    <div class="belcms_guestbook_entry">
-        <div class="belcms_guestbook_avatar">
-            <?php
-            if (strlen($value->author) == 32) {
-                $valueUser = User::getInfosUserAll($value->author);
-                $username  = $valueUser->user->username;
-                $user_avatar = $valueUser->profils->avatar;
-                if (empty($user_avatar)) {
-                    $user_avatar = constant('DEFAULT_AVATAR');
-                }
-            } else {
-                $user_avatar = constant('DEFAULT_AVATAR');
-            }
-            ?>
-            <img src="<?= $user_avatar; ?>" alt="Avatar de <?= $username; ?>">
-        </div>
-        <div class="belcms_guestbook_content">
-            <div class="belcms_guestbook_name"><?= $username; ?></div>
-            <div class="belcms_guestbook_date"><?= $value->date_insert; ?></div>
-            <div class="belcms_guestbook_message"><?= $value->message; ?></div>
-        </div>
+<div class="card">
+    <div class="card-header" id="belcms_header_title">
+        <h2><i class="fa-solid fa-angles-right"></i> Livre d'or</h2>
+        <a href="guestbook/view" title="view read">Voir les messages</a>
+        <a href="guestbook" title="home guestbook">Accueil</a>
     </div>
-    <?php
-    endforeach;
-    ?>
+    <div class="card-body py-5 bg-light">
+        <h3 id="belcms_title_section">Bienvenue sur le livre d'or</h3>
+    </div>
 </div>
-<?php
-if (User::isLogged()) {
-    $readonly = 'readonly';
-} else {
-    $readonly = '';
-}
-?>
+
 <div class="belcms_guestbook_form">
     <div class="form-container">
         <form method="post" action="guestbook/new">
             <h2 class="mb-3">Laisse ton message 💬</h2>
-            <input type="text" id="name" name="user" <?= $readonly; ?> class="input-group-text" placeholder="Ex: Stive le Magnifique" required value="<?= $user; ?>">
-            <textarea id="message" name="msg" rows="3" class="belcms_guestbook_textarea bel_cms_textarea_simple"></textarea>
+            <div class="input-group mb-3">
+                <input type="pseudo" aria-label="name" name="username" class="form-control" placeholder="Pseudo" required <?= $readonly ?> value="<?= $username; ?>">
+                <input type="email" aria-label="mail" name="mail" class="form-control" placeholder="E-mail" required <?= $readonly ?> value="<?= $email; ?>">
+            </div>
+            <div class="input-group mb-3">
+                <textarea id="message" name="message" rows="3" class="belcms_guestbook_textarea bel_cms_textarea_simple"></textarea>
+            </div>
             <div class="input-group mb-3">
                 <label class="input-group-text" for="captcha"><?= $_SESSION['CAPTCHA']['CODE']; ?></label>
+            </div>
+            <div class="input-group mb-3">
                 <input type="number" placeholder="Trouve la solution du calcul." name="captcha" class="form-control" id="captcha">
             </div>
+            <input type="hidden" name="avatar" value="<?= $avatar; ?>" required <?= $readonly ?>>
             <input type="hidden" name="captcha_value" value="">
             <input type="submit" value="Envoyer ✨" class="belcms_guestbook_submit">
         </form>

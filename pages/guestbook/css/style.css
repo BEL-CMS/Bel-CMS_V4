@@ -143,3 +143,14 @@
 .input-group-text {
   width: 100%;
 }
+.guestbook_avatar {
+  width: 100px;
+  height: 100px;
+}
+.belcms_color_text > p {
+  color: rgba(0,0,0,0.85);
+}
+.belcms_color_text>p a {
+  font-weight: bold;
+  color: #333333;
+}

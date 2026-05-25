@@ -1,19 +1,22 @@
 <?php
 /**
-* Bel-CMS [Content management system]
-* @version 4.0.0 [PHP8.4]
-* @link https://bel-cms.dev
-* @link https://determe.be
-* @license MIT License
-* @copyright 2015-2026 Bel-CMS
-* @author as Stive - stive@determe.be
-*/
+ * Bel-CMS [Content management system]
+ * @version 4.0.1 [PHP8.4]
+ * @link https://bel-cms.dev
+ * @link https://determe.be
+ * @license MIT License
+ * @copyright 2015-2026 Bel-CMS
+ * @author as Stive - stive@determe.be
+ */
 
 namespace Belcms\Pages\Controller;
 
 use BelCMS\Core\Captcha;
 use BelCMS\Core\Notification;
 use BelCMS\Core\Pages;
+use BelCMS\Core\Secure;
+use BelCMS\Core\User;
+use BelCMS\Requires\Common;
 
 if (!defined('CHECK_INDEX')):
     header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
@@ -36,8 +39,11 @@ class Guestbook extends Pages
     public function new ()
     {
         if (Captcha::verifCaptcha($_POST['captcha']) == true and empty($_POST['captcha_value'])) {
-            $data['author']  = $_POST['user'];
-            $data['message'] = $_POST['msg'];
+            $data['mail']     = Secure::isMail($_POST['mail']);
+            $data['username'] = Common::VarSecure($_POST['username']);
+            $data['message']  = Common::VarSecure($_POST['message'], null);
+            $data['ip']       = Common::GetIp();
+            $data['avatar']   = Common::VarSecure($_POST['avatar'], null);
             $return = $this->models->addnew ($data);
             if ($return === false) {
                 Notification::error(constant('ERROR_INSERT_BDD'), 'Message');
@@ -50,6 +56,13 @@ class Guestbook extends Pages
             return;
         }
         $this->redirect('Guestbook', 2);
+    }
+
+    public function view ()
+    {
+        $d['data'] = $this->models->getGuest();
+        $this->set($d);
+        $this->render('view');
     }
 
 }

@@ -242,3 +242,186 @@ nav#bel_cms_comment {
 	color: white;
 	text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.15);
 }
+
+.belcms_textarea {
+	width: 100%;
+	min-height: 180px;
+	padding: 15px 20px;
+	border: 1px solid #cfcfcf;
+	border-radius: 14px;
+	background: linear-gradient(145deg, #f5f5f5, #e9e9e9);
+	color: #2c2c2c;
+	font-size: 16px;
+	font-family: Arial, sans-serif;
+	resize: vertical;
+	outline: none;
+	transition: all 0.25s ease;
+	box-shadow:
+		inset 0 1px 2px rgba(255, 255, 255, 0.8),
+		0 4px 12px rgba(0, 0, 0, 0.08);
+	text-align: justify;
+	cursor: pointer;
+}
+
+.belcms_textarea::placeholder {
+	color: #8a8a8a;
+}
+
+.belcms_textarea:focus {
+	border-color: #9ca3af;
+	background: linear-gradient(145deg, #ffffff, #f1f1f1);
+	box-shadow:
+		0 0 0 4px rgba(180, 180, 180, 0.15),
+		0 6px 18px rgba(0, 0, 0, 0.10);
+}
+.belcms-flag {
+	width: 24px;
+	height: 18px;
+}
+.belcms_flags {
+	display: block;
+	list-style: none;
+	line-height: 24px;
+	text-align: left;
+	float: left;
+	width: 100%;
+}
+.belcms_flags img {
+	vertical-align: center !important;
+}
+.belcms_flags i {
+	text-align: left !important;
+	line-height: 24px !important;
+	margin-left: 5px;
+}
+.belcms_flags span {
+	display: inline-block;
+	text-align: right;
+	font-weight: bold;
+	text-transform: capitalize;
+}
+/* Bel-CMS Cookie Consent */
+#belcms-cookie-consent {
+	position: fixed;
+	inset: 0;
+	background: rgba(0, 0, 0, .45);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 999999;
+	padding: 20px;
+	font-family: Arial, sans-serif;
+}
+.belcms-cookie-hidden {
+	display: none !important;
+}
+.belcms-cookie-box {
+	width: 100%;
+	max-width: 520px;
+	background: #fff;
+	border-radius: 16px;
+	padding: 30px;
+	box-shadow: 0 15px 45px rgba(0, 0, 0, .2);
+}
+.belcms-cookie-box h3 {
+	margin-top: 0;
+	color: #222;
+}
+
+.belcms-cookie-box p {
+	color: #666;
+	line-height: 1.6;
+}
+.belcms-cookie-options {
+	margin: 25px 0;
+}
+.belcms-cookie-options label {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 15px;
+	color: #333;
+}
+.belcms-cookie-buttons {
+	display: flex;
+	gap: 10px;
+	flex-wrap: wrap;
+}
+.belcms-cookie-buttons button {
+	border: 0;
+	border-radius: 10px;
+	padding: 12px 18px;
+	cursor: pointer;
+	transition: .3s;
+	font-weight: bold;
+}
+#belcms-cookie-accept {
+	background: #2563eb;
+	color: #fff;
+}
+#belcms-cookie-refuse {
+	background: #ef4444;
+	color: #fff;
+}
+#belcms-cookie-save {
+	background: #e5e7eb;
+	color: #222;
+}
+.belcms-cookie-buttons button:hover {
+	transform: translateY(-2px);
+}
+
+#belcms_header_title {
+	color: rgba(0, 0, 0, 0.1);
+	overflow: hidden;
+	height: 55px;
+
+}
+#belcms_header_title > h2 {
+	padding: 5px 15px;
+	display: block;
+	text-align: left;
+	color: #777;
+	font-weight: bold;
+	float: left;
+	font-size: 16px;
+	line-height: 30px;
+}
+#belcms_header_title > a {
+	display: block;
+	float: right;
+	text-align: right;
+	padding: 3px 15px;
+	color: #777;
+	line-height: 30px;
+	border: 1px solid rgba(0, 0, 0, .15);
+	margin: 0 5px;
+	border-radius: 8px;
+	background-color: #dee2e6;
+	transition: background 500ms linear;
+}
+#belcms_header_title > a:hover {
+	background-color: #2c2c2c;
+	transition: background 500ms linear;
+	color: #dee2e6;
+	border-color: rgba(255, 255, 255, 1);
+}
+#belcms_entete > header {
+	height: 55px;
+	width: 100%;
+	display: block;
+	border-bottom: 1px solid #dee2e6;
+}
+#belcms_entete > header > div {
+	color: #777;
+}
+#belcms_title_section {
+	font-family: "Indie Flower", cursive;
+	src: url('assets/css/IndieFlower-Regular.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+	font-size: 28px;
+}
+.belcms_header {
+	margin-bottom: 25px;
+}
