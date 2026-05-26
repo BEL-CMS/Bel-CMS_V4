@@ -470,9 +470,12 @@ switch ($_POST['table']) {
 		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
 		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
 			`id` int NOT NULL AUTO_INCREMENT,
+			`username` varchar(64) NOT NULL,
 			`mail` varchar(128) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
 			`message` text,
 			`date_insert` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			`avatar` varchar(128) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+			`ip` varchar(64) DEFAULT NULL,
 			PRIMARY KEY (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 	break;
