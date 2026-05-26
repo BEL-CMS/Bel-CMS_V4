@@ -1,73 +1,48 @@
-```apache
 # =========================
 # Bel-CMS Upload Security
 # =========================
 
-# Désactive listing dossiers
 Options -Indexes
-
-# Désactive exécution CGI
 Options -ExecCGI
 
-# Désactive moteur PHP
-php_flag engine off
+# Désactive PHP
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
 
 # =========================
-# Bloquer extensions PHP
+# Bloquer scripts dangereux
 # =========================
 
-<FilesMatch "\.(php|php5|php7|php8|phtml|phar|inc|cgi|pl|py|sh|bash)$">
+<FilesMatch "\.(php|php[0-9]?|phtml|phar|cgi|pl|py|sh|bash|inc)$">
     Require all denied
 </FilesMatch>
 
-# =========================
-# Supprime handlers PHP
-# =========================
+RemoveHandler .php .php5 .php7 .php8 .phtml .phar
+RemoveType .php .php5 .php7 .php8 .phtml .phar
 
-RemoveHandler .php
-RemoveHandler .php5
-RemoveHandler .php7
-RemoveHandler .php8
-RemoveHandler .phtml
-RemoveHandler .phar
-
-RemoveType .php
-RemoveType .php5
-RemoveType .php7
-RemoveType .php8
-RemoveType .phtml
-RemoveType .phar
+AddType text/plain .php .php5 .php7 .php8 .phtml .phar .sh .cgi .pl .py
 
 # =========================
-# Sécurité headers
+# Headers sécurité
 # =========================
 
 <IfModule mod_headers.c>
-
-    Header set X-Content-Type-Options "nosniff"
-
-    Header set X-Frame-Options "DENY"
-
-    Header set Referrer-Policy "strict-origin"
-
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>
 
 # =========================
 # Bloquer fichiers sensibles
 # =========================
 
-<FilesMatch "(\.env|composer\.json|composer\.lock|package\.json|yarn\.lock|\.git)">
+<FilesMatch "^(\.env|composer\.(json|lock)|package\.json|yarn\.lock|\.git)">
     Require all denied
 </FilesMatch>
 
 # =========================
-# Empêche interprétation scripts
-# =========================
-
-AddType text/plain .php .php5 .php7 .php8 .phtml .phar .sh .cgi .pl .py
-
-# =========================
-# Cache fichiers statiques
+# Cache images
 # =========================
 
 <IfModule mod_expires.c>
@@ -77,7 +52,6 @@ AddType text/plain .php .php5 .php7 .php8 .phtml .phar .sh .cgi .pl .py
     ExpiresByType image/png "access plus 1 month"
     ExpiresByType image/jpeg "access plus 1 month"
     ExpiresByType image/webp "access plus 1 month"
-    ExpiresByType application/zip "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
 
 </IfModule>
-```
