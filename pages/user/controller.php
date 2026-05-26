@@ -37,14 +37,14 @@ class User extends Pages
     {
         parent::__construct();
         if (CoreUser::isLogged() === true) {
-            $dir = constant('DIR_UPLOADS_USER').$_SESSION['USER']->user->hash_key.'/';
+            $dir = constant('DIR_UPLOADS_USER').$_SESSION['USER']->user->username.'/';
             if (!is_dir($dir)) {
                 mkdir($dir, 0774, true);
             }
             $fopen  = fopen($dir.'/index.html', 'a+');
             fclose($fopen);
 
-            $dir = constant('DIR_UPLOADS_USER').$_SESSION['USER']->user->hash_key.'/avatar/';
+            $dir = constant('DIR_UPLOADS_USER').$_SESSION['USER']->user->username.'/avatar/';
             if (!is_dir($dir)) {
                 mkdir($dir, 0774, true);
             }
@@ -510,16 +510,24 @@ class User extends Pages
     #########################################
     public function profils ()
     {
-        $this->render('profils');
+        if (CoreUser::isLogged()) {
+            $this->render('profils');
+        } else {
+            $this->redirect('User', 3);
+        }
     }
     #########################################
     #   Page principal profil               #
     #########################################
     public function avatar ()
     {
-        $d['avatar'] = Common::ScanFiles('assets/img/avatar',true,true,true);
-        $this->set($d);
-        $this->render('avatar');
+        if (CoreUser::isLogged()) {
+            $d['avatar'] = Common::ScanFiles(constant('DIR_UPLOADS_USER').$_SESSION['USER']->user->username.'/avatar/',true,true,true);
+            $this->set($d);
+            $this->render('avatar');
+        } else {
+            $this->redirect('User', 3);
+        }
     }
     public function deleteAvatar()
     {
@@ -545,14 +553,14 @@ class User extends Pages
             $typeMime = $typeMime['mime'];
         }
         if ($_FILES['avatar']['error'] != 4) {
-            $dir = 'uploads/users/'.$_SESSION['USER']->user->hash_key.'/avatar/';
+            $dir = constant('DIR_UPLOADS_USER').$_SESSION['USER']->user->username.'/avatar/';
             $extensions = array('image/bmp', 'image/gif', 'image/x-icon', 'image/jpeg', 'image/png', 'image/svg+xml', 'image/tiff', 'image/webp');
             if (!in_array($typeMime, $extensions)) {
                 $return['msg']    = 'Vous devez uploader un fichier de type png, gif, jpg, jpeg, webp';
                 $return['type']   = 'error';
                 $return['title']  = 'Extention';
                 $this->message($return['type'], $return['msg'], $return['title']);
-             } else if (move_uploaded_file($_FILES['avatar']['tmp_name'], $dir.$_FILES['avatar']['name'])) {
+             } else if (Common::Upload('avatar', $dir, 'img', true)) {
                 $return['msg']    = 'Upload effectué avec succès';
                 $return['type']   = 'success';
                 $return['title']  = 'Avatar';

@@ -30,7 +30,7 @@ function generer_password(champ_cible) {
             success: function(response) {
                 setTimeout(
                 function()  {
-                    window.location.replace("/User/profils");
+                    window.location.replace("/User/avatar");
                 }, 500);
             },
             error: function() {
@@ -52,7 +52,7 @@ function generer_password(champ_cible) {
             success: function(response) {
                 setTimeout(
                 function()  {
-                    window.location.replace("/User/profils");
+                    window.location.replace("/User/avatar");
                 }, 500);
             },
             error: function() {

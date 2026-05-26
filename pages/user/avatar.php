@@ -14,7 +14,7 @@ use BelCMS\Core\User;
 use BelCMS\Requires\Common;
 
 $list = array();
-$path = "uploads/users/" . $_SESSION['USER']->user->hash_key . "/avatar/";
+$path = "uploads/users/" . $_SESSION['USER']->user->username . "/avatar/";
 $list = Common::ScanFiles($path);
 $i    = 0;
 foreach ($avatar as $key => $value) {
@@ -46,7 +46,6 @@ foreach ($avatar as $key => $value) {
                 <table id="belcms_table_user" class="table table-bordered">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
                             <th scope="col">formats de l'images</th>
                             <th scope="col">Image(s)</th>
                             <th scope="col" colspan="2">Options</th>
@@ -57,55 +56,51 @@ foreach ($avatar as $key => $value) {
                         foreach ($list as $file):
                             $i = $i + 1;
                             if (preg_match("#\.(jpg|jpeg|png|gif|bmp|tif|webp)$#i", $file)):
-                                $img = '/uploads/users/' . $_SESSION['USER']->user->hash_key . '/avatar/' . $file;
+                                $img = 'uploads/users/' . $_SESSION['USER']->user->username . '/avatar/' . $file;
                                 $extension = pathinfo($img, PATHINFO_EXTENSION);
                         ?>
-                                <form>
-                                    <tr>
-                                        <td><?= $extension; ?></td>
-                                        <td>
-                                            <picture>
-                                                <?php
-                                                if ($extension == 'webp'):
-                                                ?>
-                                                    <source srcset="<?= $img; ?>" type="image/webp" />
-                                                    <img src=" <?= $img; ?>" class="glightbox">
-                                                <?php
-                                                else:
-                                                ?>
-                                                    <img src="<?= $img; ?>" class="glightbox">
-                                                <?php
-                                                endif;
-                                                ?>
-                                            </picture>
-                                        </td>
-                                        <td><a class="btn btn-success active_img" data-file="<?= $img; ?>"><i class="fa-solid fa-display"></i></a></td>
-                                        <td><a class="btn btn-danger delete_img" data-file="<?= $img; ?>"><i class="fa-solid fa-trash-can"></i></a></td>
-                                        
-                                    </tr>
-                                    <?php 
-                                    foreach ($defaultAvatar as $key => $value):
-                                    ?>
-                                    <tr>
-                                        <td><?= $extension; ?></td>
-                                        <td>
-                                            <picture>
-                                                <img src="<?= $value; ?>" class="glightbox">
-                                            </picture>
-                                        </td>
-                                        <td><a class="btn btn-success active_img" data-file="<?= $value; ?>"><i class="fa-solid fa-display"></i></a></td>
-                                    </tr>
-                                    <?php
-                                    endforeach;
-                                    ?>
-                                </form>
+                            <tr>
+                                <td><?= $extension; ?></td>
+                                <td>
+                                    <picture>
+                                        <?php
+                                        if ($extension == 'webp'):
+                                        ?>
+                                            <source srcset="<?= $img; ?>" type="image/webp" />
+                                            <img src=" <?= $img; ?>" class="glightbox">
+                                        <?php
+                                        else:
+                                        ?>
+                                            <img src="<?= $img; ?>" class="glightbox">
+                                        <?php
+                                        endif;
+                                        ?>
+                                    </picture>
+                                </td>
+                                <td><a class="btn btn-success active_img" data-file="<?= $img; ?>"><i class="fa-solid fa-display"></i></a></td>
+                                <td><a class="btn btn-danger delete_img" data-file="<?= $img; ?>"><i class="fa-solid fa-trash-can"></i></a></td>
+                            </tr>
                         <?php
                             endif;
                         endforeach;
+                        // Chemin du dossier à analyser
+                        $dossier = 'assets/img/avatar/'; 
+                        $images = glob($dossier . '*.{jpg,jpeg,png,gif,webp}', GLOB_BRACE);
+                            foreach ($images as $image) {
+                                $extensionImg = pathinfo($image, PATHINFO_EXTENSION);
+                            ?>
+                            <tr>
+                                <td><?= $extensionImg; ?></td>
+                                <td><picture><img src="<?= $image; ?>" class="glightbox"></picture></td>
+                                <td colspan="2"><a class="btn btn-success active_img" data-file="<?= $image; ?>"><i class="fa-solid fa-display"></i></a></td>
+                            </tr>
+                            <?php
+                            }
                         ?>
                     </tbody>
                 </table>
             </div>
+
             <div class="card-footer">
                 <form action="/User/sendNewAvatar" method="POST" enctype="multipart/form-data">
                     <div class="input-group mb-3">
