@@ -14,36 +14,41 @@ if (!defined('CHECK_INDEX')):
     exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
 endif;
 
+use BelCMS\Core\groups;
 use BelCMS\Core\User;
 use BelCMS\Requires\Common;
 ?>
-<div class="container text-center">
-    <div class="row">
+<table class="table table-striped table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Avatar</th>
+            <th>Nom d'utilisateur</th>
+            <th>Grade</th>
+            <th>Inscrit le</th>
+            <th>Profil</th>
+        </tr>
+    </thead>
+    <tbody>
         <?php
         foreach ($members as $k => $v):
             $user = User::getInfosUserAll($v->hash_key);
+            $group = groups::getName($user->groups->user_group);
+            $group = defined(strtoupper($group->name)) ? constant($group->name) : $group->name;
             $username  = $user->user->username;
             $color     = $user->user->color;
             $datedeReg = Common::TransformDate($user->profils->date_registration, 'MEDIUM', 'NONE');
             $avatar    = $user->profils->avatar;
         ?>
-            <div class="col-lg-6 col-sm-4 col-xsm-6">
-                <div class="belcms_main_members" style="background-color: <?= $_SESSION['TEMPLATE']['background']; ?> !important;">
-                    <img class="belcms_main_background_img" src="assets/img/bg_cover.webp" alt="background_user_<?= $username; ?>">
-                    <picture>
-                        <img src="<?= $avatar; ?>" class="glightbox rounded-circle" alt="Avatar de <?= $username; ?>">
-                    </picture>
-                    <h2 style="color: <?= $color; ?> !important;"><?= $username; ?></h2>
-                    <ul class="belcms_main_listing">
-                        <li>Enregistré le<span>12.06.2025</span></li>
-                        <li>Poste<span>256</span></li>
-                        <li><a href="" class="color: <?= $_SESSION['TEMPLATE']['links']; ?> !important;" title="Message a <?= $username; ?>">Message</a> - <a href="Members/detail/<?= $username; ?>" title="Profil de <?= $username; ?>">Profile</a></li>
-                    </ul>
-                </div>
-            </div>
+        <tr>
+            <td><img class="belcms_members_avatar_primary" src="<?= $avatar; ?>"></td>
+            <td style="color: <?= $color; ?>;"><?= $username; ?></td>
+            <th><?= $group; ?></th>
+            <td><?= $datedeReg; ?></td>
+            <td><button type="button" class="btn btn-secondary" onclick="location.href='Members/detail/<?= $username; ?>';">Profil</button></td>
+        </tr>
         <?php
-        endforeach;
-        echo $pagination;
+        endforeach; 
         ?>
-    </div>
-</div>
+    </tbody>
+    <?php echo $pagination; ?>
+</table>
