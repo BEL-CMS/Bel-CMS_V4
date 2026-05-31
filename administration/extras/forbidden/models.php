@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.4]
+ * @version 4.0.1 [PHP8.4]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -18,22 +18,36 @@ use BelCMS\PDO\BDD;
 #####################################
 # Infos tables                      #
 #####################################
-final class ModelsAseh
+final class ModelsForbidden
 {
-    public function get ()
+    public function getMails ()
     {
-        $sql = new BDD;
-        $sql->table('TABLE_CONFIG');
-        $sql->where(array('name' => 'name', 'value' => 'ALERT'));
-        $sql->queryOne();
-        return $sql->data;
+        $sql = new BDD();
+        $sql->table('TABLE_MAIL_BLACKLIST');
+        $sql->queryAll();
+        $return = $sql->data;
+        return $return;
     }
-    public function post ($data)
+
+    public function sendNew ($mail)
     {
-        $update['value'] = $data;
-        $sql = new BDD;
-        $sql->table('TABLE_CONFIG');
-        $sql->where(array('name' => 'name', 'value' => 'ALERT'));
-        $sql->update($update);
+        $data['name'] = $mail;
+        $sql = new BDD();
+        $sql->table('TABLE_MAIL_BLACKLIST');
+        $sql->insert($data);
+    }
+
+    public function testName ($mail) : bool
+    {
+        $sql = new BDD();
+        $sql->table('TABLE_MAIL_BLACKLIST');
+        $sql->where(array('name' => 'name', 'value' => $mail));
+        $sql->count();
+        if ($sql->data >= 1) {
+            $return = false;
+        } else {
+            $return = true;
+        }
+        return $return;
     }
 }
