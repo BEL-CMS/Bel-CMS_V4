@@ -45,7 +45,7 @@ endif;
                                             <?= constant('DELETE'); ?>
                                             <i class="ri-close-line label-btn-icon ms-2 rounded-pill"></i>
                                         </a>
-                                        <a href="forbidden/editdls/<?= $value->id; ?>?admin&option=extras" class="btn btn-warning label-btn rounded-pill">
+                                        <a href="forbidden/edit/<?= $value->id; ?>?admin&option=extras" class="btn btn-warning label-btn rounded-pill">
                                             <i class="ri-chat-smile-line label-btn-icon me-2"></i>
                                             <?= constant('EDIT'); ?>
                                         </a>

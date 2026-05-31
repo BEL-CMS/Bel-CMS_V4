@@ -29,6 +29,16 @@ final class ModelsForbidden
         return $return;
     }
 
+    public function getMailforNam ($id)
+    {
+        $sql = new BDD();
+        $sql->table('TABLE_MAIL_BLACKLIST');
+        $sql->where(array('name'=> 'id', 'value' => $id));
+        $sql->queryOne();
+        $return = $sql->data;
+        return $return;
+    }
+
     public function sendNew ($mail)
     {
         $data['name'] = $mail;
@@ -37,11 +47,40 @@ final class ModelsForbidden
         $sql->insert($data);
     }
 
-    public function testName ($mail) : bool
+    public function delMail ($id) : bool
     {
         $sql = new BDD();
         $sql->table('TABLE_MAIL_BLACKLIST');
-        $sql->where(array('name' => 'name', 'value' => $mail));
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->delete();
+        if ($sql->data === true) {
+            $return = true;
+        } else {
+            $return = false;
+        }
+        return $return;
+    }
+
+    public function sendEdit ($name, $id) : bool
+    {
+        $data['name'] = $name;
+        $sql = new BDD();
+        $sql->table('TABLE_MAIL_BLACKLIST');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->update($data);
+        if ($sql->data === true) {
+            $return = true;
+        } else {
+            $return = false;
+        }
+        return $return;
+    }
+
+    public function testName ($name) : bool
+    {
+        $sql = new BDD();
+        $sql->table('TABLE_MAIL_BLACKLIST');
+        $sql->where(array('name' => 'name', 'value' => $name));
         $sql->count();
         if ($sql->data >= 1) {
             $return = false;

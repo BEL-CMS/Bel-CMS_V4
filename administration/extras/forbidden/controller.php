@@ -10,6 +10,7 @@
  */
 
 use BelCMS\Requires\Common;
+use BelCMS\Core\Interaction;
 
 if (!defined('CHECK_INDEX')):
     header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
@@ -33,7 +34,78 @@ class Forbidden extends AdminPages
 
 	public function add ()
 	{
-		$this->render('add');
+        $menu[] = array('title' => 'Accueil', 'href' => 'forbidden?Admin&option=extras', 'ico'  => 'fa-solid fa-igloo');
+		$this->render('add', $menu);
+	}
+
+	public function edit ()
+	{
+        $menu[] = array('title' => 'Accueil', 'href' => 'forbidden?Admin&option=extras', 'ico'  => 'fa-solid fa-igloo');
+
+		$id = $this->data['2'];
+
+		if (is_numeric($id) === false) {
+            #######################################################
+            $inter = new Interaction();
+            $inter->title(constant('ID_ERROR_TITLE'));
+            $inter->message(constant('ID_ERROR_MSG'));
+            $inter->author($_SESSION['USER']->user->hash_key);
+            $inter->status('red');
+            $inter->setAdmin();
+            #######################################################
+			$array = array(
+				'type' => 'error',
+				'text' => constant('ADMIN_TEXT_FALSE_ID')
+			);
+			$this->error('e-mail', $array['text'], $array['type']);
+		} else {
+			$a['data'] = $this->models->getMailforNam ($id);
+			$this->set($a);
+		}
+
+		$this->render('edit', $menu);
+	}
+
+	public function sendEdit ()
+	{
+		$id = $_POST['id'];
+
+		if (is_numeric($id) === false) {
+            #######################################################
+            $inter = new Interaction();
+            $inter->title(constant('ID_ERROR_TITLE'));
+            $inter->message(constant('ID_ERROR_MSG'));
+            $inter->author($_SESSION['USER']->user->hash_key);
+            $inter->status('red');
+            $inter->setAdmin();
+            #######################################################
+			$array = array(
+				'type' => 'error',
+				'text' => constant('ADMIN_TEXT_FALSE_ID')
+			);
+			$this->error('e-mail', $array['text'], $array['type']);
+		} else {
+			$mail = Common::VarSecure($_POST['mail'], null);
+			$mail = str_replace('@', '', $mail);
+			$row = $this->models->testName($mail);
+
+			if ($row === true) {
+				$this->models->sendEdit ($mail, $id);
+				$array = array(
+					'type' => 'success',
+					'text' => constant('EDITING_SUCCESS')
+				);
+				$this->error('e-mail', $array['text'], $array['type']);
+				$this->redirect('forbidden?admin&option=extras', 3);
+			} else {
+				$array = array(
+					'type' => 'error',
+					'text' => 'E-mail déjà enregistré.'
+				);
+				$this->error('e-mail', $array['text'], $array['type']);
+				$this->redirect('forbidden?admin&option=extras', 3);
+			}
+		}
 	}
 
 	public function sendnew ()
@@ -50,16 +122,51 @@ class Forbidden extends AdminPages
 				'text' => 'E-mail enregistré.'
 			);
 			$this->error('e-mail', $array['text'], $array['type']);
-
 			$this->redirect('forbidden?admin&option=extras', 3);
 		} else {
 			$array = array(
 				'type' => 'error',
 				'text' => 'E-mail déjà enregistré.'
 			);
-
 			$this->error('e-mail', $array['text'], $array['type']);
 			$this->redirect('forbidden/add?admin&option=extras', 3);
 		}
+	}
+
+	public function delete ()
+	{
+		$id = $this->data['2'];
+
+		if (is_numeric($id) === false) {
+            #######################################################
+            $inter = new Interaction();
+            $inter->title(constant('ID_ERROR_TITLE'));
+            $inter->message(constant('ID_ERROR_MSG'));
+            $inter->author($_SESSION['USER']->user->hash_key);
+            $inter->status('red');
+            $inter->setAdmin();
+            #######################################################
+			$array = array(
+				'type' => 'error',
+				'text' => constant('ADMIN_TEXT_FALSE_ID')
+			);
+			$this->error('e-mail', $array['text'], $array['type']);
+		} else {
+			$return = $this->models->delMail ($id);
+
+			if ($return === true) {
+				$array = array(
+					'type' => 'success',
+					'text' => constant('DEL_SUCCESS')
+				);
+			} else {
+				$array = array(
+					'type' => 'error',
+					'text' => constant('DEL_SUCCESS')
+				);
+			}
+		}
+		$this->error('e-mail', $array['text'], $array['type']);
+		$this->redirect('forbidden?admin&option=extras', 3);
 	}
 }
