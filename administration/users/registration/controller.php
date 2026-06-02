@@ -15,6 +15,7 @@ use BelCMS\Core\Notification;
 use BelCMS\Core\Secure;
 use BelCMS\Core\User;
 use BelCMS\Requires\Common;
+use BelCMS\Core\encrypt;
 
 if (!defined('CHECK_INDEX')):
     header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
@@ -165,5 +166,46 @@ class Registration extends AdminPages
             #######################################################
             $this->redirect('registration?admin&option=users', 2);
         }
+    }
+
+    public function adduser ()
+    {
+        $insert             = array();
+        $password           = Common::VarSecure($_POST['password'], null);
+        $password_repeat    = Common::VarSecure($_POST['password_repeat'], null);
+        $insert['hash_key'] = md5(uniqid(rand(), true));
+
+        if ($password != $password_repeat) {
+            $array = array(
+                'type' => 'warning',
+                'text' => constant('Les mots de passe sont différents.')
+            );
+            $this->error('Utilisateur', $array['text'], $array['type']);
+            $this->redirect('registration/add?admin&option=users', 2);
+            return;
+        } else {
+            $passwordCrypt =  new encrypt($password, $_SESSION['CONFIG']['CMS_KEY_ADMIN']);
+            $password = $passwordCrypt->encrypt();
+            $insert['password'] = $password;
+        }
+
+        $username  = Common::cleanText($_POST['username']);
+        $testeUser = $this->models->checkUser ($username);
+
+        if ($testeUser === true) {
+            $insert['username'] = $username;
+        } else {
+            $array = array(
+                'type' => 'warning',
+                'text' => constant('Le nom d\'utilisateur existe déjà !')
+            );
+            $this->error('Utilisateur', $array['text'], $array['type']);
+            $this->redirect('registration/add?admin&option=users', 2);
+            return;
+        }
+
+        // mail
+
+        debug($insert);
     }
 }

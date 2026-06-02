@@ -853,15 +853,15 @@ final class Common
     public static function size($size, $options=null) {
 
         $o = [
-            'binary' => false,
-            'decimalPlaces' => 2,
-            'decimalSeparator' => '.',
+            'binary'             => false,
+            'decimalPlaces'      => 2,
+            'decimalSeparator'   => '.',
             'thausandsSeparator' => '',
-            'maxThreshold' => false,
-            'sufix' => [
-                'thresholds' => ['octet', 'Ko', 'Mo', 'Giga', 'téraoctet', 'pétaoctet', 'E', 'Z', 'Y'],
-                'decimal' => ' {threshold}',
-                'binary' => ' {threshold}iB'
+            'maxThreshold'       => false,
+            'sufix'              => [
+                'thresholds'     => ['octet', 'Ko', 'Mo', 'Giga', 'téraoctet', 'pétaoctet', 'E', 'Z', 'Y'],
+                'decimal'        => ' {threshold}',
+                'binary'         => ' {threshold}iB'
             ]
         ];
 
@@ -1311,6 +1311,14 @@ final class Common
         ];
     
         return $media_types[$extension] ?? 'application/octet-stream';
+    }
+
+    public static function cleanText($text)
+    {
+        $text = strip_tags($text); // retire HTML
+        $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8'); // decode &nbsp; etc
+        $text = preg_replace('/\s+/u', ' ', $text); // nettoie espaces
+        return trim($text);
     }
 }
 if (!function_exists('esc_html')) {

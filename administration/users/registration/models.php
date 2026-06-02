@@ -38,14 +38,18 @@ final class UsersModels
         return $return;
     }
 
-    public function checkUser($name)
+    public function checkUser($name) : bool
     {
         $sql = new BDD();
         $sql->table('TABLE_USERS');
         $sql->where(array('name' => 'username', 'value' => $name));
         $sql->count();
-        $returnCheckName = (int) $sql->data;
-        return $returnCheckName;
+        if ($sql->data == 1) {
+            $return = false;
+        } else {
+            $return = true;
+        }
+        return $return;
     }
 
     public function blackListEmail()
