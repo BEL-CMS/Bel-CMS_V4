@@ -98,4 +98,64 @@ final class UsersModels
             return false;
         }
     }
+
+    public function createNewUser ($data)
+    {
+        #########################################
+        $hash_key = $data['hash_key'];
+        #########################################
+        $insertUser = array(
+            'id'                => null,
+            'username'          => $data['username'],
+            'hash_key'          => $hash_key,
+            'password'          => $data['password'],
+            'mail'              => $data['mail'],
+            'ip'                => $data['ip'],
+            'expire'            => (int) 0,
+            'token'             => '',
+            'number_valid'      => '',
+            '2FA'               => 0,
+            'admin'             => 0
+        );
+        $insert = New BDD();
+        $insert->table('TABLE_USERS');
+        $insert->insert($insertUser);
+        #########################################
+        $insertGroups = array(
+            'id'          => null,
+            'hash_key'    => $hash_key,
+            'user_group'  => 2,
+            'user_groups' => 2,
+        );
+        $insertGrp = New BDD();
+        $insertGrp->table('TABLE_USERS_GROUPS');
+        $insertGrp->insert($insertGroups);
+        #########################################
+        $dataProfils = array(
+            'hash_key'     => $hash_key,
+            'gender'       => 'unisexual',
+            'public_mail'  => '',
+            'websites'     => '',
+            'list_ip'      => '',
+            'avatar'       => constant('DEFAULT_AVATAR'),
+            'info_text'    => '',
+            'birthday'     => date('Y-m-d'),
+            'country'      => $data['country'],
+            'hight_avatar' => '',
+            'friends'      => ''
+        );
+        #########################################
+        $insertProfils = New BDD();
+        $insertProfils->table('TABLE_USERS_PROFILS');
+        $insertProfils->insert($dataProfils);
+        #########################################
+        $hardware = New BDD();
+        $hardware->table('TABLE_USERS_HARDWARE');
+        $hardware->insert(array('hash_key'=> $hash_key));
+        #########################################
+        $stats = new BDD();
+        $stats->table('TABLE_USERS_PAGE');
+        $stats->insert(array('hash_key' => $hash_key));
+        #########################################
+    }
 }

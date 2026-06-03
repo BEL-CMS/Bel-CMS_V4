@@ -16,6 +16,7 @@ use BelCMS\Core\Secure;
 use BelCMS\Core\User;
 use BelCMS\Requires\Common;
 use BelCMS\Core\encrypt;
+use BelCMS\Core\eMail;
 
 if (!defined('CHECK_INDEX')):
     header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
@@ -170,11 +171,12 @@ class Registration extends AdminPages
 
     public function adduser ()
     {
+        #########################################
         $insert             = array();
         $password           = Common::VarSecure($_POST['password'], null);
         $password_repeat    = Common::VarSecure($_POST['password_repeat'], null);
         $insert['hash_key'] = md5(uniqid(rand(), true));
-
+        #########################################
         if ($password != $password_repeat) {
             $array = array(
                 'type' => 'warning',
@@ -188,24 +190,108 @@ class Registration extends AdminPages
             $password = $passwordCrypt->encrypt();
             $insert['password'] = $password;
         }
-
+        #########################################
         $username  = Common::cleanText($_POST['username']);
         $testeUser = $this->models->checkUser ($username);
-
         if ($testeUser === true) {
             $insert['username'] = $username;
         } else {
             $array = array(
                 'type' => 'warning',
-                'text' => constant('Le nom d\'utilisateur existe déjà !')
+                'text' => 'Le nom d\'utilisateur existe déjà !'
             );
             $this->error('Utilisateur', $array['text'], $array['type']);
             $this->redirect('registration/add?admin&option=users', 2);
             return;
         }
+        #########################################
+        $mail = trim($_POST['mail']);
+        if (!empty($mail) && filter_var($mail, FILTER_VALIDATE_EMAIL)) {
+            $insert['mail'] = $mail;
+        } else {
+            $array = array(
+                'type' => 'warning',
+                'text' => 'Adresse e-mail invalide !'
+            );
+            $this->error('Utilisateur', $array['text'], $array['type']);
+            $this->redirect('registration/add?admin&option=users', 2);
+            return;
+        }
+        #########################################
+        $insert['country'] = Common::VarSecure($_POST['country'], null);
+        $insert['ip']      = '127.0.0.1';
+        $insert['valid']   = (int) 1;
+        #########################################
+        $this->models->createNewUser ($insert);
+        #########################################
+        $array = array(
+            'type' => 'success',
+            'text' => 'L\'inscription de l\'utilisateur a été réalisée avec succès.'
+        );
+        #########################################
+        require_once ROOT . DS . 'core' . DS . 'class.mail.php';
+        $email = new eMail;
+        $email->addAdress($insert['mail']);
+        $email->subject('Ouverture manuelle d\'un profil.');
+        $email->body(self::sendHtmlBody($insert['username'], $password_repeat));
+        $email->submit();
+        #########################################
+        $this->error('Utilisateur', $array['text'], $array['type']);
+        $this->redirect('registration?admin&option=users', 2);
+        #########################################
+    }
 
-        // mail
+    private function sendHtmlBody ($username, $mdp)
+    {
+        setLocale(LC_TIME, 'fr_FR.utf8');
 
-        debug($insert);
+        $date = new \DateTime();
+        $date = $date->format('d/m/Y à H:i:s');
+
+        if ($_SERVER['SERVER_PORT'] == '80') {
+            $host = 'http://'.$_SERVER['HTTP_HOST'].'/';
+        } else {
+            $host = 'https://'.$_SERVER['HTTP_HOST'].'/';
+        }
+
+        return '
+        <table width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+                <td align="center">
+                    <table width="500" cellpadding="0" cellspacing="0" border="0" style="background:#ffffff;border-radius:8px;padding:30px;">
+                        <tr>
+                            <td align="center"><h2 style="margin:0;color:#333;">Vos informations de connexion</h2></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top:20px;color:#555;font-size:15px;">Bonjour, <strong>'.$username.'</strong>,</td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top:15px;color:#555;font-size:15px;line-height:24px;">
+                                Votre compte a été créé avec succès.<br>
+                                Voici vos identifiants de connexion :
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top:20px;">
+                                <table width="100%" cellpadding="10" cellspacing="0" style="background:#f8f8f8;border-radius:6px;border:1px solid #ddd;">
+                                    <tr>
+                                        <td style="font-size:14px;color:#333;"><strong>Nom d\'utilisateur : </strong> '.$username.'</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size:14px;color:#333;"><strong>Mot de passe : </strong> '.$mdp.'</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top:25px;color:#777;font-size:13px;">Nous vous conseillons de modifier votre mot de passe après votre première connexion.</td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top:30px;color:#999;font-size:12px;text-align:center;">© '.date('Y').' Bel-CMS Mail - Tous droits réservés</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>';
     }
 }
