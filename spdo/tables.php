@@ -72,6 +72,7 @@ $tables = array(
     'TABLE_SURVEY_QUEST'        => $DB_PREFIX.'survey_quest',
     'TABLE_SURVEY_VOTE'         => $DB_PREFIX.'survey_vote',
     'TABLE_SHOUTBOX'            => $DB_PREFIX.'shoutbox',
+    'TABLE_TEAMS'               => $DB_PREFIX.'teams',
     'TEMPLATE'                  => $DB_PREFIX.'template',
     'TABLE_TICKET'              => $DB_PREFIX.'ticket',
     'TABLE_TICKET_CAT'          => $DB_PREFIX.'ticket_cat',
