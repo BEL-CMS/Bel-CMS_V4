@@ -40,7 +40,37 @@ endif;
                                 </tr>
                             </thead>
                             <tbody>
-
+                                <?php
+                                foreach ($teams as $key => $value):
+                                ?>
+                                <tr>
+                                    <td width="100px"><img class="glightbox" src="<?= $value->logo; ?>" style="width:100px;height:100px;"></td>
+                                    <td><?= $value->name; ?></td>
+                                    <td style="text-align:center !important;"><?= Common::TransformDate($value->foundation, 'LONG', 'NONE'); ?></td>
+                                    <td style="text-align:center !important;"><a href="<?= $value->contact; ?>"><?= $value->contact; ?></a></td>
+                                    <td style="text-align:center !important;">
+                                        <?php
+                                        if ($value->joining == 1):
+                                            echo '<span class="badge bg-secondary-subtle text-secondary"><i class="ri-mail-line"></i> Ouvert</span>';
+                                        else:
+                                            echo '<span class="badge bg-outline-danger-subtle text-danger border border-danger rounded-pill"><i class="ri-close-line"></i> Fermer</span>';
+                                        endif;
+                                        ?>
+                                    </td>
+                                    <td style="text-align:center !important;">
+                                        <a href="teams/delete/<?= $value->id; ?>?admin&option=gaming" class="btn btn-danger label-btn label-end rounded-pill">
+                                            Supprimer
+                                            <i class="ri-close-line label-btn-icon ms-2 rounded-pill"></i>
+                                        </a>
+                                        <a href="teams/edit/<?= $value->id; ?>?admin&option=gaming" class="btn btn-warning label-btn rounded-pill">
+                                            <i class="ri-chat-smile-line label-btn-icon me-2"></i>
+                                            Editer
+                                        </a>
+                                    </td>
+                                </tr>
+                                <?php
+                                endforeach;
+                                ?>
                             </tbody>
                         </table>
                     </div>
