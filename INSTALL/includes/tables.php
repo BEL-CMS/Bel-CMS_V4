@@ -209,39 +209,35 @@ switch ($_POST['table']) {
 	case 'config_pages':
 		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
 		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
-			`id` int NOT NULL AUTO_INCREMENT,
-			`name` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
-			`visits` int NOT NULL DEFAULT '0',
-			`active` tinyint(1) NOT NULL DEFAULT '1',
-			`description` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
-			`key_seo` tinytext,
-			`infos_sup` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
-			`keywords` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
-			`access_groups` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
-			`access_admin` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
-			`config` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
-			`ver` varchar(6) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL DEFAULT '1.0.0',
-			`date_page` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-			PRIMARY KEY (`id`)
-		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
+				`id` int(11) NOT NULL,
+				`name` varchar(64) NOT NULL,
+				`visits` int(11) NOT NULL DEFAULT 0,
+				`active` tinyint(1) NOT NULL DEFAULT 1,
+				`description` text DEFAULT NULL,
+				`infos_sup` text DEFAULT NULL,
+				`keywords` varchar(64) DEFAULT NULL,
+				`access_groups` text DEFAULT NULL,
+				`access_admin` text DEFAULT NULL,
+				`config` text NOT NULL,
+				`ver` varchar(6) NOT NULL DEFAULT '1.0.0',
+				`date_page` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+				PRIMARY KEY (`id`)
+			) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";;
 
-		$insert = "INSERT INTO `".$_SESSION['prefix'].$table."`(`id`, `name`, `visits`, `active`, `description`, `key_seo`, `infos_sup`, `keywords`, `access_groups`, `access_admin`, `config`, `ver`, `date_page`) VALUES
-			('', 'news', 0, 1, NULL, NULL, NULL, NULL, '0', '1', 'MAX_NEWS=4', '1.0.0', '2025-02-12 22:22:37'),
-			('', 'user', 0, 1, NULL, NULL, NULL, NULL, '0', '1', '', '1.0.0', '2025-02-12 22:22:37'),
-			('', 'forum', 0, 1, '', NULL, NULL, NULL, '2', '1', 'MAX_PAGE=6', '1.0.0', '2025-03-21 15:09:18'),
-			('', 'newsletter', 0, 1, NULL, NULL, NULL, NULL, '0', '1', '', '1.0.0', '2025-03-21 15:09:18'),
-			('', 'gallery', 0, 1, NULL, NULL, NULL, NULL, '0', '1', 'MAX_PAGE=6', '1.0.0', '2025-04-04 15:00:16'),
-			('', 'links', 0, 1, NULL, NULL, NULL, NULL, '0', '1', 'MAX_PAGE=6', '1.0.0', '2025-04-09 08:52:33'),
-			('', 'members', 0, 1, NULL, NULL, NULL, NULL, '0', '1', 'MAX_PPR=8', '1.0.0', '2025-04-09 15:46:59'),
-			('', 'downloads', 0, 1, NULL, NULL, NULL, NULL, '0', '1', 'MAX_PPR=6', '1.0.0', '2025-04-11 16:59:39'),
-			('', 'articles', 0, 1, NULL, NULL, NULL, NULL, '0', '1', '', '1.0.0', '2025-04-13 09:49:11'),
-			('', 'guestbook', 0, 1, NULL, NULL, NULL, NULL, '0', '1|2', '', '1.0.0', '2025-04-14 12:27:04'),
-			('', 'shoutbox', 0, 1, NULL, NULL, NULL, NULL, '0', '1|2', '', '1.0.0', '2025-04-14 12:27:04'),
-			('', 'contact', 0, 1, NULL, NULL, NULL, NULL, '0', '1|2', '', '1.0.0', '2025-04-14 12:27:04'),
-			('', 'calendar', 0, 1, NULL, NULL, NULL, NULL, '0', '1', '', '1.0.0', '2026-03-10 14:52:12'),
-			('', 'inbox', 0, 1, NULL, NULL, NULL, NULL, '1|2', '1', '', '1.0.0', '2026-03-10 14:52:12'),
-			('', 'buyPlan', 0, 1, NULL, NULL, NULL, NULL, '2', '1', '', '1.0.0', '2026-04-30 12:12:44'),
-			('', 'typoghrapy', 0, 1, NULL, NULL, NULL, NULL, '0', '0', '', '1.0.0', '2026-05-16 15:33:37');";
+
+		$insert = "INSERT INTO `".$_SESSION['prefix'].$table."`(`id`, `name`, `visits`, `active`, `description`, `infos_sup`, `keywords`, `access_groups`, `access_admin`, `config`, `ver`, `date_page`) VALUES
+			(1, 'news', 639, 1, '', NULL, NULL, '0', '1', 'MAX_NEWS=4', '1.0.0', '2025-02-12 22:22:37'),
+			(2, 'user', 0, 1, '', NULL, NULL, '0', '1', '', '1.0.0', '2025-02-12 22:22:37'),
+			(3, 'forum', 0, 1, '', '<h1 id=\"belcms_forum_charte_title\"><i class=\"fas fa-scroll\"></i> Charte du Forum</h1>\n<a href=\"forum\" class=\"belcms_forum_charte_back-btn\">\n  <i class=\"fas fa-arrow-left\"></i> Retour au forum\n</a>\n  <div class=\"belcms_forum_charte_section\">\n    <h2 class=\"belcms_forum_charte_heading\"><i class=\"fas fa-handshake\"></i> Respect et bienveillance</h2>\n    <ul class=\"belcms_forum_charte_list\">\n      <li class=\"belcms_forum_charte_item\"><i class=\"fas fa-check-circle\"></i> Respecter les autres membres et leurs opinions.</li>\n      <li class=\"belcms_forum_charte_item\"><i class=\"fas fa-ban\"></i> Propos haineux ou insultants interdits.</li>\n      <li class=\"belcms_forum_charte_item\"><i class=\"fas fa-laugh-beam\"></i> L’humour est bienvenu s’il reste respectueux.</li>\n    </ul>\n  </div>\n\n  <div class=\"belcms_forum_charte_section\">\n    <h2 class=\"belcms_forum_charte_heading\"><i class=\"fas fa-comments\"></i> Contenu des messages</h2>\n    <ul class=\"belcms_forum_charte_list\">\n      <li class=\"belcms_forum_charte_item\"><i class=\"fas fa-check-circle\"></i> Messages clairs et pertinents.</li>\n      <li class=\"belcms_forum_charte_item\"><i class=\"fas fa-mobile-alt\"></i> Éviter le langage SMS.</li>\n      <li class=\"belcms_forum_charte_item\"><i class=\"fas fa-link\"></i> Liens sûrs et utiles uniquement.</li>\n    </ul>\n  </div>\n\n  <div class=\"belcms_forum_charte_section\">\n    <h2 class=\"belcms_forum_charte_heading\"><i class=\"fas fa-lock\"></i> Confidentialité et sécurité</h2>\n    <ul class=\"belcms_forum_charte_list\">\n      <li class=\"belcms_forum_charte_item\"><i class=\"fas fa-user-secret\"></i> Ne pas partager d’infos personnelles.</li>\n      <li class=\"belcms_forum_charte_item\"><i class=\"fas fa-shield-alt\"></i> Respect de la vie privée.</li>\n      <li class=\"belcms_forum_charte_item\"><i class=\"fas fa-trash-alt\"></i> Contenu dangereux supprimé par les modérateurs.</li>\n    </ul>\n  </div>\n\n  <div class=\"belcms_forum_charte_section\">\n    <h2 class=\"belcms_forum_charte_heading\"><i class=\"fas fa-user-shield\"></i> Modération</h2>\n    <ul class=\"belcms_forum_charte_list\">\n      <li class=\"belcms_forum_charte_item\"><i class=\"fas fa-gavel\"></i> Les modérateurs assurent le bon fonctionnement.</li>\n      <li class=\"belcms_forum_charte_item\"><i class=\"fas fa-exclamation-triangle\"></i> Sanctions en cas de non-respect.</li>\n      <li class=\"belcms_forum_charte_item\"><i class=\"fas fa-comment-slash\"></i> Décisions non discutables publiquement.</li>\n    </ul>\n  </div>\n\n  <div class=\"belcms_forum_charte_section\">\n    <h2 class=\"belcms_forum_charte_heading\"><i class=\"fas fa-seedling\"></i> Esprit communautaire</h2>\n    <ul class=\"belcms_forum_charte_list\">\n      <li class=\"belcms_forum_charte_item\"><i class=\"fas fa-users\"></i> Favoriser l’entraide et le partage.</li>\n      <li class=\"belcms_forum_charte_item\"><i class=\"fas fa-heart\"></i> Contribuer positivement au forum.</li>\n      <li class=\"belcms_forum_charte_item\"><i class=\"fas fa-lightbulb\"></i> Suggestions toujours bienvenues.</li>\n    </ul>\n  </div>', NULL, '2', '1', 'MAX_PAGE=6', '1.0.1', '2026-05-26 19:04:18'),
+			(4, 'newsletter', 0, 1, 'Mail de mise à jour', NULL, NULL, '0', '1', '', '1.0.0', '2025-03-21 15:09:18'),
+			(5, 'gallery', 0, 1, 'Galerie d\'images', NULL, NULL, '0', '1', 'MAX_PAGE=6', '1.0.0', '2025-04-04 15:00:16'),
+			(6, 'links', 0, 1, 'Tout les liens', NULL, NULL, '0', '1', 'MAX_PAGE=6', '1.0.0', '2025-04-09 08:52:33'),
+			(7, 'members', 0, 1, 'tout nos membres', NULL, NULL, '0', '1', 'MAX_PPR=8', '1.0.0', '2025-04-09 15:46:59'),
+			(8, 'downloads', 0, 1, 'Tout les téléchargements', NULL, NULL, '0', '1', 'MAX_PPR=6', '1.0.0', '2025-04-11 16:59:39'),
+			(9, 'articles', 0, 1, 'Tout nos articles', NULL, NULL, '0', '1', '', '1.0.0', '2025-04-13 09:49:11'),
+			(10, 'guestbook', 0, 0, 'Signez notre page Livre D\'or', NULL, NULL, '0', '1|2', '', '1.0.0', '2025-04-14 12:27:04'),
+			(11, 'buyplan', 0, 1, NULL, NULL, NULL, '0', '1', '', '1.0.0', '2026-05-08 16:27:52'),
+			(12, 'teams', 0, 1, NULL, NULL, NULL, '0', '1', '', '1.0.0', '2026-06-05 13:58:21');";
 	break;
 
 	case 'contact':
@@ -443,6 +439,15 @@ switch ($_POST['table']) {
 			`author` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
 			`id_vote` int NOT NULL,
 			`date_vote` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
+	break;
+
+	case 'game_rank':
+		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
+		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
+			`id` int NOT NULL AUTO_INCREMENT,
+			`name` tinytext,
 			PRIMARY KEY (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 	break;
@@ -803,6 +808,20 @@ switch ($_POST['table']) {
 			('', 0, 'contact');";
 	break;
 
+	case 'teams':
+		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
+		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
+			`id` int NOT NULL AUTO_INCREMENT,
+			`name` varchar(64) DEFAULT NULL,
+			`foundation` date DEFAULT NULL,
+			`contact` text,
+			`joining` tinyint(1) NOT NULL DEFAULT '1',
+			`logo` varchar(256) DEFAULT NULL,
+			`screen` varchar(256) DEFAULT NULL,
+			PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
+	break;
+
 	case 'templates':
 		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
 		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
@@ -851,6 +870,18 @@ switch ($_POST['table']) {
 			`2FA` tinyint(1) DEFAULT '0',
 			`admin` tinyint(1) NOT NULL DEFAULT '0',
 			`root` tinyint(1) NOT NULL DEFAULT '0',
+			PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
+	break;
+
+	case 'users_games':
+		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
+		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
+			`id` int NOT NULL AUTO_INCREMENT,
+			`author` varchar(32) DEFAULT NULL,
+			`date_join` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			`rank` tinyint DEFAULT NULL,
+			`id_game` tinyint DEFAULT NULL,
 			PRIMARY KEY (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 	break;

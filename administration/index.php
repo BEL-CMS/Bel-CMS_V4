@@ -179,6 +179,10 @@ final class Administration
                     $requestPage = self::request('extras', $this->page);
                     break;
 
+                case 'games':
+                    $requestPage = self::request('extras', $this->page);
+                    break;
+
                 default:
                     $requestPage = null;
                     break;
@@ -345,19 +349,6 @@ final class Administration
         return $return;
     }
     #########################################
-    # Menu gaming
-    #########################################
-    private function menuGaming()
-    {
-        $gaming  = self::getGaming();
-        $return  = array();
-
-        foreach ($gaming as $k => $v) {
-            $return['/' . $v . '?admin&option=gaming'] = defined(strtoupper($v)) ? constant(strtoupper($v)) : $v;
-        }
-        return $return;
-    }
-    #########################################
     # Menu parameter
     #########################################
     private function menuParameter()
@@ -380,6 +371,19 @@ final class Administration
 
         foreach ($parameter as $k => $v) {
             $return['/' . $v . '?admin&option=extras'] = defined(strtoupper($v)) ? constant(strtoupper($v)) : $v;
+        }
+        return $return;
+    }
+    #########################################
+    # Menu Games
+    #########################################
+    private function menuGaming()
+    {
+        $parameter  = self::getGaming();
+        $return     = array();
+
+        foreach ($parameter as $k => $v) {
+            $return['/' . $v . '?admin&option=games'] = defined(strtoupper($v)) ? constant(strtoupper($v)) : $v;
         }
         return $return;
     }

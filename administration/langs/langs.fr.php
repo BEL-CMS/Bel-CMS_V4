@@ -61,8 +61,8 @@ Common::constant(array(
 	'EDIT_ERROR'                  => 'Erreur lors de la sauvegarde ou rien à changer dans le formulaire.',
 	'ID_ERROR'                    => 'ID Incorrecte, un message sera transmis aux administrateurs',
 	'ID_ERROR_TITLE'              => 'ID Incorrecte',
-	'ID_ERROR_MSG'                => 'L\'utilisateur a donné une ID qui n\' est pas valide',
-	'DEL_SUCCESS'                 => 'Effacement effectué avec succès.',
+	'ID_ERROR_MSG'                => 'L\'utilisateur a donné une ID qui n\'est pas valide',
+	'DEL_SUCCESS'                 => 'La suppression a été réalisée avec succès.',
 	'DEL_ERROR'                   => 'Erreur lors de la suppression',
 	'ERROR_NO_DATA'               => 'Aucune donnée transmise',
 	'CATEGORY'                    => 'Catégories',
@@ -81,6 +81,7 @@ Common::constant(array(
 	'MAIN_CAT'                    => 'Catégorie principal',
 	'CAT_SUB'                     => 'Catégorie secondaire',
 	'ADD_MAIN_CAT'                => 'Ajouter une catégorie primaire',
+	'ADMIN_CONNECT_LOSE'          => 'Vous devez être connecté pour accéder à l\'administration.',
 	#####################################
 	# UPLOAD
 	#####################################
@@ -176,7 +177,7 @@ Common::constant(array(
 	'DONATIONS'                           => 'Don',
 	'GALLERY'                             => 'Galerie d\'images',
 	'FAQ'                                 => 'Foire aux questions',
-	'FILE_MANAGER'                        => 'Geiers',
+	'FILE_MANAGER'                        => 'Fichier manager',
 	'ARTICLES'                            => 'Articles',
 	'LINKS'                               => 'Liens',
 	'SURVEY'                              => 'Sondages',
@@ -200,4 +201,9 @@ Common::constant(array(
 	'REPLY'                               => 'Répondre',
 	'REPLY_MSG'                           => 'Réponse au message',
 	'CAT_NULL'                            => 'Il est nécessaire que le nom de la catégorie soit renseigné.',
+	'CAT_DELETE'                          => 'Aucune catégorie !',
+	'CAT_SEND'                            => 'L\'email a été transmis correctement.',
+	'ADD_SECOND_CAT'                      => 'Ajouter une catégorie secondaire',
+	#####################################
+	'IP'                                  => 'IP',
 ));
