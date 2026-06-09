@@ -11,6 +11,7 @@
     border: 1px solid #f0f0f0;
     background-color: rgba(255, 255, 255, .9);
     overflow: hidden;
+    margin-bottom: 25px;
 }
 .belcms_section_team_list_img {
     width: 165px;
@@ -25,17 +26,26 @@
 .belcms_section_teams_table {
     display: block;
     margin-left: 20px;
-    padding: 34px;
+    padding: 22px;
     width: 100%;
     position: relative;
+}
+.belcms_section_teams_table table,
+.belcms_section_teams_table table tr {
+    width: 100%;
 }
 .belcms_section_teams_table tr td {
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
-    width: 35%;
     text-align: left;
     vertical-align: middle;
+}
+.belcms_section_teams_table_title {
+    width: 100px;
+}
+.belcms_section_teams_table_value {
+    width: 100%;
 }
 .belcms_section_teams_table tr td:first-child {
     font-weight: bold;
@@ -44,7 +54,7 @@
     display: block;
     text-align: center;
     color: red;
-    width: 2%;
+    width: 2% !important;
     margin: 0 25px;
     line-height: 24px;
 }
@@ -67,4 +77,21 @@
 .belcms_section_teams_table_enter a:hover {
     transition: all 1s linear;
     background: linear-gradient(10deg, #ff3131, #ffac15);
+}
+
+#belcms_team_table {
+    width: 100%;
+    margin-top: 25px;
+}
+/* annulé
+#belcms_team_table img {
+    display: block;
+    width: 100px;
+    height: 100px;
+}
+*/
+#belcms_team_screen {
+    display: block;
+    width: 100%;
+    height: auto;
 }

@@ -9,6 +9,8 @@
 * @author as Stive - stive@determe.be
 */
 
+use BelCMS\Requires\Common;
+
 if (!defined('CHECK_INDEX')):
     header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
     exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
@@ -25,36 +27,47 @@ endif;
 </div>
 
 <div id="belcms_section_teams">
+    <?php
+        foreach ($teams as $key => $value):
+    ?>
     <div class="belcms_section_team_list">
         <div class="belcms_section_team_list_img">
-            <img src="templates/palacewar_2026/images/qr_code.jpg">
+            <img src="<?= $value->logo; ?>" alt="Team Logo <?= $value->name; ?>">
         </div>
         <div class="belcms_section_teams_table">
             <table>
                 <tr>
-                    <td>Fondée</td>
+                    <td class="belcms_section_teams_table_title">Team</td>
                     <td class="belcms_section_teams_table_separate">:</td>
-                    <td>2001</td>
+                    <td class="belcms_section_teams_table_value"><?= $value->name; ?></td>
                 </tr>
                 <tr>
-                    <td>Adhésion</td>
+                    <td class="belcms_section_teams_table_title">Fondée</td>
                     <td class="belcms_section_teams_table_separate">:</td>
-                    <td>Ouvert</td>
+                    <td class="belcms_section_teams_table_value"><?= Common::TransformDate($value->foundation, 'MEDIUM'); ?></td>
                 </tr>
                 <tr>
-                    <td>Contact</td>
+                    <td class="belcms_section_teams_table_title">Adhésion</td>
                     <td class="belcms_section_teams_table_separate">:</td>
-                    <td>Discord</td>
+                    <td class="belcms_section_teams_table_value">Ouvert</td>
                 </tr>
                 <tr>
-                    <td>Membres</td>
+                    <td class="belcms_section_teams_table_title">Contact</td>
                     <td class="belcms_section_teams_table_separate">:</td>
-                    <td>8</td>
+                    <td class="belcms_section_teams_table_value"><a href="<?= $value->contact; ?>" title="Team <?= $value->name; ?>"><?= $value->contact; ?></a></td>
+                </tr>
+                <tr>
+                    <td class="belcms_section_teams_table_title">Membres</td>
+                    <td class="belcms_section_teams_table_separate">:</td>
+                    <td class="belcms_section_teams_table_value"><?= $value->count; ?></td>
                 </tr>
             </table>
             <div class="belcms_section_teams_table_enter">
-                <a href="#" title="Team">Entrer</a>
+                <a href="teams/detail/<?= $value->id ?>/<?= Common::MakeConstant($value->name); ?>" title="Team - <?= $value->name; ?>">Entrer</a>
             </div>
         </div>
     </div>
+    <?php
+    endforeach;
+    ?>
 </div>

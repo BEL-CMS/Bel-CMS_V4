@@ -854,7 +854,7 @@ final class Common
 
         $o = [
             'binary'             => false,
-            'decimalPlaces'      => 2,
+            'decimalPlaces'      => 0,
             'decimalSeparator'   => '.',
             'thausandsSeparator' => '',
             'maxThreshold'       => false,

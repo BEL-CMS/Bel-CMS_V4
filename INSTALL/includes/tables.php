@@ -878,20 +878,10 @@ switch ($_POST['table']) {
 		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
 		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
 			`id` int NOT NULL AUTO_INCREMENT,
-			`author` varchar(32) DEFAULT NULL,
+			`hash_key` varchar(32) DEFAULT NULL,
 			`date_join` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			`rank` tinyint DEFAULT NULL,
 			`id_game` tinyint DEFAULT NULL,
-			PRIMARY KEY (`id`)
-		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
-	break;
-
-	case 'users_gaming':
-		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
-		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
-			`id` int NOT NULL AUTO_INCREMENT,
-			`hash_key` varchar(32) NOT NULL,
-			`name_game` text NOT NULL,
 			PRIMARY KEY (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 	break;

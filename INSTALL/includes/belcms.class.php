@@ -300,7 +300,6 @@ class BelCMS
 			'tickets',
 			'users',
 			'users_games',
-			'users_gaming',
 			'users_groups',
 			'users_hardware',
 			'users_page',
