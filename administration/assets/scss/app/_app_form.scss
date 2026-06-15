@@ -1,0 +1,228 @@
+// >>------------- 10.1 App  Form css start ------------- <<
+
+.app-form {
+  .form-label {
+    color: var(--font-color);
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .form-select,
+  .form-control {
+    background-color: rgba(var(--light),.1);
+    color: rgba(var(--dark), .4);
+    font-weight: 600;
+    font-size: 14px;
+    padding: 0.8rem 0.75rem;
+    border: 1.5px solid rgba(var(--dark), .4);
+    text-overflow: ellipsis;
+    border-radius: var(--app-border-radius);
+
+    &::placeholder {
+      color: rgba(var(--secondary), .75) !important;
+      font-weight: 500;
+      opacity: 1;
+    }
+
+    &:focus {
+      color: rgba(var(--dark), 1);
+      box-shadow: 0 0 0 0.25rem rgba(var(--primary), 0.3);
+      border: 1px solid rgba(var(--primary), .8);
+      padding-left: 1.3rem;
+      transition: var(--app-transition);
+    }
+
+    &.is-invalid {
+      border-color: rgba(var(--danger), 1);
+
+      &:focus {
+        box-shadow: 0 0 0 0.25rem rgba(var(--danger), 0.3);
+      }
+    }
+
+    &.form-control-lg {
+      min-height: calc(1.5em + 1rem + calc(var(--bs-border-width) * 2));
+      padding: 0.5rem 1rem;
+      font-size: 1.25rem;
+    }
+
+    &.form-control-sm {
+      min-height: calc(1.5em + 0.5rem + calc(var(--bs-border-width) * 2));
+      padding: 0.25rem 0.5rem;
+      font-size: .875rem;
+    }
+  }
+
+  .form-select-sm{
+    padding: 0.6rem 0.75rem !important;
+  }
+  .form-select-lg{
+    padding: 1rem 0.75rem !important;
+  }
+
+  .form-select {
+    option {
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+
+      &:active,
+      &:checked {
+        background-color: rgb(var(--primary), 1);
+        color: rgba(var(--white), 1);
+      }
+
+      &:hover {
+        background-color: rgb(var(--primary), .1);
+        color: rgb(var(--primary), 1);
+      }
+    }
+  }
+
+  .form-text {
+    color: rgba(var(--secondary), 1);
+  }
+
+  .input-group {
+    .input-group-text {
+      font-size: 14px;
+      border-color: rgba(var(--dark),.4);
+    }
+    &.input-group-sm{
+      .form-control{
+        padding: 0.5rem 0.75rem;
+      }
+    }
+  }
+
+  .form-floating {
+    > .form-control {
+      &::placeholder {
+        color: transparent !important;
+      }
+
+      &:focus {
+        &::placeholder {
+          color: rgba(var(--secondary), 1) !important;
+        }
+      }
+    }
+
+    > .form-select {
+      padding-top: 1.5rem;
+      padding-bottom: 0.625rem;
+    }
+  }
+
+  .app-control {
+    position: relative;
+    padding-bottom: 20px;
+
+    &.success {
+      input {
+        border: 1px solid rgba(var(--success), 0.3);
+      }
+    }
+
+    &.error {
+      input {
+        border: 1px solid rgba(var(--danger), 1);
+
+        &:focus {
+          box-shadow: 0 0 0 0.25rem rgba(var(--danger), 0.3);
+        }
+      }
+
+      small {
+        visibility: visible;
+      }
+    }
+
+    small {
+      color: rgba(var(--danger), 1);
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      visibility: hidden;
+    }
+  }
+
+  &.was-validated {
+    .form-control {
+      &:invalid {
+        border-color: rgba(var(--danger), 1);
+      }
+
+      &:valid {
+        border-color: rgb(var(--success), 1);
+      }
+    }
+
+    .invalid-feedback {
+      color: rgba(var(--danger), 1);
+    }
+  }
+
+  [type="color"] {
+      padding: 0 ;
+      height: 50px ;
+      border-color: transparent;
+   }
+
+  &.app-icon-form {
+    .icon-control{
+      position: relative;
+      i {
+        position: absolute;
+        font-size: 18px;
+        color: rgba(var(--dark),.75);
+      }
+      &::after {
+        content: "";
+        position: absolute;
+        top: 25px;
+        left: 40px;
+        width: 1px;
+        height: 20px;
+        background: rgba(var(--dark), 0.6);
+        transform: translateY(-50%);
+      }
+    }
+  }
+  &.tooltip-needs-validation{
+    .invalid-tooltip{
+      background-color: rgba(var(--danger), .2);
+      border: 1px solid rgba(var(--danger), .6);
+      color: rgba(var(--danger), 1);
+      right: 12px;
+      margin-top: 6px;
+      font-weight: 600;
+      font-size: 10px;
+      padding: 0.1rem .5rem;
+    }
+  }
+}
+
+.form-select {
+  &.custom-form-select {
+    min-width: 115px;
+    padding: .4rem .75rem;
+    background-color: transparent;
+  }
+}
+
+body.dark {
+  .app-form {
+    select {
+      option {
+        background-color: rgba(var(--white), 1);
+        color: #ffffff;
+
+        selected {
+          color: rgba(var(--dark), 1) !important;
+        }
+      }
+    }
+  }
+}
+
+// >>------------- 10.1 App Form css end ------------- <<

@@ -1,0 +1,62 @@
+// >>------------- 12.2  Form Wizard 1 css end ------------- <<
+
+.app-wizard-tabs{
+  border-bottom: 0;
+    .nav-item {
+      &.show {
+        .nav-link {
+           background-color: transparent;
+        }
+      }
+    }
+
+    .nav-link {
+      width: 100%;
+      padding: 0.5rem 0 !important;
+      gap: 0.5rem;
+      &.active {
+         background-color: transparent;
+        .tab-box-icon{
+          background: var(--primary-gradient) !important;
+          color: rgba(var(--white),1) !important;
+        }
+        .tab-box{
+          background: var(--primary-gradient);
+          color: rgba(var(--white),1);
+        }
+      }
+    }
+
+
+  .tab-box{
+    flex-grow: 1;
+    text-align: start;
+    padding: 0.75rem 1rem;
+    border-radius: var(--app-border-radius);
+    color: rgba(var(--secondary),1);
+  }
+  &.horizontal-wizard-tabs{
+    justify-content: space-between;
+    gap: 1rem;
+    .nav-item{
+      .nav-link {
+        padding: 0 !important;
+        &.active{
+          .text-dark{
+            color: rgba(var(--white),1) !important;
+          }
+          .text-secondary{
+            color: rgba(var(--light),1) !important;
+          }
+        }
+      }
+    }
+  }
+}
+.payment-successful-tab{
+  h4{
+    font-size: calc(20px + (28.5 - 20) * ((100vw - 300px) / (1920 - 300)));
+  }
+}
+
+// >>------------- 12.2 Form Wizard 1 css end ------------- <<

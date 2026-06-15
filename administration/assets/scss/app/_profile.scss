@@ -1,0 +1,286 @@
+// >>------------- 4.2  Profile css start ------------- <<
+
+.apps-search{
+  i{
+    top: 5px;
+    right: 15px;
+  }
+}
+
+  .image-details {
+    width: 100%;
+    position: relative;
+
+    .profile-pic {
+      position: relative;
+      width: 120px;
+      height: 120px;
+
+      .avatar-preview {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        overflow: hidden;
+
+        > div {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          background-image: url("../images/avatar/03.png");
+          background-color: rgba(var(--primary),1);
+          background-size: cover;
+          background-position: center;
+          border: 4px solid rgba(var(--dark),1);
+          transition: background-image 0.3s ease-in-out;
+        }
+      }
+
+      .avatar-edit {
+        position: absolute;
+        top: 10px;
+        right: 0;
+        z-index: 1;
+
+        input {
+          display: none;
+        }
+
+        label {
+          display: inline-block;
+          width: 34px;
+          height: 34px;
+          line-height: 34px;
+          text-align: center;
+          border-radius: 50%;
+          background-color: #fff;
+          border: 2px solid rgba(0,0,0,0.1);
+          cursor: pointer;
+          transition: all 0.2s ease-in-out;
+        }
+
+        label:hover {
+          background-color: #f0f0f0;
+        }
+      }
+    }
+  }
+
+.person-details {
+    margin-top: 40px;
+    text-align: center;
+
+    .details {
+      margin-top: 25px;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      text-align: center;
+    }
+  }
+
+.story-modal-bg{
+  width: 400px;
+  height: 380px;
+  margin: auto;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  border-radius: var(--app-border-radius);
+  overflow: hidden;
+  .modal-header{
+    backdrop-filter: blur(10px);
+  }
+  .story-text{
+    text-align: center;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    background-color: rgba(var(--white),1);
+    color: rgba(var(--dark),1);
+  }
+}
+.story-wrapper {
+  width: 100%;
+  display: flex;
+
+  .story-container {
+    display: flex;
+    gap: 1.5rem;
+    transition: transform 0.5s ease;
+    overflow-x: auto;
+
+    &.app-scroll {
+      &::-webkit-scrollbar {
+        display: none;
+        transition: all 0.5s ease-in;
+      }
+    }
+
+  }
+
+  .story-item {
+    cursor: pointer;
+    flex: 0 0 auto;
+  }
+
+}
+
+%transparentbox {
+  height: 50px;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  transition:opacity 0.5s ease-in-out ;
+}
+
+.photos-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  grid-gap: 0;
+  align-items: start;
+  .img-box {
+    border: 1px solid rgba(var(--white),1);
+    position: relative;
+    &:hover {
+      .transparent-box2 {
+        opacity: 1;
+      }
+    }
+  }
+  img {
+    max-width: 100%;
+    display: block;
+    height: auto;
+  }
+  .caption {
+    color: rgba(var(--white),1);
+    font-size: 1.5rem;
+  }
+  .transparent-box {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: background-color 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .transparent-box2 {
+    @extend %transparentbox;
+    .captions {
+      color: rgba(var(--white),1);
+      text-align: center;
+      padding-top: 10px;
+    }
+  }
+
+  .left-main-img {
+    grid-row: 1;
+    grid-column: 1;
+  }
+  .right-main-img {
+    grid-row: 1;
+    grid-column: 2;
+  }
+  .sub {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-gap: 0;
+  }
+}
+
+.hide-element {
+  border: 0;
+  clip: rect(1px 1px 1px 1px);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  grid-gap: 0;
+  .boxs {
+
+    height: auto;
+    border: 1px solid rgba(var(--white),1);
+    justify-content: center;
+    align-items: start;
+    position: relative;
+    &:hover {
+      .transparent-box3 {
+        opacity: 1;
+      }
+    }
+  }
+  img {
+    width: 100%;
+  }
+  .transparent-box3 {
+    @extend %transparentbox;
+    .description-caption{
+      color: rgba(var(--white),1);
+      text-align: center;
+      padding-top: 10px;
+    }
+  }
+}
+
+.card{
+  &.profile-project-card{
+    border: 1px solid rgba(var(--secondary),.4) !important;
+  }
+}
+
+
+.post-div{
+  .post {
+    width: 100%;
+    height: 400px;
+    background-image: url("../images/profile-app/25.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top;
+    border-radius: 10px;
+    margin:1rem 0;
+  }
+  .post-icon{
+    font-size: 25px;
+  }
+}
+.comment-box{
+  border: 1px solid rgba(var(--secondary),.4);
+  border-radius: var(--app-border-radius);
+  padding: 1rem;
+}
+
+.post-upload-container{
+  border: 1px solid rgba(var(--secondary), .4);
+  border-radius: var(--app-border-radius);
+}
+
+.about-list {
+  //padding-top: 10px;
+  div {
+    &+div{
+      margin-top: 10px;
+    }
+  }
+}
+// >>------------- 4.2 Profile css end ------------- <<

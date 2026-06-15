@@ -1,0 +1,88 @@
+// >>-------------  4.20 Invoice css start  ------------- <<
+
+.invoice-table {
+  tr {
+    th,
+    td {
+      padding: 0.8rem 0.75rem !important;
+    }
+
+    h6,
+    p{
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+    }
+
+  }
+}
+@media print {
+  table {
+    width: 100% !important;
+    table-layout: fixed !important;
+    border-collapse: collapse !important;
+  }
+
+  .invoice-table {
+    tr {
+
+      th,
+      td {
+        word-break: break-word !important;
+        white-space: normal !important;
+        vertical-align: top !important;
+      }
+
+      h6,
+      p {
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        display: block !important;
+        -webkit-line-clamp: unset !important;
+        -webkit-box-orient: unset !important;
+        white-space: nowrap !important;
+      }
+    }
+  }
+
+  .app-breadcrumbs,
+  #theme-customizer-box,
+  .invoice-footer,
+  footer,
+  header,
+  .app-navbar{
+    display: none;
+    margin: 0 !important;
+    padding:0 !important;
+  }
+  main{
+    width: 100%;
+    padding: 0;
+    .container{
+      max-width: 100%;
+      padding: 0;
+    }
+  }
+  .app-wrapper {
+    .app-content{
+      padding: 0;
+      .go-top{
+        display: none !important;
+      }
+    }
+  }
+  .customizer-btn{
+    display: none;
+  }
+  .invoice-container{
+    .card-body{
+      padding: 0;
+    }
+  }
+}
+
+
+
+// >>-------------  4.20 Invoice css end  ------------- <<

@@ -1,0 +1,64 @@
+@use "sass:map";
+@use "reboot";
+
+// >>---------- 7.10 Scrollpy css start --------------<<
+
+@mixin btn_pill($name, $color) {
+
+    .nav-link,
+    .dropdown-item {
+        &.nav-pill-#{$name}{
+            &.active{
+                background-color: rgba(#{$color},1);
+                color: rgba(var(--white),1);
+            }
+        }
+    }
+    .list-group-item{
+        &.nav-pill-#{$name}{
+            &.active{
+                background-color: rgba(#{$color},1);
+                border-color:rgba(#{$color},1);
+            }
+        }
+    }
+  }
+
+  @each $name, $color in reboot.$colors {
+    @include btn_pill(""+$name, map.get(reboot.$colors, $name));
+  }
+
+.simple-list-example-scrollspy{
+    .active{
+        color: rgba(var(--primary),1);
+    }
+}
+
+.scrollpy-navbar{
+    //background-color: rgba(var(--secondary),.1) !important;
+    border-radius: var(--bs-border-radius);
+    .navbar-collapse{
+        padding: 0.5rem !important;
+    }
+    .nav-link{
+        color: rgba(var(--secondary),1);
+        font-weight: 500;
+    }
+    .navbar-toggler{
+        filter: brightness(0);
+        &:focus{
+            box-shadow: none;
+        }
+    }
+}
+.nested-nav ,
+.scrollpy-nested-nav  {
+    .nav-link{
+        color: rgba(var(--primary)) ;
+    }
+}
+.nav-link.nav-pill-primary.active{
+    color: white !important;
+}
+
+// >>--------- 7.10 Scrollpy css end ----------<<

@@ -1,0 +1,42 @@
+// >>------------- 4.26 Pricing css start  ------------- <<
+.pricing-section{
+  padding-top: 2.5rem !important;
+  padding-bottom: 0 !important;
+
+  h4{
+    font-size: calc(32px + (48 - 32) * ((100vw - 300px) / (1920 - 300)));
+  }
+  h3{
+    font-size: calc(22px + (32 - 22) * ((100vw - 300px) / (1920 - 300)));
+  }
+  p{
+    font-size: calc(15px + (17 - 15) * ((100vw - 300px) / (1920 - 300)));
+    color: rgba(var(--secondary), 1) !important;
+  }
+
+  .template-pricing-card{
+    position: relative;
+    .pricing-icon{
+      outline: 12px solid rgba(var(--white), .6);
+      position: absolute;
+      top: -28px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .pricing-list{
+      li{
+        color: rgba(var(--light),1);
+        font-size: calc(15px + (18 - 15) * ((100vw - 300px) / (1920 - 300)));
+        &+li{
+          padding-top: 1rem;
+        }
+      }
+    }
+    .btn{
+      font-size: calc(15px + (18 - 15) * ((100vw - 300px) / (1920 - 300))) !important;
+    }
+  }
+}
+
+// >>------------- 4.26 Pricing css end  ------------- <<

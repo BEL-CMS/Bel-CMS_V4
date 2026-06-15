@@ -1,0 +1,80 @@
+// >>------------- 4.10 Email css start ------------- <<
+
+.email-inbox-tab{
+  &.nav-tabs {
+    .nav-link{
+      padding: 0 !important;
+    }
+  }
+
+}
+
+.mail-toggle-btn{
+  position: absolute;
+  left: 2px;
+  width: 30px;
+  height: 30px;
+  background-color: rgba(var(--primary), 1);
+  color: rgba(var(--white), 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.email-list {
+  li {
+    padding: 8px 18px;
+    font-size: 15px;
+    color: rgb(var(--secondary), 0.8);
+    display: flex;
+    align-items: center;
+  }
+}
+
+.mail-table {
+  width: 100%;
+  height: calc(100vh - 245px);
+  overflow-y: auto;
+
+  .mail-box {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+    border: 1px solid rgba(var(--secondary),.4);
+    border-radius: 10px;
+    padding: 0.75rem;
+    margin-top: 10px;
+    a {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      cursor: pointer;
+    }
+    &:hover{
+      background-color: rgba(var(--light), 0.1);
+    }
+    .spam-box{
+      p{
+        max-width: 600px;
+      }
+    }
+  }
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.mailtoggle {
+  display: block !important;
+  position: absolute;
+  z-index: 3;
+  width: calc(100% - 24px);
+}
+
+
+// >>------------- 4.10 Email css end ------------- <<

@@ -1,0 +1,244 @@
+@use "sass:map";
+@use "reboot";
+
+// >>-------------  6.3 card css start ------------- <<
+
+.card{
+  &.h-100{
+    height: calc(100% - 1.25rem)!important;
+  }
+}
+
+
+.card {
+  background-color: rgba(var(--white), .65);
+  border: 1px solid rgba(var(--secondary), .2);
+  margin-bottom: 1rem;
+  transition: var(--app-transition);
+  border-radius: var(--app-border-radius);
+  box-shadow: var(--box-shadow);
+
+
+  .card-style{
+    background-color: transparent;
+    border: none;
+    .card-header {
+      padding: 0.75rem 0 !important;
+    }
+
+    .card-body {
+      background-color: rgba(var(--white), .65);
+      border: 1px solid rgba(var(--secondary), .2);
+      border-radius: var(--app-border-radius);
+    }
+  }
+
+
+  &.hover-effect {
+    &:hover {
+      transform: translateY(-2px);
+      transition: var(--app-transition);
+      box-shadow: var(--hover-shadow);
+    }
+  }
+
+  &.border-0 {
+    .card-header {
+      border-bottom: 0;
+
+      & + .card-body {
+        padding-top: 0;
+      }
+    }
+
+    .card-body {
+      & + .card-footer {
+        border-top: 0;
+        padding-top: 0;
+      }
+    }
+  }
+
+  .icon-bg {
+    font-size: 500%;
+    position: absolute;
+    right: -4px;
+    top: -8px;
+    opacity: 0.15;
+
+    &.icon-bg-start {
+      left: -6px;
+    }
+  }
+
+  .card-body, .card-header, .card-footer {
+    padding: 1.125rem 1.5rem;
+  }
+
+  .card-header, .card-footer {
+    background-color: transparent;
+    border-color: rgba(var(--secondary),.2);
+
+    h5 {
+      font-size: calc(16.5px + (18 - 16.5) * ((100vw - 300px) / (1920 - 300)));
+      font-weight: 600;
+      color: rgba(var(--dark),.9);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+    }
+
+    p {
+      color: rgba(var(--secondary), .75);
+      margin-bottom: 0;
+    }
+  }
+
+  .card-body,
+  .card-header {
+    &.code-header {
+      .source {
+        font-size: 20px;
+        color: rgba(var(--dark), 1);
+        position: absolute;
+        right: 20px;
+        top: 14px;
+        background-color: rgba(var(--dark), 0.1);
+        padding: 6px;
+        border-radius: 100%;
+      }
+    }
+  }
+
+  .card-footer {
+    &.code-footer {
+      .source {
+        font-size: 20px;
+        color: rgba(var(--dark), 1);
+        position: absolute;
+        right: 20px;
+        bottom: 14px;
+        background-color: rgba(var(--dark), 0.1);
+        padding: 6px;
+        border-radius: 100%;
+      }
+    }
+  }
+}
+
+.horizontal-card {
+  img {
+    object-fit: cover;
+    min-height: 100%;
+  }
+}
+
+.equal-card {
+  height: calc(100% - 1.25rem);
+}
+
+@mixin card_mixin($name, $color) {
+  .card-#{$name} {
+    background-color: rgba(#{$color}, 1);
+
+    * {
+      color: rgba(var(--white), 1) !important;
+    }
+
+    &:hover, &:active, &.active, &.show, &:checked, &:focus {
+      background-color: rgba(#{$color}, 1) !important;
+      transition: var(--app-transition);
+    }
+  }
+
+  .card-outline-#{$name} {
+    background-color: transparent;
+    border: 1px solid rgba(#{$color}, 1);
+
+    * {
+      color: rgba(#{$color}, 0.8);
+    }
+
+    .card-header {
+      * {
+        color: rgba(#{$color}, 1);
+      }
+    }
+
+    .card-header, .card-footer {
+      border-color: rgba(#{$color}, 1);
+    }
+
+    &:hover, &.active, &.show, &:checked, &:focus {
+      background-color: rgba(#{$color}, 1);
+
+      * {
+        color: rgba(var(--white), 1);
+      }
+
+      .card-header, .card-footer {
+        border-color: rgba(var(--white), 1);
+      }
+    }
+  }
+
+  .card-light-#{$name} {
+    background-color: rgba(#{$color}, 0.10);
+
+    .card-header, .card-footer {
+      border-color: rgba(#{$color}, 0.4);
+    }
+
+    * {
+      color: rgba(#{$color}, 1);
+    }
+
+    &:hover, &.active, &.show, &:checked, &:focus {
+      background-color: rgba(#{$color}, 0.20);
+      border-color: rgba(#{$color}, 1);
+      color: rgba(#{$color}, 1);
+    }
+
+    &.disabled {
+      background-color: rgba(#{$color}, 0.5);
+    }
+  }
+}
+
+@each $name, $color in reboot.$colors {
+  @include card_mixin(""+$name, map.get(reboot.$colors, $name));
+}
+
+.card-cover {
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  z-index: 1;
+  bottom: 95%;
+  left: 95%;
+  opacity: 0.6;
+  background-size: cover;
+  background-position: center;
+  filter: blur(4px);
+  transform: scale(10);
+}
+
+
+.footer-card {
+  position: absolute;
+  bottom: 4px;
+  left: 4px;
+  width: calc(100% - 8px);
+  backdrop-filter: blur(8px);
+  background-color: rgba(var(--white), 0.2);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.top-footer {
+  top: 4px;
+  bottom: auto;
+}
+
+// >>------------- 6.3  card css end ------------- <<

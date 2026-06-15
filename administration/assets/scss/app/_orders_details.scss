@@ -1,0 +1,103 @@
+// >>------------- 4.15 Orders details css start ------------- <<
+
+.orders-details-datatable {
+  .table {
+    thead {
+      tr {
+        th:nth-child(1) {
+          min-width: 212px;
+        }
+        th {
+          color: rgba(var(--dark), 0.8);
+          font-weight: 600;
+        }
+
+        th:nth-child(3) {
+          min-width: 177px;
+        }
+        th:nth-child(6)
+        {
+          min-width: 136px;
+        }
+        th:nth-child(7) {
+          min-width: 150px;
+        }
+      }
+    }
+    tbody {
+      tr {
+        td {
+          color: rgba(var(--scendary), 0.75);
+          h6 {
+            color: rgba(var(--dark), 0.8);
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
+}
+
+.shipping-timeline{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  margin-top: 1rem;
+  margin-left: 10px;
+
+  &.app-side-timeline {
+    .side-timeline-section{
+      padding-bottom: 0;
+
+      .side-timeline-icon{
+        cursor: pointer;
+        &:hover{
+          i {
+            animation: swing;
+            animation-duration: 2s;
+          }
+        }
+      }
+
+      &.right-side{
+        border-left: 3px solid rgba(var(--secondary),.4);
+        .side-timeline-icon{
+          left: -18px;
+          top: 0;
+          outline: 3px solid rgba(var(--secondary),.2);
+          border-radius: 50%;
+        }
+      }
+      &.complete-step{
+        border-left: 3px solid rgba(var(--primary),1);
+
+        .side-timeline-icon{
+          outline: 3px solid rgba(var(--primary),.4);
+        }
+      }
+
+      .timeline-content{
+        margin: 0 0 15px 30px !important;
+        p{
+          -webkit-line-clamp: 1 !important;
+        }
+      }
+
+    }
+  }
+}
+
+.product-table {
+  thead {
+    tr {
+      th:nth-child(4) {
+        min-width: 100px;
+      }
+      th:nth-child(5) {
+        min-width: 100px;
+      }
+    }
+  }
+}
+
+// >>------------- 4.15 Orders details css end ------------- <<

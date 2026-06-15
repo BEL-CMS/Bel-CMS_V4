@@ -1,0 +1,305 @@
+// >>------------- 10.10 switch css start ------------- <<
+
+.app-switch {
+  .form-check-input {
+    width: 38px;
+    height: 20px;
+
+    &:checked {
+      background-color: rgba(var(--primary), 1);
+    }
+  }
+  &.switch-sm{
+    .form-check-input{
+      width: 28px;
+      height: 14px;
+    }
+  }
+  &.switch-md{
+    .form-check-input{
+      width: 32px;
+      height: 16px;
+    }
+  }
+  &.switch-lg{
+    .form-check-input{
+      width: 45px;
+      height: 26px;
+    }
+  }
+  &.switch-xl{
+    .form-check-input{
+      width: 65px;
+      height: 38px;
+    }
+  }
+}
+
+$gradientColors: (primary, secondary, success, warning, danger, info, light, dark);
+
+@mixin switch_gradient_mixin($name, $cssVarName) {
+  .switch-#{$name} {
+    .form-check-input {
+      position: relative;
+      overflow: hidden;
+
+      &:after {
+        content: "";
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        inset: 0;
+        top: 0;
+        left: 0;
+        background: transparent;
+        z-index: -1;
+        transition: background 0.3s ease;
+      }
+
+      &:checked {
+        background-color: transparent !important;
+        border: 1px solid transparent;
+
+        &:after {
+          background-image: var(--#{$cssVarName}-gradient) !important;
+
+        }
+      }
+    }
+  }
+}
+
+
+@each $name in $gradientColors {
+  @include switch_gradient_mixin($name, $name);
+}
+
+.theme-switch {
+  display: inline-block;
+
+  input {
+    display: none;
+    &:checked  {
+      + .switch{
+        background: rgba(var(--dark), 1);
+
+        .sun {
+          left: 10px;
+          i{
+            color: rgba(var(--dark), 1);
+          }
+        }
+
+        &::before {
+          transform: translateX(40px);
+        }
+      }
+    }
+  }
+
+  .switch {
+    width: 80px;
+    height: 40px;
+    background: rgba(var(--white),1);
+    border: 1px solid rgba(var(--light),.6);
+    border-radius: 30px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.3s ease;
+
+    &::before {
+      content: "";
+      width: 35px;
+      height: 35px;
+      background: rgba(var(--light), .4);
+      border-radius: 50%;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      transition: transform 0.3s ease;
+    }
+
+    .theme-toggle-icon {
+      position: absolute;
+      top:50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      line-height: normal;
+    }
+
+    .sun {
+      left: 10px;
+    }
+
+    .moon {
+      right: 10px;
+      i{
+        color: rgba(var(--white), 1);
+      }
+    }
+  }
+}
+
+.custom-switch {
+  display: inline-block;
+
+  input {
+    display: none;
+
+    &:checked + .switch-track {
+      background: var(--success-gradient);
+
+      .switch-thumb {
+        transform: translateX(40px);
+      }
+
+      .check {
+        opacity: 1;
+      }
+
+      .cross {
+        opacity: 0;
+      }
+    }
+  }
+
+  .switch-track {
+    width: 80px;
+    height: 40px;
+    background: var(--danger-gradient);
+    border-radius: 50px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 14px;
+  }
+
+  .switch-thumb {
+    width: 35px;
+    height: 35px;
+    background: rgba(var(--white), 1);
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 4px;
+    transition: transform 0.3s ease;
+  }
+
+  .icon {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    z-index: 1;
+    transition: opacity 0.3s ease;
+  }
+
+  .check {
+    opacity: 0;
+  }
+
+  .cross {
+    opacity: 1;
+  }
+}
+
+.vertical-switch {
+
+  .form-check-input {
+    width: 32px;
+    height: 60px;
+    border-radius: 16px;
+    background-color: rgba(var(--primary), .1);
+    border: 1px solid rgba(var(--primary), .6);
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.25s ease;
+    box-shadow: none;
+    background-image: unset !important;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 3px;
+      left: 2px;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background-color: rgba(var(--dark), 1);
+      transition: transform 0.25s ease;
+    }
+
+    &:checked {
+      background-color: rgba(var(--primary), 1);
+
+      &::before {
+        transform: translateY(28px);
+      }
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 4px rgba(var(--primary), 0.15);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.switch-v-sm {
+  .form-check-input {
+    width: 24px;
+    height: 44px;
+    border-radius: 12px;
+
+    &::before {
+      width: 18px;
+      height: 18px;
+      transform: translateY(0);
+    }
+
+    &:checked::before {
+      transform: translateY(20px);
+    }
+  }
+}
+
+.switch-v-md {
+  .form-check-input {
+    width: 32px;
+    height: 60px;
+    border-radius: 16px;
+
+    &::before {
+      width: 26px;
+      height: 26px;
+    }
+
+    &:checked::before {
+      transform: translateY(28px);
+    }
+  }
+}
+
+.switch-v-lg {
+  .form-check-input {
+    width: 40px;
+    height: 76px;
+    border-radius: 20px;
+
+    &::before {
+      width: 34px;
+      height: 34px;
+    }
+
+    &:checked::before {
+      transform: translateY(36px);
+    }
+  }
+}
+
+// >>------------- 10.10 switch css end ------------- <<

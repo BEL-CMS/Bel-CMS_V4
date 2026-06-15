@@ -1,0 +1,63 @@
+// >>----- 6.21 progress css start -----<<
+.progress-bar-animated {
+  animation: progress-bar-stripes 1s linear infinite !important;
+}
+.progress-list {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+
+.progress {
+  border-radius:  0.25rem 0 0 0.25rem;
+  background-color: rgba(var(--light), 0.20) !important;
+  //height: 11px;
+  font-size: 80%;
+  font-weight: 600;
+  .progress-bar {
+    border-radius:  0.25rem 0 0 0.25rem;
+    animation: progress-bar-animation 3s;
+  }
+}
+.progress-wrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 20px;
+
+  .progress-tooltip {
+    position: absolute;
+    top: -19px;
+    transform: translateX(-50%);
+    padding: 1px 1px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+  }
+}
+@keyframes progress-bar-animation {
+  from {
+      width: 0px;
+  }
+}
+
+.progress-box{
+  border-radius:  var(--bs-border-radius);
+  position: relative;
+  .progress-content{
+    padding: 0.5rem;
+    .progress-close {
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+    }
+  }
+
+ .progress{
+  .progress-bar{
+    border-radius: 0;
+  }
+}
+}
+
+// >>------ 6.21 progress css end -------<<

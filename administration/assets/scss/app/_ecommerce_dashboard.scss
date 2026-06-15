@@ -1,0 +1,353 @@
+@use "sass:map";
+@use 'sass:math';
+@use "reboot";
+
+// >>------ 3.1  Ecommerce_dashboard css start --------<<
+
+.shop-card {
+  overflow: hidden;
+
+  h3{
+    font-size: calc(22px + (28 - 22) * ((100vw - 300px) / (1920 - 300))) !important;
+  }
+
+  .shop-card-vector {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+.stat-card {
+  overflow: hidden;
+  border: 0 !important;
+  cursor: pointer;
+
+  h4{
+    font-size: var(--h5-font-size);
+  }
+  &:hover{
+    .stat-icon-box{
+      i{
+        animation: swing 1s ease-in-out infinite;
+      }
+    }
+  }
+
+  .icon-bg {
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: -1;
+    font-size: 60px;
+    opacity: 1 !important;
+  }
+
+  &.stat-primary {
+    background: linear-gradient(128deg, rgba(var(--primary), 0.4) 0%, rgba(var(--white), 1) 50%);
+
+    .icon-bg {
+      color: rgba(var(--primary), .75);
+    }
+
+    .stat-icon-box {
+      outline: 6px solid rgba(var(--primary), .2);
+    }
+  }
+
+  &.stat-success {
+    background: linear-gradient(128deg, rgba(var(--success), 0.4) 0%, rgba(var(--white), 1) 50%);
+
+    .icon-bg {
+      color: rgba(var(--success), .75);
+    }
+
+    .stat-icon-box {
+      outline: 6px solid rgba(var(--success), .2);
+    }
+  }
+
+  &.stat-warning {
+    background: linear-gradient(128deg, rgba(var(--warning), 0.4) 0%, rgba(var(--white), 1) 50%);
+
+    .icon-bg {
+      color: rgba(var(--warning), .75);
+    }
+
+    .stat-icon-box {
+      outline: 6px solid rgba(var(--warning), .2);
+    }
+  }
+
+  &.stat-info {
+    background: linear-gradient(128deg, rgba(var(--info), 0.4) 0%, rgba(var(--white), 1) 50%);
+
+    .icon-bg {
+      color: rgba(var(--info), .75);
+    }
+
+    .stat-icon-box {
+      outline: 6px solid rgba(var(--info), .2);
+    }
+  }
+}
+
+.ecommerce-country-card {
+  position: relative;
+  background-image: url("../images/dashboard/ecommerce-dashboard/flag-img.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 345px;
+
+  &:after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(180deg, rgb(var(--white), 0) 2%, rgb(var(--white), 0) 50%, rgb(var(--dark), .8) 75%, rgb(var(--dark), 1) 100%);
+    z-index: 1;
+  }
+
+  .country-sale-overview {
+    //background: linear-gradient(179deg, rgb(var(--white), .0) 10%, rgb(19, 35, 67,1) 128%);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    -webkit-backdrop-filter: blur(10px);
+    padding: 0.75rem 1rem;
+    margin-top: -35px;
+    position: absolute;
+    bottom: 0;
+    z-index: 2;
+  }
+}
+
+.product-box-detail-container {
+  height: 264px;
+  overflow: auto;
+
+  .product-box-details {
+    padding: 0.5rem 1rem;
+    h6{
+      font-size: calc(15px + (18 - 15) * ((100vw - 300px) / (1920 - 300))) !important;
+    }
+
+    & + {
+      .product-box-details {
+        border-top: 1px solid rgba(var(--secondary), .4);
+      }
+    }
+  }
+}
+
+.returning-customers-list {
+  background: linear-gradient(173deg, rgb(var(--white), 1) 2%, rgba(var(--primary), 0.8) 128%);
+
+  .customer-item {
+    background-color: rgba(var(--white), .5);
+    margin: 0 0.75rem 0.75rem;
+    border-radius: var(--app-border-radius);
+    padding: 0.75rem 1.5rem;
+    border: 1px solid rgba(var(--primary), .4);
+    backdrop-filter: blur(2px);
+    h6{
+      font-size: calc(15px + (18 - 15) * ((100vw - 300px) / (1920 - 300))) !important;
+    }
+  }
+}
+
+
+
+.app-timeline-box{
+  &.delivery-timeline{
+    padding: 0 0.75rem !important;
+    .timeline-section{
+      border-left: 2px dashed rgba(var(--primary), .4);
+
+      .timeline-content{
+        padding: 0;
+      }
+      .timeline-icon {
+        border-radius: 50%;
+      }
+
+      &.active{
+        .timeline-icon{
+          span{
+            background: var(--primary-gradient);
+          }
+        }
+      }
+    }
+  }
+}
+
+.smarter-card{
+   .smarter-card-title {
+     font-size: var(--h1-font-size);
+  }
+  .form-switch{
+    position: absolute;
+    top: 35px;
+    right: 16px;
+    .form-check-input{
+      &:checked{
+        background-color: rgba(var(--success), 1 ) !important;
+      }
+    }
+
+  }
+}
+// >>-------------  box layout css
+.box-layout {
+  .shop-card{
+    .btn{
+      padding: 7px 16px;
+    }
+  }
+  .stat-card{
+    h4{
+      font-size: 18px !important;
+    }
+  }
+  .reach-chart-box{
+    h2{
+      font-size: 28px !important;
+    }
+    h5{
+      font-size: 24px !important;
+    }
+  }
+}
+
+// >>-------------  rtl layout css
+.layout-rtl {
+  .product-box-detail-container{
+    .ms-3 {
+      margin-left: 0 !important;
+      margin-right: 1rem !important;
+    }
+  }
+  .returning-customers-list{
+    .ms-2 {
+      margin-left: 0 !important;
+      margin-right: .5rem !important;
+    }
+  }
+  .smarter-card {
+    .form-switch {
+      right: auto;
+      left: 16px;
+    }
+  }
+}
+
+// ----------- dark css
+body.dark {
+  .stat-card{
+    .stat-icon-box{
+      color: rgba(var(--dark),1);
+    }
+  }
+  .app-timeline-box{
+    &.delivery-timeline{
+      padding: 0 0.75rem !important;
+      .timeline-section{
+        .timeline-icon {
+          .bg-primary{
+            color: rgba(var(--dark), 1) !important;
+          }
+        }
+      }
+    }
+  }
+
+  .smarter-card{
+    .text-white {
+      color: rgba(var(--dark), 1) !important;
+    }
+  }
+}
+
+// ----------- responsive css
+
+@media screen and (max-width: 1550px) {
+
+  .order-detail-divider-box {
+    flex-wrap: nowrap;
+    h6{
+      font-size: 15px !important;
+    }
+
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .stat-card{
+    .content {
+      &.mt-4{
+        margin-top: 1rem !important;
+      }
+    }
+  }
+  .ecommerce-country-card{
+    height: 328px;
+    .country-sale-overview{
+      flex-direction: column;
+    }
+    &:after {
+      background: linear-gradient(180deg, rgb(var(--white), 0) 2%, rgb(var(--dark), 0.8) 50%, rgb(var(--dark), 0.8) 75%, rgb(var(--dark), 1) 100%);
+    }
+  }
+  .product-box-detail-container{
+    height: 248px;
+    .product-box-details {
+      .badge{
+        font-size: 10px ;
+      }
+      .h-60 {
+        height: 45px !important;
+        border-radius: 10px !important;
+      }
+      small{
+        font-size: 11px !important;
+      }
+      .ms-3 {
+         margin-left: .75rem !important;
+      }
+    }
+  }
+  .product-box-card{
+    .app-form{
+      .form-control{
+        padding: 0.5rem 0.75rem;
+      }
+      .rounded-circle{
+        width: 35px !important;
+        height: 35px !important;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .stat-card{
+    h4{
+      font-size: 18px !important;
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .returning-customers-list {
+    .customer-item {
+      margin: 0 0.5rem 0.5rem;
+      padding: 0.5rem 1rem;
+    }
+  }
+}
+
+// >>-------- 3.1 Ecommerce_dashboard css end -------<<

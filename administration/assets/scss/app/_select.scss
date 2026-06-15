@@ -1,0 +1,102 @@
+@use "sass:map";
+@use "reboot";
+
+// >>-------- 10.9 Select css start -------<<
+
+@mixin select_mixin($name, $color) {
+  .select_#{$name} {
+    .select2-container--default   {
+      .select2-selection--multiple{
+        .select2-selection__choice{
+          background-color: rgba(#{$color},0.10) !important;
+          color: rgba(#{$color},1) !important;
+        }
+      }
+    }
+  }
+}
+
+@each $name, $color in reboot.$colors {
+  @include select_mixin(""+$name, map.get(reboot.$colors, $name));
+}
+.app-form{
+
+  .select2-container--default{
+    outline: 0 !important;
+    .select2-selection--single {
+      height: calc(1.75rem + 0.75rem + calc(var(--bs-border-width) * 2));
+      .select2-selection__rendered{
+        color: rgba(var(--secondary), 1);
+        font-weight: 500;
+        line-height: 2.50rem;
+        padding-left: 1rem;
+      }
+
+      .select2-selection__arrow{
+        b{
+          border: 0;
+          margin-left: -16px;
+          border-color: rgb(var(--secondary)) transparent transparent transparent;
+          &:after{
+            content: "\ea5f";
+            font-family: "tabler-icons";
+            position: absolute;
+          }
+        }
+      }
+
+      .select2-selection__clear{
+        background-color: rgba(var(--danger), .2);
+        color: rgba(var(--danger), 1);
+        padding-left: 0;
+        width: 26px ;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 14px;
+        position: absolute !important;
+        right: 10px;
+        top: 10px;
+      }
+    }
+
+
+
+    .select2-selection{
+      background-color: rgba(var(--white),1);
+      border: 1px solid rgba(var(--secondary),.4);
+      border-radius: var(--app-border-radius);
+    }
+
+    .select2-selection--multiple{
+
+      .select2-selection__choice__remove{
+        border-right: 0;
+        padding: 0 6px;
+      }
+      .select2-selection__choice {
+        background-color: rgb(var(--secondary),.1);
+        border: 1px dashed rgb(var(--secondary),1);
+        margin-left: 16px;
+        margin-top: 8px;
+      }
+    }
+  }
+
+
+  .select2-container{
+    width: 100% !important;
+    .select2-selection--multiple{
+      min-height: 44px;
+    }
+   .select2-search--inline {
+     .select2-search__field{
+       margin-left: 16px;
+       margin-top: 8px;
+     }
+   }
+  }
+}
+
+
+// >>------------- 10.9 select css end ------------- <<

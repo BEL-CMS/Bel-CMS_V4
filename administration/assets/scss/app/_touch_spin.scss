@@ -1,0 +1,143 @@
+// >>-------------  10.11 Touch Spin css start ------------- <<
+
+.custom-touch-spin {
+  .touch-spin-circle-btn {
+    width: 38px;
+    height: 38px;
+    text-align: center;
+    border-radius: 50%;
+  }
+}
+
+.app-small-touch-spin {
+  max-width: 120px;
+  width: 100%;
+  height: 35px;
+  text-align: center;
+  margin: 0 4px;
+  border-radius: 3px;
+}
+
+.simple-rounded {
+  .app-touch-spin {
+    max-width: 120px;
+    text-align: center;
+    margin: 0 4px;
+    border-radius: 3px;
+  }
+
+  .btn {
+    width: 38px;
+    height: 38px;
+    text-align: center;
+    border-radius: 50%;
+  }
+
+  .btn-left {
+    border-radius: 50px 0 0 50px;
+  }
+
+  .btn-right {
+    border-radius: 0 50px 50px 0;
+  }
+}
+
+.quantity-touch-spin {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+
+  img {
+    max-width: 30px;
+    height: 25px;
+    position: absolute;
+    left: 10px;
+  }
+
+  .app-small-touch-spin {
+    max-width: 250px;
+    height: 50px;
+    text-align: center;
+    margin: auto;
+    border-radius: var(--app-border-radius);
+    position: relative;
+  }
+
+  .no-focus:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  .chevron-touch-action {
+    position: absolute;
+    right: 10px;
+  }
+
+  .chevron-touch-action-left {
+    position: absolute;
+    left: 10px;
+  }
+
+  .quantity-touch-action {
+    position: absolute;
+    right: 10px;
+
+    .touch-spin-circle-btn {
+      width: 35px;
+      height: 35px;
+      text-align: center;
+      border-radius: 10px;
+    }
+  }
+  .quantity-touch-action-left {
+    position: absolute;
+    left: 10px;
+
+    .touch-spin-circle-btn {
+      width: 35px;
+      height: 35px;
+      text-align: center;
+      border-radius: 10px;
+
+    }
+  }
+}
+.vertical-touch-spin{
+  .touch-spin-circle-btn {
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    border-radius: 25px;
+  }
+}
+.app-vertical-touch-spin{
+  max-width: 42px;
+  height: 42px;
+  text-align: center;
+  margin: 4px 4px;
+  border-radius: 5px;
+}
+
+.single-side-touch-spin  {
+  .touch-spin-circle-btn {
+    width: 40px;
+    height: 35px;
+    text-align: center;
+    border-radius: 10%;
+    margin: 0 4px;
+  }
+
+  .app-small-touch-spin {
+    max-width: 420px;
+    height: 35px;
+    text-align: center;
+    margin: 0 4px;
+    border-radius: 3px;
+  }
+}
+
+// >>-------------  10.11 Touch Spin css end ------------- <<
+
+

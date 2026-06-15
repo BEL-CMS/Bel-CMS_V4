@@ -1,0 +1,362 @@
+// >>-------------   2.7   sidebar_horizontal css start ------------- <<
+
+.sidebar-horizontal {
+  .main-side-nav {
+    width: 100%;
+    height: 68px;
+    display: flex;
+    overflow: visible;
+    position: fixed;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 0;
+    background-color: rgba(var(--white), 1);
+
+    .simplebar-track {
+      display: none !important;
+    }
+
+    .simplebar-scrollbar {
+      display: none !important;
+    }
+
+    > div {
+      display: inline-flex !important;
+      gap: 0.5rem;
+    }
+
+    .nav-wrapper {
+      min-height: 50px;
+      width: 100%;
+      height: 100% !important;
+      flex-grow: 1;
+      padding: 0 1.5rem 0 1rem;
+
+      .simplebar-content-wrapper {
+        overflow: visible !important;
+      }
+
+      .simplebar-mask {
+        overflow: visible !important;
+      }
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      .simplebar-content {
+        height: inherit;
+
+        .main-side-menu {
+          width: 100%;
+          //height: inherit;
+          //width: calc(100% - 437px) !important;
+          height: inherit;
+          display: flex;
+          //overflow: auto;
+
+          .another-level {
+            ul {
+              max-height: 100%;
+              position: unset;
+              background-color: transparent;
+              box-shadow: none;
+              border: 0;
+              margin-top: 0;
+              padding: 0 1rem;
+            }
+          }
+
+          > ul:not(.collapse) > li {
+            position: relative;
+            width: 200px;
+            display: inline-flex;
+          }
+
+          a {
+            & + ul {
+              width: inherit;
+              max-height: 580px;
+              overflow-y: auto;
+              position: fixed;
+              background-color: rgba(var(--white), 1);
+              box-shadow: var(--box-shadow);
+              border: 1px solid rgba(var(--secondary), .2);
+              padding: 0;
+              margin-top: 0.75rem;
+              top: 50px !important;
+              border-radius: var(--app-border-radius);
+
+              &::-webkit-scrollbar {
+                position: absolute;
+                right: 0;
+                width: 4px;
+                height: 4px;
+                background-color: rgba(var(--secondary), 0.1);
+              }
+
+              &::-webkit-scrollbar-thumb {
+                background-color: rgba(var(--secondary), 0.3);
+                border-radius: 20px;
+              }
+
+              li {
+                a {
+                  &:before {
+                    left: 6px;
+                    top: 10px;
+                  }
+                }
+              }
+            }
+          }
+
+        }
+      }
+    }
+
+    .main-menu {
+      padding: 8px;
+      display: inline-flex !important;
+
+      .no-sub {
+        a {
+          &.active {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+
+    .side-search,
+    .sidebar-shortcut-apps,
+    .sidebar-folder-box {
+      display: none;
+    }
+
+  }
+
+  .semi-side-nav {
+    transform: translateX(-100%);
+  }
+
+  .app-content {
+    padding-left: 0;
+    padding-top: 145px;
+  }
+
+  .app-breadcrumbs {
+    z-index: 1002;
+    background-color: transparent;
+    width: auto;
+    top: 5.75rem;
+    left: 0;
+  }
+
+  .header-main {
+    left: 0;
+    width: 100%;
+    top: 68px;
+    border-top: 1px solid rgba(var(--secondary), .2);
+
+    h4 {
+      margin-top: -16px;
+    }
+
+    .main-side-toggle {
+      display: none;
+    }
+  }
+
+  .header-cart-canvas,
+  .header-notification-canvas{
+    top: 132px !important;
+  }
+
+  .footer-container {
+    width: 100%;
+    left: 0;
+  }
+}
+
+.horizontal-action {
+  .horizontal-left,
+  .horizontal-right {
+    cursor: pointer;
+    background-color: rgba(var(--primary), 0.2);
+    border: 2px solid rgba(var(--primary), 0.6);
+    color: rgba(var(--primary), 1);
+    font-size: 24px;
+  }
+}
+
+// ------------- rtl layout  ------------
+.layout-rtl {
+  .sidebar-horizontal {
+
+    .main-side-nav {
+      .horizontal-action{
+        flex-direction: row-reverse;
+      }
+    }
+
+    .semi-side-nav {
+      transform: translateX(100%);
+    }
+
+    .app-content {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+     .header-main {
+      left: auto;
+      right: 0;
+    }
+
+     .app-breadcrumbs {
+      left: auto;
+    }
+
+      .footer-container {
+        left: 0;
+        right: 0;
+      }
+  }
+}
+// ------------- rtl layout  ------------
+.layout-rtl {
+  .app-wrapper{
+    &.sidebar-horizontal {
+      .main-side-nav {
+        padding-right: 1rem;
+        .logo{
+          direction: ltr;
+        }
+      }
+    }
+   .horizontal-action {
+      margin-left: -28px;
+      margin-right: auto;
+    }
+  }
+}
+
+
+// ------------- responsive  ------------
+
+@media screen and (max-width: 992px) {
+  .app-wrapper {
+    &.sidebar-horizontal {
+      .main-side-nav {
+        .logo {
+          width: 72px;
+          overflow: hidden;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .app-wrapper {
+    &.sidebar-horizontal {
+      .horizontal-action {
+        .horizontal-left,
+        .horizontal-right {
+          width: 35px !important;
+          height: 35px !important;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .app-wrapper {
+    &.sidebar-horizontal {
+      .app-navbar {
+        .main-side-nav {
+          .main-side-menu {
+            a {
+              + ul {
+                width: inherit;
+                max-width: 168px;
+              }
+            }
+
+            > ul {
+              &:not(.collapse) {
+                > li {
+                  > a {
+                    padding: 0.625rem 0.75rem;
+                    font-size: 14px;
+                    max-width: 168px;
+
+                    .badge {
+                      position: absolute;
+                      right: 0;
+                      top: -5px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .main-side-nav {
+        .main-side-menu {
+          padding: 0;
+        }
+
+        .logo {
+          width: 52px;
+          padding: 0.5rem;
+          img{
+            width: 100px;
+          }
+        }
+      }
+
+      .horizontal-action {
+        //flex-direction: column;
+        margin-right: -28px;
+
+        .horizontal-left,
+        .horizontal-right {
+          width: 28px !important;
+          height: 28px !important;
+          font-size: 20px;
+        }
+      }
+
+      .app-content {
+        padding-left: 0;
+        .header-main {
+          .container-fluid{
+            padding: .4rem 1rem;
+          }
+          h4 {
+            margin-top: 0;
+          }
+        }
+      }
+
+      .app-breadcrumbs {
+        width: 100%;
+        left: 0;
+        padding-left: 1rem;
+        top: 8rem;
+        background-color: #eef2f5;
+      }
+
+      .footer-container {
+        width: 100%;
+        left: 0;
+      }
+    }
+  }
+}
+// >>-------------   2.7   sidebar_horizontal css end ------------- <<

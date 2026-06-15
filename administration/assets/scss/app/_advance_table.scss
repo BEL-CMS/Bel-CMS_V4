@@ -1,0 +1,74 @@
+// >>------------- 11.1 advance table css start ------------- <<
+
+.advance-custom-table{
+  .form-check-input {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+    border: 2px solid rgba(var(--secondary), .4);
+  }
+}
+
+.volume-chart{
+  .apexcharts-toolbar{
+    display: none !important;
+  }
+}
+
+.dragging-row {
+  background-color:rgba(var(--secondary),0.2);
+  opacity: 0.7;
+}
+
+.advance-custom-table{
+  thead{
+    tr{
+      th:nth-child(2){
+        min-width: 220px;
+
+      }
+      th:nth-child(3){
+        min-width: 150px;
+
+      }
+      th:nth-child(5),
+      th:nth-child(4){
+        min-width: 160px;
+
+      }
+
+      th:nth-child(8){
+        min-width: 180px;
+
+      }
+      th:nth-child(9){
+        min-width: 280px;
+      }
+    }
+  }
+}
+
+.drag-drop-table{
+
+  thead{
+    tr{
+      th:nth-child(5),
+      th:nth-child(7){
+        min-width: 120px;
+      }
+      th:nth-child(8),
+      th:nth-child(9){
+        min-width: 120px;
+
+      }
+      th:nth-child(10){
+        min-width:240px;
+
+      }
+    }
+  }
+
+}
+
+
+// >>-------------  advance table css start ------------- <<
+

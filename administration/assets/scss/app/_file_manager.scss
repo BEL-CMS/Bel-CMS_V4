@@ -1,0 +1,100 @@
+// >>------------- 4.22 File Manager css start ------------- <<
+
+.quick-access-card {
+  .card-body {
+    border-radius: .8rem;
+    background: transparent;
+    overflow: hidden;
+    .file-name {
+      max-width: 100px;
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      left: 10px;
+      top: -13px;
+      width: 50%;
+      height: 12px;
+      border-bottom: 14px solid rgba(var(--secondary), 0.4);
+      border-right: 12px solid transparent;
+      border-top-left-radius: 25px;
+      z-index: 0;
+    }
+  }
+}
+
+.folder-cards {
+  .card-body {
+    border-radius: var(--app-border-radius);
+    background: transparent;
+    overflow: hidden;
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 10px;
+      top: -13px;
+      width: 50%;
+      height: 12px;
+      border-bottom: 14px solid rgba(var(--secondary), 0.4);
+      border-right: 12px solid transparent;
+      border-top-left-radius: 25px;
+      z-index: 0;
+    }
+    .folder-dropdown {
+      position: absolute;
+      right: 15px;
+    }
+
+    .starred-div {
+      font-size: 14px;
+      position: absolute;
+      left: 20px;
+      padding-top: 5px;
+    }
+
+    .file-image {
+      font-weight: 500;
+      border-radius: 5px;
+      text-align: center;
+
+      img {
+        width: 45px;
+        height: 45px;
+      }
+    }
+  }
+}
+
+.file-box {
+  border-radius: 5px;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 10px;
+  h6 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+  }
+}
+
+.recent-file-table{
+  thead{
+    tr{
+      th{
+        &:nth-child(1){
+          min-width: 150px;
+        }
+        &:nth-child(4),
+        &:nth-child(3){
+          min-width: 100px;
+        }
+      }
+    }
+  }
+}
+
+
+
+// >>------------- 4.22 File Manager css end ------------- <<

@@ -1,0 +1,33 @@
+// >>------------- 13.1 maintenance css start ------------- <<
+
+.maintenance {
+  min-height: 100vh;
+  background-image: url("../images/maintenance/backgroung-bg.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+
+  h1{
+    color: rgba(var(--white),1);
+    font-size: calc(28px + (68 - 28) * ((100vw - 300px) / (1920 - 300)));
+    line-height: 1;
+    margin-bottom: 25px;
+    padding-top: 2rem;
+  }
+  p{
+    font-size: calc(14px + (18 - 14) * ((100vw - 300px) / (1920 - 300))) ;
+    color: rgba(var(--white),.75);
+  }
+
+  .overlay-maintenance-card{
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -40%);
+  }
+
+}
+// >>------------- 13.1 maintenance css end ------------- <<

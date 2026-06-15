@@ -1,0 +1,101 @@
+// >>------  6.18  List css start ------<<
+
+
+.list-item {
+
+  .list-items-active {
+    .list-group-item {
+      color: var(--black);
+
+      &.active {
+        z-index: 2;
+        color: rgba(var(--white), 1);
+        background-color: rgb(var(--primary), 1);
+        border-color: rgb(var(--primary), 1);
+      }
+    }
+  }
+
+  .list-group-content {
+    border-left: 0.13rem solid rgb(var(--primary), 1) !important;
+    background: rgb(var(--primary), 0.1);
+  }
+
+  .list-button {
+    .list-group-item {
+      color: var(--black);
+
+      &.active {
+        z-index: 2;
+        color: rgba(var(--white), 1);
+        background: rgb(var(--dark), 1) !important;
+        border-color: rgb(var(--dark), 1);
+      }
+    }
+  }
+
+  .list-horizontal {
+    .list-group-horizontal {
+      .list-radius-left-horizontal {
+        border-bottom-left-radius: 0 !important;
+      }
+
+      .list-radius-right-horizontal {
+        border-top-right-radius: 0 !important;
+      }
+
+      .list-group-item {
+        display: flex;
+        align-items: center;
+        max-width: 300px;
+        overflow: hidden;
+      }
+    }
+  }
+
+  .list-active {
+    cursor: pointer;
+  }
+
+  .list-content {
+    .list-group-item {
+      display: flex;
+      justify-content: space-between;
+
+      p {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
+
+      &.active {
+        color: rgb(var(--light), 1);
+        background-color: rgb(var(--light), 1);
+        border-color: rgb(var(--dark), 1);
+
+        h6 {
+          color: rgba(var(--white), 1);
+        }
+      }
+    }
+  }
+
+  .scrolling-list-group {
+    max-height: 22rem;
+
+    .list-group-item {
+      border: none;
+      padding: .75rem 1rem 0;
+
+      .icon {
+        font-size: 1.25rem;
+        margin-top: 0.625rem;
+        color: rgb(var(--dark), 0.6);
+      }
+    }
+  }
+}
+
+// >>------- 53 List css end ---------<<

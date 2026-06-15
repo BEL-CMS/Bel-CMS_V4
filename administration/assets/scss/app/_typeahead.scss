@@ -1,0 +1,84 @@
+// >>-------------10.12 Typeahead css start ------------- <<
+
+.app-typeahead {
+  span.twitter-typeahead {
+    width: 100%;
+
+    input {
+      background-color: rgba(var(--white),1) !important;
+    }
+
+    .tt-menu {
+      position: absolute;
+      width: 100%;
+      padding: 0px;
+      text-align: left;
+      background-color: var(--bs-body-bg);
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      border-radius: var(--app-border-radius);
+      color: rgba(var(--secondary), 1) !important;
+      margin-top: 10px;
+      z-index: 10000 !important;
+      box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+      overflow: hidden;
+
+
+      .league-name{
+        padding: 0.5rem 1rem;
+        background-color: rgba(var(--secondary),.2);
+        color: rgba(var(--secondary), 1);
+        border-left: 3px solid rgba(var(--secondary),1);
+      }
+
+      .tt-highlight {
+        background-color: rgba(var(--primary),.1) !important;
+        padding: 0.025rem;
+        color: rgba(var(--primary), 1) !important;
+      }
+
+      .tt-suggestion {
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        font-weight: 500;
+        color: rgba(var(--dark), .75) !important;
+        font-family: "Lexend Deca", sans-serif;
+        border: 1px solid transparent;
+        cursor: default;
+
+        &:hover {
+          outline: 0;
+          background-color: rgb(var(--light), .2);
+          border: 1px solid rgba(var(--light),.4) ;
+          border-radius: var(--app-border-radius);
+          color: rgba(var(--primary), 1) !important;
+        }
+      }
+    }
+
+  }
+}
+
+.typeahead-demo {
+  margin-bottom: 100px;
+
+  .tt-dataset {
+    max-height: 100px;
+    overflow-x: hidden;
+    &::-webkit-scrollbar {
+      position: absolute;
+      right: 0;
+      width: 4px;
+      height: 4px;
+      background-color: rgba(var(--secondary),0.1);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(var(--secondary),0.3);
+      border-radius: 20px;
+    }
+  }
+
+}
+
+
+// >>------------- 10.12 Typeahead css end ------------- <<

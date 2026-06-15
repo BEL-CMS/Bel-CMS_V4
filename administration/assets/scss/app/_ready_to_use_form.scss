@@ -1,0 +1,45 @@
+// >>------------- 12.3 Ready To Use Form css start ------------- <<
+
+.avatar-upload {
+  position: relative;
+  width: 130px;
+  margin: 0 auto;
+
+  .avatar-edit {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1;
+
+    input {
+      display: none;
+    }
+
+    label {
+      border: 1px solid #dee2e6;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+  }
+
+
+  .avatar-preview {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    border: 2px solid #e9ecef;
+    overflow: hidden;
+    background: #f8f9fa;
+    .preview{
+      width: inherit;
+      height: inherit;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  }
+}
+
+
+// >>------------- 12.3 Ready To Use Form css end ------------- <<

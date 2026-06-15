@@ -1,0 +1,450 @@
+// >>-------------  3.2  crypto dashboard css start ------------- <<
+
+.currency-card {
+  .bitcoin {
+    animation: float 3s ease-in-out infinite, gradientMove 4s ease infinite;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-6px);
+    }
+  }
+}
+
+.trader-box {
+
+  position: relative;
+  overflow: hidden;
+  padding: 0.5rem 1rem;
+  background:url("../images/dashboard/crypto-dashboard/bg-trader.png"),
+          linear-gradient(
+                          173deg,
+                          rgba(var(--white), 1) 2%,
+                          rgba(var(--primary), 0.8) 128%
+          );
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  .trader-title{
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 1rem;
+    width: 100%;
+    font-weight: 600;
+
+    .highlight-word{
+      background: linear-gradient(to right,rgba( var(--primary),.6),rgba( var(--primary),.4),rgba( var(--white),0));
+      color: rgba(var(--primary),1);
+      position: relative;
+      display: inline-block;
+      transform: rotate(-7deg);
+      border-radius: 6px;
+
+      .top-i{
+        position: absolute;
+        left: -10px;
+        top: -10px;
+      }
+    }
+  }
+
+
+}
+
+.trader-slider {
+  height: 240px;
+  .trader-item {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    transition: opacity 1s ease-in-out;
+    &.active {
+      opacity: 1;
+    }
+  }
+}
+
+.feedback-card {
+  .emoji-row {
+    height: 75px;
+
+    .emoji {
+      font-size: 24px;
+      cursor: pointer;
+      opacity: 0.4;
+      transition: all 0.3s ease;
+
+      &.active {
+        opacity: 1;
+        transform: scale(1.3);
+        background: rgba(var(--warning), 0.2);
+        border-radius: 50%;
+        padding: 8px;
+        border: 1px solid rgba(var(--warning), 0.2);
+      }
+    }
+  }
+}
+
+.wallet-card {
+
+ .wallet-top {
+    background: url("../images/dashboard/crypto-dashboard/wallet-bg.png"),var(--primary-gradient);
+    background-repeat: no-repeat;
+    background-position: top;
+    background-size: cover;
+    border: 1px solid rgba(var(--white), 0.8);
+    backdrop-filter: blur(4px);
+    border-radius: 20px;
+    padding: 20px;
+  }
+  .wallet-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 10px !important;
+    .action {
+      cursor: pointer;
+      flex: 1;
+      text-align: center;
+
+      .action-title {
+        display: block;
+        font-size: 13px;
+      }
+    }
+  }
+}
+
+.coin-card-container{
+  background:url("../images/dashboard/crypto-dashboard/coin-bg.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.crypto-stat-box {
+  width: 100%;
+  border-radius: var(--app-border-radius);
+  overflow: hidden;
+  background: transparent;
+  display: flex;
+
+
+
+  .stat-item {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(var(--primary),.2);
+
+    &.active {
+      background: var(--primary-gradient);
+    }
+
+    .stat-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    h5,
+    h3 {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+  }
+}
+
+@keyframes depthFade {
+  0% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  40% {
+    opacity: 0.6;
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+}
+
+.coin-card {
+  width: 100%;
+  height: 165px;
+position: relative;
+
+
+  .coin {
+    position: absolute;
+    z-index: 2;
+    animation: depthFade 2s ease-in-out infinite;
+
+    &:nth-child(1) {
+      top: 40%;
+      left: 40%;
+      z-index: 5;
+      animation: none;
+    }
+
+    &:nth-child(2) {
+      top: 44%;
+      left: 8%;
+      animation-delay: 0s;
+    }
+
+    &:nth-child(3) {
+      top: 19%;
+      left: 12%;
+      animation-delay: 0.8s;
+    }
+
+    &:nth-child(4) {
+      bottom: 23%;
+      left: 25%;
+      animation-delay: 0.5s;
+    }
+
+    &:nth-child(5) {
+      top: 6%;
+      right: 50%;
+      animation-delay: 0.8s;
+    }
+
+    &:nth-child(6) {
+      top: 17%;
+      right: 23%;
+      animation-delay: 0.9s;
+    }
+
+    &:nth-child(7) {
+      bottom: 20%;
+      right: 10%;
+      animation-delay: 0.5s;
+    }
+  }
+}
+
+.transaction-list {
+  overflow: auto;
+  height: 204px;
+  .transaction-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: 0.75rem 1rem;
+  }
+}
+
+.btc-chart-card{
+  .btc-chart{
+    margin-top: -15px;
+  }
+
+}
+
+.crypto-card{
+  background: url("../images/dashboard/crypto-dashboard/crypto-card-bg.png");
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: cover;
+  background-color: rgba(var(--dark),1) !important;
+
+}
+
+// >>-------------  box layout css
+
+.box-layout {
+  .currency-card{
+    .d-flex{
+      flex-direction: column;
+      align-items: flex-start !important;
+      gap: 0.2rem !important;
+    }
+    .bitcoin{
+      img{
+        width: 35px !important;
+        height: 35px !important;
+      }
+    }
+    .p-3{
+      padding-bottom: 0 !important;
+    }
+
+    .currency-mini-chart{
+      margin-top: -8px;
+    }
+  }
+  .wallet-top {
+    h3{
+      font-size: 24px !important;
+    }
+  }
+  .wallet-card {
+    .card-body{
+      padding-bottom: 0 !important;
+    }
+    h4{
+      font-size: 24px !important;
+    }
+    .wallet-actions {
+      padding: 16px 10px !important;
+    }
+  }
+  .coin-transaction-list{
+    .app-form{
+      .w-45{
+        width: 35px !important;
+        height: 35px !important;
+      }
+    }
+  }
+}
+
+
+// >>-------------  rtl layout css
+.layout-rtl {
+  .trader-box{
+    direction: ltr;
+  }
+  .transaction-list{
+    padding-right: 0;
+    .ps-2 {
+      padding-left: 0 !important;
+      padding-right: .5rem !important;
+    }
+  }
+}
+
+// ----------- responsive css
+
+@media screen and (max-width: 1550px) {
+
+  .currency-card{
+    .d-flex{
+      flex-direction: column;
+      align-items: flex-start !important;
+      gap: 0.2rem !important;
+    }
+    .bitcoin{
+      img{
+        width: 35px !important;
+        height: 35px !important;
+      }
+    }
+    .p-3{
+      padding-bottom: 0 !important;
+    }
+
+    .currency-mini-chart{
+      margin-top: -8px;
+    }
+  }
+  .wallet-top {
+    h3{
+      font-size: 24px !important;
+    }
+  }
+  .wallet-card {
+    .card-body{
+      padding-bottom: 0 !important;
+    }
+    h4{
+      font-size: 24px !important;
+    }
+    .wallet-actions {
+      padding: 16px 10px !important;
+    }
+  }
+  .coin-transaction-list{
+    .app-form{
+      .w-45{
+        width: 35px !important;
+        height: 35px !important;
+      }
+    }
+  }
+}
+
+
+@media screen and (max-width: 1399px) {
+  .crypto-card{
+    .card-body{
+      flex-direction: column;
+      gap: 0.5rem !important;
+      p{
+        &.mb-3{
+          margin-bottom: 0 !important;
+        }
+      }
+
+
+      .flex-grow-1{
+        text-align: center;
+        .d-flex{
+          justify-content: center;
+          margin-top: .75rem;
+        }
+      }
+    }
+  }
+
+  .trader-slider {
+    height: 198px;
+  }
+
+  .feedback-card {
+    h5,
+    h6{
+      font-size: 16px !important;
+    }
+    .emoji-row {
+      height: 55px;
+      margin-bottom: 0 !important;
+      .emoji {
+        font-size: 20px;
+        &.active {
+          padding: 6px;
+        }
+      }
+    }
+    .form-control{
+      margin-bottom: 0.5rem !important;
+    }
+  }
+
+  .wallet-card {
+    .card-body{
+      padding: 1.125rem 1rem !important;
+    }
+    .my-3{
+      margin-top: -6px !important;
+      margin-bottom: 0 !important;
+    }
+    h4{
+      span{
+        display: block;
+      }
+    }
+    .wallet-actions {
+      padding: 20px 10px !important;
+    }
+  }
+}
+// >>-------------  3.2  crypto dashboard css end ------------- <<
