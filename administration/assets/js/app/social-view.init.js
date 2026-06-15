@@ -1,1 +1,0 @@
-function printMailPreview(){const n=document.getElementById("mailPreviewSection").innerHTML,e=document.body.innerHTML;document.body.innerHTML=n,window.print(),document.body.innerHTML=e,location.reload()}

@@ -1,1 +1,0 @@
-var swiper=new Swiper(".order-center",{slidesPerView:1,spaceBetween:20,loop:!0,autoplay:{delay:3e3,disableOnInteraction:!1},breakpoints:{640:{slidesPerView:2},1441:{slidesPerView:3}}});
