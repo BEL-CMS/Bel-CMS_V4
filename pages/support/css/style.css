@@ -1,0 +1,12 @@
+#belcms_support_text {
+    background-color: #f8f8f8;
+    width: 98%;
+    min-height: 100px;
+    margin: 8px 1%;
+    border-radius: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 15px;
+}
+#belcms_support_text p {
+    color: rgba(0, 0, 0, 0.9) !important;
+}

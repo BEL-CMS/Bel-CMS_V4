@@ -1,15 +1,13 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.4]
+ * @version 4.0.1 [PHP8.4]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
  * @copyright 2015-2026 Bel-CMS
  * @author as Stive - stive@determe.be
  */
-
-use BelCMS\Requires\Common;
 
 if (!defined('CHECK_INDEX')):
     header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
@@ -68,6 +66,9 @@ $tables = array(
     'TALBE_NEWSLETTER_SEND'     => $DB_PREFIX.'newsletter_send',
     'TALBE_NEWSLETTER_TPL'      => $DB_PREFIX.'newsletter_tpl',
     'TABLE_STATS'               => $DB_PREFIX.'stats',
+    'TABLE_SUPPORT'             => $DB_PREFIX.'support',
+    'TABLE_SUPPORT_OBJECT'      => $DB_PREFIX.'support_object',
+    'TABLE_SUPPORT_REPLIES'     => $DB_PREFIX.'support_replies',
     'TABLE_TPL'                 => $DB_PREFIX.'templates',
     'TABLE_SURVEY'              => $DB_PREFIX.'survey',
     'TABLE_SURVEY_QUEST'        => $DB_PREFIX.'survey_quest',
@@ -75,15 +76,11 @@ $tables = array(
     'TABLE_SHOUTBOX'            => $DB_PREFIX.'shoutbox',
     'TABLE_TEAMS'               => $DB_PREFIX.'teams',
     'TEMPLATE'                  => $DB_PREFIX.'template',
-    'TABLE_TICKET'              => $DB_PREFIX.'ticket',
-    'TABLE_TICKET_CAT'          => $DB_PREFIX.'ticket_cat',
-    'TABLE_TICKET_REP'          => $DB_PREFIX.'ticket_rep',
     'TABLE_MAIL_BLACKLIST'      => $DB_PREFIX.'mails_blacklist',
     'TABLE_MAINTENANCE'         => $DB_PREFIX.'maintenance',
     'TABLE_MAIL_CONFIG'         => $DB_PREFIX.'mails_config',
     'TABLE_USERS'               => $DB_PREFIX.'users',
     'TABLE_USERS_GAMES'         => $DB_PREFIX.'users_games',
-    'TABLE_USERS_GAMING'        => $DB_PREFIX.'users_gaming',
     'TABLE_USERS_GROUPS'        => $DB_PREFIX.'users_groups',
     'TABLE_USERS_NOTIFICATION'  => $DB_PREFIX.'users_notification',
     'TABLE_USERS_PAGE'          => $DB_PREFIX.'users_page',
@@ -98,7 +95,7 @@ $tables = array(
 );
 #####################################################
 foreach ($tables as $name => $value) {
-    define($name, $value); unset($tables);
+    define($name, $value);
 }
 #####################################################
 ?>
