@@ -1,4 +1,4 @@
-#belcms_support_text {
+.belcms_support_text {
     background-color: #f8f8f8;
     width: 98%;
     min-height: 100px;
@@ -7,6 +7,6 @@
     border: 1px solid rgba(0, 0, 0, 0.2);
     padding: 15px;
 }
-#belcms_support_text p {
+.belcms_support_text p {
     color: rgba(0, 0, 0, 0.9) !important;
 }

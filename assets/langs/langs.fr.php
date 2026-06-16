@@ -18,7 +18,7 @@ $array = array(
 	#####################################
 	# Langue - DEFAUT
 	#####################################
-	'DEFAULT_AVATAR'                      => 'assets/img/default_avatar.jpg',
+	'DEFAULT_AVATAR'                      => 'assets/img/avatar/dummy-avatar.jpg',
 	'DEFAULT_COLOR_USERNAME'              => '#000',
 	'BOT'                                 => 'Robot',
 	'NO_NAME'                             => 'Pas de Nom',
@@ -26,7 +26,6 @@ $array = array(
 	'INFOS'                               => 'Informations',
 	'ALERT_INFOS'                         => 'Alert ! Information requis',
 	'CAPTCHA'                             => 'Captcha',
-	'CODE_CAPTCHA_ERROR'                  => 'Erreur du code Captcha !',
 	'CODE_CAPTCHA_TIME'                   => 'Veuillez patienter avant l\'envoi d\'un nouveau message',
 	'ERROR_UNKNOW'                        => 'Erreur inconnue du Captcha',
 	'SEND_MAIL_VALID'                     => 'Envoie de votre code de validation par e-mail',
@@ -70,7 +69,7 @@ $array = array(
 	'MEMBER_DELETE'                       => 'Membre supprimé',
 	'CODE_CAPTCHA_ERROR'                  => 'Erreur de code captcha, veuillez réessayer',
 	'NO_BANS_YET'                         => 'Aucun bannissement pour l\'instant',
-	'NO_USER_CONNECT'                     => 'Il est important d\'établir des connexions avec le site',
+	'NO_USER_CONNECT'                     => 'Il est important d\'établir une connexion avec le site',
 	'NO_VALID_TOKEN_USER'                 => 'La clé "Token" ou l\'adresse e-mail n\'est pas valide',
 	'GET_PASSWORD_TOKEN'                  => 'Récupération de mot de passe',
 	'CALENDAR'                            => "Calendrier",
@@ -98,7 +97,6 @@ $array = array(
 	#####################################
 	# Langue Français - ROOT\WIDGETS
 	#####################################
-	'SURVEY'                              => 'Sondage',
 	'SURVEYS'                             => 'Sondages',
 	'SEE_THE_LIST_OF_SURVEYS'             => 'Voir la liste des sondages',
 	'NO_SURVEY_IN_PROGRESS'               => 'Aucun sondage en cours...',
@@ -152,6 +150,7 @@ $array = array(
 	'WEB_IS_CLOSED'                       => 'Le site web est en mode fermé, seuls les administrateurs suprêmes ont accès.',
 	'ERROR_CAPTCHA'                       => 'Erreur de CAPTCHA !<br>Trop de tentative fausse, il est possible que vous soyez banni !',
 	'NO_ID_DEFINED'                       => 'Pas d\'ID définit.',
+	'MSG_BDD_OK'                          => 'La transmission du message s\'est effectuée avec succès.',
 	########## ###########################
 	# COMMUN
 	#####################################
@@ -274,6 +273,8 @@ $array = array(
 	'SEARCH'                              => 'Rechercher',
 	'MAX_UPLOADS'                         => 'Max taille Upload',
 	'MAIL_BY_BELCMS'                      => '© '.date("Y").' Mail by <a href="https://bel-cms.dev">Bel-CMS.dev</a> Tous droits réservés.',
+	'REPLY'                               => 'Répondre',
+	'SEND_REPLY'                          => 'Envoyer la réponse',
 	#####################################
 	# UPLOAD
 	#####################################
@@ -440,7 +441,12 @@ $array = array(
 	'MARKET'                              => 'Boutique',
 	'PRICING'                             => 'Tarifs',
 	'CONTACT'                             => 'Contact',
-	
+	'WEB_HOSTING'                         => 'Hébergement web ',
+	'BUYPLAN'                             => 'Hébergement web ',
+	'STATISTICS'                          => 'Statistiques',
+	'TEAMS'                               => 'Teams',
+	'SUPPORT'                             => 'Support',
+	'SUPPORTS'                            => 'Supports',
 	#####################################
 	# USER
 	#####################################
@@ -477,6 +483,7 @@ $array = array(
 	'IMPOSSIBLE_TO_BAN_YOURSELF'          => 'Impossible de se bannir soi-même.',
 	'EMAIL_USER'                          => 'E-mail renseigné',   
 	'NO_TEXT_DEFINED'                     => 'Le texte n\'est pas definit',
+	'USER_NO_FOUND'                       => 'Utilisateur inconnu',
 	#####################################
 	# WIDGETS
 	# ###################################

@@ -27,28 +27,46 @@ endif;
 <div class="card shadow-sm">
     <div class="card-body">
         <form method="post" action="support/newsend" enctype="multipart/form-data">
+
             <div class="mb-3">
-                <label class="form-label">Sujet</label>
-                <input type="text" name="subject" class="form-control" required>
+                <label class="form-label">Titre</label>
+                <input type="text" name="title" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Sujets</label>
+                <select name="subject" class="form-select">
+                    <option selected>Veuillez choisir un sujet</option>
+                    <?php
+                    foreach ($object as $key => $value):
+                    ?>
+                        <option value="<?= $value->id; ?>"><?= $value->value; ?></option>
+                    <?php
+                    endforeach;
+                    ?>
+                    <option value="0">Autre</option>
+                </select>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Priorité</label>
                 <select name="priority" class="form-select">
-                    <option value="low">Basse</option>
-                    <option value="medium">Moyenne</option>
-                    <option value="high">Haute</option>
+                    <option value="3">Basse</option>
+                    <option value="2" selected>Normal</option>
+                    <option value="1">Haute</option>
                 </select>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Message</label>
-                <textarea name="message" class="bel_cms_textarea_simple" rows="5" required></textarea>
+                <textarea name="message" class="bel_cms_textarea_simple" rows="5"></textarea>
             </div>
+
             <div class="input-group mb-3">
                 <label class="input-group-text" for="captcha"><?= $_SESSION['CAPTCHA']['CODE']; ?></label>
                 <input type="number" placeholder="Trouve la solution du calcul." name="captcha" class="form-control" id="captcha">
             </div>
+
             <input type="hidden" name="captcha_value" value="">
             <button class="btn btn-success">Envoyer</button>
         </form>
