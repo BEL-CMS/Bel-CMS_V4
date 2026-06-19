@@ -31,6 +31,7 @@ class Support extends AdminPages
     public function index ()
     {
         $menu[] = array('title' => 'Accueil', 'href' => 'support?Admin&option=pages', 'ico'  => 'fa-solid fa-igloo','active' => 'active');
+        $menu[] = array('title' => 'Sujets', 'href' => 'support/subject?Admin&option=pages', 'ico'  => 'fa-solid fa-signature');
 
         $a['messages'] = $this->models->getMessages ();
         foreach ($a['messages'] as $key => $value) {
@@ -120,6 +121,78 @@ class Support extends AdminPages
              if ($close === true) {
                 Notification::success(constant('PARAMETER_EDITING_SUCCESS'), 'Support');
                 $this->redirect('support?Admin&option=pages', 2);
+            } else {
+                Notification::warning(constant('DEL_BDD_ERROR'), 'Support');
+                $this->redirect('support?Admin&option=pages', 3);
+            }
+        } else {
+            $return = array('text' => constant('ADMIN_TEXT_FALSE_ID'), 'type' => 'warning');
+            $this->error(get_class($this), $return['text'], $return['type']);
+            $this->redirect('support?Admin&option=pages', 3);
+            return;
+        }
+    }
+
+    public function subject ()
+    {
+        $menu[] = array('title' => 'Accueil', 'href' => 'support?Admin&option=pages', 'ico'  => 'fa-solid fa-igloo');
+        $menu[] = array('title' => 'Sujets', 'href' => 'support/subject?Admin&option=pages', 'ico'  => 'fa-solid fa-signature','active' => 'active');
+        $a['subject'] = $this->models->getSubject ();
+        $this->set($a);
+        $this->render('subject', $menu);
+    }
+
+    public function sendnewsubject ()
+    {
+        $data['value'] = Common::VarSecure($_POST['name']);
+        if ($this->models->testSubject($data['value']) === false) {
+            $return = array('text' => constant('UNIQUE_NAME'), 'type' => 'warning');
+            $this->error(get_class($this), $return['text'], $return['type']);
+            $this->redirect('support/subject?Admin&option=pages', 3);
+            return;
+        }
+        $return = $this->models->sendnewsubject ($data);
+        if ($return === true) {
+            $this->redirect('support/subject?Admin&option=pages', 0);
+        } else {
+            Notification::warning(constant('DEL_BDD_ERROR'), 'Support');
+            $this->redirect('support?Admin&option=pages', 3);
+        }
+    }
+
+    public function editsubject ()
+    {
+        $id = $_POST['id'];
+        if (Common::is_numeric($id)) {
+            $data['value'] = Common::VarSecure($_POST['name']);
+            if ($this->models->testSubject($data['value']) === false) {
+                $return = array('text' => constant('UNIQUE_NAME'), 'type' => 'warning');
+                $this->error(get_class($this), $return['text'], $return['type']);
+                $this->redirect('support/subject?Admin&option=pages', 3);
+                return;
+            }
+            $return = $this->models->editsubject ($id, $data);
+            if ($return === true) {
+                $this->redirect('support/subject?Admin&option=pages', 0);
+            } else {
+                Notification::warning(constant('DEL_BDD_ERROR'), 'Support');
+                $this->redirect('support?Admin&option=pages', 3);
+            }
+        } else {
+            $return = array('text' => constant('ADMIN_TEXT_FALSE_ID'), 'type' => 'warning');
+            $this->error(get_class($this), $return['text'], $return['type']);
+            $this->redirect('support?Admin&option=pages', 3);
+            return;
+        }
+    }
+
+    public function delsubject ()
+    {
+        $id = $_POST['id'];
+        if (Common::is_numeric($id)) {
+            $return = $this->models->delsubject ($id);
+            if ($return === true) {
+                $this->redirect('support/subject?Admin&option=pages', 0);
             } else {
                 Notification::warning(constant('DEL_BDD_ERROR'), 'Support');
                 $this->redirect('support?Admin&option=pages', 3);

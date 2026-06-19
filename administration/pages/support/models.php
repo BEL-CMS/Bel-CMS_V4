@@ -106,4 +106,68 @@ final class modelsSupport
             return false;
         }
     }
+
+    public function getSubject () : array
+    {
+        $sql = new BDD();
+        $sql->table('TABLE_SUPPORT_OBJECT');
+        $sql->queryAll();
+        $return = $sql->data;
+        return $return;
+    }
+
+    public function sendnewsubject ($data) : bool
+    {
+        $sql = new BDD();
+        $sql->table('TABLE_SUPPORT_OBJECT');
+        $sql->insert($data);
+        $return = $sql->rowCount;
+        if ($return == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function testSubject ($name) : bool
+    {
+        $sql = new BDD();
+        $sql->table('TABLE_SUPPORT_OBJECT');
+        $sql->where(array('name' => 'value', 'value' => $name));
+        $sql->count();
+        $return = $sql->data;
+        if ($return == 1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public function editsubject ($id, $name) : bool
+    {
+        $sql = new BDD();
+        $sql->table('TABLE_SUPPORT_OBJECT');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->update($name);
+        $return = $sql->rowCount;
+        if (empty($return)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public function delsubject ($id) : bool
+    {
+        $sql = new BDD();
+        $sql->table('TABLE_SUPPORT_OBJECT');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->delete();
+        $return = $sql->rowCount;
+        if (empty($return)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }
