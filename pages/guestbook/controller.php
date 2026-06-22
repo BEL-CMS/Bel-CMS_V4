@@ -30,15 +30,14 @@ class Guestbook extends Pages
     public function index ()
     {
         $a['guest'] = $this->models->getGuest ();
-        $captcha = new Captcha ();
-        $a['captcha'] = $captcha->createCaptcha ();
+        $a['captcha'] = (new Captcha())->createCaptcha();
         $this->set($a);
         $this->render ('index');
     }
 
     public function new ()
     {
-        if (Captcha::verifCaptcha($_POST['captcha']) == true and empty($_POST['captcha_value'])) {
+        if (Captcha::verify()) {
             $data['mail']     = Secure::isMail($_POST['mail']);
             $data['username'] = Common::VarSecure($_POST['username']);
             $data['message']  = Common::VarSecure($_POST['message'], null);
@@ -52,7 +51,9 @@ class Guestbook extends Pages
                 Notification::$type($return['msg'], 'Guestbook');
             }
         } else {
-            Notification::error(constant('CODE_CAPTCHA_ERROR'), 'Captcha');
+            $error = $_SESSION['CAPTCHA_ERROR'] ?? null;
+            Notification::error(htmlspecialchars($error['message']), 'Captcha');
+		    $this->redirect('Guestbook', 5);
             return;
         }
         $this->redirect('Guestbook', 2);

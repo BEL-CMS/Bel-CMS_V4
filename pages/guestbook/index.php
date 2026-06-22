@@ -47,11 +47,22 @@ if (user::isLogged()) {
             <div class="input-group mb-3">
                 <textarea id="message" name="message" rows="3" class="belcms_guestbook_textarea bel_cms_textarea_simple"></textarea>
             </div>
-            <div class="input-group mb-3">
-                <label class="input-group-text" for="captcha"><?= $_SESSION['CAPTCHA']['CODE']; ?></label>
-            </div>
-            <div class="input-group mb-3">
-                <input type="number" placeholder="Trouve la solution du calcul." name="captcha" class="form-control" id="captcha">
+            <div id="belcms_global_captcha">
+                <div class="mb-1">
+                    <strong><?= $_SESSION['CAPTCHA']['question'] ?? 'Chargement...' ?></strong>
+                    <label>Résolvez le calcul :</label>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="number" name="captcha" required placeholder="Votre réponse" class="form-control">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="belcms_captcha_container">
+                        <label><?= constant('CAPTCHA_MESSAGE_INDEX'); ?></label>
+                        <input type="range" id="belcms_captcha_slider" min="0" max="100" value="15">
+                        <div id="belcms_captcha_percent">0%</div>
+                        <input type="hidden" name="belcms_captcha_value" id="belcms_captcha_value">
+                    </div>
+                </div>
             </div>
             <input type="hidden" name="avatar" value="<?= $avatar; ?>" required <?= $readonly ?>>
             <input type="hidden" name="captcha_value" value="">

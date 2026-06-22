@@ -67,7 +67,8 @@ $array = array(
 	'YOUR_MESSAGE'                        => 'Votre Message...',
 	'LOGIN_ID'                            => 'Connexion identifiant',
 	'MEMBER_DELETE'                       => 'Membre supprimé',
-	'CODE_CAPTCHA_ERROR'                  => 'Erreur de code captcha, veuillez réessayer',
+	'CODE_CAPTCHA_ERROR'                  => 'La vérification a échoué. Veuillez déplacer correctement le curseur ou résoudre le captcha.<br>ou<br>Accès temporairement limité suite à plusieurs tentatives. Veuillez patienter quelques minutes.',
+	'CAPTCHA_MESSAGE_INDEX'               => 'Déplacez le curseur d\'au moins 20% et + sans entrer dans la zone rouge !',
 	'NO_BANS_YET'                         => 'Aucun bannissement pour l\'instant',
 	'NO_USER_CONNECT'                     => 'Il est important d\'établir une connexion avec le site',
 	'NO_VALID_TOKEN_USER'                 => 'La clé "Token" ou l\'adresse e-mail n\'est pas valide',
@@ -512,14 +513,20 @@ $array = array(
 	'FR_LANG'                            => 'français',
 	'FR_ENGLISH'                         => 'english',
 	#####################################
-	# Fichier lang - Pages Contac
+	# Fichier lang - Pages Contact
 	#####################################
 	'SUCCESS_SEND_CONTACT'               => 'Votre message a été correctement transmis.',
 	'ERROR_EMAIL_CONTACT'                => 'Il est indispensable de fournir votre e-mail !',
-	'ERROR_TEXT_CONTACT'                 => 'Le texte doit impérativement contenir des informations.'
+	'ERROR_TEXT_CONTACT'                 => 'Le texte doit impérativement contenir des informations.',
+	##########################################################################
+	# Notification
+	##########################################################################
+	'NOTIFICATION_BYPASS'                => 'À tenter de bypasser l\'identifiant ID',
+
 );
 foreach ($array as $constant => $value) {
 	if (!defined($constant)) {
-		define($constant, $value); unset($array);
+		define($constant, $value);
 	}
 }
+unset($array);
