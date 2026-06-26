@@ -21,76 +21,304 @@ endif;
 ################################################
 # Class du CMS Captcha
 ################################################
-final class Captcha
+class Captcha
 {
-    public function createCaptcha () : array
+    private static function ip()
     {
-        $numberOneRand = rand(1, 9);
-        $numberTwoRand = rand(1, 9);
-        $OVERALL = $numberOneRand + $numberTwoRand;
-
-        $_SESSION['CAPTCHA']['CODE'] = $numberOneRand.' + '. $numberTwoRand;
-        $array = array('code' => $OVERALL, 'fail1' => rand(1, 20), 'fail_2' => rand(1, 20), 'fail_3' => rand(1, 20), 'fail_4' => rand(1, 20), 'fail_5' => rand(1, 20));
-        self::sendBDDInsert($OVERALL);
-        return $array;
+        return Common::GetIp();
     }
 
-    private function sendBDDInsert($code)
+    private static function now()
     {
-        self::destructCaptcha();
-        $insert['timelast'] = time();
-        $insert['code'] = $code;
-        $insert['IP'] = Common::GetIp();
-        $cryptTime = Common::encryptDecrypt($insert['timelast'], $_SESSION['CONFIG']['CMS_KEY_ADMIN']);
-        setcookie(
-            'BELCMS_CAPTCHA_'.$_SESSION['CONFIG']['CMS_COOKIES'],
-            $cryptTime,
-            time()+60*60*24*30,
-            "/",
-            $_SERVER['HTTP_HOST'],
-            true,
-            true
-        );
-        $sql = new BDD;
-        $sql->table('TABLE_CAPTCHA');
-        $sql->insert($insert);
+        return time();
     }
 
-    private function destructCaptcha ()
+    private static function setError($message, $type = 'error')
     {
-        $sql = new BDD;
-        $sql->table('TABLE_CAPTCHA');
-        $sql->where(array('name' => 'IP', 'value' => Common::GetIp()));
-        $sql->delete();
+        $_SESSION['CAPTCHA_ERROR'] = [
+            'type'    => $type,
+            'message' => $message,
+            'time'    => self::now()
+        ];
     }
 
-    public static function verifCaptcha ($code)
+    public static function getLastError()
     {
-        if (!isset($_REQUEST['captcha']) and empty($_REQUEST['captcha'])) {
-            return false;
+        return $_SESSION['CAPTCHA_ERROR'] ?? null;
+    }
+
+    private static function log($type, $message = '')
+    {
+        try {
+
+            $sql = new BDD;
+            $sql->table('TABLE_CAPTCHA_LOGS');
+            $sql->insert([
+                'ip'         => self::ip(),
+                'type'       => $type,
+                'message'    => $message,
+                'created_at' => self::now()
+            ]);
+
+        } catch (\Throwable $e) {
+            // ignore log errors
         }
-        $code = Common::VarSecure($code, null);
-        $where[] = array('name' => 'IP', 'value' => Common::GetIp());
-        $where[] = array('name' => 'code', 'value' => $code);
+    }
+
+    public function createCaptcha()
+    {
+        $a = rand(1, 9);
+        $b = rand(1, 9);
+
+        $_SESSION['CAPTCHA'] = [
+            'question' => $a . ' + ' . $b,
+            'result'   => $a + $b
+        ];
+
+        return $_SESSION['CAPTCHA'];
+    }
+
+    private static function getData()
+    {
         $sql = new BDD;
-        $sql->table('TABLE_CAPTCHA');
-        $sql->where($where);
+        $sql->table('TABLE_BELCMS_SHIELD');
+        $sql->where([
+            ['name' => 'ip', 'value' => self::ip()]
+        ]);
         $sql->queryOne();
+
+        return $sql->data ?? null;
+    }
+
+    private static function save(array $data)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_BELCMS_SHIELD');
+        $sql->where([
+            ['name' => 'ip', 'value' => self::ip()]
+        ]);
+        $sql->update($data);
+    }
+
+    private static function createShieldRow()
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_BELCMS_SHIELD');
+        $sql->insert([
+            'ip'            => self::ip(),
+            'success'       => 0,
+            'attempts'      => 0,
+            'blocked_until' => 0,
+            'last_action'   => self::now()
+        ]);
+    }
+
+    public static function isBlocked()
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_CAPTCHA_BLACKLIST');
+        $sql->where([
+            ['name' => 'ip', 'value' => self::ip()]
+        ]);
+        $sql->queryOne();
+
+        $data = $sql->data ?? null;
+
+        if ($data && (int)$data->blocked_until > self::now()) {
+
+            self::setError(
+                'Trop de tentatives. Réessayez dans quelques minutes.',
+                'warning'
+            );
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private static function block($reason, $minutes = 5)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_CAPTCHA_BLACKLIST');
+        $sql->where([
+            ['name' => 'ip', 'value' => self::ip()]
+        ]);
+        $sql->queryOne();
+
         if (!empty($sql->data)) {
-            $timeCurrent = time();
-            $testingTime = $timeCurrent - $sql->data->timelast;
-            if ($testingTime >= $_SESSION['CONFIG']['CMS_CAPTCHA_TIME']) {
-                $del = new BDD;
-                $del->table('TABLE_CAPTCHA');
-                $del->where(array('name' => 'IP', 'value' => Common::GetIp()));
-                $del->delete();
-                setcookie('BELCMS_CAPTCHA_'.$_SESSION['CONFIG']['CMS_COOKIES'], 'data', time()-60*60*24*365, '/', $_SERVER['HTTP_HOST'], false);
-                return true;
-            } else {
-                return false;
-            }
+
+            $sql->where([
+                ['name' => 'ip', 'value' => self::ip()]
+            ]);
+
+            $sql->update([
+                'reason'        => $reason,
+                'created_at'    => self::now(),
+                'blocked_until' => self::now() + ($minutes * 60)
+            ]);
+
         } else {
+
+            $sql->insert([
+                'ip'            => self::ip(),
+                'reason'        => $reason,
+                'created_at'    => self::now(),
+                'blocked_until' => self::now() + ($minutes * 60)
+            ]);
+        }
+
+        self::log('blocked', $reason);
+    }
+
+    private static function checkFlood()
+    {
+        $data = self::getData();
+
+        if (!$data) {
+
+            self::createShieldRow();
+            return true;
+        }
+
+        $now  = self::now();
+        $last = (int)$data->last_action;
+
+        if (($now - $last) < 3) {
+
+            self::log('flood', 'Requête trop rapide');
+
+            self::setError(
+                'Veuillez attendre quelques secondes avant de réessayer.'
+            );
+
             return false;
         }
+
+        self::save([
+            'last_action' => $now
+        ]);
+
+        return true;
+    }
+
+    private static function fail()
+    {
+        $data = self::getData();
+
+        if (!$data) {
+            self::createShieldRow();
+            $data = self::getData();
+        }
+
+        $attempts = (int)$data->attempts + 1;
+
+        $update = [
+            'attempts'    => $attempts,
+            'last_action' => self::now()
+        ];
+
+        if ($attempts >= 5) {
+
+            $update['attempts'] = 0;
+
+            self::block(
+                'Too many failed captcha attempts',
+                5
+            );
+
+            self::setError(
+                'Trop de tentatives incorrectes. Accès bloqué 5 minutes.',
+                'warning'
+            );
+        }
+
+        self::save($update);
+    }
+
+    private static function success()
+    {
+        $data = self::getData();
+
+        if (!$data) {
+            self::createShieldRow();
+            $data = self::getData();
+        }
+
+        self::save([
+            'success'     => ((int)$data->success + 1),
+            'attempts'    => 0,
+            'last_action' => self::now()
+        ]);
+
+        self::log('success', 'Captcha validé');
+
+        return true;
+    }
+
+    public static function verify()
+    {
+        if (self::isBlocked()) {
+            return false;
+        }
+
+        if (!self::checkFlood()) {
+            return false;
+        }
+
+        if (!empty($_POST['captcha_value'])) {
+
+            self::log('honeypot', 'Bot détecté');
+            self::fail();
+
+            self::setError(
+                'Comportement suspect détecté.'
+            );
+
+            return false;
+        }
+
+        $slider = (int)($_POST['belcms_captcha_value'] ?? 0);
+
+        if ($slider < 25 || $slider > 85) {
+
+            self::log('slider', 'Slider hors zone');
+
+            self::fail();
+
+            self::setError(
+                'Veuillez positionner le curseur dans la zone autorisée.'
+            );
+
+            return false;
+        }
+
+        if (!isset($_SESSION['CAPTCHA']['result'])) {
+
+            self::setError(
+                'Le captcha a expiré.'
+            );
+
+            return false;
+        }
+
+        $answer = (int)($_POST['captcha'] ?? 0);
+
+        if ($answer !== (int)$_SESSION['CAPTCHA']['result']) {
+
+            self::log('captcha', 'Mauvaise réponse');
+
+            self::fail();
+
+            self::setError(
+                'La réponse au calcul est incorrecte.'
+            );
+
+            return false;
+        }
+
+        unset($_SESSION['CAPTCHA']);
+
+        return self::success();
     }
 }
