@@ -139,6 +139,9 @@ class Captcha
 
     private static function block($reason, $minutes = 5)
     {
+
+        self::cleanBlacklist();
+
         $sql = new BDD;
         $sql->table('TABLE_CAPTCHA_BLACKLIST');
         $sql->where([
@@ -254,6 +257,45 @@ class Captcha
         self::log('success', 'Captcha validé');
 
         return true;
+    }
+
+    /**
+     * Supprime les doublons de la blacklist.
+     * Conserve uniquement l'enregistrement le plus récent.
+     */
+    private static function cleanBlacklist()
+    {
+        $sql = new BDD;
+
+        // Récupère toutes les entrées de cette IP
+        $sql->table('TABLE_CAPTCHA_BLACKLIST');
+        $sql->where([
+            ['name' => 'ip', 'value' => self::ip()]
+        ]);
+        $sql->queryAll();
+
+        if (empty($sql->data) || count($sql->data) <= 1) {
+            return;
+        }
+
+        // Trie par date décroissante
+        usort($sql->data, function ($a, $b) {
+            return $b->created_at <=> $a->created_at;
+        });
+
+        // Conserve la première
+        $keep = array_shift($sql->data);
+
+        // Supprime toutes les autres
+        foreach ($sql->data as $row) {
+
+            $delete = new BDD;
+            $delete->table('TABLE_CAPTCHA_BLACKLIST');
+            $delete->where([
+                ['name' => 'id', 'value' => $row->id]
+            ]);
+            $delete->delete();
+        }
     }
 
     public static function verify()
