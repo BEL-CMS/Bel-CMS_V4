@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.1 [PHP8.4]
+ * @version 4.1.0 [PHP8.5]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -13,12 +13,16 @@
 		'articles',
 		'articles_content',
 		'ban',
+		'bbsa_bssa',
 		'buy_mails',
 		'buy_ndd',
 		'buy_plan',
 		'buy_plan_infos',
 		'buy_users',
 		'captcha',
+		'captcha_blacklist',
+		'captcha_log',
+		'captcha_shield',
 		'comments',
 		'config',
 		'config_pages',
@@ -28,6 +32,9 @@
 		'downloads_cat',
 		'events',
 		'events_cat',
+		'formation',
+		'formation_actif',
+		'formation_activite',
 		'forum',
 		'forum_msg',
 		'forum_name',
@@ -54,6 +61,7 @@
 		'newsletter_send',
 		'newsletter_tpl',
 		'news_cat',
+		'shield',
 		'shoutbox',
 		'stats',
 		'support',

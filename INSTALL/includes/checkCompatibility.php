@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.4]
+ * @version 4.1.0 [PHP8.5]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -79,10 +79,12 @@ function createDirAll ()
 	$dir = array(
 		ROOT.'spdo',
 		ROOT.'uploads',
+		ROOT.'uploads'.DS.'articles',
 		ROOT.'uploads'.DS.'backup',
 		ROOT.'uploads'.DS.'downloads',
 		ROOT.'uploads'.DS.'emoticones',
 		ROOT.'uploads'.DS.'events',
+		ROOT.'uploads'.DS.'files',
 		ROOT.'uploads'.DS.'forum',
 		ROOT.'uploads'.DS.'gallery',
 		ROOT.'uploads'.DS.'gallery'.DS.'cat',
@@ -91,11 +93,14 @@ function createDirAll ()
 		ROOT.'uploads'.DS.'mails',
 		ROOT.'uploads'.DS.'market',
 		ROOT.'uploads'.DS.'market'.DS.'cat',
+		ROOT.'uploads'.DS.'news',
 		ROOT.'uploads'.DS.'paypal',
+		ROOT.'uploads'.DS.'plan',
 		ROOT.'uploads'.DS.'shoutbox',
 		ROOT.'uploads'.DS.'team',
 		ROOT.'uploads'.DS.'tmp',
-		ROOT.'uploads'.DS.'users'
+		ROOT.'uploads'.DS.'users',
+		ROOT.'uploads'.DS.'web_hosting'
 	);
 
 	foreach ($dir as $v) {
@@ -154,7 +159,7 @@ function configIncPhp ()
 	$content  = "<?php".PHP_EOL;
 	$content .= "/**".PHP_EOL;
 	$content .= "* Bel-CMS [Content management system]".PHP_EOL;
-	$content .= "* @version 4.0.0 [PHP8.4]".PHP_EOL;
+	$content .= "* @version 4.1.0 [PHP8.5]".PHP_EOL;
 	$content .= "* @link https://bel-cms.dev".PHP_EOL;
 	$content .= "* @link https://determe.be".PHP_EOL;
 	$content .= "* @license MIT License".PHP_EOL;
