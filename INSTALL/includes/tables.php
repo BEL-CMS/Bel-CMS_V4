@@ -568,6 +568,10 @@ switch ($_POST['table']) {
 			UNIQUE KEY `name` (`name`),
 			UNIQUE KEY `id_group` (`id_group`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
+
+		$insert = "INSERT INTO `".$_SESSION['prefix'].$table."`(`id`, `name`, `id_group`, `image`, `color`, `description`) VALUES
+			(1, 'ADMINISTRATOR', 1, '', '#a54c76ff', 'Administrateur principal'),
+			(2, 'MEMBERS', 2, '', '#2381c0ff', 'Membres');";
 	break;
 
 	case 'guestbook':
