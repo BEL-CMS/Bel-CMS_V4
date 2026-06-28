@@ -159,7 +159,7 @@ class User extends Pages
     #########################################
     public function createUser()
     {
-        if (Captcha::verify() == true) {
+        if (Captcha::verify()) {
             $error = 0;
             $array['username']  = Common::VarSecure($_POST['name'], null);
             $array['mail']      = Secure::isMail($_POST['mail']);

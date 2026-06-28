@@ -21,6 +21,29 @@ use BelCMS\Core\GetHost;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscription Bel-CMS</title>
     <link rel="stylesheet" href="pages/user/css/login.css">
+    <link rel="stylesheet" href="assets/css/belcms.global.css">
+    <script src="/assets\/plugins/jQuery/jquery-3.7.1.min.js"></script>
+    <script src="/assets/js/belcms.core.js"></script>
+    <script type="text/javascript">
+        $(document).on('input', '#belcms_captcha_slider', function () {
+            let value = parseInt($(this).val());
+            $('#belcms_captcha_percent').text(value + '%');
+            $('#belcms_captcha_value').val(value);
+            if (value < 25) {
+                $('#belcms_captcha_percent')
+                    .css('color', '#00c853')
+                    .html(value + '% ➜ Déplacez davantage le curseur');
+            } else if (value >= 85) {
+                $('#belcms_captcha_percent')
+                    .css('color', '#d50000')
+                    .html(value + '% ❌ Zone rouge');
+            } else {
+                $('#belcms_captcha_percent')
+                    .css('color', '#00c853')
+                    .html(value + '% ✓ Validation possible');
+            }
+        });
+    </script>
 </head>
 
 <body>
@@ -32,12 +55,26 @@ use BelCMS\Core\GetHost;
                     <input type="text" name="name" placeholder="Nom d'utilisateur" required>
                     <input type="email" name="mail" placeholder="Adresse email" required>
                     <input type="password" name="password" placeholder="Mot de passe" required>
-                    <div class="input-group mb-3">
-                        <label class="input-group-text" for="captcha"><?= $_SESSION['CAPTCHA']['CODE']; ?></label>
-                        <input type="number" placeholder="Trouve la solution du calcul." name="captcha" class="form-control" id="captcha">
+                    <div class="row" id="belcms_global_captcha">
+                        <div id="belcms_global_captcha_style">
+                            <span>Il faut passer par une vérification de sécurité.</span>
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text">Résolvez le calcul : <?= $_SESSION['CAPTCHA']['question'] ?? 'Chargement...' ?></span>
+                                <input type="number" name="captcha" class="form-control" placeholder="Votre réponse" required>
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="belcms_captcha_container">
+                                    <label><?= constant('CAPTCHA_MESSAGE_INDEX'); ?></label>
+                                    <input type="range" id="belcms_captcha_slider" min="0" max="100" value="15">
+                                    <div id="belcms_captcha_percent">0%</div>
+                                    <input type="hidden" name="belcms_captcha_value" id="belcms_captcha_value">
+                                    <input type="hidden" name="captcha_value" value="">
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <input type="hidden" name="captcha_value" value="">
                     <button type="submit">S'inscrire</button>
+                    
                 </form>
                 <div class="login-links">
                     <a href="User/login&echo">Se connecter</a>
