@@ -44,27 +44,11 @@ $nameG = isset($nameG->name) ? constant($nameG->name) : $nameG->name;
         </div>
         <nav class="app-navbar">
             <div class="semi-side-nav">
-                <div class="py-4">
-                    <span class="bg-white h-40 w-40 d-flex-center b-r-12 mx-auto">
-                        <img style="width: 32px;height:32px;" src="administration/assets/images/logo.png">
-                    </span>
-                </div>
-                <ul class="navbar-menu-list" role="tablist">
-                    <li class="nav-item">
-                        <a href="index.php?admin" class="nav-link" data-target="homePage">
-                            <i class="ti ti-brand-stackshare"></i>
-                        </a>
-                    </li>
-                </ul>
-                <span class="bg-primary-800 h-45 w-45 d-flex-center b-r-30 position-relative mx-auto ">
-                <img alt="avatar" class="img-fluid b-r-30" src="administration/assets/images/avatar/01.png">
-                <span class="position-absolute top-0 end-0 p-1 bg-gradient-success border border-light rounded-circle"></span>
-            </span>
             </div>
             <div class="main-side-nav">
                 <div>
-                    <a class="logo d-inline-block" href="index.php?admin">
-                        <img style="margin: auto;display:block;text-align:center;" src="administration/assets/images/apple-touch-icon.png">
+                    <a class="logo d-inline-block" href="https://www.bel-cms.dev" title="HomePage Bel-CMS">
+                        <img style="margin: auto;display:block;text-align:center;" src="/assets/img/belcms.gif">
                     </a>
                     <span class="w-30 h-30 d-none bg-gradient-danger b-r-8 cursor-pointer side-toggle">
                         <i class="ti ti-x f-s-18"></i>
@@ -119,6 +103,7 @@ $nameG = isset($nameG->name) ? constant($nameG->name) : $nameG->name;
                                     <?php echo $menu->games(); ?>
                                 </ul>
                             </li>
+
                         </ul>
                     </div>
                 </div>

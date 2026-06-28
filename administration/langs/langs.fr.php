@@ -18,73 +18,75 @@ use Belcms\Administration\Administration;
 use BelCMS\Requires\Common;
 
 Common::constant(array(
-    #####################################
+    ##########################################################################
 	# Nom Administration
-	#####################################
-	'ADMINISTRATORS'        => 'Administrateur',
-	'MEMBERS'               => 'Membres',
-	'ADMIN_TEXT_FALSE_ID'   => 'Un administrateur a reçu des informations sur une situation alarmante relative à l\'ID.',
-	'INITIALIZATION_ADMIN'  => 'Initialisation du système...',
-    #####################################
+	##########################################################################
+	'ADMINISTRATORS'                      => 'Administrateur',
+	'MEMBERS'                             => 'Membres',
+	'ADMIN_TEXT_FALSE_ID'                 => 'Un administrateur a reçu des informations sur une situation alarmante relative à l\'ID.',
+	'INITIALIZATION_ADMIN'                => 'Initialisation du système...',
+	##########################################################################
     # Fichier lang en français - Forum
-    #####################################
-    'ALL_MSG_POST'         => 'Tout les sujets',
-    'ALL_MSG_REP'          => 'Tout les postes',
-    'ADD_CAT_SUB'          => 'Ajouter une catégorie principal',
-    'ADD_CAT_SUB_SECOND'   => 'Ajouter une catégorie secondaire',
-	#####################################
+	##########################################################################
+    'ALL_MSG_POST'                        => 'Tout les sujets',
+    'ALL_MSG_REP'                         => 'Tout les postes',
+    'ADD_CAT_SUB'                         => 'Ajouter une catégorie principal',
+    'ADD_CAT_SUB_SECOND'                  => 'Ajouter une catégorie secondaire',
+	##########################################################################
 	# Fichier lang en français - Groupes
-	#####################################
-    'GROUP_NAME_RESERVED' => 'Le nom est réservé.',
-	#####################################
+	##########################################################################
+    'GROUP_NAME_RESERVED'                 => 'Le nom est réservé.',
+	##########################################################################
 	# Fichier lang en français - Pages
-	#####################################
-	'ADDED_AN_ARTICLE'            => 'Ajouté un article',
-	'ADD_DOWNLOADS'               => 'Ajouté un téléchargement',
-	'CONFIRM_DELETE'              => 'Confirmer la suppression : ',
-	'DEL_CONFIRM'                 => 'Confirmer la suppression',
-	'ACCESS_TO_ADMIN'             => 'Accès aux administrateurs',
-	'ACCESS_TO_GROUPS'            => 'Accès aux groupes',
-	'TO_REGISTER'                 => 'Enregistrer',
-	'PARAMETER_EDITING_SUCCESS'   => 'Édition des paramètre avec succès',
-	'EDIT_PARAM_ERROR'            => 'Erreur lors de la sauvegarde des paramètre',
-	'ACTIVE_WIDGETS'              => 'Activer le widget',
-	'EDIT_PARAM_SUCCESS'          => 'Édition des paramètres avec succès',
-	'DROP_FILES_CLICK_OR_UPLOADS' => 'Déposez les fichiers ici ou cliquez pour télécharger.',
-	'SEND_FILES'                  => 'Envoyer les fichiers',
-	'DEL_BDD_ERROR'               => 'Erreur lors du transfert en base de données',
-	'SEND_BDD_PARTIEL'            => 'Envoie en base de données partiellement',
-	'NO_CATEGORY'                 => 'Aucune catégorie',
-	'COPYRIGHT'                   => 'Bel-CMS',
-	'NO_ACCESS_ADMIN'             => 'Cette page n\'est accessible qu\'aux administrateurs de premier niveau.',
-	'EDITING_SUCCESS'             => 'Édition effectue avec succès',
-	'EDIT_ERROR'                  => 'Erreur lors de la sauvegarde ou rien à changer dans le formulaire.',
-	'ID_ERROR'                    => 'ID Incorrecte, un message sera transmis aux administrateurs',
-	'ID_ERROR_TITLE'              => 'ID Incorrecte',
-	'ID_ERROR_MSG'                => 'L\'utilisateur a donné une ID qui n\'est pas valide',
-	'DEL_SUCCESS'                 => 'La suppression a été réalisée avec succès.',
-	'DEL_ERROR'                   => 'Erreur lors de la suppression',
-	'ERROR_NO_DATA'               => 'Aucune donnée transmise',
-	'CATEGORY'                    => 'Catégories',
-	'SEND_EDIT_SUCCESS'           => 'Édition a été effectuée avec succès',
-	'ACTIVE'                      => 'Activer',
-	'CAT_IS_REQUIRED'             => 'Une catégorie est obligatoire.',
-	'QUESTION'                    => 'Question',
-	'SEND_SUCCESS'                => 'Insertion en base de donnée avec succès',
-	'EMPTY_NAME'                  => 'Aucun nom transmis ?',
-	'NEW'                         => 'Nouveau',
-	'ARRANGEMENT'                 => 'Disposition',
-	'DEL_FILE_SUCCESS'            => 'Fichier supprimé avec succès',
-	'UNKNOW_MODELS'               => 'Fichier models manquant.',
-	'SAVE_BDD_SUCCESS'            => 'Sauvegarde effectuée avec succès',
-	'SAVE_BDD_ERROR'              => 'Données corrompues, la sauvegarde n\'a pas eu lieu',
-	'MAIN_CAT'                    => 'Catégorie principal',
-	'CAT_SUB'                     => 'Catégorie secondaire',
-	'ADD_MAIN_CAT'                => 'Ajouter une catégorie primaire',
-	'ADMIN_CONNECT_LOSE'          => 'Vous devez être connecté pour accéder à l\'administration.',
-	#####################################
+	##########################################################################
+	'ADDED_AN_ARTICLE'                    => 'Ajouté un article',
+	'ADD_DOWNLOADS'                       => 'Ajouté un téléchargement',
+	'CONFIRM_DELETE'                      => 'Confirmer la suppression : ',
+	'DEL_CONFIRM'                         => 'Confirmer la suppression',
+	'ACCESS_TO_ADMIN'                     => 'Accès aux administrateurs',
+	'ACCESS_TO_GROUPS'                    => 'Accès aux groupes',
+	'TO_REGISTER'                         => 'Enregistrer',
+	'PARAMETER_EDITING_SUCCESS'           => 'Édition des paramètre avec succès',
+	'EDIT_PARAM_ERROR'                    => 'Erreur lors de la sauvegarde des paramètre',
+	'ACTIVE_WIDGETS'                      => 'Activer le widget',
+	'EDIT_PARAM_SUCCESS'                  => 'Édition des paramètres avec succès',
+	'DROP_FILES_CLICK_OR_UPLOADS'         => 'Déposez les fichiers ici ou cliquez pour télécharger.',
+	'SEND_FILES'                          => 'Envoyer les fichiers',
+	'DEL_BDD_ERROR'                       => 'Erreur lors du transfert en base de données',
+	'SEND_BDD_PARTIEL'                    => 'Envoie en base de données partiellement',
+	'NO_CATEGORY'                         => 'Aucune catégorie',
+	'COPYRIGHT'                           => 'Bel-CMS',
+	'NO_ACCESS_ADMIN'                     => 'Cette page n\'est accessible qu\'aux administrateurs de premier niveau.',
+	'EDITING_SUCCESS'                     => 'Édition effectue avec succès',
+	'EDIT_ERROR'                          => 'Erreur lors de la sauvegarde ou rien à changer dans le formulaire.',
+	'ID_ERROR'                            => 'ID Incorrecte, un message sera transmis aux administrateurs',
+	'ID_ERROR_TITLE'                      => 'ID Incorrecte',
+	'ID_ERROR_MSG'                        => 'L\'utilisateur a donné une ID qui n\'est pas valide',
+	'DEL_SUCCESS'                         => 'La suppression a été réalisée avec succès.',
+	'DEL_ERROR'                           => 'Erreur lors de la suppression',
+	'ERROR_NO_DATA'                       => 'Aucune donnée transmise',
+	'CATEGORY'                            => 'Catégories',
+	'SEND_EDIT_SUCCESS'                   => 'Édition a été effectuée avec succès',
+	'ACTIVE'                              => 'Activer',
+	'CAT_IS_REQUIRED'                     => 'Une catégorie est obligatoire.',
+	'QUESTION'                            => 'Question',
+	'SEND_SUCCESS'                        => 'Insertion en base de donnée avec succès',
+	'EMPTY_NAME'                          => 'Aucun nom transmis ?',
+	'NEW'                                 => 'Nouveau',
+	'ARRANGEMENT'                         => 'Disposition',
+	'DEL_FILE_SUCCESS'                    => 'Fichier supprimé avec succès',
+	'UNKNOW_MODELS'                       => 'Fichier models manquant.',
+	'SAVE_BDD_SUCCESS'                    => 'Sauvegarde effectuée avec succès',
+	'SAVE_BDD_ERROR'                      => 'Données corrompues, la sauvegarde n\'a pas eu lieu',
+	'MAIN_CAT'                            => 'Catégorie principal',
+	'CAT_SUB'                             => 'Catégorie secondaire',
+	'ADD_MAIN_CAT'                        => 'Ajouter une catégorie primaire',
+	'ADMIN_CONNECT_LOSE'                  => 'Vous devez être connecté pour accéder à l\'administration.',
+	'UNIQUE_NAME'                         => 'Ce nom est déjà utilisé, veuillez en trouver un différent.',
+	'PHONE'                               => 'Téléphone',
+	##########################################################################
 	# UPLOAD
-	#####################################
+	##########################################################################
 	'UPLOAD_ERROR'                        => 'Echec de l\'upload !',
 	'UPLOAD_ERROR_FILE'                   => 'Vous devez uploader un fichier de type prédéfini.',
 	'UPLOAD_ERROR_SIZE'                   => 'Le fichier est trop volumineux',
@@ -92,33 +94,33 @@ Common::constant(array(
 	'UPLOAD_NONE'                         => 'Aucun fichier en upload',
 	'UPLOAD'                              => 'Télécharger',
 	'SIZE'                                => 'Taille',
-	#####################################
+	##########################################################################
 	# COLOR
-	#####################################
+	##########################################################################
 	'RED'                                 => 'Rouge',
 	'BLUE'                                => 'Bleu',
 	'YELLOW'                              => 'Jaune',
 	'GREEN'                               => 'Vert',
 	'GREY'                                => 'Gris',
-	#####################################
+	##########################################################################
 	# POSITION
-	#####################################
+	##########################################################################
 	'TOP'                                 => 'Haut',
 	'RIGHT'                               => 'Droit',
 	'BOTTOM'                              => 'Bas',
 	'LEFT'                                => 'Gauche',
-	#####################################
+	##########################################################################
 	# Fichier lang en français - Pages BAN
-	#####################################
+	##########################################################################
 	'BAN'                                 => 'Bannissement',
 	'DATE_OF_BAN'                         => 'Durée du bannissement',
 	'BEGINNING_OF_BAN'                    => 'Début du bannissement',
 	'DATE_OF_FNISH'                       => 'Fin du bannissement',
 	'DFNISH'                              => 'Fini',
 	'YOU_ARE_BANNED'                      => 'Vous êtes banni',
-	#####################################
+	##########################################################################
 	# Fichier lang en français - Pages BAN DUREE
-	#####################################
+	##########################################################################
 	'LIFE'                                => 'A vie',
 	'ONE_MINUTE'                          => '1 Minute',
 	'FIVE_MINUTES'                        => '5 Minute',
@@ -156,9 +158,9 @@ Common::constant(array(
 	'P5Y'                                 => '5 Ans',
 	'P10Y'                                => '10 ans',
 	'P99Y'                                => 'À vie',
-	#####################################
+	##########################################################################
 	# Nom des modules
-	#####################################
+	##########################################################################
 	'NEWS'                                => 'Actualités',
 	'ARTICLE'                             => 'Article',
 	'HOME'                                => 'Accueil',
@@ -183,9 +185,9 @@ Common::constant(array(
 	'SURVEY'                              => 'Sondages',
 	'MARKET'                              => 'Boutique',
 	'PRICING'                             => 'Tarifs',
-	#####################################
+	##########################################################################
 	# Nom Administration
-	#####################################
+	##########################################################################
 	'ADMINISTRATORS'                      => 'Administrateur',
 	'MEMBERS'                             => 'Membres',
 	'CMS_VALIDATION'                      => '',
@@ -204,6 +206,6 @@ Common::constant(array(
 	'CAT_DELETE'                          => 'Aucune catégorie !',
 	'CAT_SEND'                            => 'L\'email a été transmis correctement.',
 	'ADD_SECOND_CAT'                      => 'Ajouter une catégorie secondaire',
-	#####################################
+	##########################################################################
 	'IP'                                  => 'IP',
 ));

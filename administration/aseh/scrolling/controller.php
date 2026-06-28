@@ -19,11 +19,11 @@ if (!defined('CHECK_INDEX')):
     exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
 endif;
 
-class Aseh extends AdminPages
+class Scrolling extends AdminPages
 {
     var $admin  = false; // Admin suprême uniquement (Groupe 1);
     var $active = true; // Activation/désactivation par FTP
-    var $bdd    = 'ModelsAseh'; // Nom du Models (récupération de données)
+    var $bdd    = 'ModelsScrolling'; // Nom du Models (récupération de données)
 
 	public function index ()
 	{

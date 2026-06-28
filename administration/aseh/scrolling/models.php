@@ -18,7 +18,7 @@ use BelCMS\PDO\BDD;
 #####################################
 # Infos tables                      #
 #####################################
-final class ModelsAseh
+final class ModelsScrolling
 {
     public function get ()
     {

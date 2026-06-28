@@ -80,7 +80,7 @@ class Menu
             'Hébérgements'        => array('buyplan?admin&amp;option=pages', ''),
             //'Tarifs'              => array('pricing?admin&amp;option=pages', ''),
             //'Recherche'           => array('search?admin&amp;option=pages', ''),
-            //'Tickets'             => array('tickets?admin&amp;option=pages, ''),
+            'Support'             => array('support?admin&amp;option=pages', '')
         );
         ksort($array);
         self::getLayout($array);
@@ -103,7 +103,6 @@ class Menu
         $array = array(
             'Serveur'          =>  array('server?management&option=extras', ''),
             'Mails interdits'  =>  array('forbidden?management&option=extras', ''),
-            //'ASEH'            =>  array('aseh?management&option=extras', ''), 
         );
         ksort($array);
         self::getLayout($array);
@@ -113,6 +112,17 @@ class Menu
     {
         $array = array(
             'Teams'   =>  array('teams?management&option=gaming', ''),
+        );
+        ksort($array);
+        self::getLayout($array);
+    }
+
+    public function aseh()
+    {
+        $array = array(
+            'Défilement'   =>  array('scrolling?management&option=aseh', ''),
+            'Formation'    =>  array('training?management&option=aseh', ''),
+            'BBSA'         =>  array('bbsa?management&option=aseh', ''),
         );
         ksort($array);
         self::getLayout($array);

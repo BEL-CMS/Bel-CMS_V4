@@ -84,6 +84,10 @@ class AdminPages
                 $dir = self::getDir('extras');
                 break;
 
+            case 'aseh':
+                $dir = self::getDir('aseh');
+                break;
+
             default:
                 $dir = null;
                 break;
@@ -231,6 +235,10 @@ class AdminPages
 
             case 'extras':
                 $filename = ROOT . DS . 'administration' . DS . 'extras' . DS . strtolower(get_class($this)) . DS . $filename . '.php';
+                break;
+
+            case 'aseh':
+                $filename = ROOT . DS . 'administration' . DS . 'aseh' . DS . strtolower(get_class($this)) . DS . $filename . '.php';
                 break;
 
             default:

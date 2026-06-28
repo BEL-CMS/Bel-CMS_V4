@@ -60,6 +60,10 @@ if ($infos->priority == 1) {
                                     <td><?= $infos->ip_user;?></td>
                                 </tr>
                                 <tr>
+                                    <td><?= constant('PHONE'); ?></td>
+                                    <td><?= $infos->phone; ?></td>
+                                </tr>
+                                <tr>
                                     <td>Titre :</td>
                                     <td><?= $infos->title;?></td>
                                 </tr>

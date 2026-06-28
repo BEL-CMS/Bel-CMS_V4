@@ -60,6 +60,15 @@ class Support extends AdminPages
             $this->set($b);
 
         } else {
+            ####################################################### 
+            $msg   = $_SESSION['USER']->user->username.' '.constant('NOTIFICATION_BYPASS');
+            $interaction = new Interaction();
+            $interaction->status('red');
+            $interaction->message($msg);
+            $interaction->title('Support');
+            $interaction->author(Common::GetIp());
+            $interaction->setAdmin();
+            #######################################################
             $return = array('text' => constant('ADMIN_TEXT_FALSE_ID'), 'type' => 'warning');
             $this->error(get_class($this), $return['text'], $return['type']);
             $this->redirect('support?Admin&option=pages', 3);
@@ -86,6 +95,15 @@ class Support extends AdminPages
                 $this->redirect('support?Admin&option=pages', 3);
             }
         } else {
+            ####################################################### 
+            $msg   = $_SESSION['USER']->user->username.' '.constant('NOTIFICATION_BYPASS');
+            $interaction = new Interaction();
+            $interaction->status('red');
+            $interaction->message($msg);
+            $interaction->title('Support');
+            $interaction->author(Common::GetIp());
+            $interaction->setAdmin();
+            #######################################################
             $return = array('text' => constant('ADMIN_TEXT_FALSE_ID'), 'type' => 'warning');
             $this->error(get_class($this), $return['text'], $return['type']);
             $this->redirect('support?Admin&option=pages', 3);
@@ -106,6 +124,15 @@ class Support extends AdminPages
                 $this->redirect('support?Admin&option=pages', 3);
             }
         } else {
+            ####################################################### 
+            $msg   = $_SESSION['USER']->user->username.' '.constant('NOTIFICATION_BYPASS');
+            $interaction = new Interaction();
+            $interaction->status('red');
+            $interaction->message($msg);
+            $interaction->title('Support');
+            $interaction->author(Common::GetIp());
+            $interaction->setAdmin();
+            #######################################################
             $return = array('text' => constant('ADMIN_TEXT_FALSE_ID'), 'type' => 'warning');
             $this->error(get_class($this), $return['text'], $return['type']);
             $this->redirect('support?Admin&option=pages', 3);
@@ -123,12 +150,21 @@ class Support extends AdminPages
                 $this->redirect('support?Admin&option=pages', 2);
             } else {
                 Notification::warning(constant('DEL_BDD_ERROR'), 'Support');
-                $this->redirect('support?Admin&option=pages', 3);
+                $this->redirect('support?Admin&option=pages', 2);
             }
         } else {
+            ####################################################### 
+            $msg   = $_SESSION['USER']->user->username.' '.constant('NOTIFICATION_BYPASS');
+            $interaction = new Interaction();
+            $interaction->status('red');
+            $interaction->message($msg);
+            $interaction->title('Support');
+            $interaction->author(Common::GetIp());
+            $interaction->setAdmin();
+            #######################################################
             $return = array('text' => constant('ADMIN_TEXT_FALSE_ID'), 'type' => 'warning');
             $this->error(get_class($this), $return['text'], $return['type']);
-            $this->redirect('support?Admin&option=pages', 3);
+            $this->redirect('support?Admin&option=pages', 2);
             return;
         }
     }
@@ -151,6 +187,15 @@ class Support extends AdminPages
             $this->redirect('support/subject?Admin&option=pages', 3);
             return;
         }
+        ####################################################### 
+        $msg   = $_SESSION['USER']->user->username.' '.constant('NOTIFICATION_BYPASS');
+        $interaction = new Interaction();
+        $interaction->status('red');
+        $interaction->message($msg);
+        $interaction->title('Support');
+        $interaction->author(Common::GetIp());
+        $interaction->setAdmin();
+        #######################################################
         $return = $this->models->sendnewsubject ($data);
         if ($return === true) {
             $this->redirect('support/subject?Admin&option=pages', 0);
@@ -179,6 +224,15 @@ class Support extends AdminPages
                 $this->redirect('support?Admin&option=pages', 3);
             }
         } else {
+            ####################################################### 
+            $msg   = $_SESSION['USER']->user->username.' '.constant('NOTIFICATION_BYPASS');
+            $interaction = new Interaction();
+            $interaction->status('red');
+            $interaction->message($msg);
+            $interaction->title('Support');
+            $interaction->author(Common::GetIp());
+            $interaction->setAdmin();
+            #######################################################
             $return = array('text' => constant('ADMIN_TEXT_FALSE_ID'), 'type' => 'warning');
             $this->error(get_class($this), $return['text'], $return['type']);
             $this->redirect('support?Admin&option=pages', 3);
@@ -198,6 +252,15 @@ class Support extends AdminPages
                 $this->redirect('support?Admin&option=pages', 3);
             }
         } else {
+            ####################################################### 
+            $msg   = $_SESSION['USER']->user->username.' '.constant('NOTIFICATION_BYPASS');
+            $interaction = new Interaction();
+            $interaction->status('red');
+            $interaction->message($msg);
+            $interaction->title('Support');
+            $interaction->author(Common::GetIp());
+            $interaction->setAdmin();
+            #######################################################
             $return = array('text' => constant('ADMIN_TEXT_FALSE_ID'), 'type' => 'warning');
             $this->error(get_class($this), $return['text'], $return['type']);
             $this->redirect('support?Admin&option=pages', 3);

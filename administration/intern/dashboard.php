@@ -53,6 +53,7 @@ function getCountForum() {
 function getCountIntertaction() {
     $sql = new BDD();
     $sql->table('TABLE_INTERACTION_ADMIN');
+    $sql->orderby(array(array('name' => 'id', 'type' => 'DESC')));
     $sql->limit(5);
     $sql->queryAll();
     return $sql->data;

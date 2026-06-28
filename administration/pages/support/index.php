@@ -33,6 +33,7 @@ endif;
                                     <th><?= constant('ID'); ?></th>
                                     <th><?= constant('SUBJECT'); ?></th>
                                     <th><?= constant('USERS'); ?></th>
+                                    <th><?= constant('PHONE'); ?></th>
                                     <th><?= constant('DATE'); ?></th>
                                     <th><?= constant('IP'); ?></th>
                                     <th>Statut</th>
@@ -66,6 +67,7 @@ endif;
                                     <td><?= $value->number_id; ?></td>
                                     <td><?= $value->title; ?></td>
                                     <td><?= $value->user_hash_key; ?></td>
+                                    <td><?= $value->phone; ?></td>
                                     <td><?=  Common::TransformDate($value->created_at, 'MEDIUM', 'MEDIUM'); ?></td>
                                     <td><?= $value->ip_user; ?></td>
                                     <?= $status; ?>

@@ -180,7 +180,11 @@ final class Administration
                     break;
 
                 case 'games':
-                    $requestPage = self::request('extras', $this->page);
+                    $requestPage = self::request('games', $this->page);
+                    break;
+
+                case 'aseh':
+                    $requestPage = self::request('aseh', $this->page);
                     break;
 
                 default:
@@ -278,9 +282,26 @@ final class Administration
                             $_SESSION['LOGIN_MANAGEMENT'] = true;
                             $return['ajax'] = constant('LOGIN_IN_PROGRESS');
                             echo json_encode($return);
+                            ####################################################### 
+                            $msg   = $_SESSION['USER']->user->username. ' a bien établi la connexion avec l\'administration.';
+                            $interaction = new Interaction();
+                            $interaction->status('green');
+                            $interaction->message($msg);
+                            $interaction->title('Connexion à l\'administration');
+                            $interaction->author(Common::GetIp());
+                            $interaction->setAdmin();
+                            ####################################################### 
                             return;
                         } else {
                             $return['ajax'] = constant('HASHKEY_DOES_NOT_MATCH_YOURS');
+                            $msg   = Common::GetIp(). ' à tenter de se connecter l\'administration avec un hash_key qu\'il lui appartient pas !.';
+                            $interaction = new Interaction();
+                            $interaction->status('red');
+                            $interaction->message($msg);
+                            $interaction->title('Connexion à l\'administration');
+                            $interaction->author(Common::GetIp());
+                            $interaction->setAdmin();
+                            #######################################################
                         }
                     } else {
                         $return['ajax'] = constant('THE_PASS_IS_NOT_CORRECT');
@@ -450,6 +471,16 @@ final class Administration
         asort($scan);
         return $scan;
     }
+    #########################################
+    # Scan le dossier des pages
+    #########################################
+    private function getAseh()
+    {
+        $scan = Common::ScanDirectory(ROOT.DS.'administration'.DS . 'aseh', true);
+        asort($scan);
+        return $scan;
+    }
+
     #########################################
     # Autorisation des pages
     #########################################
