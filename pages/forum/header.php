@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="forum"><i class="fa-solid fa-comments"></i> <?= $_SESSION['CONFIG']['CMS_NAME']; ?> :: Forum</a>
+        <a class="navbar-brand fw-bold" href="index.html"><i class="fa-solid fa-comments"></i> <?= $_SESSION['CONFIG']['CMS_NAME']; ?> :: Forum</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
             <span class="navbar-toggler-icon"></span>
         </button>

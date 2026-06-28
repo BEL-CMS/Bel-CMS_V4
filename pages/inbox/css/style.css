@@ -49,6 +49,7 @@ input {
         #belcms_inbox_body > table {
             border: none !important;
             margin: 0;
+            width: 100% !important;
         }
         .belcms_inbox_items_msg {
             border-bottom: 1px solid rgba(0, 0, 0, .15) !important;
@@ -56,11 +57,34 @@ input {
             padding: 5px 10px !important;
             line-height: 36px;
             transition: all .500ms linear;
+            text-align: left;
+            border-radius: 4px;
+            color: #fff;
         }
         .belcms_inbox_items_date {
             display: block;
             float: right;
-            line-height: 30px;
+            line-height: 45px;
+            text-align: right;
+        }
+            .belcms_inbox_items_msg label {
+                width: 100% !important;
+            }
+        .belcms_inbox_items_msg a,
+        .belcms_inbox_items_msg {
+            line-height: 45px;
+            color: #fff !important;
+        }
+            .belcms_inbox_items_msg *:hover,
+            .belcms_inbox_items_msg:hover,
+            .belcms_inbox_items_msg a:hover {
+            color: #6c757d !important;
+            }
+        .belcms_inbox_items_msg {
+            width: 100%;
+        }
+        .form-check-label:hover {
+            color: #6c757d !important;
         }
         table#belcms_inbox_items tbody tr td.belcms_inbox_items_msg.bg-secondary.bg-gradient label.form-check-label {
             margin: 0 !important;

@@ -1,0 +1,11 @@
+#belcms_Typoghrapy_test {
+    display: block;
+}
+#belcms_Typoghrapy_test > i {
+    text-align: center !important;
+    width: 100% !important;
+    display: block !important;
+    margin: 20px auto !important;
+    text-decoration: dashed !important;
+    font-weight: bold !important;
+}

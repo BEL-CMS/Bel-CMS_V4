@@ -70,7 +70,14 @@ class Support extends Pages
     public function newsend ()
     {
         if (User::isLogged() === true) {
-            if (Captcha::verifCaptcha($_POST['captcha']) == true and empty($_POST['captcha_value'])) {
+            if (Captcha::verify() == true) {
+                ########################################################################################
+                $phone = preg_replace('/[^0-9+]/', '', $_POST['phone']);
+                if (preg_match('/^\+?[1-9]\d{7,14}$/', $phone)) {
+                    $data['phone'] = $phone;
+                } else {
+                    $data['phone'] = null;
+                }
                 ########################################################################################
                 $data['user_hash_key'] = $_SESSION['USER']->user->hash_key;
                 $data['title']         = Common::VarSecure($_POST['title'], null);
@@ -80,7 +87,7 @@ class Support extends Pages
                 $data['status']        = (int) 1;
                 $data['number_id']     = Common::randomNumeric(6);
                 ########################################################################################
-                $msg['ticket_id']      = $data['number_id'];
+                $msg['number_id']      = $data['number_id'];
                 $msg['user_id']        = $data['user_hash_key'];
                 $msg['message']        = Common::VarSecure($_POST['message'], true);
                 ########################################################################################
@@ -116,7 +123,7 @@ class Support extends Pages
                     $this->set($a);
                 }
             } else {
-                Notification::success(constant('ID_ERROR_MSG'), 'Support');
+                Notification::warning(constant('ID_ERROR_MSG'), 'Support');
                 $this->redirect('support/create', 2);
             }
             $this->render('view');

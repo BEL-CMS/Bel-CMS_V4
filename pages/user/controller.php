@@ -159,13 +159,13 @@ class User extends Pages
     #########################################
     public function createUser()
     {
-        if (Captcha::verifCaptcha($_POST['captcha']) == true and empty($_POST['captcha_value'])) {
+        if (Captcha::verify() == true) {
             $error = 0;
             $array['username']  = Common::VarSecure($_POST['name'], null);
             $array['mail']      = Secure::isMail($_POST['mail']);
             $array['password']  = Common::VarSecure($_POST['password'], null);
             if (!empty($array['username'])) {
-                $array['username'] = str_replace(' ', '_', $array['username']);
+                $array['username'] = Common::cleanText($array['username']);
             }
 
             $backlist = $this->models->blackListEmail($array['mail']);
@@ -576,7 +576,7 @@ class User extends Pages
             $return['title']  = 'Aucune image';
             $this->message($return['type'], $return['msg'], $return['title']);
         }
-        $this->redirect('user', 2);
+        $this->redirect('user/avatar', 2);
     }
 
     public function changeGravatar ()
@@ -584,7 +584,7 @@ class User extends Pages
        $num = isset($_POST['gravatar']) ? 1 : 0;
        $return = $this->models->changeGravatar ($num);
        $this->message($return['type'], $return['msg'], constant('INFO'));
-       $this->redirect('User', 2);
+       $this->redirect('User/avatar', 2);
     }
 
     public function Grp()

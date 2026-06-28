@@ -174,11 +174,15 @@ class Templates
         /* GLOBAL STYLE */
         $files[] = 'assets/css/belcms.global.css';
         $files[] = 'assets/css/color.css';
+        if ($_SESSION['CONFIG']['CMS_JQUERY'] != 0) {
         /* jQuery ui 1.13.2 */
-        $files[] = 'assets/plugins/jquery-ui-1.13.2/jquery-ui.structure.min.css';
-        $files[] = 'assets/plugins/jquery-ui-1.13.2/themes/base/jquery-ui.min.css';
+            $files[] = 'assets/plugins/jquery-ui-1.13.2/jquery-ui.structure.min.css';
+            $files[] = 'assets/plugins/jquery-ui-1.13.2/themes/base/jquery-ui.min.css';
+        }
         /* bootstrap v5.3.3 */
-        $files[] = 'assets/plugins/bootstrap-5.3.3/css/bootstrap.min.css';
+        if ($_SESSION['CONFIG']['CMS_BOOTSTRAP'] != 0) {
+            $files[] = 'assets/plugins/bootstrap-5.3.3/css/bootstrap.min.css';
+        }
         /* FONTAWASOME 6.5.1 ALL */
         $files[] = 'assets/plugins/fontawesome-6.5.1/css/all.min.css';
 
@@ -216,11 +220,15 @@ class Templates
         $files          = array();
         $return         = '';
         /* jQuery 3.7.1 */
-        $files[] = 'assets/plugins/jQuery/jquery-3.7.1.min.js';
-        /* jQuery UI 1.13.2 */
-        $files[] = 'assets/plugins/jquery-ui-1.13.2/jquery-ui.min.js';
+        if ($_SESSION['CONFIG']['CMS_JQUERY'] != 0) {
+            $files[] = 'assets/plugins/jQuery/jquery-3.7.1.min.js';
+            /* jQuery UI 1.13.2 */
+            $files[] = 'assets/plugins/jquery-ui-1.13.2/jquery-ui.min.js';
+        }
+        if ($_SESSION['CONFIG']['CMS_BOOTSTRAP'] != 0) {
+            $files[] = 'assets/plugins/bootstrap-5.3.3/js/bootstrap.min.js';
+        }
         /* bootstrap v5.3.3 */
-        $files[] = 'assets/plugins/bootstrap-5.3.3/js/bootstrap.min.js';
         /* FONTAWASOME 6.5.1 ALL */
         $files[] = 'assets/plugins/fontawesome-6.5.1/js/all.min.js';
 

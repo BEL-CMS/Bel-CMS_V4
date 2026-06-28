@@ -46,29 +46,36 @@ class Contact extends Pages
 
     public function send ()
     {
-        $data['user']      = Common::VarSecure($_POST['user'], null);
-        $data['mail_user'] = CoreSecure::isMail($_POST['mail_user']);
-        $data['object']    = Common::VarSecure($_POST['object'], null);
-        $data['ip_user']   = Common::GetIp();
-        $data['message']   = Common::VarSecure($_POST['message'], 'html');
-        if (ctype_digit($_POST['category'])) {
-            $data['category'] = $_POST['category'];
-        } else {
-            $data['category'] = null;
-        }
-
-        if (empty($data['mail_user'])) {
-            Notification::error(text: constant('ERROR_EMAIL_CONTACT'), title: constant('CONTACT'));
-        } else if (empty($data['message'])) {
-            Notification::error(text: constant('ERROR_TEXT_CONTACT'), title: constant('CONTACT'));
-        } else {
-            $return = $this->models->send($data);
-
-            if ($return === true) {
-                Notification::success(text: constant('SUCCESS_SEND_CONTACT'), title: constant('CONTACT'));
+        if (Captcha::verify()) {
+            $data['user']      = Common::VarSecure($_POST['user'], null);
+            $data['mail_user'] = CoreSecure::isMail($_POST['mail_user']);
+            $data['object']    = Common::VarSecure($_POST['object'], null);
+            $data['ip_user']   = Common::GetIp();
+            $data['message']   = Common::VarSecure($_POST['message'], 'html');
+            if (ctype_digit($_POST['category'])) {
+                $data['category'] = $_POST['category'];
             } else {
-                Notification::warning(text: constant('ERROR_INSERT_BDD'), title: constant('CONTACT'));
+                $data['category'] = null;
             }
+
+            if (empty($data['mail_user'])) {
+                Notification::error(text: constant('ERROR_EMAIL_CONTACT'), title: constant('CONTACT'));
+            } else if (empty($data['message'])) {
+                Notification::error(text: constant('ERROR_TEXT_CONTACT'), title: constant('CONTACT'));
+            } else {
+                $return = $this->models->send($data);
+
+                if ($return === true) {
+                    Notification::success(text: constant('SUCCESS_SEND_CONTACT'), title: constant('CONTACT'));
+                } else {
+                    Notification::warning(text: constant('ERROR_INSERT_BDD'), title: constant('CONTACT'));
+                }
+            }
+        } else {
+            $error = $_SESSION['CAPTCHA_ERROR'] ?? null;
+            Notification::error(htmlspecialchars($error['message']), 'Captcha');
+		    $this->redirect('index.php', 3);
+            return;
         }
 
         $this->redirect('/index.php', 3);

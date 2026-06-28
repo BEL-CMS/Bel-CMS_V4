@@ -10,3 +10,18 @@
 .belcms_support_text p {
     color: rgba(0, 0, 0, 0.9) !important;
 }
+.belcms_support_button {
+    padding: 3px 15px;
+    line-height: 30px;
+    border: 1px solid rgba(0, 0, 0, .15);
+    border-top-color: rgba(0, 0, 0, 0.15);
+    border-right-color: rgba(0, 0, 0, 0.15);
+    border-bottom-color: rgba(0, 0, 0, 0.15);
+    border-left-color: rgba(0, 0, 0, 0.15);
+    margin: 0 5px;
+    border-radius: 8px;
+    background-color: #dee2e6;
+    transition: background 500ms linear;
+    background-color: #2c2c2c;
+    color: #dee2e6;
+}

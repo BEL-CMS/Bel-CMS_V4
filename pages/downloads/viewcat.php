@@ -14,7 +14,7 @@ use BelCMS\Requires\Common;
 
 ?>
 <section id="belcms_downloads">
-    <table class="table table-striped table-hover" id="DataTableBelCMS">
+    <table class="table table-striped table-hover DataTableBelCMS">
         <thead>
             <tr>
                 <th scope="col">

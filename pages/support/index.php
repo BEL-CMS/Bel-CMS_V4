@@ -75,7 +75,7 @@ endif;
                     <?= $status; ?>
                     <?= $priority; ?>
                     <td><?= Common::TransformDate($value->created_at, 'MEDIUM'); ?></td>
-                    <td><button type="button" onclick="location.href='support/view/<?= $value->number_id; ?>';" class="btn btn-secondary btn-sm">Ouvrir</button></td>
+                    <td><button type="button" onclick="location.href='support/view/<?= $value->number_id; ?>';" class="belcms_support_button">Ouvrir</button></td>
                 </tr>
                 <?php
                 endforeach;

@@ -37,6 +37,9 @@ final class Security
 					if (User::isLogged()) {
 						foreach ($bdd[$page]->access_groups as $k => $v) {
 							$user = self::accessSqlUser();
+							if ($user === false) {
+								return false;
+							}
 							$access = $user->access ? $user->access : array(0);
 							if (in_array(1, $access)) {
 								return true;
@@ -170,7 +173,12 @@ final class Security
 			if (isset($_SESSION['USER']->user->hash_key) and strlen($_SESSION['USER']->user->hash_key) == 32) {
 				$user = User::getInfosUserAll($_SESSION['USER']->user->hash_key);
 				$return = new \stdClass();
-				$return->access = $user->groups->all_groups;
+				if (isset($user->groups->all_groups)) {
+					$return->access = $user->groups->all_groups;
+				} else {
+					return false;
+				}
+				
 			} else {
 				return false;
 			}

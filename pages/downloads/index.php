@@ -17,24 +17,15 @@ if (!defined('CHECK_INDEX')):
     exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
 endif;
 ?>
-<nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom">
-    <div class="container">
-        <a class="navbar-brand fw-bold" href="downloads"><i class="fa-solid fa-download"></i> <?= $_SESSION['CONFIG']['CMS_NAME']; ?> :: Téléchargements</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="mainNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link active" href="downloads">Accueil</a></li>
-                <li class="nav-item"><a class="nav-link" href="downloads/charte">Charte</a></li>
-            </ul>
-        </div>
+<div class="card">
+    <div class="card-header" id="belcms_header_title">
+        <h2><i class="fa-solid fa-angles-right"></i> Téléchargements</h2>
+        <a href="downloads/charte" title="view read">Charte</a>
+        <a href="downloads" title="home guestbook">Accueil</a>
     </div>
-</nav>
-<div class="bg-light border-bottom">
-    <div class="container">
-        <h1 class="fw-semibold mb-2 belcms_bnv" id="belcms_bnv">Votre ressource est ici, est prête à être téléchargée.</h1>
-        <p class=" lead text-secondary" style="text-align: center;"></p>
+    <div class="card-body py-5 bg-light">
+        <h3 id="belcms_title_section">Bienvenue sur la page des téléchargements</h3>
+        <h4 id="belcms_sub_title_section">Votre ressource est ici, est prête à être téléchargée.</h4>
     </div>
 </div>
 

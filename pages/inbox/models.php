@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.4]
+ * @version 4.0.1 [PHP8.4]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -10,6 +10,7 @@
  */
 
 namespace Belcms\Pages\Models;
+
 use BelCMS\PDO\BDD;
 
 if (!defined('CHECK_INDEX')):
@@ -23,14 +24,48 @@ endif;
 ############################################
 final class Inbox
 {
-     public function getMsgForUSer ($hash_key)
+     public function getMsgForUSer ()
      {
-        $array = " WHERE `send` = '".$hash_key."' OR `sendto` = '".$hash_key."' AND `read_msg_send` = '1' OR read_msg_receive = 1";
-        $sql = new BDD;
-        $sql->table ('TABLE_INBOX');
-        $sql->where($array);
-        $sql->queryAll();
-        $return = $sql->data;
-        return $return;
+         $hash_key = $_SESSION['USER']->user->hash_key;
+         $array = " WHERE `sendto` = '".$hash_key."' AND `read_msg_send` = '1' OR `read_msg_receive` = 1 AND `close` = '0'";
+         $sql = new BDD;
+         $sql->table ('TABLE_INBOX');
+         $sql->where($array);
+         $sql->queryAll();
+         $return = $sql->data;
+         return $return;
+     }
+
+     public function searchUser ($user)
+     {
+         $return = array();
+         $where = array(
+            'name'  => 'username',
+            'value' => $user
+         );
+         $sql = new BDD;
+         $sql->table ('TABLE_USERS');
+         $sql->whereLike($where);
+         $sql->fields(array('username'));
+         $sql->queryAll();
+
+         $result = $sql->data;
+
+         foreach ($result as $k => $v) {
+            $return[] = $v->username;
+         }
+
+         return $return;
+     }
+
+     public function addMail ($data, $content)
+     {
+        $sql = new BDD();
+        $sql->table('TABLE_INBOX');
+        $sql->insert($data);
+
+        $sql2 = new BDD();
+        $sql2->table('TABLE_INBOX_MSG');
+        $sql2->insert($content);
      }
 }

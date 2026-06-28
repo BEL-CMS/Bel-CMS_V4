@@ -139,37 +139,14 @@ class Captcha
 
     private static function block($reason, $minutes = 5)
     {
-
-        self::cleanBlacklist();
-
         $sql = new BDD;
         $sql->table('TABLE_CAPTCHA_BLACKLIST');
-        $sql->where([
-            ['name' => 'ip', 'value' => self::ip()]
+        $sql->insert([
+            'ip'            => self::ip(),
+            'reason'        => $reason,
+            'created_at'    => self::now(),
+            'blocked_until' => self::now() + ($minutes * 60)
         ]);
-        $sql->queryOne();
-
-        if (!empty($sql->data)) {
-
-            $sql->where([
-                ['name' => 'ip', 'value' => self::ip()]
-            ]);
-
-            $sql->update([
-                'reason'        => $reason,
-                'created_at'    => self::now(),
-                'blocked_until' => self::now() + ($minutes * 60)
-            ]);
-
-        } else {
-
-            $sql->insert([
-                'ip'            => self::ip(),
-                'reason'        => $reason,
-                'created_at'    => self::now(),
-                'blocked_until' => self::now() + ($minutes * 60)
-            ]);
-        }
 
         self::log('blocked', $reason);
     }
@@ -362,5 +339,23 @@ class Captcha
         unset($_SESSION['CAPTCHA']);
 
         return self::success();
+    }
+
+    public static function getStopMsg ()
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_CAPTCHA_BLACKLIST');
+        $sql->where([
+            ['name' => 'ip', 'value' => self::ip()]
+        ]);
+        $sql->count();
+        $data = $sql->data;
+
+        if ($data >= 1) {
+            return false;
+        } else {
+            return true;
+        }
+
     }
 }

@@ -36,14 +36,14 @@ class Teams extends Pages
 
     public function detail ()
     {
-        $a = array();
+        $a  = array();
         $id = $this->data[2];
 
         if (ctype_digit($id)) {
             $a['team']['team']     = $this->models->getTeam ($id);
             $a['team']['users']    = $this->models->getUser ($id);
             foreach ($a['team']['users'] as $key => $value) {
-                $a['team']['users'][$key]['author'] = User::getInfosUserAll($value['author'])->user->username;
+                $a['team']['users'][$key]['author'] = User::getInfosUserAll($value['hash_key'])->user->username;
                 $a['team']['users'][$key]['rank'] = $this->models->getRank ($a['team']['users'][$key]['rank'])->name;
                 if (empty($a['team']['users'][$key]['rank'])) {
                     $a['team']['users'][$key]['rank'] = 'Grade inconnu';

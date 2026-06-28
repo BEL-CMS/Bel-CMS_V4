@@ -100,7 +100,7 @@ class Gallery extends Pages
 
     public function SendNew ()
     {
-        if (Captcha::verifCaptcha($_POST['captcha']) == true and empty($_POST['captcha_value'])) {
+        if (Captcha::verify() == true) {
             if (empty($_POST['name'])) {
                 Notification::error('Aucun nom transmis.', 'titre');
             } else {

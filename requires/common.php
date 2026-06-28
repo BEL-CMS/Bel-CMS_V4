@@ -684,6 +684,9 @@ final class Common
         }
         return $return;
     }
+    public static function is_numeric($data) {
+        return preg_match("/^[0-9]+$/", $data) ? $data : 0;
+    }
     #########################################
     # Security Upload
     #########################################

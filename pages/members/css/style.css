@@ -75,7 +75,7 @@ table {
 .belcms_members_wrapper {
   display: flex;
   max-width: 1000px;
-  margin: 2rem auto;
+  margin: auto;
   background-color: #fdfdfd;
   box-shadow: 0 0 20px rgba(0,0,0,0.05);
   border-radius: 12px;

@@ -33,6 +33,8 @@ if($infos->status == 1) {
     $status = '<span class="badge bg-info text-dark">En cours</span>';
 } else if ($infos->status == 3) {
     $status = '<span class="badge bg-success">Répondu</span>';
+} else if ($infos->status == 4) {
+    $status = '<td><span class="badge bg-success">Fermer</span></td>';
 } else {
     $status = '<span class="badge bg-warning">En attente</span>';
 }
@@ -65,7 +67,7 @@ foreach ($messages as $key => $value):
 ?>
     <div class="card shadow-sm mb-3 <?= $bgColor; ?>">
         <div class="card-header">
-            <button class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="<?= Common::TransformDate($value->created_at, 'FULL', 'SHORT'); ?>">
+            <button class="belcms_support_button" data-bs-toggle="tooltip" data-bs-placement="bottom" title="<?= Common::TransformDate($value->created_at, 'FULL', 'SHORT'); ?>">
                 <?= Common::TransformDate($value->created_at, 'FULL', 'SHORT'); ?>
             </button>
         </div>

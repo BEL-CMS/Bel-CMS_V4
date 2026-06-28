@@ -8,6 +8,9 @@
  * @copyright 2015-2026 Bel-CMS
  * @author as Stive - stive@determe.be
  */
+
+use BelCMS\Core\Captcha;
+use BelCMS\Core\Notification;
 use BelCMS\Core\User;
 
 if (user::isLogged()) {
@@ -47,6 +50,13 @@ if (user::isLogged()) {
             <div class="input-group mb-3">
                 <textarea id="message" name="message" rows="3" class="belcms_guestbook_textarea bel_cms_textarea_simple"></textarea>
             </div>
+            <?php
+            if (Captcha::getStopMsg() === false) {
+                echo '<div class="input-group mb-3">';
+                Notification::error('Votre accès aux commentaires est bloqué en raison d\'un bannissement.', 'Ban !');
+                echo '</div>';
+            } else {
+            ?>
             <div id="belcms_global_captcha">
                 <div class="mb-1">
                     <strong><?= $_SESSION['CAPTCHA']['question'] ?? 'Chargement...' ?></strong>
@@ -67,6 +77,7 @@ if (user::isLogged()) {
             <input type="hidden" name="avatar" value="<?= $avatar; ?>" required <?= $readonly ?>>
             <input type="hidden" name="captcha_value" value="">
             <input type="submit" value="Envoyer ✨" class="belcms_guestbook_submit">
+            <?php } ?>
         </form>
     </div>
 </div>

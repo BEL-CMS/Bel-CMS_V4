@@ -58,13 +58,28 @@ endif;
             </div>
 
             <div class="mb-3">
+                <label class="form-label">Téképhone</label>
+                <input type="text" name="phone" class="form-control" placeholder="+32 0 xxx xx xx xx" pattern="^\+?[0-9\s().-]{8,20}$">
+            </div>
+
+            <div class="mb-3">
                 <label class="form-label">Message</label>
                 <textarea name="message" class="bel_cms_textarea_simple" rows="5"></textarea>
             </div>
 
-            <div class="input-group mb-3">
+            <div id="belcms_global_captcha">
                 <label class="input-group-text" for="captcha"><?= $_SESSION['CAPTCHA']['CODE']; ?></label>
-                <input type="number" placeholder="Trouve la solution du calcul." name="captcha" class="form-control" id="captcha">
+                <div class="input-group mb-3">
+                    <input type="number" placeholder="Trouve la solution du calcul." name="captcha" class="form-control" id="captcha">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="belcms_captcha_container">
+                        <label><?= constant('CAPTCHA_MESSAGE_INDEX'); ?></label>
+                        <input type="range" id="belcms_captcha_slider" min="0" max="100" value="15">
+                        <div id="belcms_captcha_percent">0%</div>
+                        <input type="hidden" name="belcms_captcha_value" id="belcms_captcha_value">
+                    </div>
+                </div>
             </div>
 
             <input type="hidden" name="captcha_value" value="">

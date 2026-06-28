@@ -373,7 +373,7 @@ class User
         }
     }
 	#########################################
-	# Change hash_key en username ou avatar
+	# Récupère toutes les infos de l'utilisateur
 	#########################################
 	public static function getInfosUserAll ($hash_key = false)
 	{
@@ -451,8 +451,18 @@ class User
 				$hardware->isObject(false);
 				$hardware->queryOne();
 				$g = array('hardware' => (object) $hardware->data);
+				/* Return info de la game */
+				$games = new BDD();
+				$games->table('TABLE_USERS_GAMES');
+				$games->where(array(
+					'name'  => 'hash_key',
+					'value' => $hash_key
+				));
+				$games->isObject(false);
+				$games->queryAll();
+				$h = array('games' => (object) $games->data);
 				/* return */
-				$return = (object) array_merge($a, $b, $c, $d, $e, $g);
+				$return = (object) array_merge($a, $b, $c, $d, $e, $g, $h);
 				$return->user->color = User::colorUsername($hash_key);
 				$return->groups->all_groups[] = (int) $return->groups->user_group;
 				$count = strpos($return->groups->user_groups,'|');
@@ -552,6 +562,35 @@ class User
 			$sql->table('TABLE_USERS');
 			$sql->where(array('name' => 'hash_key', 'value' => $hash));
 			$sql->fields(array('username'));
+			$sql->queryOne();
+			$return = $sql->data;
+			$return = $return->username;
+			return $return;
+		}
+	}
+
+	public static function getHashForName ($name)
+	{
+		if (!empty($name)) {
+			$name = Common::VarSecure($name, null);
+			$sql = new BDD();
+			$sql->table('TABLE_USERS');
+			$sql->where(array('name' => 'username', 'value' => $name));
+			$sql->fields(array('hash_key'));
+			$sql->queryOne();
+			$return = $sql->data;
+			$return = $return->hash_key;
+			return $return;
+		}
+	}
+	public static function getNameForMail ($mail)
+	{
+		if (!empty($mail)) {
+			$mail = Common::VarSecure($mail, null);
+			$sql = new BDD();
+			$sql->table('TABLE_USERS');
+			$sql->where(array('name' => 'mail', 'value' => $mail));
+			$sql->fields(array('hash_key', 'username'));
 			$sql->queryOne();
 			$return = $sql->data;
 			$return = $return->username;

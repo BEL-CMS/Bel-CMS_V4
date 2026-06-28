@@ -53,12 +53,21 @@ $mail     = !empty($mail) ? $mail : '';
         <div class="mb-3 row p-3">
             <textarea class="bel_cms_textarea_simple" name="message"></textarea>
         </div>
-        <div class="mb-3 row">
-            <label for="captcha" class="col-sm-2 col-form-label"><?= $_SESSION['CAPTCHA']['CODE']; ?> : </label>
-            <div class="col-sm-10">
-                <input type="number" placeholder="Trouve la solution du calcul." name="captcha" class="form-control" id="captcha">
+            <div class="row" id="belcms_global_captcha">
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Résolvez le calcul : <?= $_SESSION['CAPTCHA']['question'] ?? 'Chargement...' ?></span>
+                    <input type="number" name="captcha" class="form-control" placeholder="Votre réponse" required>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="belcms_captcha_container">
+                        <label><?= constant('CAPTCHA_MESSAGE_INDEX'); ?></label>
+                        <input type="range" id="belcms_captcha_slider" min="0" max="100" value="15">
+                        <div id="belcms_captcha_percent">0%</div>
+                        <input type="hidden" name="belcms_captcha_value" id="belcms_captcha_value">
+                        <input type="hidden" name="captcha_value" value="">
+                    </div>
+                </div>
             </div>
-        </div>
         <div class="mb-3 row">
             <input type="hidden" name="captcha_value" value="">
             <input type="submit" class="btn btn-primary mt-3 bg-info text-dark" value="Envoyer">

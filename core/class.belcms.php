@@ -33,7 +33,7 @@ final class BelCMS
         new Config;
         new User;
         self::getLangs();
-        new Visitors();
+        Visitors::register();
 		$this->link      = Dispatcher::page($_SESSION['CONFIG']['CMS_DEFAULT_PAGE']);
         $this->widgets   = self::getWidgets ();
         $this->page      = self::PageContent();
@@ -65,7 +65,6 @@ public function PageContent()
             );
 
         } else {
-
             $_SESSION['CONFIG_CMS']['CMS_WEBSITE_NAME']
                 ??= constant('NO_NAME');
 
@@ -73,6 +72,8 @@ public function PageContent()
 
             return ob_get_clean();
         }
+    } else {
+
     }
 
     $dir = constant('DIR_PAGES')
@@ -218,24 +219,6 @@ public function PageContent()
 		}
 		return $return;	
 	}
-    #########################################
-    # Récupère les vrais utilisateurs
-    #########################################
-    public function noBot ()
-    {
-        ob_start();
-        echo '<input type="text" name="robot_check" style="display:none">';
-        if (empty($_POST['robot_check'])) {
-            new Visitors();
-        }
-		$content = ob_get_contents();
-		if (ob_get_length() != 0) {
-			ob_end_clean();
-		}
-        return $content;
-    }
-
-
     public function Templates ()
     {
 		ob_start();
@@ -279,25 +262,22 @@ public function PageContent()
     ##################################################
     private function statsPages ()
     {
-        if (Common::isBot() === false) {
-            $sql = new BDD;
-            $sql->table('TABLE_STATS');
-            $sql->where(array(
+        $sql = new BDD;
+        $sql->table('TABLE_STATS');
+        $sql->where(array(
+            'name' => 'page',
+            'value' => $this->link
+        ));
+        $sql->queryOne();
+        if (!empty($sql->data)) {
+            $update['nb_view'] = $sql->data->nb_view +1;
+            $insert = new BDD;
+            $insert->table('TABLE_STATS');
+            $insert->where(array(
                 'name' => 'page',
                 'value' => $this->link
             ));
-            $sql->queryOne();
-            if (!empty($sql->data)) {
-                $update['nb_view'] = $sql->data->nb_view +1;
-                $insert = new BDD;
-                $insert->table('TABLE_STATS');
-                $insert->where(array(
-                    'name' => 'page',
-                    'value' => $this->link
-                ));
-                $insert->update($update);
-            }
-            self::noBot();
+            $insert->update($update);
         }
     }
     ##################################################

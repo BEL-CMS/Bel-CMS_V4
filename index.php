@@ -14,7 +14,10 @@
 #######################################################
 if (session_status() === PHP_SESSION_NONE) {          #
 	session_start();                                  #
-}                                                     #
+} 
+########################################################
+$_SESSION['belcms_captcha_attempts'] ??= 0;           #
+$_SESSION['belcms_captcha_blocked_until'] ??= 0;      #
 #######################################################
 use Belcms\Administration\Administration;             #
 use BelCMS\Core\BelCMS;                               #
@@ -35,7 +38,7 @@ define('DS', DIRECTORY_SEPARATOR);                    #
 define('ROOT', __DIR__);                              #
 define('ROOT_DOC', $_SERVER['DOCUMENT_ROOT']);        #
 define('SHOW_ALL_REQUEST_SQL', false);                #
-define('ERROR_INDEX', '<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');                                              #
+define('ERROR_INDEX', '<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
 #######################################################
 # Function debug                                      #
 #######################################################
@@ -92,7 +95,6 @@ if (Dispatcher::isManagement() === true) {
 		header('X-Content-Type-Options: nosniff');
 		header('Referrer-Policy: strict-origin-when-cross-origin');
 		$csp = [
-			"default-src 'self'",
 			"img-src 'self' data: https:",
 			"script-src 'self' 'unsafe-inline' https:",
 			"style-src 'self' 'unsafe-inline' https:",

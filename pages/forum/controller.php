@@ -99,7 +99,7 @@ class Forum extends Pages
             }
         } else {
             Notification::error(constant('NO_USER_CONNECT'), 'Login requis');
-            $referer = 'user/login&echo';
+            $referer = 'login&echo';
             $this->redirect($referer, 3);
             return;
         }
@@ -112,7 +112,7 @@ class Forum extends Pages
         $id = $_POST['id'];
         if (ctype_alnum($id)) {
             if (User::isLogged()) {
-                if (Captcha::verifCaptcha($_POST['captcha']) == true and empty($_POST['captcha_value'])) {
+                if (Captcha::verify() == true) {
                     $data['content'] = Common::VarSecure($_POST['content'], 'html');
                     $data['id_mdg']  = $id;
                     $data['author']  = $_SESSION['USER']->user->hash_key;
@@ -128,7 +128,7 @@ class Forum extends Pages
                 }
             } else {
                 Notification::error(constant('NO_USER_CONNECT'), 'Login requis');
-                $referer = 'user/login?echo';
+                $referer = 'login?echo';
 		        $this->redirect($referer, 3);
                 return;
             } 
@@ -143,7 +143,7 @@ class Forum extends Pages
     public function sendnew ()
     {
         if (User::isLogged()) {
-            if (Captcha::verifCaptcha($_POST['captcha']) == true and empty($_POST['captcha_value'])) {
+            if (Captcha::verify() == true) {
                 $d['title']      = Common::VarSecure($_POST['title'], null);
                 $d['id_message'] = Common::randomString(16);
                 $d['author']     = $_SESSION['USER']->user->hash_key;
@@ -165,7 +165,7 @@ class Forum extends Pages
             }
         } else {
             Notification::error(constant('NO_USER_CONNECT'), 'Login requis');
-            $referer = 'user/login?echo';
+            $referer = 'login?echo';
 		    $this->redirect($referer, 3);
             return;
         }
@@ -176,7 +176,7 @@ class Forum extends Pages
         $id = $_POST['id'];
         if (User::isLogged()) {
             if (ctype_alnum($id)) {
-                if (Captcha::verifCaptcha($_POST['captcha']) == true and empty($_POST['captcha_value'])) {
+                if (Captcha::verify() == true) {
                     $d['content']  = Common::VarSecure($_POST['content'], 'html');
                     $d['author']   = $_SESSION['USER']->user->hash_key;
                     $d['id_mdg']   = $id;
@@ -192,7 +192,7 @@ class Forum extends Pages
             }
         } else {
             Notification::error(constant('NO_USER_CONNECT'), 'Login requis');
-            $referer = 'user/login&echo';
+            $referer = 'login&echo';
             $this->redirect($referer, 3);
             return;
         }
@@ -221,7 +221,7 @@ class Forum extends Pages
             }
         } else {
             Notification::error(constant('NO_USER_CONNECT'), 'Login requis');
-            $referer = 'user/login&echo';
+            $referer = 'login&echo';
             $this->redirect($referer, 3);
             return;
         }

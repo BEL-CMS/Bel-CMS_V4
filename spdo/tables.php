@@ -93,7 +93,11 @@ $tables = array(
     'TABLE_VISITORS'            => $DB_PREFIX.'visitors',
     'TABLE_WIDGETS'             => $DB_PREFIX.'widgets',
     'TABLE_VISITORS_ONLINE'     => $DB_PREFIX.'visitors_online',
-    'TABLE_VISITORS_STATS'      => $DB_PREFIX.'visitors_stats'
+    'TABLE_VISITORS_STATS'      => $DB_PREFIX.'visitors_stats',
+    'TABLE_FORMATION'           => $DB_PREFIX.'formation',
+    'TABLE_FORMATION_ACTIVITY'  => $DB_PREFIX.'formation_activite',
+    'TABLE_FORMATION_ACTIF'     => $DB_PREFIX.'formation_actif',
+    'TABLE_BBSA_BSAA'           => $DB_PREFIX.'bbsa_bssa',
     #####################################################
 );
 #####################################################

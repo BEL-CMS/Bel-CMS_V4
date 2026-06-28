@@ -93,7 +93,7 @@ class Links extends Pages
 
     public function SendNew ()
     {
-        if (Captcha::verifCaptcha($_POST['captcha']) == true and empty($_POST['captcha_value'])) {
+        if (Captcha::verify() == true) {
             if (empty($_POST['name']) or empty($_POST['link'])) {
                 Notification::error('Aucun nom ou lien transmis.', 'Lien');
             } else {

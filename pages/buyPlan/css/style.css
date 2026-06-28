@@ -1,0 +1,109 @@
+#tinymce {
+    height: 100% !important;
+}
+/* css buy */
+#content {
+    border: 1px solid rgba(0,0,0,.175);
+    color: #212529;
+    text-align: left !important;
+    padding: 20px;
+    border-radius: 4px;
+    font-size: 13px !important;
+    width: 100%;
+}
+#content ol, #content ul {
+    list-style: decimal-leading-zero;
+    padding: 20px;
+}
+#content ol li, #content ul li {
+    line-height: 25px;
+}
+#infos_server {
+    text-align: left !important;
+    display: block;
+    margin: 25px 0;
+}
+#ulStatsServer {
+    padding: 20px;
+    text-align: left !important;
+    line-height: 22px;
+    font-weight: bold;
+}
+#ulStatsServer span {
+    text-align: right !important;
+    font-weight: 400;
+}
+.btn_belcms {
+    width: 100%;
+    color: azure !important;
+    text-decoration: dotted;
+}
+/* css finish buy */
+.belcms_buy_ul {
+    text-align: left !important;
+    line-height: 23px !important;
+}
+#belcms_buy_unic {
+    display:block;
+    font-weight: bold;
+    background-color: black;
+    border: 1px solid aqua;
+    color:aquamarine;
+    height: 45px;
+    line-height: 45px;
+    text-align: center;
+    width: 100%;
+}
+#belcms_buy_comment {
+    background-color: #f1f3f5;
+    border-color: #212529;
+    color: #212529;
+    padding: 20px;
+    text-align: justify;
+    border-radius: 6px;
+}
+
+
+.icon {
+    font-size: 1.2rem;
+}
+
+.icon.success {
+    color: green;
+}
+
+.icon.error {
+    color: red;
+}
+.belcms_buy_comments {
+    background-color: #f1f3f5;
+    border-color: #212529;
+    color: #212529;
+    text-align: justify;
+    border-radius: 6px;
+    margin: 15px auto;
+    padding: 20px;
+    text-align: right;
+    text-align: left;
+}
+.belcms_buy_table {
+    display: block;
+    width: 100%;
+    margin: auto;
+    padding: 20px;
+    background-color: #f8f8f8;
+}
+#belcms_buy_paypal {
+    display: block;
+    text-align: center;
+    margin: auto;
+    padding: 20px;
+    background-color: #f8f8f8;
+}
+.belcms_buy_button {
+    background-color: #f8f8f8;
+    width: 100%;
+    padding: 35px;
+    display: block;
+    text-align: center;
+}
