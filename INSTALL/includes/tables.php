@@ -797,6 +797,14 @@ switch ($_POST['table']) {
 			`author` varchar(32) DEFAULT NULL,
 			PRIMARY KEY (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
+
+		$insert = "INSERT INTO `".$_SESSION['prefix'].$table."`(`id`, `name`, `value`) VALUES
+			(1, 'color_1', '#f8f8f8'),
+			(2, 'background', '#FFF'),
+			(3, 'border', '0.175'),
+			(4, 'text', '#252529'),
+			(5, 'links', '#252529');";
+
 	break;
 
 	case 'news_cat':
