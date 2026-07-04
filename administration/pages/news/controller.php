@@ -11,6 +11,7 @@
  */
 
 use BelCMS\Core\config;
+use BelCMS\Core\Config as CoreConfig;
 use BelCMS\Core\Notification;
 use BelCMS\Requires\Common;
 
@@ -148,9 +149,13 @@ class News extends AdminPages
 
     public function editcat()
     {
-        $id = (int) $this->data[2];
-        $d['cat'] = $this->models->getCatforID($id);
-        $this->set($d);
+        $id = $this->data[2];
+        if (Common::SecureRequest($id) === true) {
+            $d['cat'] = $this->models->getCatforID($id);
+            $this->set($d);
+        } else {
+            $this->redirect('index.php', 0);
+        }
         $this->render ('editcat');
     }
 
@@ -165,7 +170,6 @@ class News extends AdminPages
 
     public function parameter ()
     {
-        Config::GroupsAccess('news');
         $menu[] = array('title' => 'Accueil', 'href' => 'news?Admin&option=pages', 'ico'  => 'fa-solid fa-igloo');
         $menu[] = array('title' => 'Ajouter une actualité', 'href' => 'news/add?Admin&option=pages', 'ico'  => 'fa-solid fa-pen-to-square');
         $menu[] = array('title' => 'Catégories', 'href' => 'News/cat?admin&option=pages', 'ico'  => 'fa-solid fa-puzzle-piece');

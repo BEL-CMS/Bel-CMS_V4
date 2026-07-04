@@ -24,7 +24,7 @@ endif;
                         Editer l'article
                     </div>
                 </div>
-                <form action="articles/sendnew?management&option=pages" method="post" enctype="multipart/form-data">
+                <form action="articles/sendeditdls?management&option=pages" method="post" enctype="multipart/form-data">
                     <div class="card-body">
                         <div class="form-floating mb-3">
                             <input name="name" value="<?= $data->name; ?>" required="required" type="text" class="form-control" id="name">
@@ -36,6 +36,7 @@ endif;
                     </div>
                     <div class="card-footer">
                         <div class="mb-3">
+                            <input type="hidden" name="id" value="<?= $data->id; ?>">
                             <button type="submit" class="btn btn-primary">Sauvegarder</button>
                         </div>
                     </div>

@@ -175,12 +175,8 @@ class Training extends AdminPages
 
     public function sendActivity ()
     {
-        if ($_POST['Lieu'] == 'farciennes') {
-            $data['lieu'] = 'Farciennes';
-        } else {
-            $data['lieu'] = 'Montignies-sur-sambre';
-        }
-
+        $data['lieu']            = Common::VarSecure($_POST['lieu']);
+        $data['adress']          = Common::VarSecure($_POST['adress']);
         $data['date_activite']   = Common::DatetimeSQL($_POST['date'], false, 'Y-m-d');
 
         if (preg_match('/^([01]\d|2[0-3]):([0-5]\d)$/', $_POST['time_1'])) {

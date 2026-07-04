@@ -24,25 +24,25 @@ endif;
                 <div class="mb-3 row">
                     <label class="col-sm-3 col-form-label">Le nom :</label>
                     <div class="col-sm-9">
-                        <input disabled type="email" class="form-control" value="<?= $mails->user; ?>">
+                        <input readonly type="email" class="form-control" value="<?= $mails->user; ?>">
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="inputEmail" class="col-sm-3 col-form-label">E-mail :</label>
                     <div class="col-sm-9">
-                        <input disabled type="email" class="form-control" value="<?= $mails->mail_user; ?>">
+                        <input readonly type="email" class="form-control" value="<?= $mails->mail_user; ?>">
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="inputEmail" class="col-sm-3 col-form-label">Catégorie :</label>
                     <div class="col-sm-9">
-                        <input disabled type="text" class="form-control" value="<?= $mails->category; ?>">
+                        <input readonly type="text" class="form-control" value="<?= $mails->category; ?>">
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label class="col-sm-3 col-form-label">Objet : </label>
                     <div class="col-sm-9">
-                        <input disabled type="text" class="form-control" value="<?= $mails->object; ?>">
+                        <input readonly type="text" class="form-control" value="<?= $mails->object; ?>">
                     </div>
                 </div>
                 <div class="mb-3 row p-3">

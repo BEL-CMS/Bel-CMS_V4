@@ -36,8 +36,7 @@ class Scrolling extends AdminPages
 	{
 		$post = Common::VarSecure($_POST['alert']);
 		$this->models->post($post);
-		$data['get'] = $this->models->get();
-		$this->set($data);
-		$this->render('index');
+		Notification::success('L\'inscription à la base de données a été un succès.', 'Scrolling');
+		$this->redirect('Scrolling?management&option=aseh', 2);
 	}
 }

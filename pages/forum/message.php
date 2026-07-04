@@ -73,16 +73,11 @@ use BelCMS\Requires\Common;
                     <textarea name="content" id="replyContent" class="form-control bel_cms_textarea_full" rows="6" placeholder="Écris ta réponse…"></textarea>
                     <div class="form-text">* Reste courtois, pas de spam, cite tes sources si besoin.</div>
                 </div>
-                <div class="input-group mb-3">
-                    <label class="input-group-text" for="captcha"><?= $_SESSION['CAPTCHA']['CODE']; ?></label>
-                    <input type="number" placeholder="Trouve la solution du calcul." name="captcha" class="form-control" id="captcha">
-                </div>
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="subscribe" disabled>
                         <label class="form-check-label" for="subscribe"><i class="fa-regular fa-bell"></i> M’abonner au sujet</label>
                     </div>
-                    <input type="hidden" name="captcha_value" value="">
                     <input type="hidden" name="id" value="<?= $id; ?>">
                     <button class="btn btn-success" type="submit"><i class="fa-regular fa-paper-plane"></i><span>Publier</span></button>
                 </div>

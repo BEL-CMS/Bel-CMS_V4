@@ -39,6 +39,7 @@ class Pages
         if (isset($this->useModels) and !empty($this->useModels)){
             self::loadModel($this->useModels);
         }
+        self::BanForIdFail();
     }
 
     private function isAccess ()
@@ -346,5 +347,37 @@ class Pages
         $sql->table('TABLE_INTER_ADMIN');
         $sql->insert($data);
     }
-}
 
+    ##################################################
+    # Blocage automatique, identifiant [NO-ID NUMERIC]
+    ##################################################
+    private function BanForIdFail ()
+    {
+        $return = true;
+        $array = array(
+            'members'  => 'detail',
+            'forum'    => 'category',
+            'articles' => 'getpages',
+        );
+
+        if (strtolower(Dispatcher::link()[0] == 'forum')) {
+            return $return;
+        }
+
+        if (isset(Dispatcher::link()[0]) and isset(Dispatcher::link()[1])) {
+            if (array_key_exists(strtolower(Dispatcher::link()[0]), $array)) {
+                if (!in_array(Dispatcher::link()[1], $array)) {
+                    $return = Common::SecureRequest(Dispatcher::link()[2], false);
+                }
+            } else {
+                if (isset(Dispatcher::link()[2])) {
+                    $return = Common::SecureRequest(Dispatcher::link()[2], false);
+                } else {
+                    $return = true;
+                }
+            }
+        }
+
+        return $return;
+    }
+}

@@ -19,17 +19,21 @@ endif;
 
 if (isset($_SESSION['LOGIN_MANAGEMENT']) && $_SESSION['LOGIN_MANAGEMENT'] === true):
 ?>
-<form action="aseh/send?management&option=extras" method="post">
+<form action="Scrolling/send?management&option=aseh" method="post">
 	<div class="flex flex-col">
 		<div class="">
 			<div class="card">
 				<div class="card-header">
-					<h4>Texte Alert</h4>
+					<h4>Bandeau défilant</h4>
 				</div>
-				<div class="p-6 mb-3">
-					<input name="alert" class="form-control" type="text" value="<?=$get->value;?>">
+				<div class="card-body">
+					<div class="p-6 py-4 mb-3">
+						<div class="input-group mb-2">
+							<textarea name="alert" class="form-control"><?=$get->value;?></textarea>
+						</div>
+					</div>
 				</div>
-				<div class="p-6">
+				<div class="card-footer">
 					<button type="submit" class="btn bg-primary text-white"><?=constant('SAVE');?></button>
 				</div>
 			</div>

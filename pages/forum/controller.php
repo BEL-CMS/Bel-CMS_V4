@@ -71,8 +71,6 @@ class Forum extends Pages
         }
         $config = Config::GetConfigPage('forum');
         $data['pagination'] = $this->pagination($config->config['MAX_PAGE'], 'forum/forumMsg/'.$id, constant('TABLE_FORUM_MSG'), array('name' => 'id_mdg', 'value' => $id));
-        $captcha = new Captcha ();
-        $data['captcha'] = $captcha->createCaptcha ();
         $id = $this->data[2];
         if (ctype_alnum($id)) {
             $data['message'] = $this->models->getMsg ($id);
@@ -112,20 +110,13 @@ class Forum extends Pages
         $id = $_POST['id'];
         if (ctype_alnum($id)) {
             if (User::isLogged()) {
-                if (Captcha::verify() == true) {
-                    $data['content'] = Common::VarSecure($_POST['content'], 'html');
-                    $data['id_mdg']  = $id;
-                    $data['author']  = $_SESSION['USER']->user->hash_key;
-                    $this->models->sendReply ($data);
-                    Notification::success(constant('SEND_SUCCESS'), 'Insertion du post avec succès');
-		            $referer = (!empty($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : 'forum';
-		            $this->redirect($referer, 3);
-                } else {
-                    Notification::error(constant('CODE_CAPTCHA_ERROR'), 'Captcha');
-		            $referer = (!empty($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : 'forum';
-		            $this->redirect($referer, 3);
-                    return;
-                }
+                $data['content'] = Common::VarSecure($_POST['content'], true);
+                $data['id_mdg']  = $id;
+                $data['author']  = $_SESSION['USER']->user->hash_key;
+                $this->models->sendReply ($data);
+                Notification::success(constant('SEND_SUCCESS'), 'Insertion du post avec succès');
+                $referer = (!empty($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : 'forum';
+                $this->redirect($referer, 3);
             } else {
                 Notification::error(constant('NO_USER_CONNECT'), 'Login requis');
                 $referer = 'login?echo';
@@ -143,25 +134,18 @@ class Forum extends Pages
     public function sendnew ()
     {
         if (User::isLogged()) {
-            if (Captcha::verify() == true) {
-                $d['title']      = Common::VarSecure($_POST['title'], null);
-                $d['id_message'] = Common::randomString(16);
-                $d['author']     = $_SESSION['USER']->user->hash_key;
-                $d['id_cat']     = Common::VarSecure($_POST['id'], null);
-                $returnThreads = $this->models->sendThread($d);
-                $a['id_mdg']   = $d['id_message'];
-                $a['author']   = $d['author'];
-                $a['content']  = Common::VarSecure($_POST['content'], 'html');	
-                $returnMsg     = $this->models->sendMsg ($a);
-                if ($returnThreads and $returnMsg == true) {
-                    Notification::success(constant('SEND_SUCCESS'), 'Insertion du post');
-                    $this->redirect('forum/forumMsg/'.$a['id_mdg'].'', 2);
-                }
-            } else {
-                Notification::error(constant('CODE_CAPTCHA_ERROR'), 'Captcha');
-		        $referer = (!empty($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : 'forum';
-		        $this->redirect($referer, 3);
-                return;
+            $d['title']      = Common::VarSecure($_POST['title'], null);
+            $d['id_message'] = Common::randomString(16);
+            $d['author']     = $_SESSION['USER']->user->hash_key;
+            $d['id_cat']     = Common::VarSecure($_POST['id'], null);
+            $returnThreads = $this->models->sendThread($d);
+            $a['id_mdg']   = $d['id_message'];
+            $a['author']   = $d['author'];
+            $a['content']  = Common::VarSecure($_POST['content'], 'html');	
+            $returnMsg     = $this->models->sendMsg ($a);
+            if ($returnThreads and $returnMsg == true) {
+                Notification::success(constant('SEND_SUCCESS'), 'Insertion du post');
+                $this->redirect('forum/forumMsg/'.$a['id_mdg'].'', 2);
             }
         } else {
             Notification::error(constant('NO_USER_CONNECT'), 'Login requis');
@@ -175,21 +159,11 @@ class Forum extends Pages
     {
         $id = $_POST['id'];
         if (User::isLogged()) {
-            if (ctype_alnum($id)) {
-                if (Captcha::verify() == true) {
-                    $d['content']  = Common::VarSecure($_POST['content'], 'html');
-                    $d['author']   = $_SESSION['USER']->user->hash_key;
-                    $d['id_mdg']   = $id;
-                    $return = $this->models->sendReply ($d);
-                    Notification::success($return['text'], 'Message');
-                } else {
-                    Notification::error(constant('CODE_CAPTCHA_ERROR'), 'Captcha');
-                    return;
-                }
-            } else {
-                Notification::error('Erreur ID, l\'administrateur sera prévenue', 'ID');
-                return;
-            }
+            $d['content']  = Common::VarSecure($_POST['content'], 'html');
+            $d['author']   = $_SESSION['USER']->user->hash_key;
+            $d['id_mdg']   = $id;
+            $return = $this->models->sendReply ($d);
+            Notification::success($return['text'], 'Message');
         } else {
             Notification::error(constant('NO_USER_CONNECT'), 'Login requis');
             $referer = 'login&echo';
@@ -204,21 +178,14 @@ class Forum extends Pages
     {
         $id = $this->data[2];
         if (User::isLogged()) {
-            if (ctype_alnum($id)) {
-                $data['data'] = $this->models->nameThreads ($id);
-                foreach ($data['data'] as $key => $value) {
-                    $data['data'][$key]->reply = $this->models->getnbMesg ($value->id_message);
-                    $data['data'][$key]->last = $this->models->getLastMsg($value->id_message);
-                }
-                $data['id'] = $id;
-                $this->set($data);
-                $this->render('cat');
-            } else {
-                Notification::error('Erreur ID, l\'administrateur sera prévenue', 'ID');
-                return;
-                $referer = (!empty($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : 'forum';
-                $this->redirect($referer, 3);
+            $data['data'] = $this->models->nameThreads ($id);
+            foreach ($data['data'] as $key => $value) {
+                $data['data'][$key]->reply = $this->models->getnbMesg ($value->id_message);
+                $data['data'][$key]->last = $this->models->getLastMsg($value->id_message);
             }
+            $data['id'] = $id;
+            $this->set($data);
+            $this->render('cat');
         } else {
             Notification::error(constant('NO_USER_CONNECT'), 'Login requis');
             $referer = 'login&echo';

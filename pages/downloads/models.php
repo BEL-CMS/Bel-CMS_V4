@@ -102,7 +102,6 @@ final class Downloads
     public function AddDownload($id)
     {
         if ($id) {
-            $id  = Common::secureRequest($id);
             $get = new BDD();
             $get->table('TABLE_DOWNLOADS');
             $where = array(

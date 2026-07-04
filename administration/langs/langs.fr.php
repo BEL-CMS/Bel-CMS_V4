@@ -84,6 +84,7 @@ Common::constant(array(
 	'ADMIN_CONNECT_LOSE'                  => 'Vous devez être connecté pour accéder à l\'administration.',
 	'UNIQUE_NAME'                         => 'Ce nom est déjà utilisé, veuillez en trouver un différent.',
 	'PHONE'                               => 'Téléphone',
+	'REPLY_MAIL_OK'                       => 'Je vous confirme avoir répondu au message électronique.',
 	##########################################################################
 	# UPLOAD
 	##########################################################################

@@ -39,7 +39,7 @@ final class Administration
     #########################################
     function __construct()
     {
-        if (isset($_SESSION['USER'])) {
+        if (CoreUser::isLogged()) {
             if ($_SESSION['USER']->user->admin == 1) {
 
                 $this->link = Dispatcher::link();
@@ -89,6 +89,7 @@ final class Administration
             ############################################
             # Tentative de connexion sans être logué
             ############################################
+            Common::Redirect('User/Login&echo', 3);
             $msg   = Common::GetIp(). ' à tenter de se connecter l\'administration sans être logué.';
             $interaction = new Interaction();
             $interaction->status('orange');

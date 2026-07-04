@@ -106,7 +106,7 @@ final class Dispatcher
         $return = 0;
         $dispatcher = new Dispatcher;
         if (isset($dispatcher->link[3]) AND !empty($dispatcher->link[3])) {
-            $return = Secure::isInt($dispatcher->link[3]);
+            $return =($dispatcher->link[3]);
         }
         return $return;
     }

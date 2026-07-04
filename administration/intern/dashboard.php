@@ -18,6 +18,7 @@ endif;
 use BelCMS\PDO\BDD;
 use BelCMS\Requires\Common;
 use BelCMS\Core\groups;
+use BelCMS\Core\Notification;
 
 if (isset($_SESSION['LOGIN_MANAGEMENT']) && $_SESSION['LOGIN_MANAGEMENT'] === true):
 function getCountNews() {
@@ -57,6 +58,17 @@ function getCountIntertaction() {
     $sql->limit(5);
     $sql->queryAll();
     return $sql->data;
+}
+
+function getCountBan ()
+{
+    $sql = new BDD;
+    $sql->table('TABLE_BAN');
+    $sql->limit(5);
+    $sql->orderby(array(array('name' => 'id', 'type' => 'DESC')));
+    $sql->queryAll();
+    $return = $sql->data;
+    return $return;
 }
 
 $nameG   = groups::getName($_SESSION['USER']->groups->user_group);
@@ -100,7 +112,7 @@ $country = !empty($_SESSION['USER']->profils->country) ? $_SESSION['USER']->prof
     <div class="col-lg-6 col-xl-12">
         <div class="card">
             <div class="card-header">
-                <h5 class="">Activités récentes</h5>
+                <h5 class="">Activités récentes dans l'administration.</h5>
             </div>
             <div class="card-body">
                 <?php
@@ -118,6 +130,50 @@ $country = !empty($_SESSION['USER']->profils->country) ? $_SESSION['USER']->prof
                 </div>
                 <?php
                 endforeach;
+                ?>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-xl-4">
+    <div class="col-lg-6 col-xl-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="">Bannissements effectifs.</h5>
+            </div>
+            <div class="card-body">
+                <?php
+                foreach (getCountBan() as $key => $value):
+                    $ban = ($value->reason == '<p>Vous avez été banni pour la raison suivante :</p>' or $value->reason == null) ? 'Bannissements automatiques par le système' : $value->reason;
+                    $ban = strip_tags($ban);
+                ?>
+                <div class="d-flex align-items-center gap-3 justify-content-between mb-2">
+                    <div class="flex-grow-1">
+                        <h6 class="mb-0 f-s-15"><?= $value->ip; ?></h6>
+                        <p class="text-secondary mb-0 f-s-13 txt-ellipsis-1"><?= $ban; ?></p>
+                    </div>
+                    <?php
+                    $time = strtoupper($value->timeban);
+                    $time = defined($time) ? constant($time) : $time;
+                    ?>
+                    <p class="mb-0 text-secondary txt-ellipsis-1"><?= $time; ?></p>
+                </div>
+                <?php
+                endforeach;
+                ?>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-xl-4">
+    <div class="col-lg-6 col-xl-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="">Les actions que vous avez récemment effectuées en lignes.</h5>
+            </div>
+            <div class="card-body">
+                <?php
+                Notification::alert('Pas disponible pour l\'instant.');
                 ?>
             </div>
         </div>

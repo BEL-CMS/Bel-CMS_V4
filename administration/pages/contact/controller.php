@@ -151,11 +151,11 @@ class Contact extends AdminPages
     public function delete ()
     {
         $id = $this->data[2];
-        if (ctype_digit($id)) {
-            $return = $this->models->deleteCat($id);
+        if (Common::is_numeric($id)) {
+            $return = $this->models->deleteMsg($id);
             if ($return === true) {
                 Notification::success(text: constant('DEL_SUCCESS'), title: constant('CONTACT'));
-                $this->redirect('contact/category?admin&option=pages', 3);
+                $this->redirect('contact?admin&option=pages', 3);
             } else {
                 Notification::warning(text: constant('DEL_ERROR'), title: constant('CONTACT'));
                 $referer = (!empty($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : constant('CONTACT');
@@ -193,7 +193,7 @@ class Contact extends AdminPages
             return;
         }
 
-        if (ctype_digit($this->data[2])) {
+        if (Common::is_numeric($this->data[2])) {
             $d['mails'] = $this->models->getMailsForID($this->data[2]);
             if (!empty($this->models->getCatName($d['mails']->category)->content)) {
                 $d['mails']->category = $this->models->getCatName($d['mails']->category)->content;
@@ -220,7 +220,7 @@ class Contact extends AdminPages
 
     public function sendreply ()
     {
-        if (ctype_digit($_POST['id'])) {
+        if (Common::is_numeric($_POST['id'])) {
             $infos    = $this->models->getMailsForID($_POST['id']);
             $setFrom  = $_SESSION['CONFIG']['CMS_MAIL'];
             $userMail = $infos->mail_user;
@@ -228,7 +228,7 @@ class Contact extends AdminPages
             $tpl = $_POST['content'];
             self::templateMail($setFrom, $userMail, $subject, $tpl);
             $this->models->mailSend($_POST['id']);
-            Notification::error(text: constant('ID_ERROR'), title: constant('CONTACT'));
+            Notification::success(text: constant('REPLY_MAIL_OK'), title: constant('CONTACT'));
             $this->redirect('contact?admin&option=pages', 3);
         } else {
             #######################################################

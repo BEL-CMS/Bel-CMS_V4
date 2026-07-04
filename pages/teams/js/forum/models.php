@@ -137,7 +137,6 @@ final class Forum
 
     public function getnName ($id)
     {
-        $id  = Common::secureRequest($id);
         $get = new BDD();
         $get->table('TABLE_FORUM_THREAD');
         $get->where(array('name' => 'id_message', 'value' => $id));
@@ -149,7 +148,6 @@ final class Forum
     private function countOnePlus ($id)
     {
         if ($id) {
-            $id  = Common::secureRequest($id);
             $get = new BDD();
             $get->table('TABLE_FORUM_THREAD');
             $get->where(array('name' => 'id_message', 'value' => $id));

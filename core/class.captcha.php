@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.4]
+ * @version 4.1.1 [PHP8.5]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -23,6 +23,11 @@ endif;
 ################################################
 class Captcha
 {
+    public function __construct()
+    {
+        self::cleanBlacklist();
+    }
+
     private static function ip()
     {
         return Common::GetIp();
@@ -74,6 +79,8 @@ class Captcha
             'question' => $a . ' + ' . $b,
             'result'   => $a + $b
         ];
+
+        self::cleanBlacklist();
 
         return $_SESSION['CAPTCHA'];
     }
@@ -203,7 +210,7 @@ class Captcha
             $update['attempts'] = 0;
 
             self::block(
-                'Too many failed captcha attempts',
+                'Trop de tentatives de captcha infructueuses',
                 5
             );
 

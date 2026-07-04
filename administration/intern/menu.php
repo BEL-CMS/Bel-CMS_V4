@@ -121,7 +121,7 @@ class Menu
     {
         $array = array(
             'Défilement'   =>  array('scrolling?management&option=aseh', ''),
-            'Formation'    =>  array('training?management&option=aseh', ''),
+            'Osez sauver'  =>  array('training?management&option=aseh', ''),
             'BBSA'         =>  array('bbsa?management&option=aseh', ''),
         );
         ksort($array);

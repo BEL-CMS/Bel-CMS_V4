@@ -123,4 +123,17 @@ final class ModelsAtl
         }
         return $return;
     }
+
+    public function addEditPage($data, $id) : bool
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_ARTICLES_CONTENT');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->update($data);
+        if ($sql->rowCount == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

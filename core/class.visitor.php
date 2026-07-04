@@ -40,9 +40,10 @@ class Visitors
         $ip        = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
         $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
         $page = $_SERVER['REQUEST_URI'] ?? '/';
+        $page = trim($page, '//');
         $page = parse_url($page, PHP_URL_PATH);
 
-        // Retire le /
+        // Retire le /        
         $page = trim($page, '/');
 
         // Coupe l'URL

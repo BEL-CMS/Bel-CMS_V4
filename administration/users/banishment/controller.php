@@ -10,6 +10,7 @@
  */
 
 use BelCMS\Core\Secure;
+use BelCMS\PDO\BDD;
 use BelCMS\Requires\Common;
 
 if (!defined('CHECK_INDEX')):
@@ -61,7 +62,7 @@ class banishment extends AdminPages
 		} else {
 			$where  = false;
 		}
-        $this->models->deleteBan($where);
+        //$this->models->deleteBan($where);
 
 		// Initialise le time du ban.
 		$current = new DateTime('now');
@@ -82,11 +83,23 @@ class banishment extends AdminPages
         $d['who']     = $_SESSION['USER']->user->hash_key;
         $d['author']  = $_POST['author'];
         $d['date']    = $date;
-        $d['endban']  = $endban;	
-        $d['timeban'] = $timeban;	
+        $d['endban']  = $endban;
+        $d['timeban'] = $timeban;
         $d['reason']  = Common::VarSecure($_POST['reason'], 'html');
         $d['number']  = 0;
 
         $this->models->addBan($d['author'], $_POST['ip'], $_POST['email'], $d['date'], $d['endban'], $d['timeban'], $d['reason']);
+
+        $sql = New BDD;
+		$sql->table('TABLE_BAN');
+		$sql->insert($d);
+
+        $array = array(
+            'type' => 'success',
+            'text' => 'Le bannissement de l\'utilisateur est effectif.'
+        );
+        $this->error('Utilisateur', $array['text'], $array['type']);
+        $this->redirect('banishment?admin&option=users', 2);
+        return;
     }
 }

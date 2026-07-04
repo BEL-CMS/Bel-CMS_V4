@@ -64,7 +64,7 @@ endif;
                                             <a href="Articles/deletePage/<?= $v->id; ?>?admin&option=pages" class="btn btn-danger label-end rounded-pill">
                                                 Supprimer
                                             </a>&emsp;
-                                            <a href="Articles/editart/<?= $v->id; ?>?admin&option=pages" class="btn btn-warning rounded-pill">
+                                            <a href="Articles/editdls/<?= $v->id; ?>?admin&option=pages" class="btn btn-warning rounded-pill">
                                                 Editer
                                             </a>
                                         </td>

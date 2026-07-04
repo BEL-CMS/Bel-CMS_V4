@@ -69,7 +69,6 @@ final class News
     public function NewView ($id = false)
 	{
 		if ($id) {
-			$id = Common::secureRequest($id);
 			$get = New BDD();
 			$get->table('TABLE_NEWS');
 			$where = array(

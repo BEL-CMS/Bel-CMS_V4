@@ -20,18 +20,12 @@ endif;
             <div class="card card-h-100">
                 <div class="card-body">
                     <div class="row gy-4 mb-4">
-                       <div class="input-group">
-                            <div class="input-group-text">
-                                <input name="Lieu" class="form-check-input f-s-18 mb-1" type="radio" value="farciennes" required>
-                            </div>
-                            <input type="text" class="form-control" value="Farciennes" readonly>
-                        </div>
-                       <div class="input-group">
-                            <div class="input-group-text">
-                                <input name="Lieu" class="form-check-input f-s-18 mb-1" type="radio" value="farciennes" required>
-                            </div>
-                            <input type="text" class="form-control" value="Montignies-sur-sambre" readonly>
-                        </div>
+                        <label for="lieu" class="form-label">Lieu du rendez-vous</label>
+                        <input type="text" name="lieu" class="form-control" id="lieu" required>
+                    </div>
+                    <div class="row gy-4 mb-4">
+                        <label class="form-label" for="adress">Adresse</label>
+                        <textarea name="adress" class="form-control" id="adress" placeholder="" rows="4"></textarea>
                     </div>
                 </div>
             </div>

@@ -216,6 +216,33 @@ class Articles extends AdminPages
 
     public function editdls ()
     {
-        
+        $id = (int) $this->data[2];
+        $data['data'] = $this->models->getEdit($id);
+        $this->set($data);
+        $this->render('edit');
+
+    }
+
+    public function sendeditdls ()
+    {
+        $a['name']        = Common::VarSecure($_POST['name']);
+        $a['content']     = Common::VarSecure($_POST['content'], true);
+        $id               = (int) $_POST['id'];
+        $return           = $this->models->addEditPage ($a, $id);
+        if ($return === true) {
+            $array = array(
+                'type' => 'success',
+                'text' => constant('SAVE_BDD_SUCCESS')
+            );
+            $this->error('Article', $array['text'], $array['type']);
+            $this->redirect('articles?admin&option=pages', 2);
+        } else {
+            $array = array(
+                'type' => 'error',
+                'text' => constant('SAVE_BDD_ERROR')
+            );
+            $this->error('Article', $array['text'], $array['type']);
+            $this->redirect('articles?admin&option=pages', 2);
+        }
     }
 }

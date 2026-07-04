@@ -82,8 +82,8 @@ final class Comment
 			$html .= '<div class="belcms_comments_com">'.$v->comment.'</div>';
 			$html .= '</li>';
 		}
-			$html .= '</ul>
-			';
+			$html .= '</ul>';
+		
 		if (User::isLogged() === true) {
 			$dispatcher = new Dispatcher();
 			$dispatcher->link;

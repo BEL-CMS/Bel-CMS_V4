@@ -326,11 +326,11 @@ class Forum extends AdminPages
                 'type' => 'error',
                 'text' => 'Aucun titre transmis'
             );
+            Notification::error(text: constant('ID_ERROR'), title: constant('FORUM'));
         } else {
-            $return = $this->models->AddCatMain ($d);
+            $this->models->AddCatMain ($d);
+            Notification::success(text: constant('SEND_SUCCESS'), title: constant('FORUM'));
         }
-        $return = $this->error('Forum', $return['text'], $return['type']);
         $this->redirect('Forum/MainCat?admin&option=pages', 3);
-        return $return;
     }
 }

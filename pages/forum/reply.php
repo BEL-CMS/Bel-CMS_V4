@@ -27,11 +27,6 @@
             <input type="text" class="form-control" name="title" required>
         </div>
         <textarea name="content" class="bel_cms_textarea_full"></textarea>
-        <div class="input-group mb-3">
-            <label class="input-group-text" for="captcha"><?= $_SESSION['CAPTCHA']['CODE']; ?></label>
-            <input type="number" placeholder="Trouve la solution du calcul." name="captcha" class="form-control" id="captcha">
-        </div>
-        <input type="hidden" name="captcha_value" value="">
         <input type="hidden" name="id" value="<?= $id; ?>">
         <input type="submit" class="btn btn-secondary btn-sm mt-3" value="Enregistrer">
     </form>

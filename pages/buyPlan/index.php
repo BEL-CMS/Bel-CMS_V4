@@ -152,9 +152,23 @@ if (isset($_GET['plan'])) {
                     <input class="form-control" type="file" name="files" name="file" accept="image/*,.pdf, text/plain, .nfo">
                 </div>
                  <p style="text-align: center;"><i style="color: red;margin-right:5px;" class="fa-solid fa-alarm-clock"></i><span style="color: #ff9900;"><strong>L'activation du nom de domaine et des acc&egrave;s FTP/SQL s'effectuera quotidiennement entre 10h et 20h.</strong></span></p>
-                <div class="input-group mb-3">
-                    <label class="input-group-text" for="captcha"><?= $_SESSION['CAPTCHA']['CODE']; ?></label>
-                    <input type="number" placeholder="Trouve la solution du calcul." name="captcha" class="form-control" id="captcha">
+                <div class="row" id="belcms_global_captcha">
+                    <div id="belcms_global_captcha_style">
+                        <span>Il faut passer par une vérification de sécurité.</span>
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text">Résolvez le calcul : <?= $_SESSION['CAPTCHA']['question'] ?? 'Chargement...' ?></span>
+                            <input type="number" name="captcha" class="form-control" placeholder="Votre réponse" required>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="belcms_captcha_container">
+                                <label><?= constant('CAPTCHA_MESSAGE_INDEX'); ?></label>
+                                <input type="range" id="belcms_captcha_slider" min="0" max="100" value="15">
+                                <div id="belcms_captcha_percent">0%</div>
+                                <input type="hidden" name="belcms_captcha_value" id="belcms_captcha_value">
+                                <input type="hidden" name="captcha_value" value="">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="card-footer bg-white small text-secondary">

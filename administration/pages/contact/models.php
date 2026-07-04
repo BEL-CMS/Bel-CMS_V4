@@ -155,4 +155,18 @@ final class modelsContact
         $return = $sql->data;
         return $return;
     }
+
+    public function deleteMsg ($id) : bool
+    {
+        $sql = new BDD();
+        $sql->table('TABLE_CONTACT');
+        $sql->where(array('name' => 'id', 'value' => $id));
+        $sql->delete();
+        if ($sql->data === true) {
+            $return = true;
+        } else {
+            $return = false;
+        }
+        return $return;
+    }
 }
