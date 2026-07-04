@@ -13,6 +13,7 @@
 namespace BelCMS\Requires;
 use \DateTime as DateTime;
 use BelCMS\Core\GetHost;
+use BelCMS\Core\Interaction;
 use \IntlDateFormatter as IntlDateFormatter;
 use BelCMS\PDO\BDD as BDD;
 use BelCMS\Core\Secure as Secure;
@@ -522,62 +523,127 @@ final class Common
     #########################################
     # Secure PHP - HTML Var
     #########################################
-    public static function VarSecure($data = null, $allowHtml = false)
+    public static function VarSecure($data = null, $allowHtml = false, array $options = [])
     {
         if ($data === null) {
             return null;
         }
 
-        $allowedTags = '<p><br><b><strong><i><em><u><ul><ol><li><blockquote><code><pre>';
+        $defaults = [
+            'max_length' => 10000,
+            'allow_empty' => true,
+            'custom_tags' => null,
+            'preserve_newlines' => false,
+            'strict_mode' => true
+        ];
+        $options = array_merge($defaults, $options);
 
-        $clean = function ($value) use ($allowHtml, $allowedTags) {
+        $allowedTags = $options['custom_tags'] ?? 
+            '<table><thead><tbody><tfoot><tr><td><th><colgroup><col>' .
+            '<a><abbr><address><article><aside><b><bdi><bdo><blockquote><br>' .
+            '<caption><cite><code><data><dd><del><details><dfn><div><dl><dt>' .
+            '<em><figcaption><figure><footer><h1><h2><h3><h4><h5><h6>' .
+            '<header><hr><i><kbd><li><main><mark><menu><nav><ol><p><pre>' .
+            '<q><rp><rt><ruby><s><samp><section><small><span><strong><sub>' .
+            '<summary><sup><time><u><ul><var><wbr><label><optgroup><img>';
 
+        $clean = function ($value) use ($allowHtml, $allowedTags, $options) {
+            
             if (!is_string($value)) {
+                if (is_numeric($value)) {
+                    return $value;
+                }
+                if (is_bool($value)) {
+                    return $value;
+                }
                 return '';
+            }
+
+            if (mb_strlen($value, 'UTF-8') > $options['max_length']) {
+                $value = mb_substr($value, 0, $options['max_length'], 'UTF-8');
             }
 
             $value = trim($value);
 
-            // Force UTF-8 valide
-            $value = mb_convert_encoding($value, 'UTF-8', 'UTF-8');
+            if (!$options['allow_empty'] && empty($value)) {
+                return '';
+            }
 
-            // Supprime caractères invisibles
-            $value = preg_replace('/[\x00-\x1F\x7F]/u', '', $value);
+            if (!mb_check_encoding($value, 'UTF-8')) {
+                $value = mb_convert_encoding($value, 'UTF-8', 'UTF-8');
+            }
+
+            if ($options['preserve_newlines']) {
+                $value = preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/u', '', $value);
+            } else {
+                $value = preg_replace('/[\x00-\x1F\x7F]/u', '', $value);
+            }
+
+            $value = preg_replace('/[\x{202E}\x{202D}\x{200E}\x{200F}]/u', '', $value);
+
+            if (class_exists('Normalizer')) {
+                $value = \Normalizer::normalize($value, \Normalizer::FORM_C);
+            }
 
             if ($allowHtml) {
+                
+                $previousValue = '';
+                $iterations = 0;
 
-                // Decode entités HTML
-                $value = html_entity_decode($value, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                while ($previousValue !== $value && $iterations < 3) {
+                    $previousValue = $value;
+                    $value = html_entity_decode($value, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                    $iterations++;
+                }
 
-                // Tags autorisés
                 $value = strip_tags($value, $allowedTags);
 
-                // Supprime attributs JS
                 $value = preg_replace(
-                    '/\son\w+\s*=\s*(".*?"|\'.*?\'|[^\s>]+)/iu',
+                    '/\s*on\w+\s*=\s*(?:"[^"]*"|\'[^\']*\'|[^\s>]*)/iu',
                     '',
                     $value
                 );
 
-                // Supprime styles inline
+                if ($options['strict_mode']) {
+                    $value = preg_replace(
+                        '/\s*(?:style|class)\s*=\s*(?:"[^"]*"|\'[^\']*\'|[^\s>]*)/iu',
+                        '',
+                        $value
+                    );
+                }
+
                 $value = preg_replace(
-                    '/\sstyle\s*=\s*(".*?"|\'.*?\'|[^\s>]+)/iu',
+                    '/(?:javascript|vbscript|data|file|about)\s*:/iu',
                     '',
                     $value
                 );
 
-                // Protocoles dangereux
                 $value = preg_replace(
-                    '/(javascript|vbscript|data)\s*:/iu',
+                    '/<\s*(script|iframe|object|embed|applet|meta|link|base)[^>]*>.*?<\s*\/\s*\1\s*>/isu',
                     '',
                     $value
                 );
+
+                $value = preg_replace('/<!--.*?-->/s', '', $value);
+
+                $value = preg_replace_callback(
+                    '/(href|src)\s*=\s*(["\'])([^"\']*)\2/iu',
+                    function($matches) {
+                        $url = $matches[3];
+                        if (preg_match('/^(?:https?:|mailto:|\/|#|[a-z0-9_\-\.]+)/i', $url)) {
+                            return $matches[0];
+                        }
+                        return '';
+                    },
+                    $value
+                );
+
+                $value = preg_replace('/<([a-z]+)(?![^>]*\/>)[^>]*$/i', '', $value);
 
             } else {
-
                 $value = htmlspecialchars(
                     $value,
-                    ENT_QUOTES | ENT_HTML5,
+                    ENT_QUOTES | ENT_HTML5 | ENT_SUBSTITUTE,
                     'UTF-8'
                 );
             }
@@ -586,19 +652,20 @@ final class Common
         };
 
         if (is_array($data)) {
-
             $return = [];
-
             foreach ($data as $k => $v) {
-                $return[$k] = $clean($v);
+                $safeKey = is_string($k) ? $clean($k) : $k;
+                if (is_array($v)) {
+                    $return[$safeKey] = self::VarSecure($v, $allowHtml, $options);
+                } else {
+                    $return[$safeKey] = $clean($v);
+                }
             }
-
             return $return;
         }
 
         return $clean($data);
     }
-
     public static function removeBlank ($data = null)
     {
         $return = null;
@@ -628,18 +695,104 @@ final class Common
         return $text;
     }
     #########################################
-    # Request ID or rewrite_name secure
+    # Request ID | true | false = [BAN]
     #########################################
-    public static function SecureRequest ($data = false) {
-
+    public static function SecureRequest ($id = false, $admin = true) : bool
+    {
         $return = false;
 
-        if ($data) {
-            if (is_numeric($data)) {
-                $return = intval($data);
+        if (is_numeric($id)) {
+            $return = true;
+        } else {
+            if (isset($_SESSION['USER'])) {
+                $user = $_SESSION['USER']->user->ip;
+                $mail = $_SESSION['USER']->user->mail;
             } else {
-                $return = Common::VarSecure($data, null);
+                $user = self::GetIp();
+                $mail = null;
             }
+            #############################################
+            $current = new DateTime('now');
+            $date = $current->format('Y-m-d H:i:s');
+            #############################################
+            $current->add(new \DateInterval('P99Y'));
+		    $endban  = $current->format('Y-m-d H:i:s');
+            #############################################
+            $a['who']     = self::GetIp();
+            $a['author']  = $user;
+            $a['ip']      = self::GetIp();
+            $a['date']    = $date;
+            $a['endban']  = $endban;
+            $a['timeban'] = 'P99Y';
+            $a['reason']  = 'Bannissements automatiques par le système : ID incorrecte';
+            $a['number']  = 4;
+            #############################################
+            $sql = New BDD;
+            $sql->table('TABLE_BAN');
+            $sql->insert($a);
+            #############################################
+            if ($admin === true) {
+                $computer = $_SERVER['HTTP_USER_AGENT'];
+                if (stristr($computer, 'Macintosh')) {
+                    $machine = "Mac";
+                } elseif (stristr($computer, 'Win')) {
+                    $machine = "PC";
+                } elseif (stristr($computer, 'iPhone')) {
+                    $machine = "iPhone";
+                } elseif (stristr($computer, 'iPod')) {
+                    $machine = "iPod";
+                } elseif (stristr($computer, 'Android')) {
+                    $machine = "Android";
+                } elseif (stristr($computer, 'iPad')) {
+                    $machine = "iPad";
+                } else {
+                    $machine = "Linux";
+                }
+                #############################################
+                if (stristr($computer, 'Chrome')) {
+                    $navigateur = "Chrome";
+                } elseif (stristr($computer, 'Camino')) {
+                    $navigateur = "Camino";
+                } elseif (stristr($computer, 'Firefox')) {
+                    $navigateur = "Firefox";
+                } elseif (stristr($computer, 'Safari')) {
+                    $navigateur = "Safari";
+                } elseif (stristr($computer, 'MSIE')) {
+                    $navigateur = "Explorer";
+                } elseif (stristr($computer, 'Opera')) {
+                    $navigateur = "Opera";
+                } elseif (stristr($computer, 'Epiphany')) {
+                    $navigateur = "Epiphany";
+                } elseif (stristr($computer, 'ChromePlus')) {
+                    $navigateur = "ChromePlus";
+                } elseif (stristr($computer, 'Lynx')) {
+                    $navigateur = "Lynx";
+                } else {
+                    $navigateur = "Inconnu";
+                }
+                #############################################
+                if (isset($_SERVER['HTTP_REFERER'])) {
+                   $referer =  $_SERVER['HTTP_REFERER'];
+                } else {
+                    $referer = 'Visite direct';
+                }
+                #############################################
+                $b['title']       = 'ID';
+                $b['author']      = $a['author'];
+                $b['date_insert'] = $a['date'];
+                $b['message']     = $a['reason'];
+                $b['status']      = 'red';
+                $b['IP']          = $a['ip'];
+                $b['machine']     = $machine;
+                $b['navigateur']  = $navigateur;
+                $b['referer']     = $referer;
+                #############################################
+                $sql = new BDD();
+                $sql->table('TABLE_INTERACTION_ADMIN');
+                $sql->insert($b);
+            }
+            
+            $return = false;
         }
 
         return $return;
