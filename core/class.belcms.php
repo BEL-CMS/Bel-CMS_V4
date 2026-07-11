@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.4]
+ * @version 4.1.1 [PHP8.5]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -269,15 +269,23 @@ public function PageContent()
             'value' => $this->link
         ));
         $sql->queryOne();
-        if (!empty($sql->data)) {
-            $update['nb_view'] = $sql->data->nb_view +1;
-            $insert = new BDD;
-            $insert->table('TABLE_STATS');
-            $insert->where(array(
-                'name' => 'page',
-                'value' => $this->link
-            ));
-            $insert->update($update);
+        if ($sql->data === false) {
+            $a['nb_view'] = 1;
+            $a['page'] = Common::VarSecure($this->link);
+            $new = new BDD();
+            $new->table('TABLE_STATS');
+            $new->insert($a);
+        } else {
+            if (!empty($sql->data)) {
+                $update['nb_view'] = $sql->data->nb_view +1;
+                $insert = new BDD;
+                $insert->table('TABLE_STATS');
+                $insert->where(array(
+                    'name' => 'page',
+                    'value' => $this->link
+                ));
+                $insert->update($update);
+            }
         }
     }
     ##################################################

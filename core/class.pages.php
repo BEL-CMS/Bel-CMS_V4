@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.3]
+ *  * @version 4.1.1 [PHP8.5]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -356,11 +356,15 @@ class Pages
         $return = true;
         $array = array(
             'members'  => 'detail',
-            'forum'    => 'category',
             'articles' => 'getpages',
+            'gallery'  => 'Detail'
         );
 
-        if (strtolower(Dispatcher::link()[0] == 'forum')) {
+        if (isset(Dispatcher::link()[0])) {
+            if (strtolower(Dispatcher::link()[0] == 'forum') or strtolower(Dispatcher::link()[0] == 'articles')) {
+                return $return;
+            }
+        } else {
             return $return;
         }
 

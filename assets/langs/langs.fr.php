@@ -75,6 +75,7 @@ $array = array(
 	'GET_PASSWORD_TOKEN'                  => 'Récupération de mot de passe',
 	'CALENDAR'                            => "Calendrier",
 	'ADMIN_CONNECT_LOSE'                  => 'Il est nécessaire d\'être connecté afin d\'accéder à l\'administration.',
+	'NO_USER_CONNECT_NEWS'                => 'Il est nécessaire d\'être connecté afin d\'accéder à envoyer un commentaire',
  	#####################################
 	# Fichier lang en français - Social
 	#####################################
@@ -273,9 +274,10 @@ $array = array(
 	'MOBILE'                              => 'Mobile',
 	'SEARCH'                              => 'Rechercher',
 	'MAX_UPLOADS'                         => 'Max taille Upload',
-	'MAIL_BY_BELCMS'                      => '© '.date("Y").' Mail by <a href="https://bel-cms.dev">Bel-CMS.dev</a> Tous droits réservés.',
+	'MAIL_BY_BELCMS'                      => '© '.date("Y").' Mail by <a href="https://www.bel-cms.dev">Bel-CMS.dev</a> Tous droits réservés.',
 	'REPLY'                               => 'Répondre',
 	'SEND_REPLY'                          => 'Envoyer la réponse',
+	'SEND_MSG_NEWS'                       => 'Transmettre le message',
 	#####################################
 	# UPLOAD
 	#####################################
@@ -365,6 +367,7 @@ $array = array(
 	'FILE_NO_EXIST'                       => 'Le fichier n\'existe pas sur le FTP',
 	'ERROR_ID'                            => 'ID Fausse, un administrateur est prévenu',
 	'LINK_EXIT'                           => 'Attention, vous allez être redirigé vers un site externe(5s),<br>nous ne sommes pas responsables du contenu.',
+	'NK_OLD'                              => 'Ancien membres de Nk',
 	#####################################
 	# Fichier lang en français - Pages BAN
 	#####################################
@@ -448,6 +451,8 @@ $array = array(
 	'TEAMS'                               => 'Teams',
 	'SUPPORT'                             => 'Support',
 	'SUPPORTS'                            => 'Supports',
+	'BBSA'                                => 'Test d\'admission (BSSA)',
+	'OSEZ_SAUVER'                         => 'Osez sauver',
 	#####################################
 	# USER
 	#####################################

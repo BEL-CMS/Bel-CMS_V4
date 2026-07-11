@@ -2,7 +2,7 @@
 
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.4]
+*  * @version 4.1.1 [PHP8.5]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -37,14 +37,14 @@ endif;
                 }
             ?>
                 <tr>
-                    <th scope="row"><a href="articles/read/<?= $value->id; ?>" title="<?= $value->name; ?>">
+                    <th scope="row"><a href="articles/read/<?= $value->id; ?>/<?= Common::FormatName($value->name); ?>" title="<?= $value->name; ?>">
                             <h2 class="belcms_read_value"> <?= $value->name; ?></h2>
                         </a></th>
                     <td><?= Common::TransformDate($value->publish, 'FULL', 'MEDIUM'); ?></td>
                     <td><?= $author; ?></td>
                     <td><?= $value->view; ?></td>
                     <td>
-                        <a href="articles/read/<?= $value->id; ?>">
+                        <a href="articles/read/<?= $value->id; ?>/<?= Common::FormatName($value->name); ?>">
                             <h2 class="belcms_read_value">Lire</h2>
                         </a>
                     </td>

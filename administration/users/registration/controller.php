@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.4]
+ * @version 4.1.1 [PHP8.5]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -34,10 +34,14 @@ class Registration extends AdminPages
         $menu[] = array('title' => 'Accueil', 'href' => 'registration?admin&option=users', 'ico'  => 'fa-solid fa-igloo');
         $menu[] = array('title' => 'Créer un utilisateur', 'href' => 'registration/add?admin&option=users', 'ico'  => 'fa-solid fa-pen-to-square');
 
-        $d['users'] = $this->models->getUsers();
-        foreach ($d['users'] as $key => $value) {
-            $d['users'][$key]->profils = User::getInfosUserAll($value->hash_key);
+        if (isset($_GET['letter']) and strlen($_GET['letter']) == 1) {
+            $letter = Common::VarSecure($_GET['letter']);
+        } else {
+            $letter = 'a';
         }
+
+        $d['users'] = $this->models->getUsers($letter);
+
         $this->set($d);
         $this->render('index', $menu);
     }

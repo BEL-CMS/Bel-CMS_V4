@@ -2,6 +2,9 @@
     margin: 0;
     margin-bottom: 20px;
 }
+#belcms_user > .card-header{
+    margin: 5px auto;
+}
 #belcms_user_ul {
     margin: 0;
     padding: 0;

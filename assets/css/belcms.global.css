@@ -1,5 +1,12 @@
+@import url(https://fonts.googleapis.com/css2?family=Monoton&family=Montenegrin+Gothic+One&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap);
 code, pre {
 	word-wrap:break-word !important;
+}
+.belcms_text_justify {
+	text-align: justify !important;
+}
+.belcms_upper_text {
+	text-transform: uppercase !important;
 }
 /*-------------------------------------------------------------------------------------------------*/
 /*	Commentaires styles
@@ -464,8 +471,111 @@ nav#bel_cms_comment {
 	color: #00c853;
 }
 #belcms_global_captcha {
+	border: 1px solid rgba(209, 207, 207, 1);
+	background: rgba(248, 248, 248, 1);
 	margin: 15px auto;
 	width: 100%;
+	overflow: hidden;
+	padding: 25px !important;
+	color: #333;
+}
+#belcms_global_captcha_style {
+	margin: 15px;
+	padding: 15px;
+	text-align: justify;
+	border: 1px solid rgba(209, 207, 207, 1);
+	background-color: rgba(244, 242, 242, 1);
+	font-weight: 13px;
+	color: gray;
+	width: calc(100% - 30px);
+}
+#belcms_global_captcha_style > span {
 	display: block;
-	padding: 20px;
+	width: 100%;
+	background-color: #00c853;
+	color: #FFF;
+	line-height: 25px;
+	padding-left: 20px;
+	margin-bottom: 20px;
+	border: thick double rgba(242, 242, 242, 0.9);
+}
+/*-------------------------------------------------------------------------------------------------*/
+/*	Haut de page
+---------------------------------------------------------------------------------------------------*/
+#belcms_header_top {
+	font-family: "Montenegrin Gothic One", serif;
+	font-weight: 400;
+	font-style: normal;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+	color: #333;
+	word-wrap: break-word;
+	border: 1px solid #d2d2d2;
+	border-radius: 4px;
+	margin-bottom: 15px;
+	background: linear-gradient(135deg, #ffc695 0.000%, #636676 50.000%, #001426 100.000%);
+}
+#belcms_header_top > #belcms_header_top_title {
+	height: 55px;
+	line-height: 55px;
+	padding: 3px;
+}
+#belcms_header_top > #belcms_header_top_title > h1 {
+	font-family: "Montenegrin Gothic One", serif;
+	font-weight: 400;
+	font-style: normal;
+	padding: 0 15px;
+	display: block;
+	text-align: left;
+	color: #777;
+	font-weight: bold;
+	float: left;
+	font-size: 18px;
+	line-height: 55px;
+	color: #F2F2F2;
+}
+#belcms_header_top > #belcms_header_top_title> a {
+	display: block;
+	float: right;
+	text-align: right;
+	padding: 0 15px;
+	color: #F2F2F2;
+	line-height: 30px;
+	border: 1px solid rgba(0, 0, 0, .15);
+	transition: all 500ms linear;
+	margin: 10px 0;
+	margin-right: 15px;
+	box-shadow: 0 0 10px #eee;
+	border-radius: 8px;
+	background-size: 200% auto;
+	background-image: linear-gradient(to right, #C04848 0%, #480048 51%, #C04848 100%);
+}
+#belcms_header_top > #belcms_header_top_title> a:hover {
+	transition: all 400ms linear;
+	color: #dee2e6;
+	border-color: rgba(255, 255, 255, 0.85);
+	background-position: right center;
+	color: #fff;
+	text-decoration: none;
+	background-position: right center;
+	text-decoration: none;
+}
+#belcms_header_top_content {
+	max-height: 100px;
+	height: 100px;
+}
+#belcms_header_top_content_msg {
+	text-align: center;
+	font-size: 28px;
+	line-height: 75px;
+	text-align: center;
+	color: #F2F2F2;
+}
+#belcms_header_top_content > span {
+	display: block;
+	text-align: center;
+	color: rgba(255, 255, 255, 0.55);
+	margin-top: -15px;
 }

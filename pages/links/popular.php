@@ -2,7 +2,7 @@
 
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.4]
+ *  * @version 4.1.1 [PHP8.5]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-	<title><?=$_SESSION['CONFIG_CMS']['CMS_WEBSITE_NAME'];?> | Coming Soon</title>
+	<title><?=$_SESSION['CONFIG']['CMS_NAME'];?> | Coming Soon</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" type="image/png" href="assets/templates/maintenance/tpl/images/icons/favicon.ico">
 	<link rel="stylesheet" type="text/css" href="assets/templates/maintenance/tpl/vendor/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="/assets/plugins/fontawesome-6.4.2/css/all.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/plugins/fontawesome-6.4.2/css/all.min.css">
 	<link rel="stylesheet" type="text/css" href="assets/templates/maintenance/tpl/vendor/animate/animate.css">
 	<link rel="stylesheet" type="text/css" href="assets/templates/maintenance/tpl/css/main.css">
 	<link rel="stylesheet" type="text/css" href="assets/templates/maintenance/tpl/css/util.css">

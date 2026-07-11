@@ -1,7 +1,7 @@
 /* TEAM */
 	BEL-CMS
-	Contact: admin [at] bel-cms.dev
-	Meta: https://www.facebook.com/Bel.CMS
+	Contact: contact [at] bel-cms.dev
+	Meta: https://www.facebook.com/BelCMS.DEV
 	From: Belgium
 
 	Developper: Determe Stive
@@ -13,9 +13,9 @@
 	Meta: https://www.facebook.com/stive.determe
 	From: Belgium
                    [...]					
-/* THANKS */					
+/* THANKS */
+	Name: https://www.bel-cms.dev					
     Name: http://palacewar.eu
-    Name: https://bel-cms.dev
 	Name: https://determe.be
                    [...]                         
 /* SITE */                        

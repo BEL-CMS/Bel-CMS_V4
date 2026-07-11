@@ -2,7 +2,7 @@
 
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.4]
+ * @version 4.1.1 [PHP8.5]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -76,7 +76,7 @@ final class Administration
                 ############################################
                 $msg   = 'L\'utilisateur '.$_SESSION['USER']->user->username.' ne peut pas accéder à l\'administration.';
                 $interaction = new Interaction();
-                $interaction->status('orange');
+                $interaction->status('blue');
                 $interaction->message($msg);
                 $interaction->title('Connexion à l\'administration');
                 $interaction->author($_SESSION['USER']->user->hash_key);
@@ -92,7 +92,7 @@ final class Administration
             Common::Redirect('User/Login&echo', 3);
             $msg   = Common::GetIp(). ' à tenter de se connecter l\'administration sans être logué.';
             $interaction = new Interaction();
-            $interaction->status('orange');
+            $interaction->status('blue');
             $interaction->message($msg);
             $interaction->title('Connexion à l\'administration');
             $interaction->author(Common::GetIp());

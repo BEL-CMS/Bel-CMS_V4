@@ -2,7 +2,7 @@
 
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.4]
+ * @version 4.1.1 [PHP8.5]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -51,22 +51,23 @@ class News extends AdminPages
     public function sendnew()
     {
         $send['rewrite_name']      = Common::MakeConstant($_POST['name']);
-        $send['name']              = Common::VarSecure($_POST['name'], ''); // autorise que du texte
-        $send['content']           = Common::VarSecure($_POST['content'], 'html'); // autorise que les balises HTML
-        $send['additionalcontent'] = Common::VarSecure($_POST['additionalcontent'], 'html'); // autorise que les balises HTML
+        $send['name']              = Common::VarSecure($_POST['name']); // autorise que du texte
+        $send['content']           = Common::VarSecure($_POST['content'], true); // autorise que les balises HTML
+        $send['additionalcontent'] = Common::VarSecure($_POST['additionalcontent'], true); // autorise que les balises HTML
         $send['author']            = $_SESSION['USER']->user->hash_key;
         $send['authoredit']        = null;
-        $send['tags']              = Common::VarSecure($_POST['tags'], ''); // autorise que du texte
+        $send['tags']              = Common::VarSecure($_POST['tags']); // autorise que du texte
         $send['cat']               = (int) $_POST['cat'];
         $send['view']              = 0;
         $send['like_post']         = 0;
 
         if (isset($_FILES['img'])) {
-            $screen = Common::Upload('img', 'uploads/news', false, true);
+            $screen = Common::Upload('img', 'uploads/news', 'img');
             $send['img'] = '/uploads/news/' . $screen;
         } else {
             $send['img'] = '';
         }
+
         $return = $this->models->sendnew($send);
         $this->error(get_class($this), $return['text'], $return['type']);
         $this->redirect('News?admin&option=pages', 3);

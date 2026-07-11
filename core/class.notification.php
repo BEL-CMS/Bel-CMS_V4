@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.1 [PHP8.4]
+ *  * @version 4.1.1 [PHP8.5]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -101,7 +101,7 @@ final class Notification
 		}
 		$render  = '<section style="border: 1px solid rgba(209, 207, 207, 1);background:rgba(248, 248, 248, 1);margin: 15px  auto;width:100%;overflow:hidden;padding:0 !important;">'.PHP_EOL;
 		if (!empty($title)):
-		$render .= '<header style="display: block;width:100%;padding:15px;overflow:hidden;color:rgba(255, 255, 255, 0.95);min-height:auto !important;'.$bg.'">'.PHP_EOL;
+		$render .= '<header style="display: block;width:100%;padding:15px;overflow:hidden;color:rgba(255, 255, 255, 0.95);min-height:auto !important;max-width: 100%;'.$bg.'">'.PHP_EOL;
 		$render .= '<span style="display:block;float:left;margin-left:15px;line-height:24px;font-size:16px;font-weight: bold;">'.$title.'</span>'.PHP_EOL;
 		endif;
 		$render .= '</header>'.PHP_EOL;

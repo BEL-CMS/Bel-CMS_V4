@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.1 [PHP8.4]
+ *  * @version 4.1.1 [PHP8.5]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -18,12 +18,21 @@ use BelCMS\PDO\BDD;
 
 final class UsersModels
 {
-    public function getUsers () : array
+    public function getUsers ($letter = 'a')
     {
+        if ($letter == '0') {
+            $where = "WHERE 1 AND `username` REGEXP '^[^A-Za-z]'";
+        } else {
+            $where = "WHERE 1 AND `username` LIKE '".addslashes($letter)."%'";
+        }
+
+        $return = array();
         $sql = new BDD;
-        $sql->table('TABLE_USERS');
+        $sql->table ('TABLE_USERS');
+        $sql->where($where);
         $sql->queryAll();
         $return = $sql->data;
+
         return $return;
     }
 

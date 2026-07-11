@@ -1,11 +1,7 @@
 <?php
-
-use BelCMS\Core\Groups;
-use BelCMS\Requires\Common;
-
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.4]
+ * @version 4.1.1 [PHP8.5]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -13,11 +9,34 @@ use BelCMS\Requires\Common;
  * @author as Stive - stive@determe.be
  */
 
+use BelCMS\Core\Groups;
+use BelCMS\Requires\Common;
+
 if (!defined('CHECK_INDEX')):
     header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
     exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
 endif;
+
+$letter = strtolower($_GET['letter'] ?? 'a');
 ?>
+
+<nav class="mb-3 mt-3">
+    <ul class="pagination">
+        <?php foreach (range('a', 'z') as $l): ?>
+            <li class="page-item <?= $letter === $l ? 'active' : ''; ?>">
+                <a class="page-link" href="registration?admin&option=users&letter=<?= $l; ?>">
+                    <?= strtoupper($l); ?>
+                </a>
+            </li>
+        <?php endforeach; ?>
+        <li class="page-item <?= $letter === '0' ? 'active' : ''; ?>">
+            <a class="page-link" href="registration?admin&option=users&letter=0">
+                #
+            </a>
+        </li>
+    </ul>
+</nav>
+
 <div class="card-body">
     <div class="row">
         <div class="col-xl-12">
@@ -32,33 +51,23 @@ endif;
                         <table class="table table-bordered text-nowrap w-100 DataTableBelCMS">
                             <thead>
                                 <tr>
-                                    <th style="text-align:center !important;">Avatar</th>
                                     <th>Nom / Pseudonyme</th>
                                     <th>e-mail</th>
                                     <th style="text-align:center !important;">IP</th>
-                                    <th style="text-align:center !important;">Date d'enregistrement</th>
-                                    <th style="text-align:center !important;">Dernière visite</th>
-                                    <th style="text-align:center !important;">groupe principal</th>
+                                    <th style="text-align:center !important;">Validation</th>
                                     <th>Options</th>
                                 </tr>
                             </thead>
                             <tbody>
                             <?php
                             foreach ($users as $key => $value):
-                                $userGroup = Groups::getName($value->profils->groups->user_group);
-                                $nameGroup = defined((strtoupper($userGroup->name))) ? constant(strtoupper($userGroup->name)) : $userGroup->name;
+                               $valid = ($value->valid == 1 ) ? 'Validé' : 'Non validé';
                             ?>
                                 <tr>
-                                    <td style="text-align:center !important;">
-                                        <source style="width: 50px;" srcset="<?=$value->profils->profils->avatar;?>" type="image/webp">
-                                        <img style="width: 50px;" src="<?=$value->profils->profils->avatar;?>" class="glightbox">
-                                    </td>
                                     <td><?=$value->username;?></td>
                                     <td><?=$value->mail;?></td>
                                     <td style="text-align:center !important;"><?=$value->ip;?></td>
-                                    <td style="text-align:center !important;"><?=Common::TransformDate($value->profils->profils->date_registration, 'FULL', 'MEDIUM');?></td>
-                                    <td style="text-align:center !important;"><?=Common::TransformDate($value->profils->page->last_visit, 'FULL', 'MEDIUM');?></td>
-                                    <td style="text-align:center !important;"><?=$nameGroup;?></td>
+                                    <td style="text-align:center !important;"><?= $valid; ?></td>
                                     <?php
                                     if ($value->root == 0):
                                     ?>

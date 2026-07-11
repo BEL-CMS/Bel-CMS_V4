@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.4]
+ * @version 4.1.1 [PHP8.5]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -68,9 +68,9 @@ final class Ban
 	{
 		// liste le bannissement / return true or false
 		if (self::getBan() === true) {
+			self::removeAccess ();
 			// Vérifie l'IP ou l'auteur, si elle correspond à un des bannissements
-			if (Common::GetIp() == $this->ipBan or $this->author == $_SESSION['USER']->user->hash_key)
-			{
+			if (Common::GetIp() == $this->ipBan or $this->author == $_SESSION['USER']->user->hash_key) {
 				$ban  = new \DateTimeImmutable($this->endban);
 				$this->countDate = $ban->format('Y/m/d H:i:s');
 				$diff = $this->currentDate->diff($ban);
@@ -239,8 +239,8 @@ final class Ban
 			break;
 		}
 
-		$currentDate  =  new \DateTimeImmutable('now');
-		$currentDate  = $currentDate->format('Y-m-d H:i:s');
+		$currentDate        =  new \DateTimeImmutable('now');
+		$currentDate        = $currentDate->format('Y-m-d H:i:s');
 		$insert['endban']   = $insert['endban']->format('Y-m-d H:i:s');
 		$insert['who']      = isset($_SESSION['USER']->user->hash_key) ? $_SESSION['USER']->user->hash_key : Common::GetIp();
 		$insert['author']   = empty($author) ? $_SESSION['USER']->user->hash_key : $author;
@@ -252,5 +252,30 @@ final class Ban
 		$sql = New BDD;
 		$sql->table('TABLE_BAN');
 		$sql->insert($insert);
+	}
+
+	private function removeAccess ()
+	{
+		if (isset($_SESSION['LOGIN_MANAGEMENT'])) {
+			unset($_SESSION['LOGIN_MANAGEMENT']);
+		}
+
+		$sql = new BDD();
+		$sql->table('TABLE_CONFIG');
+		$sql->where(array('name' => 'name', 'value' => 'CMS_COOKIES'));
+		$sql->fields(array('value'));
+		$sql->queryOne();
+		$cookieName = $sql->data->value;
+		
+		$domain = ($_SERVER['HTTP_HOST']);
+		setcookie('BELCMS_HASH_KEY_'.$cookieName, 'data', time()-60*60*24*365, '/', $domain, false);
+		setcookie('BELCMS_NAME_'.$cookieName, 'data', time()-60*60*24*365, '/', $domain, false);
+		setcookie('BELCMS_PASS_'.$cookieName, 'data', time()-60*60*24*365, '/', $domain, false);
+
+		unset($_SESSION['USER'], $_COOKIE["BELCMS_HASH_KEY"],$_COOKIE["BELCMS_NAME"], $_COOKIE["BELCMS_PASS"]);
+
+		if (isset($_SESSION)) {
+			session_destroy();
+		}
 	}
 }

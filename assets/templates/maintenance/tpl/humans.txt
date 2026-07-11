@@ -15,7 +15,7 @@
                    [...]					
 /* THANKS */					
     Name: http://palacewar.eu
-    Name: https://bel-cms.dev
+    Name: https://www.bel-cms.dev
     Name: https://determe.be
                    [...]                         
 /* SITE */                        

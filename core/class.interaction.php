@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.4]
+ * @version 4.1.1 [PHP8.5]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -208,6 +208,8 @@ final class Interaction
             Ban::addBan($insert['author'], Common::GetIp(), null, $this->time,$insert['message']);
         } else if ($this->status == 'orange') {
             Ban::addBan($insert['author'], Common::GetIp(), null, 'PT15M', $insert['message']);
+        } else if ($this->status == 'blue') {
+            Ban::addBan($insert['author'], Common::GetIp(), null, 'PT1M', $insert['message']);
         }
     }
 

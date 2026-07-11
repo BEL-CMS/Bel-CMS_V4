@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.4]
+ *  * @version 4.1.1 [PHP8.5]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -37,7 +37,7 @@ date_default_timezone_set('Europe/Brussels');         #
 # Définit comme l'index                               #
 #######################################################
 define('CHECK_INDEX', true);                          #
-define('VERSION_CMS', '4.0.0');                       #
+define('VERSION_CMS', '4.1.1');                       #
 define('DS', DIRECTORY_SEPARATOR);                    #
 define('ROOT', __DIR__);                              #
 define('ROOT_DOC', $_SERVER['DOCUMENT_ROOT']);        #

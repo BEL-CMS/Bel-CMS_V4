@@ -1,15 +1,17 @@
 
-header {
+.belcms_header_forum {
   background: #333;
   color: #fff;
   padding: 10px 15px;
+  max-width: 100%;
+  width: 100%;
 }
 
-header h1 {
+.belcms_header_forum h1 {
   margin: 0;
 }
 
-header nav a {
+.belcms_header_forum nav a {
   color: #fff;
   text-decoration: none;
 }
@@ -563,5 +565,5 @@ footer {
   text-decoration: none;
   font-size: 1em;
   transition: background 0.3s, transform 0.3s;
-  margin-bottom: 30px;
+  margin: 30px 15px;
 }

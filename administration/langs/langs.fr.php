@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.1 [PHP8.4]
+ *  * @version 4.1.1 [PHP8.5]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -85,6 +85,7 @@ Common::constant(array(
 	'UNIQUE_NAME'                         => 'Ce nom est déjà utilisé, veuillez en trouver un différent.',
 	'PHONE'                               => 'Téléphone',
 	'REPLY_MAIL_OK'                       => 'Je vous confirme avoir répondu au message électronique.',
+	'INDEX'                               => 'Accueil',
 	##########################################################################
 	# UPLOAD
 	##########################################################################

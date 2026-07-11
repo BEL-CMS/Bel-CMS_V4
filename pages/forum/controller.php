@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.4]
+ * @version 4.1.1 [PHP8.5]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -11,6 +11,7 @@
 
 namespace Belcms\Pages\Controller;
 
+use BelCMS\Core\headerPages;
 use BelCMS\Core\Pages;
 use BelCMS\Core\Captcha;
 use BelCMS\Core\Config;
@@ -37,6 +38,8 @@ class Forum extends Pages
                 $data['threads'][$key]->subCat[$ksub]->nbsubcat = $this->models->getCountPostThreads ($valueCount->id);
             }
         }
+        $menu  = array(array('name'=> 'Accueil', 'title'=>'Forum','href'=>'forum'), array('name'=>'Règles','href'=> 'forum/charte','title'=>'Règlements'));
+        new headerPages('Forum', $menu, 'Bienvenue sur le forum de '.$_SESSION['CONFIG']['CMS_NAME'], 'Discute, apprends et partage dans une communauté bienveillante.', null);
         $data['countMessage'] = $this->models->getCountMsg ();
         $data['countThreads'] = $this->models->getCountThreads ();
         $this->set($data);
@@ -47,6 +50,8 @@ class Forum extends Pages
     {
         $id = $this->data[2];
         if (ctype_digit($id)) {
+        $menu  = array(array('name'=> 'Accueil', 'title'=>'Forum','href'=>'forum'), array('name'=>'Règles','href'=> 'forum/charte','title'=>'Règlements'));
+        new headerPages('Forum', $menu, 'Bienvenue sur le forum de '.$_SESSION['CONFIG']['CMS_NAME'], 'Discute, apprends et partage dans une communauté bienveillante.', null);
             $data['threads'] = $this->models->nameThreads ($id);
             foreach ($data['threads'] as $key => $value) {
                 $data['threads'][$key]->countMsg = $this->models->getCountMsgThreads ($value->id_message);
@@ -73,6 +78,8 @@ class Forum extends Pages
         $data['pagination'] = $this->pagination($config->config['MAX_PAGE'], 'forum/forumMsg/'.$id, constant('TABLE_FORUM_MSG'), array('name' => 'id_mdg', 'value' => $id));
         $id = $this->data[2];
         if (ctype_alnum($id)) {
+            $menu  = array(array('name'=> 'Accueil', 'title'=>'Forum','href'=>'forum'), array('name'=>'Règles','href'=> 'forum/charte','title'=>'Règlements'));
+            new headerPages('Forum', $menu, 'Bienvenue sur le forum de '.$_SESSION['CONFIG']['CMS_NAME'], 'Discute, apprends et partage dans une communauté bienveillante.', null);
             $data['message'] = $this->models->getMsg ($id);
             $data['id'] = $id;
             $data['title'] = $this->models->getnName ($id);
@@ -109,6 +116,8 @@ class Forum extends Pages
         $this->redirect($referer, 3);
         $id = $_POST['id'];
         if (ctype_alnum($id)) {
+            $menu  = array(array('name'=> 'Accueil', 'title'=>'Forum','href'=>'forum'), array('name'=>'Règles','href'=> 'forum/charte','title'=>'Règlements'));
+            new headerPages('Forum', $menu, 'Bienvenue sur le forum de '.$_SESSION['CONFIG']['CMS_NAME'], 'Discute, apprends et partage dans une communauté bienveillante.', null);
             if (User::isLogged()) {
                 $data['content'] = Common::VarSecure($_POST['content'], true);
                 $data['id_mdg']  = $id;
@@ -178,6 +187,8 @@ class Forum extends Pages
     {
         $id = $this->data[2];
         if (User::isLogged()) {
+            $menu  = array(array('name'=> 'Accueil', 'title'=>'Forum','href'=>'forum'), array('name'=>'Règles','href'=> 'forum/charte','title'=>'Règlements'));
+            new headerPages('Forum', $menu, 'Bienvenue sur le forum de '.$_SESSION['CONFIG']['CMS_NAME'], 'Discute, apprends et partage dans une communauté bienveillante.', null);
             $data['data'] = $this->models->nameThreads ($id);
             foreach ($data['data'] as $key => $value) {
                 $data['data'][$key]->reply = $this->models->getnbMesg ($value->id_message);
@@ -196,7 +207,10 @@ class Forum extends Pages
 
     public function charte ()
     {
+        $menu  = array(array('name'=> 'Accueil', 'title'=>'Forum','href'=>'forum'));
+        new headerPages('Forum', $menu, 'Conditions d\'utilisation du Forum', '', 'fa-solid fa-comment-dots');
         $data['charte'] = $this->models->charte ();
+        $data['charte'] = Common::VarSecure($data['charte'], true, ['allow_class' => true]);
         $this->set($data);
         $this->render ('charte');
     }

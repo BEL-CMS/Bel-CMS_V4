@@ -14,7 +14,7 @@ if (typeof jQuery === 'undefined') {
 	
 	var copyleft = $("body").hasClass("bel_cms_copyleft");
 	if (copyleft === false) {
-		var new_element = jQuery('<a style="display: none;" class="bel_cms_copyleft" href="https://bel-cms.dev" title="BEL-CMS">Powered by Bel-CMS</a>');
+		var new_element = jQuery('<a style="display: none;" class="bel_cms_copyleft" href="https://www.bel-cms.dev" title="BEL-CMS">Powered by Bel-CMS</a>');
 		$('body').append(new_element);
 	}
 
@@ -57,6 +57,8 @@ if (typeof jQuery === 'undefined') {
 		}
 
 	});
+
+	const lightbox = GLightbox({});
 
 		$('.DataTableBelCMS').DataTable({
 	    "language":
@@ -110,8 +112,6 @@ if (typeof jQuery === 'undefined') {
 	}
 
 	bel_cms_private_message();
-
-	const lightbox = GLightbox({});
 
     console.log("Chargement BEL-CMS script Ok");
 
@@ -261,3 +261,52 @@ function bel_cms_alert_box_end (time) {
 		});
 	}, time);
 }
+
+tippy('.belcms_tooltip_right', {
+	content: (reference) => reference.getAttribute('data'),
+	placement: 'right',
+	arrow: true,
+	animation: 'scale',
+	moveTransition: 'transform 0.2s ease-out',
+	interactive: true,
+	allowHTML: true,
+	inlinePositioning: true,
+	maxWidth: 'none',
+	followCursor: true,
+});
+tippy('.belcms_tooltip_left', {
+	content: (reference) => reference.getAttribute('data'),
+	placement: 'left',
+	arrow: true,
+	animation: 'scale',
+	moveTransition: 'transform 0.2s ease-out',
+	interactive: true,
+	allowHTML: true,
+	inlinePositioning: true,
+	maxWidth: 'none',
+	followCursor: true,
+});
+tippy('.belcms_tooltip_top', {
+	content: (reference) => reference.getAttribute('data'),
+	placement: 'top',
+	arrow: true,
+	animation: 'scale',
+	moveTransition: 'transform 0.2s ease-out',
+	interactive: true,
+	allowHTML: true,
+	inlinePositioning: true,
+	maxWidth: 'none',
+	followCursor: true,
+});
+tippy('.belcms_tooltip_bottom', {
+	content: (reference) => reference.getAttribute('data'),
+	placement: 'bottom',
+	arrow: true,
+	animation: 'scale',
+	moveTransition: 'transform 0.2s ease-out',
+	interactive: true,
+	allowHTML: true,
+	inlinePositioning: true,
+	maxWidth: 'none',
+	followCursor: true,
+});
