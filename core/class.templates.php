@@ -184,7 +184,7 @@ class Templates
             $files[] = 'assets/plugins/bootstrap-5.3.3/css/bootstrap.min.css';
         }
         /* FONTAWASOME 6.5.1 ALL */
-        $files[] = 'assets/plugins/fontawesome-6.5.1/css/all.min.css';
+        $files[] = 'assets/plugins/fontawesome/css/fontawesome.7.0.1.all.min.css';
 
         $files[] = 'assets/plugins/lightbox/lightbox.css';
 
@@ -228,9 +228,10 @@ class Templates
         if ($_SESSION['CONFIG']['CMS_BOOTSTRAP'] != 0) {
             $files[] = 'assets/plugins/bootstrap-5.3.3/js/bootstrap.min.js';
         }
-        /* bootstrap v5.3.3 */
-        /* FONTAWASOME 6.5.1 ALL */
-        $files[] = 'assets/plugins/fontawesome-6.5.1/js/all.min.js';
+
+        $files[] = 'assets/plugins/dataTables-2.2.9/jquery.dataTables.min.js';
+        /* FONTAWASOME 7.0.1 ALL */
+        $files[] = 'assets/plugins/fontawesome/js/fontawesome.7.0.1.all.min.js';
 
         $files[] = 'assets/plugins/lightbox/lightbox.js';
         /* Tinymce */

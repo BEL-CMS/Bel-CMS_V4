@@ -324,7 +324,7 @@ final class Common
     public static function TransformDate ($date, $d = 'NONE', $t = 'NONE')
     {
         # fix empty date - 30-11-0001
-        if ($date == '31-11-0001' or $date == '0000-00-00' or $date == '30-11--0001') {
+        if ($date == '31-11-0001' or $date == '0000-00-00' or $date == '30-11--0001' or empty($date)) {
             return date('Y-m-d');
         }
 

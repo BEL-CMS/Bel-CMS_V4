@@ -42,6 +42,7 @@ $files = array (
 	ROOT.DS.'core'.DS.'class.landing.php',
 	ROOT.DS.'core'.DS.'class.forbidden.php',
 	ROOT.DS.'core'.DS.'class.comment.php',
+	ROOT.DS.'core'.DS.'class.header.php',
 	ROOT.DS.'core'.DS.'class.user.php',
 	ROOT.DS.'core'.DS.'class.pages.php',
 	ROOT.DS.'core'.DS.'class.notification.php',

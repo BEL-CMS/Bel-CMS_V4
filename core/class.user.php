@@ -597,4 +597,21 @@ class User
 			return $return;
 		}
 	}
+	public static function getProfils ($hash_key)
+	{
+		$profils = new BDD();
+		$profils->table('TABLE_USERS_PROFILS');
+		$profils->where(array(
+			'name'  => 'hash_key',
+			'value' => $hash_key
+		));
+		$profils->fields(array('gender','public_mail','websites','list_ip','avatar','info_text','birthday','country','hight_avatar','friends', 'date_registration', 'visits','phone', 'gravatar', 'profils'));
+		$profils->isObject(false);
+		$profils->queryOne();
+		if (empty($profils->data['gravatar'])) {
+			$profils->data['avatar'] = constant('DEFAULT_AVATAR');
+		}
+		$return = array('profils' => (object) $profils->data);
+		return $return;
+	}
 }
