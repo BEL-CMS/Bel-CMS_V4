@@ -235,7 +235,7 @@ switch ($_POST['table']) {
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 
 		$insert = "INSERT INTO `".$_SESSION['prefix'].$table."`(`id`, `name`, `value`) VALUES
-			(1, 'CMS_VERSION', '4.0.1'),
+			(1, 'CMS_VERSION', '4.1.1'),
 			(2, 'CMS_NAME', 'Bel-CMS Installation'),
 			(3, 'CMS_HIGHLIGHT', '1'),
 			(4, 'CMS_FONTAWSOME', '1'),
@@ -280,30 +280,32 @@ switch ($_POST['table']) {
 			`config` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
 			`ver` varchar(6) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL DEFAULT '1.0.0',
 			`date_page` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			`pages` text,
 			PRIMARY KEY (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 
-		$insert = "INSERT INTO `".$_SESSION['prefix'].$table."`(`id`, `name`, `visits`, `active`, `description`, `key_seo`, `infos_sup`, `keywords`, `access_groups`, `access_admin`, `config`, `ver`, `date_page`) VALUES
-			(1, 'news', 0, 1, NULL, NULL, NULL, NULL, '0', '1', 'MAX_NEWS=4', '1.0.0', '2025-02-12 22:22:37'),
-			(2, 'user', 0, 1, NULL, NULL, NULL, NULL, '0', '1', '', '1.0.0', '2025-02-12 22:22:37'),
-			(3, 'forum', 0, 1, '', NULL, NULL, NULL, '2', '1', 'MAX_PAGE=6', '1.0.0', '2025-03-21 15:09:18'),
-			(4, 'newsletter', 0, 1, NULL, NULL, NULL, NULL, '0', '1', '', '1.0.0', '2025-03-21 15:09:18'),
-			(5, 'gallery', 0, 1, NULL, NULL, NULL, NULL, '0', '1', 'MAX_PAGE=6', '1.0.0', '2025-04-04 15:00:16'),
-			(6, 'links', 0, 1, NULL, NULL, NULL, NULL, '0', '1', 'MAX_PAGE=6', '1.0.0', '2025-04-09 08:52:33'),
-			(7, 'members', 0, 1, NULL, NULL, NULL, NULL, '0', '1', 'MAX_PPR=8', '1.0.0', '2025-04-09 15:46:59'),
-			(8, 'downloads', 0, 1, NULL, NULL, NULL, NULL, '0', '1', 'MAX_PPR=6', '1.0.0', '2025-04-11 16:59:39'),
-			(9, 'articles', 0, 1, NULL, NULL, NULL, NULL, '0', '1', '', '1.0.0', '2025-04-13 09:49:11'),
-			(10, 'guestbook', 0, 1, NULL, NULL, NULL, NULL, '0', '1|2', '', '1.0.0', '2025-04-14 12:27:04'),
-			(11, 'shoutbox', 0, 1, NULL, NULL, NULL, NULL, '0', '1|2', '', '1.0.0', '2025-04-14 12:27:04'),
-			(13, 'contact', 0, 1, NULL, NULL, NULL, NULL, '0', '1|2', 'EMAIL=stive@determe.be', '1.0.0', '2025-04-14 12:27:04'),
-			(14, 'calendar', 0, 1, NULL, NULL, NULL, NULL, '0', '1', '', '1.0.0', '2026-03-10 14:52:12'),
-			(15, 'inbox', 0, 1, NULL, NULL, NULL, NULL, '1|2', '1', '', '1.0.0', '2026-03-10 14:52:12'),
-			(16, 'buyPlan', 0, 1, NULL, NULL, NULL, NULL, '2', '1', '', '1.0.0', '2026-04-30 12:12:44'),
-			(17, 'typoghrapy', 0, 1, NULL, NULL, NULL, NULL, '0', '0', '', '1.0.0', '2026-05-16 15:33:37'),
-			(18, 'teams', 0, 1, NULL, NULL, NULL, NULL, '0', '1', '', '1.0.0', '2026-06-05 13:58:21'),
-			(19, 'support', 0, 1, NULL, NULL, NULL, NULL, '2', '1', '', '1.0.0', '2026-06-15 17:40:07'),
-			(20, 'formation', 0, 1, NULL, NULL, NULL, NULL, '0', '1', '', '1.0.0', '2026-06-22 20:50:15'),
-			(21, 'test', 0, 1, NULL, NULL, NULL, NULL, '0', '1', '', '1.0.0', '2026-06-27 14:03:09');";
+		$insert = "INSERT INTO `".$_SESSION['prefix'].$table."`(`id`, `name`, `visits`, `active`, `description`, `key_seo`, `infos_sup`, `keywords`, `access_groups`, `access_admin`, `config`, `ver`, `date_page`, `pages`) VALUES
+			('', 'news', 0, 1, NULL, NULL, NULL, NULL, '0', '1', 'MAX_NEWS=4', '1.0.0', '2025-02-12 22:22:37', NULL),
+			('', 'user', 0, 1, NULL, NULL, NULL, NULL, '0', '1', '', '1.0.0', '2025-02-12 22:22:37', NULL),
+			('', 'forum', 0, 1, '', NULL, NULL, NULL, '2', '1', 'MAX_PAGE=6', '1.0.0', '2025-03-21 15:09:18', '  <div class=\"belcms_forum_charte_section\">\r\n    <h2 class=\"belcms_forum_charte_heading\"><i class=\"fas fa-handshake\"></i> Respect et bienveillance</h2>\r\n    <ul class=\"belcms_forum_charte_list\">\r\n      <li class=\"belcms_forum_charte_item\"><i class=\"fas fa-check-circle\"></i> Respecter les autres membres et leurs opinions.</li>\r\n      <li class=\"belcms_forum_charte_item\"><i class=\"fas fa-ban\"></i> Propos haineux ou insultants interdits.</li>\r\n      <li class=\"belcms_forum_charte_item\"><i class=\"fas fa-laugh-beam\"></i> L’humour est bienvenu s’il reste respectueux.</li>\r\n    </ul>\r\n  </div>\r\n\r\n  <div class=\"belcms_forum_charte_section\">\r\n    <h2 class=\"belcms_forum_charte_heading\"><i class=\"fas fa-comments\"></i> Contenu des messages</h2>\r\n    <ul class=\"belcms_forum_charte_list\">\r\n      <li class=\"belcms_forum_charte_item\"><i class=\"fas fa-check-circle\"></i> Messages clairs et pertinents.</li>\r\n      <li class=\"belcms_forum_charte_item\"><i class=\"fas fa-mobile-alt\"></i> Éviter le langage SMS.</li>\r\n      <li class=\"belcms_forum_charte_item\"><i class=\"fas fa-link\"></i> Liens sûrs et utiles uniquement.</li>\r\n    </ul>\r\n  </div>\r\n\r\n  <div class=\"belcms_forum_charte_section\">\r\n    <h2 class=\"belcms_forum_charte_heading\"><i class=\"fas fa-lock\"></i> Confidentialité et sécurité</h2>\r\n    <ul class=\"belcms_forum_charte_list\">\r\n      <li class=\"belcms_forum_charte_item\"><i class=\"fas fa-user-secret\"></i> Ne pas partager d’infos personnelles.</li>\r\n      <li class=\"belcms_forum_charte_item\"><i class=\"fas fa-shield-alt\"></i> Respect de la vie privée.</li>\r\n      <li class=\"belcms_forum_charte_item\"><i class=\"fas fa-trash-alt\"></i> Contenu dangereux supprimé par les modérateurs.</li>\r\n    </ul>\r\n  </div>\r\n\r\n  <div class=\"belcms_forum_charte_section\">\r\n    <h2 class=\"belcms_forum_charte_heading\"><i class=\"fas fa-user-shield\"></i> Modération</h2>\r\n    <ul class=\"belcms_forum_charte_list\">\r\n      <li class=\"belcms_forum_charte_item\"><i class=\"fas fa-gavel\"></i> Les modérateurs assurent le bon fonctionnement.</li>\r\n      <li class=\"belcms_forum_charte_item\"><i class=\"fas fa-exclamation-triangle\"></i> Sanctions en cas de non-respect.</li>\r\n      <li class=\"belcms_forum_charte_item\"><i class=\"fas fa-comment-slash\"></i> Décisions non discutables publiquement.</li>\r\n    </ul>\r\n  </div>\r\n\r\n  <div class=\"belcms_forum_charte_section\">\r\n    <h2 class=\"belcms_forum_charte_heading\"><i class=\"fas fa-seedling\"></i> Esprit communautaire</h2>\r\n    <ul class=\"belcms_forum_charte_list\">\r\n      <li class=\"belcms_forum_charte_item\"><i class=\"fas fa-users\"></i> Favoriser l’entraide et le partage.</li>\r\n      <li class=\"belcms_forum_charte_item\"><i class=\"fas fa-heart\"></i> Contribuer positivement au forum.</li>\r\n      <li class=\"belcms_forum_charte_item\"><i class=\"fas fa-lightbulb\"></i> Suggestions toujours bienvenues.</li>\r\n    </ul>\r\n  </div>'),
+			('', 'newsletter', 0, 1, NULL, NULL, NULL, NULL, '0', '1', '', '1.0.0', '2025-03-21 15:09:18', NULL),
+			('', 'gallery', 0, 1, NULL, NULL, NULL, NULL, '0', '1', 'MAX_PAGE=6', '1.0.0', '2025-04-04 15:00:16', NULL),
+			('', 'links', 0, 1, NULL, NULL, NULL, NULL, '0', '1', 'MAX_PAGE=6', '1.0.0', '2025-04-09 08:52:33', NULL),
+			('', 'members', 0, 1, NULL, NULL, NULL, NULL, '0', '1', 'MAX_PPR=8', '1.0.0', '2025-04-09 15:46:59', NULL),
+			('', 'downloads', 0, 1, NULL, NULL, NULL, NULL, '0', '1', 'MAX_PPR=6', '1.0.0', '2025-04-11 16:59:39', NULL),
+			('', 'articles', 0, 1, NULL, NULL, NULL, NULL, '0', '1', '', '1.0.0', '2025-04-13 09:49:11', NULL),
+			('', 'guestbook', 0, 1, NULL, NULL, NULL, NULL, '0', '1|2', '', '1.0.0', '2025-04-14 12:27:04', NULL),
+			('', 'shoutbox', 0, 1, NULL, NULL, NULL, NULL, '0', '1|2', '', '1.0.0', '2025-04-14 12:27:04', NULL),
+			('', 'contact', 0, 1, NULL, NULL, NULL, NULL, '0', '1|2', '', '1.0.0', '2025-04-14 12:27:04', NULL),
+			('', 'calendar', 0, 1, NULL, NULL, NULL, NULL, '0', '1', '', '1.0.0', '2026-03-10 14:52:12', NULL),
+			('', 'inbox', 0, 1, NULL, NULL, NULL, NULL, '1|2', '1', '', '1.0.0', '2026-03-10 14:52:12', NULL),
+			('', 'buyPlan', 0, 1, NULL, NULL, NULL, NULL, '2', '1', '', '1.0.0', '2026-04-30 12:12:44', NULL),
+			('', 'typoghrapy', 0, 1, NULL, NULL, NULL, NULL, '0', '0', '', '1.0.0', '2026-05-16 15:33:37', NULL),
+			('', 'teams', 0, 1, NULL, NULL, NULL, NULL, '0', '1', '', '1.0.0', '2026-06-05 13:58:21', NULL),
+			('', 'support', 0, 1, NULL, NULL, NULL, NULL, '2', '1', '', '1.0.0', '2026-06-15 17:40:07', NULL),
+			('', 'osez_sauver', 0, 1, NULL, NULL, NULL, NULL, '0', '1', '', '1.0.0', '2026-06-22 20:50:15', NULL),
+			('', 'bbsa', 0, 1, NULL, NULL, NULL, NULL, '0', '1', '', '1.0.0', '2026-06-27 14:03:09', NULL),
+			('', 'comments', 0, 1, NULL, NULL, NULL, NULL, '0', '1', '', '1.0.0', '2026-07-02 13:30:38', NULL);";
 	break;
 
 	case 'contact':
@@ -765,7 +767,7 @@ switch ($_POST['table']) {
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 
 		$insert = "INSERT INTO `".$_SESSION['prefix'].$table."`(`id`, `rewrite_name`, `name`, `date_create`, `author`, `authoredit`, `content`, `additionalcontent`, `tags`, `cat`, `view`, `img`, `like_post`) VALUES
-			(2, '_Felicitations_Votre_installation_est_reussie', '', '2026-06-28 11:56:56', '33d3953c3bf8611f481f076880958e97', NULL, '<p data-path-to-node=\"6\">L\'installation de votre infrastructure <strong data-path-to-node=\"6\" data-index-in-node=\"39\">Bel-CMS</strong> a été finalisée avec succès. Toutes les configurations initiales, la base de données ainsi que les modules de base ont été correctement déployés et sont désormais prêts à l\'emploi.</p><p data-path-to-node=\"7\">Vous disposez maintenant d\'un environnement performant, sécurisé et optimisé pour concevoir, gérer et propulser votre projet web en toute sérénité.</p><p data-path-to-node=\"8\"><strong data-path-to-node=\"8\" data-index-in-node=\"0\">Prochaines étapes recommandées :</strong></p><ul data-path-to-node=\"9\"><li>Créez un compte au plus vite ; le 1er compte sera directement administrateur.</li><li><p data-path-to-node=\"9,0,0\">Accédez à votre espace d\'administration.</p></li><li><p data-path-to-node=\"9,1,0\">Configurez vos identifiants de sécurité et personnalisez votre profil.</p></li><li><p data-path-to-node=\"9,2,0\">Explorez le panneau de configuration pour activer vos modules.</p></li></ul><p data-path-to-node=\"10\">Merci d\'avoir choisi <strong data-path-to-node=\"10\" data-index-in-node=\"21\">Bel-CMS</strong> pour donner vie à vos ambitions numériques. Notre documentation reste à votre entière disposition sur www.bel-cms.dev pour vous accompagner.</p>', '', 'CMS, News, V4.1.0', '3', 0, '/uploads/news/UPLOAD_NONE', 0);";
+			('', 'Felicitations_Votre_installation_est_reussie', '', '', '', NULL, '<p data-path-to-node=\"6\">L\'installation de votre infrastructure <strong data-path-to-node=\"6\" data-index-in-node=\"39\">Bel-CMS</strong> a été finalisée avec succès. Toutes les configurations initiales, la base de données ainsi que les modules de base ont été correctement déployés et sont désormais prêts à l\'emploi.</p><p data-path-to-node=\"7\">Vous disposez maintenant d\'un environnement performant, sécurisé et optimisé pour concevoir, gérer et propulser votre projet web en toute sérénité.</p><p data-path-to-node=\"8\"><strong data-path-to-node=\"8\" data-index-in-node=\"0\">Prochaines étapes recommandées :</strong></p><ul data-path-to-node=\"9\"><li>Créez un compte au plus vite ; le 1er compte sera directement administrateur.</li><li><p data-path-to-node=\"9,0,0\">Accédez à votre espace d\'administration.</p></li><li><p data-path-to-node=\"9,1,0\">Configurez vos identifiants de sécurité et personnalisez votre profil.</p></li><li><p data-path-to-node=\"9,2,0\">Explorez le panneau de configuration pour activer vos modules.</p></li></ul><p data-path-to-node=\"10\">Merci d\'avoir choisi <strong data-path-to-node=\"10\" data-index-in-node=\"21\">Bel-CMS</strong> pour donner vie à vos ambitions numériques. Notre documentation reste à votre entière disposition sur www.bel-cms.dev pour vous accompagner.</p>', '', 'CMS, News, V4.1.1', '3', 0, '/uploads/news/UPLOAD_NONE', 0);";
 	break;
 
 	case 'newsletter':
@@ -966,7 +968,8 @@ switch ($_POST['table']) {
 			`2FA` tinyint(1) DEFAULT '0',
 			`admin` tinyint(1) NOT NULL DEFAULT '0',
 			`root` tinyint(1) NOT NULL DEFAULT '0',
-			PRIMARY KEY (`id`)
+			PRIMARY KEY (`id`),
+			KEY `hash_key` (`hash_key`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 	break;
 
@@ -978,7 +981,8 @@ switch ($_POST['table']) {
 			`date_join` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			`game_rank` tinyint DEFAULT NULL,
 			`id_game` tinyint DEFAULT NULL,
-			PRIMARY KEY (`id`)
+			PRIMARY KEY (`id`),
+			KEY `hash_key` (`hash_key`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 	break;
 
@@ -989,7 +993,8 @@ switch ($_POST['table']) {
 			`hash_key` varchar(32) NOT NULL,
 			`user_group` int DEFAULT '0',
 			`user_groups` text NOT NULL,
-			PRIMARY KEY (`id`)
+			PRIMARY KEY (`id`),
+			KEY `hash_key` (`hash_key`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 	break;
 
@@ -1021,7 +1026,8 @@ switch ($_POST['table']) {
 			`screen_resolution` text,
 			`keyboard` text,
 			`mouse` text,
-			PRIMARY KEY (`id`)
+			PRIMARY KEY (`id`),
+			KEY `hash_key` (`hash_key`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 	break;
 
@@ -1032,7 +1038,8 @@ switch ($_POST['table']) {
 			`hash_key` varchar(32) NOT NULL,
 			`namepage` text,
 			`last_visit` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-			PRIMARY KEY (`id`)
+			PRIMARY KEY (`id`),
+			KEY `hash_key` (`hash_key`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 	break;
 
@@ -1056,7 +1063,8 @@ switch ($_POST['table']) {
 			`gravatar` tinyint(1) NOT NULL DEFAULT '0',
 			`profils` tinyint(1) NOT NULL DEFAULT '0',
 			`phone` varchar(30) DEFAULT NULL,
-			PRIMARY KEY (`id`)
+			PRIMARY KEY (`id`),
+			KEY `hash_key` (`hash_key`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 	break;
 
@@ -1082,7 +1090,8 @@ switch ($_POST['table']) {
 			`teams_ms` text,
 			`discord` text,
 			`twitch` text,
-			PRIMARY KEY (`id`)
+			PRIMARY KEY (`id`),
+			KEY `hash_key` (`hash_key`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 	break;
 
