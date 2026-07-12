@@ -5,7 +5,7 @@
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
- * @copyright 2015-2025 Bel-CMS
+ * @copyright 2015-2026 Bel-CMS
  * @author as Stive - stive@determe.be
  */
 
@@ -28,6 +28,7 @@ final class BDD
 				$where,
 				$orderby,
 				$limit,
+				$join,
 				$type,
 				$rowCount,
 				$sqlInsert,
@@ -54,42 +55,57 @@ final class BDD
 			self::orderby(false);
 			self::where(false);
 			self::whereLike(false);
+			self::join();
 		}
 	}
 	#########################################
 	# function table
 	#########################################
-	public function table ($data = null)
+	public function table($data = null)
 	{
-		if (!is_null($data) && defined($data)) {
-			$this->table = constant($data);
-		} else if (self::tableExists($data)) {
-			$this->table = $data;
+		if (is_null($data)) {
+			return;
+		}
+		// Sépare le nom de la table de son alias
+		$tmp   = preg_split('/\s+/', trim($data));
+		$table = $tmp[0];
+
+		if (defined($table)) {
+			$table = constant($table);
+		}
+
+		if (self::tableExists($table)) {
+
+			if (isset($tmp[1])) {
+				$this->table = $table.' '.$tmp[1];
+			} else {
+				$this->table = $table;
+			}
+
 		} else {
-			throw new \Exception('Table : '.$data.' does not exist');
+			throw new \Exception('Table : '.$table.' does not exist');
 		}
 	}
 	#########################################
 	# function fields
 	#########################################
-	public function fields ($data)
-	{
-		if (is_array($data) || is_object($data)) {
-			foreach ($data as $k => $n) {
-				$data[$k] = '`'.$n.'`';
-			}
-		}
+public function fields($data = array())
+{
+    if (!is_array($data) || empty($data)) {
+        $this->fields = '*';
+        return;
+    }
 
-		if (!is_null($data)) {
-			if (is_array($data)) {
-				$this->fields = implode(',', $data);
-			} else {
-				$this->fields = trim($data);
-			}
-		} else {
-			$this->fields = '*';
-		}
-	}
+    $fields = [];
+
+    foreach ($data as $value) {
+
+        // Ne pas mettre de backticks sur les alias
+        $fields[] = $value;
+    }
+
+    $this->fields = implode(',', $fields);
+}
 	#########################################
 	# function limit
 	#########################################
@@ -182,7 +198,7 @@ final class BDD
 
 		$this->where = $return;
 	}
-	public function whereLike($data = array(), $dta = array())
+	public function whereLike($data = array())
 	{
 		$return = " WHERE 1 ";
 
@@ -195,10 +211,38 @@ final class BDD
 				$return .= '%"';
 			}
 		}
-
 		$this->where = $return;
-
 	}
+	public function whereLikeRight($data = array())
+	{
+		$return = " WHERE 1 ";
+
+		if (isset($data) AND is_array($data)) {
+			if (isset($data['name']) AND isset($data['value'])) {
+				$return .= 'AND ';
+				$return .= $data['name']. ' ';
+				$return .= 'LIKE "%';
+				$return .= $data['value'];
+			}
+		}
+		$this->where = $return;
+	}
+	public function whereLikeLeft($data = array())
+	{
+		$return = " WHERE 1 ";
+
+		if (isset($data) AND is_array($data)) {
+			if (isset($data['name']) AND isset($data['value'])) {
+				$return .= 'AND ';
+				$return .= $data['name']. ' ';
+				$return .= 'LIKE " ';
+				$return .= $data['value'];
+				$return .= '%"';
+			}
+		}
+		$this->where = $return;
+	}
+
 	#########################################
 	# function execute and manage error
 	#########################################
@@ -249,6 +293,7 @@ final class BDD
 			$prepare = '
 				SELECT '.$this->fields.'
 				FROM   '.$this->table.
+						 $this->join.
 						 $this->where.
 						 $this->orderby.
 						 $this->limit.' ';
@@ -276,10 +321,11 @@ final class BDD
 		if ($this->cnx) {
 			$prepare = '
 				SELECT '.$this->fields.'
-				FROM   '.$this->table.
-						 $this->where.
-						 $this->orderby.
-						 $this->limit.' ';
+				FROM '.$this->table.' '.
+					$this->join.
+					$this->where.
+					$this->orderby.
+					$this->limit;
 			$this->cnx = $this->cnx->prepare($prepare);
 
 			if (self::sqlExecute()) {
@@ -294,6 +340,80 @@ final class BDD
 
 		}
 	}
+	#########################################
+	# Select SQL multiple line +500 hyper long
+	#########################################
+	public function queryLarge(): \Generator
+	{
+		if (!$this->cnx) {
+			return;
+		}
+
+		$prepare = '
+			SELECT '.$this->fields.'
+			FROM '.$this->table.' '.
+				$this->join.
+				$this->where.
+				$this->orderby.
+				$this->limit;
+
+		$stmt = $this->cnx->prepare($prepare);
+
+		if (!$stmt->execute()) {
+			return;
+		}
+
+		if ($this->isObject) {
+			$stmt->setFetchMode(\PDO::FETCH_OBJ);
+		} else {
+			$stmt->setFetchMode(\PDO::FETCH_ASSOC);
+		}
+
+		$_SESSION['NB_REQUEST_SQL']++;
+
+		while ($row = $stmt->fetch()) {
+			yield $row;
+		}
+
+		$stmt->closeCursor();
+		
+	}
+
+	/* return iterator_to_array($sql->queryLarge(), false); */
+	#########################################
+	# function join
+	#########################################
+public function join($data = null)
+{
+    if (empty($data) || !is_array($data)) {
+        $this->join = '';
+        return;
+    }
+
+    $join = '';
+
+    foreach ($data as $value) {
+
+        if (!is_array($value)) {
+            continue;
+        }
+
+        $table = $value['table'] ?? '';
+        
+        // Gestion des constantes SQL
+        if (defined($table)) {
+            $table = constant($table);
+        }
+
+        $type = strtoupper($value['type'] ?? 'INNER');
+
+        $on = $value['on'] ?? '';
+
+        $join .= " {$type} JOIN {$table} ON {$on}";
+    }
+
+    $this->join = $join;
+}
 	#########################################
 	# Returns the number of line
 	#########################################

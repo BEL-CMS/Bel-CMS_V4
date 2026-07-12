@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.3]
+ * @version 4.1.1 [PHP8.5]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -534,7 +534,8 @@ final class Common
             'allow_empty' => true,
             'custom_tags' => null,
             'preserve_newlines' => false,
-            'strict_mode' => true
+            'strict_mode' => true,
+            'allow_class' => false
         ];
         $options = array_merge($defaults, $options);
 
@@ -605,11 +606,20 @@ final class Common
                 );
 
                 if ($options['strict_mode']) {
+
                     $value = preg_replace(
-                        '/\s*(?:style|class)\s*=\s*(?:"[^"]*"|\'[^\']*\'|[^\s>]*)/iu',
+                        '/\s*style\s*=\s*(?:"[^"]*"|\'[^\']*\'|[^\s>]*)/iu',
                         '',
                         $value
                     );
+
+                    if (!$options['allow_class']) {
+                        $value = preg_replace(
+                            '/\s*class\s*=\s*(?:"[^"]*"|\'[^\']*\'|[^\s>]*)/iu',
+                            '',
+                            $value
+                        );
+                    }
                 }
 
                 $value = preg_replace(
@@ -843,7 +853,7 @@ final class Common
     #########################################
     # Security Upload
     #########################################
-    public static function Upload ($name, $dir, $ext = false, $random = false)
+    public static function Upload ($name, $dir, $ext = 'all', $random = false)
     {
         if ($_FILES[$name]['error'] != 4) {
             $return  = '';
