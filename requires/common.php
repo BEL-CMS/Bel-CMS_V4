@@ -336,6 +336,8 @@ final class Common
             $lg = 'nl_NL';
         } else if ($_SESSION['CONFIG']['CMS_WEBSITE_LANG'] == constant('DEUTCH')) {
             $lg = 'de_DE';
+        } else {
+            $lg = 'fr_FR';
         }
 
         $d    = strtoupper($d); $t = strtoupper($t);

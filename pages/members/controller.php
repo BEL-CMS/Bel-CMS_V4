@@ -30,7 +30,18 @@ class Members extends Pages
     {
         $config = Config::GetConfigPage('members');
         $a['pagination'] = $this->pagination($config->config['MAX_PPR'], 'Members', constant('TABLE_USERS'));
-        $return = $this->models->members();
+
+        if (isset($_GET['letter']) and strlen($_GET['letter']) == 1) {
+            $letter = Common::VarSecure($_GET['letter']);
+        } else {
+            $letter = 'a';
+        }
+
+        $return = $this->models->members($letter);
+
+        $a['letter'] = strtolower($_GET['letter'] ?? 'a');
+
+        $return = $this->models->members($letter);
         $a['members'] = $return;
         $this->set($a);
         $this->render ('index');
@@ -47,7 +58,17 @@ class Members extends Pages
         }
 
         $a = $this->models->getMembers ($name);
+        if (empty($a)) {
+            Notification::error('Utilisateur inconnu', 'Membre');
+            return;
+        }
         $b['user'] = User::getInfosUserAll($a->hash_key);
+
+        if (empty($b['user'])) {
+            Notification::error('Erreur dans le profils, la cause est surement un espace', 'Membre');
+            return;
+        }
+
         $this->set($b);
         $this->render('detail');
     }

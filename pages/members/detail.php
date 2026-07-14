@@ -18,10 +18,12 @@ if (!defined('CHECK_INDEX')):
     exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
 endif;
 $groups = Groups::getColor($user->groups->user_group);
+$avatar = (empty($user->profils->avatar)) ? constant('DEFAULT_AVATAR') : $user->profils->avatar;
+
 ?>
  <div class="belcms_members_wrapper">
     <aside class="belcms_members_sidebar" style="background:<?= $groups->color; ?>">
-      <img src="<?= $user->profils->avatar; ?>" alt="Photo de Stive" class="belcms_members_avatar">
+      <img src="<?= $avatar; ?>" alt="Photo de <?= $user->user->username; ?>" class="belcms_members_avatar">
       <h1 class="belcms_members_name"><?= $user->user->username; ?></h1>
     </aside>
 

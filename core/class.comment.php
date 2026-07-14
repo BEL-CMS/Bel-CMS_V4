@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.1.1 [PHP8.5]
+ * @version 4.0.0 [PHP8.4]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -82,8 +82,8 @@ final class Comment
 			$html .= '<div class="belcms_comments_com">'.$v->comment.'</div>';
 			$html .= '</li>';
 		}
-			$html .= '</ul>';
-		
+			$html .= '</ul>
+			';
 		if (User::isLogged() === true) {
 			$dispatcher = new Dispatcher();
 			$dispatcher->link;

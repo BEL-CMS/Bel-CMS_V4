@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.0 [PHP8.4]
+ * @version 4.1.1 [PHP8.5]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -24,6 +24,7 @@ final class Shoutbox
         $sql = new BDD();
         $sql->table('TABLE_SHOUTBOX');
         $sql->limit(8);
+        $sql->orderby(array(array('name' => 'id', 'type' => 'DESC')));
         $sql->queryAll();
         $return = $sql->data;
 

@@ -25,22 +25,39 @@ endif;
 ############################################
 final class Members
 {
-    public function members ()
+    public function members(string $letter)
     {
-        $config = Config::GetConfigPage('members');
-        if (isset($config->config['MAX_PPR'])) {
-            $nbpp = (int) $config->config['MAX_PPR'];
-        } else {
-            $nbpp = (int) 4;
+        $sql = new BDD();
+        $sql->table(TABLE_USERS . ' u');
+        $sql->fields([
+            'u.*',
+            'p.avatar',
+            'p.websites',
+            'p.date_registration',
+            'p.country',
+            'p.birthday'
+        ]);
+        $sql->join([
+            [
+                'type'  => 'LEFT',
+                'table' => TABLE_USERS_PROFILS . ' AS p',
+                'on'    => 'u.hash_key = p.hash_key'
+            ]
+        ]);
+
+        if (!empty($letter)) {
+            $letter = strtoupper(substr($letter, 0, 1));
+            if (preg_match('/^[A-Z]$/', $letter)) {
+                $sql->where([
+                    [
+                        'name'  => 'u.username',
+                        'op'    => 'LIKE',
+                        'value' => $letter.'%'
+                    ]
+                ]);
+            }
         }
-        $sql = new BDD;
-        $sql->table('TABLE_USERS');
-        $page = (Dispatcher::RequestPages() * $nbpp) - $nbpp;
-        $sql->orderby(array(array('name' => 'username', 'type' => 'ASC')));
-        $sql->limit(array(0 => $page, 1 => $nbpp), true);
-        $sql->queryAll();
-        $return = $sql->data;
-        return $return;
+        return $sql->queryLarge();
     }
 
     public function getMembers ($name)

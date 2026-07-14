@@ -275,3 +275,21 @@ table {
   height: 60px;
   border-radius: 50%;
 }
+.belcms_members_country {
+  height: 30px;
+}
+#belcms_members_nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px auto;
+    clear: both;
+
+}
+.belcms_members_table_avatar {
+  height: 30px;
+}
+.belcms_members_th_width {
+  text-align: center;
+  width: 50px;
+}

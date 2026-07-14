@@ -42,24 +42,19 @@ endif;
                     <span class="input-group-text">Date de naissance</span>
                     <input type="date" class="form-control" placeholder="" name="birthday" required>
                     <span class="input-group-text">N° Registre national</span>
-                    <input type="text" class="form-control" name="national_number" pattern="^(\d{2}\.\d{2}\.\d{2}-\d{3}\.\d{2}|\d{11})$" placeholder="00.00.00-000.00" required>
+                    <input type="text" class="form-control" name="national_number" placeholder="00.00.00-000.00" required>
                 </div>
             </div>
             <div class="row">
                 <div class="input-group input-group-sm mb-3">
                     <span class="input-group-text">N° GSM</span>
-                    <input type="tel" class="form-control" name="gsm" pattern="^(\+32|0)4\d([ .-]?\d{2}){4}$" placeholder="1234 12 34 56" required>
+                    <input type="tel" class="form-control" name="gsm" placeholder="1234 12 34 56" required>
                 </div>
             </div>
             <div class="row">
                 <div class="input-group input-group-sm mb-3">
                     <span class="input-group-text">Adresse e-mail</span>
                     <input type="email" class="form-control" placeholder="@" name="email" required>
-                </div>
-            </div>
-            <div class="row">
-                <div class="mb-3" style="text-align: center;">
-                    <input type="submit" value="Envoyer" id="envoyer">
                 </div>
             </div>
             <div class="row">
@@ -90,7 +85,11 @@ endif;
                     </div>
                 </div>
             </div>
-
+            <div class="row">
+                <div class="mb-3" style="text-align: center;">
+                    <input type="submit" value="Envoyer" id="envoyer">
+                </div>
+            </div>
         </div>
     </form>
 </div>

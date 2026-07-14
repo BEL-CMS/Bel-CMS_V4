@@ -314,7 +314,6 @@ class User extends Pages
                 </table>
                 </body>
                 </html>';
-        require_once ROOT . DS . 'core' . DS . 'class.mail.php';
         $email = new eMail;
         $email->addAdress($mail);
         $email->subject(constant('GET_PASSWORD_TOKEN'));

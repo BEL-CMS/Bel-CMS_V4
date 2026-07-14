@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- *  * @version 4.1.1 [PHP8.5]
+ * @version 4.0.1 [PHP8.4]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -46,7 +46,6 @@ final class Config
 
     private function getSqlTpl () : array
     {
-		$return = array();
         $sql = new BDD;
         $sql->table('TABLE_TPL');
         $sql->queryAll();

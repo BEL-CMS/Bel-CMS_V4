@@ -58,7 +58,7 @@ $_SESSION['CMS_DEBUG']      = true;                   #
 # Install                                             #
 #######################################################
 if (is_file(ROOT.DS.'INSTALL'.DS.'index.php')) {      #
-	header('Location: INSTALL/index.php');    #
+	header('Location: INSTALL/index.php');            #
 	die();                                            #
 }                                                     #
 #######################################################

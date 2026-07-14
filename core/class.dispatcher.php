@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- *  * @version 4.1.1 [PHP8.5]
+ * @version 4.0.0 [PHP8.3]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -106,7 +106,7 @@ final class Dispatcher
         $return = 0;
         $dispatcher = new Dispatcher;
         if (isset($dispatcher->link[3]) AND !empty($dispatcher->link[3])) {
-            $return =($dispatcher->link[3]);
+            $return = Secure::isInt($dispatcher->link[3]);
         }
         return $return;
     }

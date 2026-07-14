@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- *  * @version 4.1.1 [PHP8.5]
+ * @version 4.0.1 [PHP8.4]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -9,24 +9,15 @@
  * @author as Stive - stive@determe.be
 */
 
+if (!defined('CHECK_INDEX')):
+	header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
+	exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
+endif;
+
 use BelCMS\Core\User;
-use BelCMS\PDO\BDD;
 use BelCMS\Requires\Common;
 
-if (!defined('CHECK_INDEX')):
-    header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
-    exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
-endif;
 foreach ($news as $key => $data):
-
-    if (!empty($data->img) and strpos($data->img, 'UPLOAD_NONE') == false) {
-        $img = $data->img;
-    } else if ($data->img == '/uploads/news/UPLOAD_NONE') {
-        $img = 'assets/img/no-image-png.png';
-    } else {
-        $img = 'assets/img/no-image-png.png';
-    }
-
     if (User::ifUserExist($data->author)) {
         $user = User::getInfosUserAll($data->author);
         $username = $user->user->username;
@@ -35,34 +26,55 @@ foreach ($news as $key => $data):
         $username = 'Inconnu';
         $avatar   = '/assets/img/avatar/dummy-avatar.jpg';
     }
-
-    $sql = New BDD();
-    $sql->table('TABLE_COMMENTS');
-
-    $where[] = array('name' => 'page', 'value' => 'news');
-    $where[] = array('name' => 'page_sub', 'value' => 'ReadMore');
-    $where[] = array('name' => 'page_id', 'value' => $data->id);
-
-    $sql->where($where);
-    $sql->count();
-    $returnCount = $sql->data;
 ?>
-<article class="post clearfix">
-    <div class="post-inner">
-        <div class="post-img"><a href="<?= $img; ?>"><img src="<?= $img; ?>" alt="image - <?= $data->rewrite_name; ?>"></a></div>
-        <h2 class="post-title"><a href="news/ReadMore/<?= $data->id; ?>/<?= $data->rewrite_name; ?>"><?= $data->name; ?></a></h2>
-        <div class="post-meta">
-            <span class="meta-author"><i class="fa-solid fa-user"></i><a href="#"><?= $username; ?></a></span>
-            <span class="meta-date"><i class="fa-solid fa-calendar-days"></i><?= Common::TransformDate($data->date_create, 'MEDIUM', 'MEDIUM'); ?></span>
-            <span class="meta-comment"><i class="fa-regular fa-comment-dots"></i><a href="#"><?= $returnCount; ?> commentaires</a></span>
-        </div>
-        <div class="post-content">
-            <?= $data->content; ?>
-            <a href="news/ReadMore/<?= $data->id; ?>/<?= $data->rewrite_name; ?>" class="post-read-more button color small">Poursuivre la lecture</a>
+<div class="text-block">
+    <?php
+    if (!empty($data->img)):
+    ?>
+    <div class="blog-media">
+        <div class="single-slider-wrap">
+            <div class="single-slider">
+                <div class="swiper-container">
+                    <div class="swiper-wrapper lightgallery">
+                        <div class="swiper-slide hov_zoom"><img src="<?= $data->img; ?>" alt="">
+                            <a href="<?= $data->img; ?>" class="box-media-zoom popup-image"><i class="fal fa-search"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</article>
+    <?php
+    endif;
+    ?>
+    <div class="text-block post-single_tb">
+        <div class="text-block-container">
+            <div class="tbc_subtitle"><a href="news/ReadMore/<?= $data->id; ?>/<?= $data->rewrite_name; ?>"><?= $data->name; ?></a></div>
+            <div class="room-card-details" style="margin-bottom: 20px">
+                <ul>
+                    <li><i class="fa-light fa-calendar-days"></i><span><?=Common::transformDate($data->date_create, 'FULL', 'MEDIUM')?></span></li>
+                    <li><i class="fa-light far fa-eye"></i><span><?=$data->view;?></span></li>
+                </ul>
+            </div>
+            <?= $data->content; ?>
+        </div>
+        <div class="tbc-separator"></div>
+        <?php
+        if (!empty($data->tags)):
+            if(strpos($data->tags, ',')) {
+                $tags = null;
+                $explodeTags = explode($data->tags, ',');
+                echo '<div class="tagcloud tc_single">';
+                foreach ($explodeTags as $key => $value) {
+                    $tags .= '<a href="#">'.$value.'</a>';
+                }
+                echo '</div>';
+            } else {
+                $tags = '<a href="#" class="cat-opt">'.$tags.'</a>';
+            }
+        endif;
+        ?>
+    </div>
+</div>
 <?php
 endforeach;
-echo $pagination;
-?>

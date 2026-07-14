@@ -8,9 +8,9 @@
     ###################################################################
     ##                                                               ##
     ##                           Bel-CMS                             ##
-    ##                      Bel-CMS Version 4.0.1                    ##
+    ##                      Bel-CMS Version 4.1.1                    ##
     ##                  Systeme de gestion de contenue               ##
-    ##                            PHP 8.4                            ##
+    ##                            PHP 8.5                            ##
     ##                  Copyright 2014-2026 by Bel-CMS               ##
     ##                 Développement par : Determe Stive             ##
     ##                                                               ##
@@ -21,7 +21,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Récupération de compte</title>
-  <script type="text/javascript" src="/assets/plugins/jQuery/jquery-3.7.1.min.js"></script>
+  <script type="text/javascript" src="/assets/plugins/jQuery/jquery-4.0.0.min.js"></script>
   <script type="text/javascript" src="/pages/user/js/javascript.js"></script>
   <style>
     * {

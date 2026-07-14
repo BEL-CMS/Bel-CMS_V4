@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.1 [PHP8.4]
+ *  * @version 4.1.1 [PHP8.5]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -60,15 +60,21 @@ $visitor = Visitors::dataVisitors();
 			<?php
 			foreach ($visitor['users'] as $key => $value):
 				$flag = strtolower($value['country']);
-				$value['username'] = empty($value['username']) ? 'Bot' : htmlspecialchars($value['username']);
-				if ($value['username'] != 'bot') {
+				if ($value['is_bot'] == 1) {
+					$username = 'Bot';
+				} else if ($value['is_bot'] == 0 and empty($value['username'])) {
+					$username = 'Visiteur';
+				} else {
+					$username = $value['username'];
+				}
+				$value['page'] = strtoupper($value['page']);
+				$value['page'] = defined($value['page']) ? constant($value['page']) : $value['page'];
 			?>
 			<li class="belcms_flags">
-				<img src="assets/img/country/<?= $flag;?>.png" class="belcms-flag" alt="pays_<?= $value['country']; ?>"> <i><?= htmlspecialchars($value['username']); ?></i>
+				<img src="assets/img/country/<?= $flag;?>.png" class="belcms-flag" alt="pays_<?= $value['country']; ?>"> <i><?= $username; ?></i>
 				<span style="text-align: right;float:right;display:block"><?= $value['page']; ?></span>
 			</li>
 			<?php
-				}
 			endforeach;
 			?>
 			</ul>

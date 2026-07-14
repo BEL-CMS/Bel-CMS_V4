@@ -33,12 +33,12 @@ Bel-CMS need a LAMP hosting (Apache / PHP / MySQL).
 
 ## Use
 
-* PHP 8.4+
+* PHP 8.4
 * MySQL UTF8
 * Apache 2.4.54.2
-* jQuery 4.min.js
+* jQuery 3.7.1.min.js
 * TinyMCE 2.1 free edition
-* FontAwesome 7.0.0 free edition
+* FontAwesome 6.5.1 free edition
 * Bootstrap 5
 
 ## Installation
@@ -51,10 +51,10 @@ Bel-CMS need a LAMP hosting (Apache / PHP / MySQL).
 
 Feel free to contribute to the greatest CMS already made, share your ideas, and help us to build a better CMS for all !
 
-* For more information [Bel-CMS](https://www.bel-cms.dev)
+* For more information [Bel-CMS](https://bel-cms.dev)
 * For issues/bugs : https://github.com/Stive1987/Bel-CMS/issues
 
-Stay tuned on social medias : [@https://www.facebook.com/BelCMS.DEV](https://www.facebook.com/BelCMS.DEV)
+Stay tuned on social medias : [@Facebook/Bel-CMS](https://www.facebook.com/Bel.CMS/)
 
 Copyleft 2015 - 2026
 
