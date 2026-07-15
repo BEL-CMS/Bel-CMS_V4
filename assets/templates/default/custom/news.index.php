@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.0.1 [PHP8.4]
+ * @version 4.1.1 [PHP8.5]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -9,15 +9,30 @@
  * @author as Stive - stive@determe.be
 */
 
-if (!defined('CHECK_INDEX')):
-	header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
-	exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
-endif;
-
 use BelCMS\Core\User;
+use BelCMS\PDO\BDD;
 use BelCMS\Requires\Common;
 
+if (!defined('CHECK_INDEX')):
+    header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
+    exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
+endif;
 foreach ($news as $key => $data):
+
+    if (!empty($data->img) and strpos($data->img, 'UPLOAD_NONE') == false) {
+        $img = $data->img;
+
+    $img = '<div class="post-item_media">
+                <a href="'.$data->img.'" title="image -'.$data->name.'">
+                    <img src="'.$data->img.'" alt="image -'.$data->name.'">
+                </a>
+            </div>';
+    } else if ($data->img == '/uploads/news/UPLOAD_NONE') {
+        $img = '';
+    } else {
+        $img = '';
+    }
+
     if (User::ifUserExist($data->author)) {
         $user = User::getInfosUserAll($data->author);
         $username = $user->user->username;
@@ -26,55 +41,41 @@ foreach ($news as $key => $data):
         $username = 'Inconnu';
         $avatar   = '/assets/img/avatar/dummy-avatar.jpg';
     }
+
+    $sql = New BDD();
+    $sql->table('TABLE_COMMENTS');
+
+    $where[] = array('name' => 'page', 'value' => 'news');
+    $where[] = array('name' => 'page_sub', 'value' => 'ReadMore');
+    $where[] = array('name' => 'page_id', 'value' => $data->id);
+
+    $sql->where($where);
+    $sql->count();
+    $returnCount = $sql->data;
+    if ($returnCount == 1) {
+        $s = '';
+    } else {
+        $s = 's';
+    }
 ?>
-<div class="text-block">
-    <?php
-    if (!empty($data->img)):
-    ?>
-    <div class="blog-media">
-        <div class="single-slider-wrap">
-            <div class="single-slider">
-                <div class="swiper-container">
-                    <div class="swiper-wrapper lightgallery">
-                        <div class="swiper-slide hov_zoom"><img src="<?= $data->img; ?>" alt="">
-                            <a href="<?= $data->img; ?>" class="box-media-zoom popup-image"><i class="fal fa-search"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <?php
-    endif;
-    ?>
-    <div class="text-block post-single_tb">
-        <div class="text-block-container">
-            <div class="tbc_subtitle"><a href="news/ReadMore/<?= $data->id; ?>/<?= $data->rewrite_name; ?>"><?= $data->name; ?></a></div>
-            <div class="room-card-details" style="margin-bottom: 20px">
+<div class="post-item">
+    <div class="post-item_wrap">
+        <?= $img; ?>
+        <div class="post-item_content">
+            <h3><a href="news/ReadMore/<?= $data->id; ?>/<?= $data->rewrite_name; ?>"><?= $data->name; ?></a></h3>
+            <p><?= Common::truncate_3($data->content, 240); ?></p>
+            <div class="post-card-details">
                 <ul>
-                    <li><i class="fa-light fa-calendar-days"></i><span><?=Common::transformDate($data->date_create, 'FULL', 'MEDIUM')?></span></li>
-                    <li><i class="fa-light far fa-eye"></i><span><?=$data->view;?></span></li>
+                    <li><i class="fa-light fa-calendar-days"></i><span><?= Common::TransformDate($data->date_create, 'MEDIUM', 'MEDIUM'); ?></span></li>
+                    <li><i class="fa-light fa-glasses"></i><span><?= $data->view; ?></span></li>
                 </ul>
             </div>
-            <?= $data->content; ?>
+            <a href="news/ReadMore/<?= $data->id; ?>/<?= $data->rewrite_name; ?>" class="post-card_link">Poursuivre la lecture <i class="fa-solid fa-caret-right"></i></a>
+            <div class="pv-item_wrap"><i class="fa-light fa-comment"></i><span><strong><?= $returnCount; ?></strong> Commentaire<?= $s; ?></span></div>
         </div>
-        <div class="tbc-separator"></div>
-        <?php
-        if (!empty($data->tags)):
-            if(strpos($data->tags, ',')) {
-                $tags = null;
-                $explodeTags = explode($data->tags, ',');
-                echo '<div class="tagcloud tc_single">';
-                foreach ($explodeTags as $key => $value) {
-                    $tags .= '<a href="#">'.$value.'</a>';
-                }
-                echo '</div>';
-            } else {
-                $tags = '<a href="#" class="cat-opt">'.$tags.'</a>';
-            }
-        endif;
-        ?>
     </div>
 </div>
 <?php
 endforeach;
+echo $pagination;
+?>
