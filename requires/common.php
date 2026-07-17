@@ -878,9 +878,8 @@ final class Common
                 $extensions = array(
                 '.png', '.bmp', '.gif', '.jpg', '.ico', '.svg', '.tiff', '.webp', '.jpeg', '.doc', '.txt', '.pdf', '.rar',
                 '.zip', '.7zip', '.exe', '.tar', '.psd', '.jar','.avi', '.mpg', '.mpeg', '.av4', '.ac3', '.docx', '.doc', '.mp3',
-                '.mp4', '.svg', '.tif', '.tiff', '.txt', '.3gp', '.3g2', '.xml', '.xls', '.xlsx', '.ppt', '.pptx', '.pkg',
-                '.iso', '.torrent','.apk', '.webp','.jpe','.jpg','.jpeg','gif','png','.bmp','.ico','.svg','.svgz',
-                '.tif','.tiff','.ai','.drw','.pct','.psp','.xcf','.psd','.raw','.webp','.heic', '.nfo');
+                '.mp4', '.tif', '.txt', '.3gp', '.3g2', '.xml', '.xls', '.xlsx', '.ppt', '.pptx', '.pkg',
+                '.iso', '.torrent','.apk','.jpe','.gif','.svgz', '.tif','.tiff','.ai','.drw','.pct','.psp','.xcf','.raw','.heic', '.nfo');
             }
             if ($ext == false) {
                 $extensions = array();
@@ -942,9 +941,7 @@ final class Common
     #########################################
     public static function deleteFile ($file)
     {
-        if (file_exists($file)) {
-            @unlink($file);
-        }
+        unlink($_SERVER['DOCUMENT_ROOT'].'/'.$file);
     }
     #########################################
     # Deplace un fichier
@@ -1479,6 +1476,42 @@ final class Common
         ];
     
         return $media_types[$extension] ?? 'application/octet-stream';
+    }
+
+    public static function cleanFileName(string $fileName): string
+    {
+        // Sépare le nom et l'extension
+        $info = pathinfo($fileName);
+
+        $name = $info['filename'];
+        $extension = isset($info['extension']) ? strtolower($info['extension']) : '';
+
+        // Suppression des accents
+        $name = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $name);
+
+        // Mise en minuscules
+        $name = strtolower($name);
+
+        // Remplace les espaces par des tirets
+        $name = preg_replace('/\s+/', '-', $name);
+
+        // Supprime tous les caractères spéciaux
+        $name = preg_replace('/[^a-z0-9\-_]/', '', $name);
+
+        // Remplace plusieurs tirets par un seul
+        $name = preg_replace('/-+/', '-', $name);
+
+        // Supprime les tirets en début et fin
+        $name = trim($name, '-_');
+
+        // Nom vide ?
+        if ($name === '') {
+            $name = 'file';
+        }
+
+        return $extension !== ''
+            ? $name.'.'.$extension
+            : $name;
     }
 
     public static function cleanText($text)

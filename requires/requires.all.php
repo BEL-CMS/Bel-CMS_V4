@@ -18,6 +18,7 @@ endif;
 ################################################
 $files = array (
 	ROOT.DS.'requires'.DS.'common.php',
+	ROOT.DS.'core'.DS.'class.uploads_files.php',
 	ROOT.DS.'core'.DS.'class.error.php',
 	ROOT.DS.'core'.DS.'class.dispatcher.php',
 	ROOT.DS.'core'.DS.'class.visitor.php',
@@ -27,7 +28,6 @@ $files = array (
 	ROOT.DS.'core'.DS.'class.constant.php',
 	ROOT.DS.'spdo'.DS.'spdo.class.php',
 	ROOT.DS.'assets'.DS.'templates'.DS.'maintenance'.DS.'index.php',
-	ROOT.DS.'core'.DS.'class.uploads_files.php',
 	ROOT.DS.'core'.DS.'class.encrypt.php',
 	ROOT.DS.'core'.DS.'class.mail.php',
 	ROOT.DS.'core'.DS.'class.secure.php',

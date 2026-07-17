@@ -1,258 +1,382 @@
 <?php
-/**
- * Bel-CMS [Content management system]
- *  * @version 4.1.1 [PHP8.5]
- * @link https://bel-cms.dev
- * @link https://determe.be
- * @license MIT License
- * @copyright 2015-2026 Bel-CMS
- * @author as Stive - stive@determe.be
-*/
 
 namespace BelCMS\Core;
 
-use ZipArchive;
+use BelCMS\Requires\Common;
 
-class DownloadsUpload
+/*
+Utilisation infos :
+
+$upload = Upload::file('avatar', 'uploads/avatar')
+    ->images()
+    ->randomName()
+    ->upload();
+
+Tous les fichiers :
+
+$upload = Upload::file('document', 'uploads/files')
+    ->upload();
+
+Extensions personnalisées :
+
+$upload = Upload::file('archive', 'uploads')
+    ->extensions(['zip', 'rar'])
+    ->upload();
+*/
+
+class BelcmsUpload
 {
-    private const MAX_SIZE = 500 * 1024 * 1024; // 500 MB
+    private string $input;
+    private string $directory;
+    private bool $randomName = false;
+    private array $extensions = [];
+    private ?int $resizeWidth = null;
+    private ?int $resizeHeight = null;
+    private bool $keepRatio = true;
+    private ?string $watermarkText = null;
+    private int $watermarkSize = 20;
+    private int $watermarkOpacity = 50;
+    private string $watermarkPosition = 'bottom-right';
 
-    private static array $allowedMime = [
-
-        // ZIP
-        'zip' => [
-            'application/zip',
-            'application/x-zip-compressed',
-            'multipart/x-zip'
-        ],
-
-        // EXE
-        'exe' => [
-            'application/x-msdownload',
-            'application/octet-stream'
-        ],
-
-        // RAR
-        'rar' => [
-            'application/vnd.rar',
-            'application/x-rar-compressed'
-        ]
+private int $quality = 90;
+    private const IMAGES = [
+        'jpg','jpeg','png','gif','bmp','webp','svg','ico',
+        'tif','tiff','heic','jpe'
     ];
 
-    private static array $forbiddenFiles = [
-        'php',
-        'phtml',
-        'phar',
-        'php3',
-        'php4',
-        'php5',
-        'js',
-        'sh',
-        'bat',
-        'cmd'
+    private const ALL = [
+        'jpg','jpeg','png','gif','bmp','webp','svg','ico',
+        'tif','tiff','heic','jpe',
+        'pdf','doc','docx','xls','xlsx','ppt','pptx',
+        'zip','rar','7z','tar',
+        'txt','xml','nfo',
+        'mp3','mp4','avi','mpeg','mpg',
+        'apk','jar','iso'
     ];
 
-    /**
-     * Upload fichier download sécurisé
-     */
-    public static function upload(
-        string $input,
-        string $destination
-    ): array {
+    private function __construct(string $input, string $directory)
+    {
+        $this->input = $input;
+        $this->directory = rtrim($directory, '/');
+        $this->extensions = self::ALL;
+    }
 
-        if (
-            !isset($_FILES[$input]) ||
-            $_FILES[$input]['error'] !== UPLOAD_ERR_OK
-        ) {
+    public static function file(string $input, string $directory): self
+    {
+        return new self($input, $directory);
+    }
+
+    public function resize(int $width, int $height, bool $keepRatio = true): self
+    {
+        $this->resizeWidth  = $width;
+        $this->resizeHeight = $height;
+        $this->keepRatio    = $keepRatio;
+
+        return $this;
+    }
+
+    public function quality(int $quality): self
+    {
+        $this->quality = max(0, min(100, $quality));
+
+        return $this;
+    }
+
+    public function images(): self
+    {
+        $this->extensions = self::IMAGES;
+        return $this;
+    }
+
+    public function extensions(array $extensions): self
+    {
+        $this->extensions = array_map('strtolower', $extensions);
+        return $this;
+    }
+
+    public function randomName(bool $value = true): self
+    {
+        $this->randomName = $value;
+        return $this;
+    }
+
+    public function upload(): array
+    {
+        if (!isset($_FILES[$this->input])) {
             return [
                 'success' => false,
-                'message' => 'Erreur upload'
+                'error'   => 'UPLOAD_NONE'
             ];
         }
 
-        if (!is_uploaded_file($_FILES[$input]['tmp_name'])) {
+        $file = $_FILES[$this->input];
+
+        if ($file['error'] !== UPLOAD_ERR_OK) {
             return [
                 'success' => false,
-                'message' => 'Upload invalide'
+                'error'   => 'UPLOAD_ERROR'
             ];
         }
 
-        if ($_FILES[$input]['size'] > self::MAX_SIZE) {
+        if (!is_dir($this->directory)) {
+            mkdir($this->directory, 0775, true);
+        }
+
+        $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+
+        if (!in_array($extension, $this->extensions, true)) {
             return [
                 'success' => false,
-                'message' => 'Fichier trop volumineux'
+                'error'   => 'UPLOAD_ERROR_FILE'
             ];
         }
 
-        $originalName = $_FILES[$input]['name'];
-
-        /**
-         * Double extension protection
-         */
-        if (
-            preg_match(
-                '/\.(php|phtml|phar|php3|php4|php5)/i',
-                $originalName
-            )
-        ) {
+        if ($file['size'] > Common::GetMaximumFileUploadSize()) {
             return [
                 'success' => false,
-                'message' => 'Extension interdite'
+                'error'   => 'UPLOAD_ERROR_SIZE'
             ];
         }
 
-        /**
-         * Extension réelle
-         */
-        $extension = strtolower(
-            pathinfo(
-                $originalName,
-                PATHINFO_EXTENSION
-            )
-        );
+        $name = Common::cleanFileName($file['name']);
 
-        if (!isset(self::$allowedMime[$extension])) {
+        if ($this->randomName) {
+
+            $info = pathinfo($name);
+
+            $name = Common::randomString(16)
+                  . '-'
+                  . $info['filename']
+                  . '.'
+                  . $info['extension'];
+        }
+
+        $destination = $this->directory.'/'.$name;
+
+        if (!move_uploaded_file($file['tmp_name'], $destination)) {
             return [
                 'success' => false,
-                'message' => 'Type interdit'
+                'error'   => 'UPLOAD_ERROR'
             ];
         }
 
-        /**
-         * MIME réel
-         */
-        $finfo = finfo_open(FILEINFO_MIME_TYPE);
-
-        $mime = finfo_file(
-            $finfo,
-            $_FILES[$input]['tmp_name']
-        );
-
-        finfo_close($finfo);
-
-        if (
-            !in_array(
-                $mime,
-                self::$allowedMime[$extension]
-            )
-        ) {
-            return [
-                'success' => false,
-                'message' => 'MIME invalide'
-            ];
+        if ($this->resizeWidth !== null) {
+            $this->resizeImage($destination);
         }
 
-        /**
-         * Vérification ZIP
-         */
-        if ($extension === 'zip') {
-
-            $zipCheck = self::checkZip(
-                $_FILES[$input]['tmp_name']
-            );
-
-            if ($zipCheck !== true) {
-                return [
-                    'success' => false,
-                    'message' => $zipCheck
-                ];
-            }
+        if ($this->watermarkText !== null) {
+            $this->addTextWatermark($destination);
         }
-
-        /**
-         * Création dossier
-         */
-        if (!file_exists($destination)) {
-
-            mkdir(
-                $destination,
-                0755,
-                true
-            );
-        }
-
-        /**
-         * Nom aléatoire
-         */
-        $filename = bin2hex(
-            random_bytes(32)
-        );
-
-        $finalName = $filename.'.'.$extension;
-
-        $path = rtrim(
-            $destination,
-            '/'
-        ).'/'.$finalName;
-
-        /**
-         * Upload
-         */
-        if (
-            !move_uploaded_file(
-                $_FILES[$input]['tmp_name'],
-                $path
-            )
-        ) {
-            return [
-                'success' => false,
-                'message' => 'Erreur sauvegarde'
-            ];
-        }
-
-        /**
-         * Permissions
-         */
-        chmod($path, 0644);
 
         return [
             'success' => true,
-            'file'    => $finalName,
-            'name'    => $originalName,
-            'mime'    => $mime,
-            'size'    => $_FILES[$input]['size']
+            'file'    => '/'.$name,
+            'filename'=> $name,
+            'path'    => $destination,
+            'size'    => filesize($destination),
+            'mime'    => mime_content_type($destination)
         ];
     }
+    private function resizeImage(string $file): void
+    {
+        [$width, $height, $type] = getimagesize($file);
 
-    /**
-     * Vérification contenu ZIP
-     */
-    private static function checkZip(
-        string $file
-    ): bool|string {
+        switch ($type) {
+            case IMAGETYPE_JPEG:
+                $source = imagecreatefromjpeg($file);
+                break;
 
-        $zip = new ZipArchive();
+            case IMAGETYPE_PNG:
+                $source = imagecreatefrompng($file);
+                break;
 
-        if ($zip->open($file) !== true) {
-            return 'ZIP corrompu';
+            case IMAGETYPE_WEBP:
+                $source = imagecreatefromwebp($file);
+                break;
+
+            case IMAGETYPE_GIF:
+                $source = imagecreatefromgif($file);
+                break;
+
+            default:
+                return;
         }
 
-        for ($i = 0; $i < $zip->numFiles; $i++) {
+        if ($this->keepRatio) {
 
-            $name = $zip->getNameIndex($i);
-
-            $ext = strtolower(
-                pathinfo(
-                    $name,
-                    PATHINFO_EXTENSION
-                )
+            $ratio = min(
+                $this->resizeWidth / $width,
+                $this->resizeHeight / $height
             );
 
-            if (
-                in_array(
-                    $ext,
-                    self::$forbiddenFiles
-                )
-            ) {
+            $newWidth  = (int)($width * $ratio);
+            $newHeight = (int)($height * $ratio);
 
-                $zip->close();
+        } else {
 
-                return 'ZIP contient un fichier interdit';
-            }
+            $newWidth  = $this->resizeWidth;
+            $newHeight = $this->resizeHeight;
         }
 
-        $zip->close();
+        $image = imagecreatetruecolor($newWidth, $newHeight);
 
-        return true;
+        imagealphablending($image, false);
+        imagesavealpha($image, true);
+
+        imagecopyresampled(
+            $image,
+            $source,
+            0,
+            0,
+            0,
+            0,
+            $newWidth,
+            $newHeight,
+            $width,
+            $height
+        );
+
+        switch ($type) {
+
+            case IMAGETYPE_JPEG:
+                imagejpeg($image, $file, $this->quality);
+                break;
+
+            case IMAGETYPE_PNG:
+                imagepng($image, $file);
+                break;
+
+            case IMAGETYPE_WEBP:
+                imagewebp($image, $file, $this->quality);
+                break;
+
+            case IMAGETYPE_GIF:
+                imagegif($image, $file);
+                break;
+        }
+
+        $source = null;
+        $image  = null;
+    }
+
+    private function addTextWatermark(string $file): void
+    {
+        [$width, $height, $type] = getimagesize($file);
+
+        switch ($type) {
+
+            case IMAGETYPE_JPEG:
+                $image = imagecreatefromjpeg($file);
+                break;
+
+            case IMAGETYPE_PNG:
+                $image = imagecreatefrompng($file);
+                break;
+
+            case IMAGETYPE_WEBP:
+                $image = imagecreatefromwebp($file);
+                break;
+
+            default:
+                return;
+        }
+
+
+        $alpha = (int) round(
+            127 - (127 * ($this->watermarkOpacity / 100))
+        );
+
+        $alpha = max(0, min(127, $alpha));
+
+        $color = imagecolorallocatealpha(
+            $image,
+            255,
+            255,
+            255,
+            $alpha
+        );
+
+
+        $font = 5; // police GD intégrée
+
+
+        $textWidth = imagefontwidth($font) * strlen($this->watermarkText);
+        $textHeight = imagefontheight($font);
+
+
+        switch ($this->watermarkPosition) {
+
+            case 'top-left':
+                $x = 10;
+                $y = 10;
+                break;
+
+
+            case 'top-right':
+                $x = $width - $textWidth - 10;
+                $y = 10;
+                break;
+
+
+            case 'bottom-left':
+                $x = 10;
+                $y = $height - $textHeight - 10;
+                break;
+
+
+            case 'center':
+                $x = ($width - $textWidth) / 2;
+                $y = ($height - $textHeight) / 2;
+                break;
+
+
+            default:
+                $x = $width - $textWidth - 10;
+                $y = $height - $textHeight - 10;
+        }
+
+
+        imagestring(
+            $image,
+            $font,
+            $x,
+            $y,
+            $this->watermarkText,
+            $color
+        );
+
+
+        switch ($type) {
+
+            case IMAGETYPE_JPEG:
+                imagejpeg($image, $file, 90);
+                break;
+
+            case IMAGETYPE_PNG:
+                imagepng($image, $file);
+                break;
+
+            case IMAGETYPE_WEBP:
+                imagewebp($image, $file, 90);
+                break;
+        }
+
+
+        $image = null;
+    }
+
+    public function watermarkText(
+        string $text,
+        int $size = 20,
+        int $opacity = 50,
+        string $position = 'bottom-right'
+    ): self {
+
+        $this->watermarkText = $text;
+        $this->watermarkSize = $size;
+        $this->watermarkOpacity = $opacity;
+        $this->watermarkPosition = $position;
+
+        return $this;
     }
 }
