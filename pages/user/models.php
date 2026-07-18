@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * *  * @version 4.1.1 [PHP8.5]
+ * @version 4.1.1 [PHP8.5]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -11,11 +11,10 @@
 
 namespace Belcms\Pages\Models;
 
-use BelCMS\PDO\BDD;
-use BelCMS\Core\User;
 use BelCMS\Core\eMail;
-use BelCMS\Core\Secure;
 use BelCMS\Core\encrypt;
+use BelCMS\Core\User;
+use BelCMS\PDO\BDD;
 use BelCMS\Requires\Common;
 
 if (!defined('CHECK_INDEX')):
@@ -25,6 +24,87 @@ endif;
 
 final class ModelsUser
 {
+    public function getInfosUser ()
+    {
+        $id = $_SESSION['USER']->user->hash_key;
+        $return = User::getInfosUserAll($id);
+        return $return;
+    }
+    public function mailSecureBDD ($mail)
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_USERS');
+        $sql->where(array('name' => 'mail', 'value' => $mail));
+        $sql->count();
+        if ($sql->data == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+	public function getUserInfo ($mail)
+	{
+        $sql = new BDD;
+        $sql->table('TABLE_USERS');
+        $sql->where(array('name' => 'mail', 'value' => $mail));
+        $sql->queryOne();
+        $return = $sql->data;
+        return $return;
+	}
+    #########################################
+	# Update le token
+	#########################################
+    public function updateLostPassword ($mail, $token)
+    {
+        $where[] = array('name' => 'mail', 'value' => $mail);
+        #-----------------------------------------------------------#
+        $updateUser = array('token' => $token);
+        #-----------------------------------------------------------#
+        $sqlUser = new BDD;
+        $sqlUser->table('TABLE_USERS');
+        $sqlUser->where($where);
+        $sqlUser->update($updateUser);
+        #-----------------------------------------------------------#
+    }
+    #########################################
+	# Recupere le token
+	#########################################
+    public function checkToken ($mail, $token)
+    {
+        $where[] = array('name' => 'token', 'value' => $token);
+        $where[] = array('name' => 'mail', 'value' => $mail);
+        $sql = new BDD;
+        $sql->table('TABLE_USERS');
+        $sql->where($where);
+        $sql->count();
+        if ($sql->data == 1) {
+            $return = true;
+        } else {
+            $return = false;
+        }
+        return $return;
+    }
+    public function removeToken ($mail)
+    {
+        $data['token'] = null;
+        $where[] = array('name' => 'mail', 'value' => $mail);
+        $sql = new BDD;
+        $sql->table('TABLE_USERS');
+        $sql->where($where);
+        $sql->update($data);
+    }
+
+    public function sendNewPass ($mail, $password)
+    {
+        $where[] = array('name' => 'mail', 'value' => $mail);
+        $data['mail'] = $mail;
+        $data['password'] = $password;
+        $sql = new BDD;
+        $sql->table('TABLE_USERS');
+        $sql->where($where);
+        $sql->update($data);
+    }
+
     public function blackListEmail ($data)
     {
         $sql = New BDD();
@@ -123,12 +203,12 @@ final class ModelsUser
                 'gender'       => 'unisexual',
                 'public_mail'  => '',
                 'websites'     => '',
-                'list_ip'      => '',
+                'list_ip'      => Common::GetIp(),
                 'avatar'       => constant('DEFAULT_AVATAR'),
                 'info_text'    => '',
                 'birthday'     => date('Y-m-d'),
                 'country'      => '',
-                'hight_avatar' => '',
+                'hight_avatar' => '/uploads/users/bg-profile.png',
                 'friends'      => ''
             );
 
@@ -149,7 +229,7 @@ final class ModelsUser
             $stats->insert(array('hash_key' => $hash_key));
 
             if (constant('CMS_VALIDATION') == 'mail') {
-                require ROOT.DS.'core'.DS.'class.mail.php';
+                require_once ROOT.DS.'core'.DS.'class.mail.php';
                 $mail = new eMail;
                 $mail->setFrom($_SESSION['CONFIG_CMS']['CMS_WEBSITE_NAME']);
                 $mail->addAdress($data['email'], $data['username']);
@@ -187,54 +267,7 @@ final class ModelsUser
                 <table style="color:#FFF; text-align:center" width="100%" border="0" align="center" cellpadding="5" cellspacing="5" bgcolor="#8f8e8c"><thead><tr><td colspan="2"><b>'.constant('INFOS').'</b></td></tr></thead><tbody><tr bordercolor="#FFF"><td style="text">'.constant('NAME').'</td><td><b>'.$user->user->username.'</b></td></tr><tr><td>'.constant('DATE').'</td><td><b>'.$date.'</b></td></tr><tr><td>IP</td><td><b>'.Common::GetIp().'</b></td></tr></tbody>
                 </table></body></html>';
     }
-    #########################################
-    # login
-    #########################################
-    public function login($name = null, $password = null)
-    {
-        return User::login($name, $password);
-    }
-    #########################################
-    # Update l'utilisateur
-    #########################################
-    public function updateUser (array $data)
-    {
-        $where[] = array('name'=>'hash_key','value'=>$_SESSION['USER']->user->hash_key);
-        #-----------------------------------------------------------#
-        $updateUser = array('username' => $data['username'], 'mail' => $data['mail']);
-        #-----------------------------------------------------------#
-        $sqlUser = new BDD;
-        $sqlUser->table('TABLE_USERS');
-        $sqlUser->where($where);
-        $sqlUser->update($updateUser);
-        #-----------------------------------------------------------#
-        $updateProfils = array('birthday' => $data['birthday'], 'websites' => $data['websites'], 'country' => $data['country'], 'gender' => $data['gender'], 'info_text' => $data['info_text']);
-        $sqlProfils = new BDD;
-        $sqlProfils->table('TABLE_USERS_PROFILS');
-        $sqlProfils->where($where);
-        $sqlProfils->update($updateProfils);
-        #-----------------------------------------------------------#
-        $return['msg']  = constant('PROFILE_UPDATE_SUCCESS');
-        $return['type'] = 'success';
-        #-----------------------------------------------------------#
-        $_SESSION['USER'] = User::getInfosUserAll($_SESSION['USER']->user->hash_key);
-        #-----------------------------------------------------------#
-        return $return;
-    }
-    public function updateMaterial (array $data) : array
-    {
-        $sql = new BDD;
-        $sql->table('TABLE_USERS_HARDWARE');
-        $sql->where(array('name' => 'hash_key', 'value' => $_SESSION['USER']->user->hash_key));
-        $sql->update($data);
-        #-----------------------------------------------------------#
-        $return['msg']  = constant('HARDWARE_UPDATE_SUCCESS');
-        $return['type'] = 'success';
-        #-----------------------------------------------------------#
-        $_SESSION['USER'] = User::getInfosUserAll($_SESSION['USER']->user->hash_key);
-        #-----------------------------------------------------------#
-        return $return;
-    }
+
     public function updateSocial (array $data) : array
     {
         $sql = new BDD;
@@ -249,51 +282,13 @@ final class ModelsUser
         #-----------------------------------------------------------#
         return $return;
     }
-    #########################################
-	# Enregistre un nouveau mot de passe
-	#########################################
-	public function sendSecurity ($data) : array
-	{
-        $hash_key = $_SESSION['USER']->user->hash_key;
-		$sql = New BDD();
-		$sql->table('TABLE_USERS');
-		$sql->where(array('name' => 'hash_key', 'value' => $hash_key));
-		$sql->queryOne();
-		$results = $sql->data;
 
-        $passwordDeCrypt =  new encrypt($results->password, constant('CMS_KEY_ADMIN'));
-        $a = $passwordDeCrypt->decrypt();
-		$b = $data['password_old'];
-
-		if ($a == $b) {
-			$new = new encrypt($data['password_new'], constant('CMS_KEY_ADMIN'));
-			$new = $new->encrypt();
-			$insert['password'] = $new;
-			$sql = New BDD();
-			$sql->table('TABLE_USERS');
-			$sql->where(array('name' => 'hash_key', 'value' => $hash_key));
-			$sql->update($insert);
-            User::dieCoockie();
-            User::login($results->username, $data['password_new']);
-            $return['msg']  = constant('SEND_PASS_IS_OK');
-            $return['type'] = 'success';
-            #-----------------------------------------------------------#
-            $_SESSION['USER'] = User::getInfosUserAll($hash_key);
-            #-----------------------------------------------------------#
-			return $return;
-		} else {
-            $return['msg']  = constant('OLD_PASS_FALSE');
-            $return['type'] = 'error';
-			return $return;
-		}
-	}
-
-    public function deleteAccount () : array
+    public function avatar ($name)
     {
-        User::delUserAllCofnig($_SESSION['USER']->user->hash_key);
-        $return['msg']  = constant('USER_DELETE_OK');
-        $return['type'] = 'success';
-        return $return;
+        $sql = new BDD;
+        $sql->table('TABLE_USERS_PROFILS');
+        $sql->where(array('name' => 'hash_key', 'value' => $_SESSION['USER']->user->hash_key));
+        $sql->update($name);
     }
 
     public function ChangeAvatar ($img) : array
@@ -326,6 +321,21 @@ final class ModelsUser
         return $return;
     }
 
+    public function updateMaterial (array $data) : array
+    {
+        $sql = new BDD;
+        $sql->table('TABLE_USERS_HARDWARE');
+        $sql->where(array('name' => 'hash_key', 'value' => $_SESSION['USER']->user->hash_key));
+        $sql->update($data);
+        #-----------------------------------------------------------#
+        $return['msg']  = constant('HARDWARE_UPDATE_SUCCESS');
+        $return['type'] = 'success';
+        #-----------------------------------------------------------#
+        $_SESSION['USER'] = User::getInfosUserAll($_SESSION['USER']->user->hash_key);
+        #-----------------------------------------------------------#
+        return $return;
+    }
+
     public function changeGravatar ($num)
     {
         $data['gravatar'] = (int) $num;
@@ -341,92 +351,11 @@ final class ModelsUser
         return $return;
     }
 
-    public function sendProfils ($data)
+    public function deleteAccount () : array
     {
-        $sql = new BDD;
-        $sql->table('TABLE_USERS_PROFILS');
-        $sql->where(array('name' => 'hash_key', 'value' => $_SESSION['USER']->user->hash_key));
-        $sql->update($data);
-        #-----------------------------------------------------------#
-        $_SESSION['USER'] = User::getInfosUserAll($_SESSION['USER']->user->hash_key);
-        #-----------------------------------------------------------#
-        $return['msg']  = 'Profil mise à jour';
+        User::delUserAllCofnig($_SESSION['USER']->user->hash_key);
+        $return['msg']  = constant('USER_DELETE_OK');
         $return['type'] = 'success';
         return $return;
-    }
-
-    public function mailSecureBDD ($mail)
-    {
-        $sql = new BDD;
-        $sql->table('TABLE_USERS');
-        $sql->where(array('name' => 'mail', 'value' => $mail));
-        $sql->count();
-        if ($sql->data == true) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-	public function getUserInfo ($mail)
-	{
-        $sql = new BDD;
-        $sql->table('TABLE_USERS');
-        $sql->where(array('name' => 'mail', 'value' => $mail));
-        $sql->queryOne();
-        $return = $sql->data;
-        return $return;
-	}
-    #########################################
-	# Update le token
-	#########################################
-    public function updateLostPassword ($mail, $token)
-    {
-        $where[] = array('name' => 'mail', 'value' => $mail);
-        #-----------------------------------------------------------#
-        $updateUser = array('token' => $token);
-        #-----------------------------------------------------------#
-        $sqlUser = new BDD;
-        $sqlUser->table('TABLE_USERS');
-        $sqlUser->where($where);
-        $sqlUser->update($updateUser);
-        #-----------------------------------------------------------#
-    }
-
-    public function checkToken ($mail, $token)
-    {
-        $where[] = array('name' => 'token', 'value' => $token);
-        $where[] = array('name' => 'mail', 'value' => $mail);
-        $sql = new BDD;
-        $sql->table('TABLE_USERS');
-        $sql->where($where);
-        $sql->count();
-        if ($sql->data == 1) {
-            $return = true;
-        } else {
-            $return = false;
-        }
-        return $return;
-    }
-
-    public function removeToken ($mail)
-    {
-        $data['token'] = null;
-        $where[] = array('name' => 'mail', 'value' => $mail);
-        $sql = new BDD;
-        $sql->table('TABLE_USERS');
-        $sql->where($where);
-        $sql->update($data);
-    }
-
-    public function sendNewPass ($mail, $password)
-    {
-        $where[] = array('name' => 'mail', 'value' => $mail);
-        $data['mail'] = $mail;
-        $data['password'] = $password;
-        $sql = new BDD;
-        $sql->table('TABLE_USERS');
-        $sql->where($where);
-        $sql->update($data);
     }
 }

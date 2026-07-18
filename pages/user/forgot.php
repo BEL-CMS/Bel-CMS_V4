@@ -1,3 +1,12 @@
+<?php
+    if (isset($_GET['token']) and strlen($_GET['token']) == 32) {
+        $token = $_GET['token'];
+        $false = '';
+    } else {
+        $token = null;
+        $false = 'false';
+    }
+?>
 <!DOCTYPE html>
 <html lang="fr">
     <!--
@@ -18,7 +27,7 @@
     -->
     <head>
         <meta charset="utf-8">
-        <title><?= $_SESSION['CONFIG']['CMS_NAME']; ?> - Login</title>
+        <title><?= $_SESSION['CONFIG']['CMS_NAME']; ?> - Mot de passe perdu</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
         <link rel="stylesheet" href="/administration/assets/vendor/simplebar/simplebar.css">
         <link href="/pages/user/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css">
@@ -33,33 +42,31 @@
                     <img height="100" width="100" class="logo-dark" alt="Dark Logo" src="/assets/img/logo.png">
                 </a>
                 <div class="mb-12">
-                    <h5 class="mb-2">Content de te revoir</h5>
-                    <p class="text-muted mb-0">En vous connectant, vous consentez à l'utilisation de cookies.</p>
+                    <h5 class="mb-2">Vous rencontrez des difficultés pour vous authentifier ?</h5>
+                    <p class="text-muted mb-0">Nous vous ferons parvenir le token par e-mail privé à l'adresse que vous avez mentionnée lors de votre inscription.</p>
                 </div>
-                <form id="signinForm" action="/user/sendLogin" method="post">
+                <form id="signinForm" action="/user/sendLostPassword" method="post">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="" required name="user">
-                        <label for="">Nom ou e-mail</label>
+                        <input type="text" class="form-control" id="email" required name="mail">
+                        <label for="email">E-mail</label>
                     </div>
-                    <div class="form-floating mb-3">
-                        <input type="password" class="form-control" id="" required name="password">
-                        <label for="">Mot de passe</label>
+                    <div class="text-center mb-3">
+                        <button type="button" id="requestTokenBt" class="btn btn-secondary w-100">Envoyer le token</button>
                     </div>
-                    <div class="mb-10">
-                        <div class="d-flex flex-wrap justify-content-between align-items-center">
-                            <div class="form-text ms-auto">
-                                <a href="/user/forgot?echo" class="link link-primary">Mot de passe oublié ?</a>
-                            </div>
-                        </div>
+                    <div class="form-floating mb-10">
+                        <input type="text" class="form-control" id="" required name="token" minlength="32" maxlength="32" value="<?= $token; ?>">
+                        <label for="">Token</label>
                     </div>
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary w-100">Se connecter</button>
+                        <button type="submit" id="newpassowrd" class="btn btn-primary w-100 <?= $false; ?>">Nouveau mot de passe</button>
                     </div>
                 </form>
-                <p class="text-center text-muted fs-14 my-6">Pas encore membre ? <a href="/user/register?echo" class="link link-primary">S'inscrire</a></p>
+                <p id="no_member" class="text-center text-muted fs-14 my-6">Pas encore membre ? <a href="/user/register?echo" class="link link-primary">S'inscrire</a></p>
             </div>
         </div>
     </div>
+    <script src="/assets/plugins/jQuery/jquery-4.0.0.min.js"></script>
+    <script src="/pages/user/js/javascript.js"></script>
     <script src="/administration/assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
     <script src="/administration/assets/vendor/simplebar/simplebar.js"></script>
     </body>

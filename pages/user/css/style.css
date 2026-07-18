@@ -1,45 +1,12 @@
-/* BelCMS 4.1.1 */
+/* BelCMS Page User 4.1.1 */
+
+/* ##### Background img & logo user ##### */
 section#belcms_pages_user {
     display: block;
     width: 100%;
     position: relative;
     margin: auto;
 }
-#belcms_pages_user_nav {
-    display: block;
-    width: 100%;
-    background-color: rgba(255, 255, 255, .9);
-    color: var(--bs-gray);
-    border-radius: 6px;
-    box-shadow: rgba(255, 255, 255, 0.05) 0px 6px 24px 0px, rgba(255, 255, 255, 0.08) 0px 0px 0px 1px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    margin-bottom: 15px;
-}
-#belcms_pages_user_nav ul {
-    display: flex;
-}
-#belcms_pages_user_nav ul li {
-    list-style: none;
-    height: 40px;
-    margin: 0 10px;
-    padding: 0 15px;
-    transition: all 500ms linear;
-}
-#belcms_pages_user_nav ul li.active {
-    font-weight: bold;
-}
-#belcms_pages_user_nav ul li:last-child {
-    background-color: var(--bs-red);
-    color: var(--bs-white);
-    float: right;
-    flex-direction: flex-end;
-}
-#belcms_pages_user_nav ul li a {
-    display: block;
-    cursor: pointer;
-    line-height: 40px;
-}
-
 #belcms_user_img {
     position: relative;
 }
@@ -50,7 +17,8 @@ section#belcms_pages_user {
     border-radius: .25rem;
     max-width: 100%;
     height: auto;
-    max-height: auto;
+    max-height: 100%;
+    width: 100%;
 }
 #belcms_user_img > img:last-child {
     position: absolute;
@@ -59,4 +27,152 @@ section#belcms_pages_user {
     border-radius: .25rem;
     left: 25px;
     max-width: 125px;
+}
+/* ##### Menu ##### */
+#belcms_pages_user_nav {
+    display: block;
+    width: 100%;
+    margin: 20px auto;
+}
+#belcms_pages_user_nav ul {
+    display: block;
+    width: 100%;
+    position: relative;
+}
+#belcms_pages_user_nav ul li {
+    display: block;
+    width: 100%;
+    background-color: var(--belcms-primary);
+    list-style: none;
+    margin-bottom: 4px;
+    height: 45px;
+    line-height: 45px;
+    border: 1px solid var(--belcms-border);
+    border-radius: 5px;
+    transition: all 250ms linear;
+}
+#belcms_pages_user_nav ul li a {
+    display: block;
+    width: 100%;
+    color: var(--belcms-color-text);
+    text-align: left;
+    padding-left: 25px;
+    font-size: 14px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, .1);
+    position: relative;
+}
+#belcms_pages_user_nav ul li.active,
+#belcms_pages_user_nav ul li:hover {
+    background-color: var(--bs-white);
+    color: var(--belcms-color-text);
+    border-color: var(--bs-gray-dark);
+    font-weight: bold;
+    transition: all 250ms linear;
+}
+#belcms_pages_user_nav ul li a svg,
+#belcms_pages_user_nav ul li a i {
+    margin-right: 10px;
+}
+#belcms_pages_user_nav ul li:last-child {
+    background-color: var(--bs-red);
+}
+#belcms_pages_user_nav ul li:last-child a {
+    color: var(--bs-white);
+}
+#belcms_user_nav_active_plus {
+    float: right;
+    padding-right: 15px;
+    line-height: 45px;
+    margin-top: 15px;
+    color: var(--belcms-color-a);
+}
+#belcms_pages_user_nav ul li a .svg-inline--fa.fa-circle-arrow-right,
+#belcms_pages_user_nav ul li a .belcms_user_nav_hover {
+float: right;
+    line-height: 45px;
+    padding-right: 15px;
+    margin-top: 15px;
+    visibility: hidden;
+    transition: all 250ms linear;
+    color: var(--bs-yellow);
+}
+#belcms_pages_user_nav ul li:hover .svg-inline--fa.fa-circle-arrow-right {
+    transition: all 250ms linear;
+    visibility: visible;
+}
+
+/* contenue de la droite */
+
+#belcms_pages_user_content {
+    background-color: var(--belcms-primary);
+    width: 100%;
+    margin: 20px auto;
+    border: 1px solid var(--belcms-border);
+    border-radius: 5px;
+    padding: 4px;
+}
+#belcms_pages_user_content_effect {
+    display: block;
+    width: 100%;
+    min-height: 280px;
+    border: 1px solid var(--belcms-border);
+    background-color: #FFF;
+    padding: 15px;
+}
+#belcms_pages_user_content_effect > h1 {
+    line-height: 30px;
+    background: var(--bs-white);
+    color: var(--belcms-color-a);
+    border-bottom: 1px solid var(--belcms-border);
+    text-align: left;
+    padding-left: 15px;
+    font-size: 16px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+/* Tableux des infos */
+table#belcms_pages_user_content_table {
+    display: table;
+    width: 100%;
+}
+table#belcms_pages_user_content_table tr td {
+    color: var(--belcms-color-a);
+    line-height: 30px;
+    border: 1px solid var(--belcms-border);
+    padding: 10px;
+}
+table#belcms_pages_user_content_table tr td:first-child {
+    background-color: var(--belcms-primary);
+    font-weight: bold;
+}
+
+.edit-row {
+    display: none;
+}
+
+.edit-content {
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 6px;
+}
+
+/* Avatar */
+#belcms_pages_user_content_table picture img {
+    width: 75px;
+    height: 75px;
+}
+.belcms_user_form {
+    display: block;
+    width: 100%;
+    border: 1px solid var(--belcms-border);
+    background-color: #FFF;
+    padding: 15px;
+    margin: 15px auto;
+}
+.belcms_user_hr {
+    margin: 15px auto;
+    padding: 0 15px;
+    width: 90%;
+    background-color: var(--bs-white);
 }

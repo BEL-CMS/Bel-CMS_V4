@@ -1,8 +1,7 @@
 <?php
-
 /**
  * Bel-CMS [Content management system]
-*  * @version 4.1.1 [PHP8.5]
+ * @version 4.1.1 [PHP8.5]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -12,109 +11,144 @@
 
 use BelCMS\Requires\Common;
 
-if (!empty($_SESSION['USER']->profils->gender)) {
-    $_SESSION['USER']->profils->gender   = strtolower($_SESSION['USER']->profils->gender);
-    $genderM        = $_SESSION['USER']->profils->gender == 'MALE' ? 'selected' : '';
-    $genderF        = $_SESSION['USER']->profils->gender == 'FEMALE' ? 'selected' : '';
-    $genderU        = $_SESSION['USER']->profils->gender == 'NOSPEC' ? 'selected' : '';
+if (!defined('CHECK_INDEX')):
+    header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
+    exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
+endif;
+
+/* utilisateur supprimé et toujours connecté = supprime la $_SESSION */
+if (empty($user)) {
+    unset($_SESSION['USER']);
+    Common::Redirect("index.php");
+}
+
+if (empty($user->profils->gender)) {
+    $gender = constant('NOSPEC');
+} else if ($user->profils->gender == 'male') {
+    $gender = constant('MALE');
+} else if ($user->profils->gender == 'female') {
+    $gender = constant('FEMALE');
 } else {
-    $genderM        = '';
-    $genderF        = '';
-    $genderU        = 'selected';
+    $gender = constant('NOSPEC');
 }
-if (!empty($_SESSION['USER']->profils->birthday)) {
-    $birthday = Common::DatetimeReverse($_SESSION['USER']->profils->birthday);
+
+if (!empty($user->profils->birthday)) {
+    $birthday = Common::TransformDate($user->profils->birthday, 'FULL', 'NONE');
 } else {
- $birthday = date('Y-m-d');
+    $birthday = date('Y-m-d');
 }
-if (empty($_SESSION['USER']->profils->avatar)) {
-    $_SESSION['USER']->profils->avatar = constant('DEFAULT_AVATAR');
+if (empty($user->profils->avatar)) {
+    $user->profils->avatar = constant('DEFAULT_AVATAR');
 }
-if (!empty($_SESSION['USER']->profils->hight_avatar) and !is_file($_SESSION['USER']->profils->hight_avatar)) {
-    $_SESSION['USER']->profils->hight_avatar = 'assets/img/bg_default.png';
+if (empty($user->profils->hight_avatar) or !is_file($user->profils->hight_avatar)) {
+    $user->profils->hight_avatar = '/uploads/users/bg-profile.png';
+}
+if (empty($user->profils->country)) {
+    $country = constant('NONE_DEFINED');
+} else {
+    $country = $user->profils->country;
+}
+if (empty($user->profils->websites)) {
+    $websites = constant('NONE_DEFINED');
+} else {
+    $websites = Common::VarSecure($user->profils->websites);
 }
 ?>
 
 <section id="belcms_pages_user">
-    <nav id="belcms_pages_user_nav">
-        <ul>
-            <li class="active"><a href="user"><i class="fa-solid fa-user"></i> Mon profil</a></li>
-            <li><a href="User/profils"><i class="fa-solid fa-user-pen"></i> Éditer mon profil</a></li>
-            <li><a href="User/Social"><i class="fa-solid fa-share-nodes"></i> Éditer Social</a></li>
-            <li><a href="User/avatar"><i class="fa-solid fa-image-portrait"></i> Éditer avatar</a></li>
-            <li><a href="User/Material"><i class="fa-solid fa-computer"></i> Éditer matériels</a></li>
-            <li><a href="user/logout"><i class="fa-solid fa-lock-open"></i> Déconnexion</a></li>
-        </ul>
-    </nav>
     <div class="row">
         <div class="col-12">
             <div id="belcms_user" class="card">
                 <div class="card-header">
-                    <?= $_SESSION['USER']->user->username; ?>
+                    <?= $user->user->username; ?>
                 </div>
                 <div class="card-body">
                     <div id="belcms_user_img">
-                        <img src="/uploads/users/bg-profile.png">
-                        <img src="<?= $_SESSION['USER']->profils->avatar; ?>" class="rounded float-start" alt="Avatar User">
+                        <img src="<?= $user->profils->hight_avatar; ?>">
+                        <img src="<?= $user->profils->avatar; ?>" class="rounded float-start" alt="Avatar User">
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-header">Informations personnelles</div>
-                    <div class="card-body">
-                        <form action="/user/sendGeneral" method="post">
-                            <div class="input-group mb-2">
-                                <div class="form-floating">
-                                    <input type="text" value="<?= $_SESSION['USER']->user->username; ?>" name="username" required="required" class="form-control" id="input_user">
-                                    <label for="input_user">Il s'agit de votre nom utilisateur</label>
-                                </div>
-                            </div>
-                            <div class="input-group mb-2">
-                                <div class="form-floating">
-                                    <input type="email" value="<?= $_SESSION['USER']->user->mail; ?>" name="mail" required="required" class="form-control" id="input_mail">
-                                    <label for="input_mail">Votre e-mail privé <i style="color: red;">* jamais divulgué</i></label>
-                                </div>
-                            </div>
-
-                            <div class="input-group mb-2">
-                                <div class="form-floating">
-                                    <input type="date" value="<?= $birthday; ?>" min="1900-01-01" max="<?= date('Y-m-d'); ?>" name="birthday" class="form-control" id="input_birthday">
-                                    <label for="input_birthday">La date à laquelle vous êtes né</label>
-                                </div>
-                            </div>
-                            <div class="input-group mb-2">
-                                <div class="form-floating">
-                                    <input type="url" value="<?= $_SESSION['USER']->profils->websites; ?>" name="websites" class="form-control" id="input_websites">
-                                    <label for="input_websites">Lien vers votre site web</label>
-                                </div>
-                            </div>
-
-                            <div class="input-group mb-2">
-                                <div class="form-floating">
-                                    <input type="text" id="demo-autocomplete" name="country" autocomplete="array:pays" class="form-control" value="<?= $_SESSION['USER']->profils->country; ?>">
-                                    <label for="demo-autocomplete">Où est-ce que vous résidez? <i style="color: red;">Pays</i></label>
-                                </div>
-                            </div>
-
-                            <div class="input-group mb-2">
-                                <div class="form-floating">
-                                    <select name="gender" class="form-select" id="input_inputgenre">
-                                        <option <?= $genderM ?> value="male"><?= constant('MALE') ?></option>
-                                        <option <?= $genderF ?> value="female"><?= constant('FEMALE') ?></option>
-                                        <option <?= $genderU ?> value="nospec"><?= constant('NO_SPEC') ?></option>
-                                    </select>
-                                    <label for="input_inputgenre">Quel est votre genre masculin ou féminin?</label>
-                                </div>
-                            </div>
-
-                            <div class="input-group">
-                                <span class="input-group-text">Signature</span>
-                                <textarea class="form-control" name="info_text"><?= $_SESSION['USER']->profils->info_text; ?></textarea>
-                            </div>
-                            <div class="card-footer">
-                                <button class="btn btn-primary" type="submit">Enregistrer</button>
-                            </div>
-                        </form>
-                    </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <nav id="belcms_pages_user_nav">
+                <ul>
+                    <li class="active">
+                        <a href="user">
+                            <i class="fa-solid fa-user"></i> Mon profil
+                            <i class="fa-solid fa-arrows-to-eye" id="belcms_user_nav_active_plus"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="User/profils">
+                            <i class="fa-solid fa-user-pen"></i> Éditer mon profil
+                            <i class="fa-solid fa-circle-arrow-right fa-buzz" class="belcms_user_nav_hover"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="User/social">
+                            <i class="fa-solid fa-share-nodes"></i> Éditer Social
+                            <i class="fa-solid fa-circle-arrow-right fa-buzz" class="belcms_user_nav_hover"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="User/avatar">
+                            <i class="fa-solid fa-image-portrait"></i> Fond & avatar
+                            <i class="fa-solid fa-circle-arrow-right fa-buzz" class="belcms_user_nav_hover"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="User/Material">
+                            <i class="fa-solid fa-computer"></i> Éditer matériels
+                            <i class="fa-solid fa-circle-arrow-right fa-buzz" class="belcms_user_nav_hover"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="User/options">
+                            <i class="fa-solid fa-computer"></i> Options & sécurité
+                            <i class="fa-solid fa-circle-arrow-right fa-buzz" class="belcms_user_nav_hover"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="user/logout">
+                            <i class="fa-solid fa-lock-open"></i> Déconnexion
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="col-9">
+            <div id="belcms_pages_user_content">
+                <div id="belcms_pages_user_content_effect">
+                    <h1>Profils</h1>
+                    <table class="table" id="belcms_pages_user_content_table">
+                        <tr>
+                            <td>Votre nom utilisateur :</td>
+                            <td><?= $user->user->username; ?></td>
+                        </tr>
+                         <tr>
+                            <td>Quel est votre genre ?</td>
+                            <td><?= $gender; ?></td>
+                        </tr>
+                        <tr>
+                            <td>Votre e-mail privé <i style="color: red;">* jamais divulgué</i></td>
+                            <td><a href="mailto:<?= $user->user->mail; ?>>"><?= $user->user->mail; ?></a></td>
+                        </tr>
+                        <tr>
+                            <td>Vôtre date de naissance :</td>
+                            <td><?= $birthday; ?></td>
+                        </tr>
+                        <tr>
+                            <td>Le pays dans lequel vous résidez :</td>
+                            <td><?= $country; ?></td>
+                        </tr>
+                        <tr>
+                            <td>Lien vers votre site web :</td>
+                            <td><a href="<?= $websites; ?>"><?= $websites; ?></a></td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
