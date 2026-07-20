@@ -550,4 +550,60 @@ class User extends Pages
             $this->redirect('/user', 2);
         }
     }
+    public function sendGeneral ()
+    {
+        $data = array(
+            'username'  => Common::VarSecure($_POST['username'], null),
+            'mail'      => Secure::isMail($_POST['mail'])
+        );
+        #-----------------------------------------------------------#
+        if ($_SESSION['USER']->user->username != $data['username']) {
+            $checkName = $this->models->checkUser($data['username']);
+            if ($checkName >= 1) {
+                $this->message('warning', constant('THIS_NAME_OR_PSEUDO_RESERVED'), constant('INFO'));
+            } else {
+                $data['username']   = str_replace(' ', '_', $data['username']);
+                $update['username'] = $data['username'];
+            }
+        } else {
+            $update['username'] = $_SESSION['USER']->user->username;
+        }
+        #-----------------------------------------------------------#
+        $backlist = $this->models->blackListEmail($data['mail']);
+        $arrayBlackList = array();
+        foreach ($backlist as $k => $v) {
+            $arrayBlackList[$v['id']] = $v['name'];
+        }
+        if (!empty($data['mail'])) {
+            $tmpMailSplit = explode('@', $data['mail']);
+            $tmpNdd =  explode('.', $tmpMailSplit[1]);
+        }
+        $checkMail = $this->models->checkMail($data['mail']);
+        if (in_array($tmpNdd[0], $arrayBlackList)) {
+            $this->message('warning', constant('NO_MAIL_ALLOWED'), constant('INFO'));
+        }
+        if ($_SESSION['USER']->user->mail != $data['mail']) {
+            if ($checkMail >= 1) {
+                $this->message('warning', constant('THIS_MAIL_IS_ALREADY_RESERVED'), constant('INFO'));
+            } else {
+                $update['mail'] = $data['mail'];
+            }
+        } else {
+            $update['mail'] = $_SESSION['USER']->user->mail;
+        }
+        #-----------------------------------------------------------#
+        $profils = array(
+            'birthday'  => Common::DatetimeSQL($_POST['birthday'], false, 'Y-m-d'),
+            'websites'  => Secure::isUrl($_POST['websites']),
+            'country'   => Common::VarSecure($_POST['country'], null),
+            'gender'    => Common::VarSecure($_POST['gender'], null),
+            'info_text' => Common::VarSecure($_POST['info_text'], 'html')
+        );
+        #-----------------------------------------------------------#
+        $result = array_merge($update, $profils);
+        #-----------------------------------------------------------#
+        $return = $this->models->updateUser ($result);
+        $this->message($return['type'], $return['msg'], constant('INFO'));
+        $this->redirect('user', 2);
+    }
 }

@@ -50,7 +50,8 @@ final class Dispatcher
         return $return;
     }
     #########################################
-    # return le nom de la page.
+    # return le nom de la vu.
+    # https://bel-cms.dev//=>NomDeLaPage/subcat/nom/id
     #########################################
     public static function page ($page = null)
     {
@@ -84,29 +85,28 @@ final class Dispatcher
         return $return;
     }
     #########################################
-    # return le nom :
-    # https://bel-cms.dev/news/view/=>nom<=/id
-    #########################################
-    public static function name () : string
-    {
-        $return = 'index';
-        $dispatcher = new Dispatcher;
-        if (isset($dispatcher->link[2]) AND !empty($dispatcher->link[2])) {
-            $return = Secure::isString($dispatcher->link[2]);
-        }
-        return $return;
-    }
-    #########################################
-    # return l'ID ex: numéro de la :
-    # page, numéro de l'article, du downloads...
-    # https://bel-cms.dev/news/view/nom/=>id<=
+    # return l'ID ex: numéro de la
+    # https://bel-cms.dev/news/view/=>id<=
     #########################################
     public static function id () : int
     {
         $return = 0;
         $dispatcher = new Dispatcher;
+        if (isset($dispatcher->link[2]) AND !empty($dispatcher->link[2])) {
+            $return = $dispatcher->link[2];
+        }
+        return $return;
+    }
+    #########################################
+    # return le nom : sert uniquement pour le SEO
+    # https://bel-cms.dev/news/view/nom/=>leNom<=
+    #########################################
+    public static function name () :string
+    {
+        $return = 0;
+        $dispatcher = new Dispatcher;
         if (isset($dispatcher->link[3]) AND !empty($dispatcher->link[3])) {
-            $return = Secure::isInt($dispatcher->link[3]);
+            $return = Secure::isString($dispatcher->link[3]);
         }
         return $return;
     }

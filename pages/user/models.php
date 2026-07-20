@@ -243,6 +243,34 @@ final class ModelsUser
         return $return;
     }
 
+    #########################################
+    # Update l'utilisateur
+    #########################################
+    public function updateUser (array $data)
+    {
+        $where[] = array('name'=>'hash_key','value'=>$_SESSION['USER']->user->hash_key);
+        #-----------------------------------------------------------#
+        $updateUser = array('username' => $data['username'], 'mail' => $data['mail']);
+        #-----------------------------------------------------------#
+        $sqlUser = new BDD;
+        $sqlUser->table('TABLE_USERS');
+        $sqlUser->where($where);
+        $sqlUser->update($updateUser);
+        #-----------------------------------------------------------#
+        $updateProfils = array('birthday' => $data['birthday'], 'websites' => $data['websites'], 'country' => $data['country'], 'gender' => $data['gender'], 'info_text' => $data['info_text']);
+        $sqlProfils = new BDD;
+        $sqlProfils->table('TABLE_USERS_PROFILS');
+        $sqlProfils->where($where);
+        $sqlProfils->update($updateProfils);
+        #-----------------------------------------------------------#
+        $return['msg']  = constant('PROFILE_UPDATE_SUCCESS');
+        $return['type'] = 'success';
+        #-----------------------------------------------------------#
+        $_SESSION['USER'] = User::getInfosUserAll($_SESSION['USER']->user->hash_key);
+        #-----------------------------------------------------------#
+        return $return;
+    }
+
     private function sendHtmlBody ($hash_key)
     {
         setLocale(LC_TIME, 'fr_FR.utf8');

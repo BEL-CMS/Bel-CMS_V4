@@ -181,6 +181,56 @@ switch ($_POST['table']) {
 			KEY `ip` (`ip`),
 			KEY `blocked_until` (`blocked_until`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
+
+		$insert = "INSERT INTO `".$_SESSION['prefix'].$table."`(`id`, `name`) VALUES
+			(1, '0-mail'),
+			(2, '10minutemail'),
+			(3, 'brefmail'),
+			(4, 'dodgeit'),
+			(5, 'dontreg'),
+			(6, 'e4ward'),
+			(7, 'ephemail'),
+			(8, 'filzmail'),
+			(9, 'gishpuppy'),
+			(10, 'guerrillamail'),
+			(11, 'haltospam'),
+			(12, 'jetable'),
+			(13, 'kasmail'),
+			(14, 'link2mail'),
+			(15, 'mail'),
+			(16, 'mail-temporaire'),
+			(17, 'maileater'),
+			(18, 'mailexpire'),
+			(19, 'mailhazard'),
+			(20, 'mailinator'),
+			(21, 'mailNull'),
+			(22, 'mytempemail'),
+			(23, 'mytrashmail'),
+			(24, 'nobulk'),
+			(25, 'nospamfor'),
+			(26, 'PookMail'),
+			(27, 'saynotospams'),
+			(28, 'shortmail'),
+			(29, 'sneakemail'),
+			(30, 'spam'),
+			(31, 'spambob'),
+			(32, 'spambox'),
+			(33, 'spamDay'),
+			(34, 'spamfree24'),
+			(35, 'spamgourmet'),
+			(36, 'spamh0le'),
+			(37, 'spaml'),
+			(38, 'tempemail'),
+			(39, 'tempInbox'),
+			(40, 'tempomail'),
+			(41, 'temporaryinbox'),
+			(42, 'trashmail'),
+			(43, 'willhackforfood'),
+			(44, 'willSelfdestruct'),
+			(45, 'wuzupmail'),
+			(46, 'yopmail'),
+			(47, 'shaw.ca'),
+			(48, 'netzero.net');";
 	break;
 
 	case 'captcha_log':
@@ -885,7 +935,8 @@ switch ($_POST['table']) {
 			(24, 0, 'user'),
 			(25, 0, 'contact'),
 			(26, 0, 'test'),
-			(27, 0, 'formation');";
+			(27, 0, 'formation)',
+			(28, 0, 'support');";
 	break;
 
 	case 'support':

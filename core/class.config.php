@@ -46,6 +46,7 @@ final class Config
 
     private function getSqlTpl () : array
     {
+		$return = array();
         $sql = new BDD;
         $sql->table('TABLE_TPL');
         $sql->queryAll();

@@ -369,6 +369,11 @@ class User
             $delPages->where(array('name' => 'hash_key', 'value' => $hash_key));
             $delPages->delete();
 
+            $delPages = new BDD;
+            $delPages->table('TABLE_USERS_HARDWARE');
+            $delPages->where(array('name' => 'hash_key', 'value' => $hash_key));
+            $delPages->delete();
+
             self::logout();
         }
     }

@@ -354,31 +354,21 @@ class Pages
     private function BanForIdFail ()
     {
         $return = true;
+        $pages  = strtolower(Dispatcher::page());
+        $view   = strtolower(Dispatcher::view());
+        $id     = Dispatcher::id();
+
         $array = array(
             'members'  => 'detail',
             'articles' => 'getpages',
-            'gallery'  => 'Detail'
+            'gallery'  => 'detail',
         );
 
-        if (isset(Dispatcher::link()[0])) {
-            if (strtolower(Dispatcher::link()[0] == 'forum') or strtolower(Dispatcher::link()[0] == 'articles')) {
-                return $return;
-            }
-        } else {
+        if (array_key_exists($pages, $array) and in_array($view, $array)) {
             return $return;
-        }
-
-        if (isset(Dispatcher::link()[0]) and isset(Dispatcher::link()[1])) {
-            if (array_key_exists(strtolower(Dispatcher::link()[0]), $array)) {
-                if (!in_array(Dispatcher::link()[1], $array)) {
-                    $return = Common::SecureRequest(Dispatcher::link()[2], false);
-                }
-            } else {
-                if (isset(Dispatcher::link()[2])) {
-                    $return = Common::SecureRequest(Dispatcher::link()[2], false);
-                } else {
-                    $return = true;
-                }
+        } else {
+            if (!is_numeric($id)) {
+                $return = Common::SecureRequest(Dispatcher::link()[2], false);
             }
         }
 
