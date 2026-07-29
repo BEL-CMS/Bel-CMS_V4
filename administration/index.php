@@ -33,14 +33,16 @@ final class Administration
             $link;
     public  $render,
             $data;
-    private $controller;
+    private $controller,
+            $user;
     #########################################
     # redirige l'utilisateur si loguer ou pas
     #########################################
     function __construct()
     {
         if (CoreUser::isLogged()) {
-            if ($_SESSION['USER']->user->admin == 1) {
+            $this->user = CoreUser::getInfosUserAll($_SESSION['USER']->user->hash_key);
+            if ($this->user->user->admin == 1) {
 
                 $this->link = Dispatcher::link();
                 $this->page = Dispatcher::page();
@@ -48,17 +50,17 @@ final class Administration
 
                 self::getLangs();
 
-                if (isset($_SESSION['USER']->user->hash_key) && strlen($_SESSION['USER']->user->hash_key) == 32) {
+                if (isset($this->user->user->hash_key) && strlen($this->user->user->hash_key) == 32) {
                     if (isset($_SESSION['LOGIN_MANAGEMENT']) and $_SESSION['LOGIN_MANAGEMENT'] === true) {
                         require_once ROOT . DS . 'administration' . DS . 'intern' . DS . 'adminpages.php';
                         ############################################
                         if (isset($_SESSION['ADMIN']['LOG']) and $_SESSION['ADMIN']['LOG'] !== true) {
-                            $msg = 'L\'utilisateur '.$_SESSION['USER']->user->username.' s\'est connecté à l\'administration.';
+                            $msg = 'L\'utilisateur '.$this->user->user->username.' s\'est connecté à l\'administration.';
                             $interaction = new Interaction();
                             $interaction->status('green');
                             $interaction->message($msg);
                             $interaction->title('Connexion à l\'administration');
-                            $interaction->author($_SESSION['USER']->user->hash_key);
+                            $interaction->author($this->user->user->hash_key);
                             $interaction->setAdmin();
                             $_SESSION['ADMIN']['LOG'] = true;
                         }
@@ -76,7 +78,7 @@ final class Administration
                 ############################################
                 $msg   = 'L\'utilisateur '.$_SESSION['USER']->user->username.' ne peut pas accéder à l\'administration.';
                 $interaction = new Interaction();
-                $interaction->status('blue');
+                $interaction->status('grey');
                 $interaction->message($msg);
                 $interaction->title('Connexion à l\'administration');
                 $interaction->author($_SESSION['USER']->user->hash_key);
@@ -92,7 +94,7 @@ final class Administration
             Common::Redirect('User/Login&echo', 3);
             $msg   = Common::GetIp(). ' à tenter de se connecter l\'administration sans être logué.';
             $interaction = new Interaction();
-            $interaction->status('blue');
+            $interaction->status('grey');
             $interaction->message($msg);
             $interaction->title('Connexion à l\'administration');
             $interaction->author(Common::GetIp());
@@ -119,7 +121,7 @@ final class Administration
 
         ob_start();
 
-        $groups = $_SESSION['USER']->groups->all_groups;
+        $groups = $this->user->groups->all_groups;
 
         require_once ROOT . DS . 'administration' . DS . 'intern' . DS . 'adminpages.php';
         #####################################
@@ -224,6 +226,17 @@ final class Administration
             if (self::getAccessPage($page) === false) {
                 Notification::error(constant('NO_ACCESS_GROUP_PAGE'), 'Page');
                 $page = defined(strtoupper($page)) ? constant(strtoupper($page)) : $page;
+                ############################################
+                 # Notifier la commande
+                ############################################
+                $msg   = 'L\'utilisateur '.$_SESSION['USER']->user->username.' ne peut pas accéder à a page :'.$page;
+                $interaction = new Interaction();
+                $interaction->status('grey');
+                $interaction->message($msg);
+                $interaction->title('Connexion à la page'.$page);
+                $interaction->author($_SESSION['USER']->user->hash_key);
+                $interaction->setAdmin();
+                #######################################################
             } else {
                 $require = ROOT.DS.'administration'.DS . $request . DS . $page . DS . 'controller.php';
                 if (!is_file($require)) {
@@ -256,7 +269,7 @@ final class Administration
                 if (!empty($_REQUEST['mail']) && !empty($_REQUEST['password'])) {
 
                     if (Secure::isMail($_REQUEST['mail']) === false) {
-                        $return['ajax'] = constant('PLEASE_ENTER_YOUR_MAIL');
+                        $return = constant('PLEASE_ENTER_YOUR_MAIL');
                         echo json_encode($return);
                         return;
                     }
@@ -270,8 +283,8 @@ final class Administration
                     $data = $sql->data;
 
                     if (empty($data)) {
-                        $return['ajax'] = 'le compte existe pas';
-                        echo json_encode($return);
+                        $return = 'le compte existe pas';
+                        echo $return;
                         die();
                     }
 
@@ -281,7 +294,7 @@ final class Administration
                     if ($passwordSQL == $_REQUEST['password']) {
                         if ($_SESSION['USER']->user->hash_key == $data->hash_key) {
                             $_SESSION['LOGIN_MANAGEMENT'] = true;
-                            $return['ajax'] = constant('LOGIN_IN_PROGRESS');
+                            $return = constant('LOGIN_ACCEPT');
                             echo json_encode($return);
                             ####################################################### 
                             $msg   = $_SESSION['USER']->user->username. ' a bien établi la connexion avec l\'administration.';
@@ -294,7 +307,7 @@ final class Administration
                             ####################################################### 
                             return;
                         } else {
-                            $return['ajax'] = constant('HASHKEY_DOES_NOT_MATCH_YOURS');
+                            $return = constant('HASHKEY_DOES_NOT_MATCH_YOURS');
                             $msg   = Common::GetIp(). ' à tenter de se connecter l\'administration avec un hash_key qu\'il lui appartient pas !.';
                             $interaction = new Interaction();
                             $interaction->status('red');
@@ -305,17 +318,17 @@ final class Administration
                             #######################################################
                         }
                     } else {
-                        $return['ajax'] = constant('THE_PASS_IS_NOT_CORRECT');
+                        $return = constant('THE_PASS_IS_NOT_CORRECT');
                     }
 
-                    echo json_encode($return);
+                    echo $return;
                 }
             } else {
                 include ROOT . DS . 'administration' . DS . 'intern'.DS.'login.php';
             }
         } else {
-            $return['ajax'] = 'vous devez etre logué';
-            echo json_encode($return);
+            $return = 'vous devez etre logué';
+            echo $return;
         }
     }
     #########################################

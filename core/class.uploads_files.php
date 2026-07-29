@@ -7,19 +7,19 @@ use BelCMS\Requires\Common;
 /*
 Utilisation infos :
 
-$upload = Upload::file('avatar', 'uploads/avatar')
+$upload = BelcmsUpload::file('avatar', 'uploads/avatar')
     ->images()
     ->randomName()
     ->upload();
 
 Tous les fichiers :
 
-$upload = Upload::file('document', 'uploads/files')
+$upload = BelcmsUpload::file('document', 'uploads/files')
     ->upload();
 
 Extensions personnalisées :
 
-$upload = Upload::file('archive', 'uploads')
+$upload = BelcmsUpload::file('archive', 'uploads')
     ->extensions(['zip', 'rar'])
     ->upload();
 */
@@ -38,7 +38,7 @@ class BelcmsUpload
     private int $watermarkOpacity = 50;
     private string $watermarkPosition = 'bottom-right';
 
-private int $quality = 90;
+    private int $quality = 90;
     private const IMAGES = [
         'jpg','jpeg','png','gif','bmp','webp','svg','ico',
         'tif','tiff','heic','jpe'

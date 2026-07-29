@@ -25,6 +25,7 @@ Common::constant(array(
 	'MEMBERS'                             => 'Membres',
 	'ADMIN_TEXT_FALSE_ID'                 => 'Un administrateur a reçu des informations sur une situation alarmante relative à l\'ID.',
 	'INITIALIZATION_ADMIN'                => 'Initialisation du système...',
+	'LOGIN_ACCEPT'                        => 'Connexion valider.',
 	##########################################################################
     # Fichier lang en français - Forum
 	##########################################################################
@@ -210,4 +211,5 @@ Common::constant(array(
 	'ADD_SECOND_CAT'                      => 'Ajouter une catégorie secondaire',
 	##########################################################################
 	'IP'                                  => 'IP',
+	'IP_OBLIGATORY'                       => 'IP obligatoire',
 ));

@@ -249,8 +249,11 @@ class BelCMS
 
 	public static function TABLES () {
 		$tables = array(
+			'articles',
 			'articles_content',
 			'ban',
+			'banishment',
+			'banishment_logs',
 			'bbsa_bssa',
 			'buy_mails',
 			'buy_ndd',
@@ -314,6 +317,7 @@ class BelCMS
 			'users_page',
 			'users_profils',
 			'users_social',
+			'users_recovery',
 			'visitors',
 			'visitors_online',
 			'visitors_stats',

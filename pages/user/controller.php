@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.1.1 [PHP8.5]
+ * @version 4.2.0 [PHP8.5]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -20,6 +20,8 @@ use BelCMS\Core\encrypt;
 use BelCMS\Core\Notification;
 use BelCMS\Core\Secure;
 use BelCMS\Core\BelcmsUpload;
+use BelCMS\Core\Security\TOTP\TOTP;
+use RecoveryCode;
 
 if (!defined('CHECK_INDEX')):
     header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
@@ -131,10 +133,276 @@ class User extends Pages
             $user   = Common::VarSecure($_POST['user']);
             $mdp    = Common::VarSecure($_POST['password']);
             $return = UserCore::login($user, $mdp);
+            $return == constant('CONNECTION_SUCCESSFULLY');
+
             $this->message($return['type'], $return['msg'], constant('INFO'));
             $this->redirect('user', 2);
         }
     }
+
+    public function double2fa ()
+    {
+        if (UserCore::isLogged()) {
+            $a['user'] = $this->models->getInfosUser ();
+            $a['count'] = $this->models->getNbrecovery ();
+            $this->set($a);
+            $this->render('doublefacteur');
+        } else {
+            $this->redirect('user', 0);
+        }
+    }
+
+    public function verifdouble2fa ()
+    {
+        $user = $this->models->getInfosUser ();
+        if ($user->user->two_factor_enabled == 0) {
+            $code = trim((string) ($_POST['two_factor_serial'] ?? ''));
+            if (!preg_match('/^\d{6}$/', $code)) {
+                Notification::error(
+                    'Le code doit comporter exactement 6 chiffres.'
+                , 'authentification 2FA');
+                $this->redirect('user/double2fa', 2);
+                return;
+            }
+
+            $secret = $_SESSION['TOTP_PENDING_SECRET'] ?? null;
+
+            if (!is_string($secret) || $secret === '') {
+                Notification::error(
+                    'La session d’activation a expiré. Veuillez recommencer.'
+                , 'authentification 2FA');
+                $this->redirect('user/double2fa', 2);
+                return;
+            }
+
+            $isValid = TOTP::verify(
+                secret: $secret,
+                code: $code,
+                window: 2
+            );
+
+            if (!$isValid) {
+                Notification::error(
+                    'Le code de vérification est incorrect ou expiré.'
+                , 'authentification 2FA');
+                $this->redirect('user/double2fa', 2);
+                return;
+            }
+
+            require_once ROOT.DS.'core'.DS.'Security'.DS.'recoverycode.php';
+            $serial = RecoveryCode::generateList();
+            $a['serial'] = $serial;
+            $a['user'] = $this->models->getInfosUser ();
+            $this->set($a);
+            
+            foreach ($serial as $f2a_code) {
+                $this->models->recoveryCode ($f2a_code);
+            }
+
+            self::htmlf2a($serial, $a['user']->user->username, $a['user']->user->mail);
+
+            $update['two_factor_enabled'] = 1;
+            $update['two_factor_secret']  = $_SESSION['TOTP_PENDING_SECRET']; 
+            $this->models->double2fUser($update);
+
+            unset($_SESSION['TOTP_PENDING_SECRET']);
+
+            $this->render('twofactorok');
+        }
+    }
+    public function secure2FA ()
+    {
+        if (UserCore::isLogged() === false) {
+            $this->render('login2fa');
+        } else {
+            $this->redirect('user', 0);
+        }
+    }
+
+    public function sendLogin2fa ()
+    {
+        if (empty($_POST['serial'])) {
+            if (empty($_POST['recovery_code'])) {
+                Notification::error(
+                    'Aucun code transmis'
+                , 'authentification 2FA');
+                $this->redirect('user/secure2FA?echo', 2);
+                return;
+            }
+        }
+
+        if (UserCore::isLogged() === false) {
+            if (!empty($_POST['recovery_code'])) {
+                $queryCode = $this->models->getCodeRecovery ();
+                $queryCount = count($queryCode);
+                if ($queryCount == 0) {
+                    Notification::alert('Vous n\'avez plus de code valide, veuillez contacté l\'administateur du site', 'Erreur 2FA');
+                    return;
+                }
+                foreach ($queryCode as $code) {
+                    $decrypt = new encrypt($code->code_hash, $_SESSION['CONFIG']['CMS_KEY_ADMIN']);
+                    $decryptPass = $decrypt->decrypt();
+                    if ($_POST['recovery_code'] == $decryptPass) {
+                        $this->models->updateCodeRecovery ($code->id);
+                        setcookie(
+                            'BELCMS_HASH_KEY_'.$_SESSION['CONFIG']['CMS_COOKIES'],
+                            $_SESSION['TEMP_USER']->user->hash_key,
+                            time()+60*60*24*30*3,
+                            "/",
+                            $_SERVER['HTTP_HOST'],
+                            true,
+                            true
+                        );
+                        setcookie(
+                            'BELCMS_NAME_'.$_SESSION['CONFIG']['CMS_COOKIES'],
+                            $_SESSION['TEMP_USER']->user->username,
+                            time()+60*60*24*30*3,
+                            "/",
+                            $_SERVER['HTTP_HOST'],
+                            true,
+                            true
+                        );
+                        setcookie(
+                            'BELCMS_PASS_'.$_SESSION['CONFIG']['CMS_COOKIES'],
+                            $_SESSION['TEMP_USER']->user->password,
+                            time()+60*60*24*30*3,
+                            "/",
+                            $_SERVER['HTTP_HOST'],
+                            true,
+                            true
+                        );
+                        unset($_SESSION['TEMP_USER']);
+                        Notification::success(constant('CONNECTION_SUCCESSFULLY'), 'Login 2FA');
+                        $this->redirect('user', 2);
+                        return true;
+                    }
+                }
+                Notification::warning('Le code de vérification est incorrect ou expiré.', 'authentification 2FA');
+                $this->redirect('user/secure2FA?echo', 2);
+                return;
+            } else {
+                $code = trim((string) ($_POST['serial']));
+                if (!preg_match('/^\d{6}$/', $code)) {
+                    Notification::error(
+                        'Le code doit comporter exactement 6 chiffres.'
+                    , 'authentification 2FA');
+                    $this->redirect('user/secure2FA?echo', 2);
+                    return;
+                }
+
+                $secret = $_SESSION['TEMP_USER']->user->two_factor_secret;
+
+                if (!is_string($secret) || $secret === '') {
+                    Notification::error(
+                        'La session d’activation a expiré. Veuillez recommencer.'
+                    , 'authentification 2FA');
+                    $this->redirect('user/secure2FA?echo', 2);
+                    return;
+                }
+
+                $isValid = TOTP::verify(
+                    secret: $secret,
+                    code: $code,
+                    window: 2
+                );
+
+                if (!$isValid) {
+                    Notification::error(
+                        'Le code de vérification est incorrect ou expiré.'
+                    , 'authentification 2FA');
+                    $this->redirect('user/secure2FA?echo', 2);
+                    return;
+                }
+
+                setcookie(
+                    'BELCMS_HASH_KEY_'.$_SESSION['CONFIG']['CMS_COOKIES'],
+                    $_SESSION['TEMP_USER']->user->hash_key,
+                    time()+60*60*24*30*3,
+                    "/",
+                    $_SERVER['HTTP_HOST'],
+                    true,
+                    true
+                );
+                setcookie(
+                    'BELCMS_NAME_'.$_SESSION['CONFIG']['CMS_COOKIES'],
+                    $_SESSION['TEMP_USER']->user->username,
+                    time()+60*60*24*30*3,
+                    "/",
+                    $_SERVER['HTTP_HOST'],
+                    true,
+                    true
+                );
+                setcookie(
+                    'BELCMS_PASS_'.$_SESSION['CONFIG']['CMS_COOKIES'],
+                    $_SESSION['TEMP_USER']->user->password,
+                    time()+60*60*24*30*3,
+                    "/",
+                    $_SERVER['HTTP_HOST'],
+                    true,
+                    true
+                );
+
+                $_SESSION['USER'] = UserCore::getInfosUserAll($_SESSION['TEMP_USER']->user->hash_key);
+                $this->models->updateF2A($_SESSION['TEMP_USER']->user->hash_key);
+                unset($_SESSION['TEMP_USER']);
+                Notification::success(constant('CONNECTION_SUCCESSFULLY'), 'Login 2FA');
+                $this->redirect('user', 2);
+            }
+        } else {
+            $this->redirect('user', 0);
+        }
+    }
+
+    public function renewrecovery ()
+    {
+        require_once ROOT.DS.'core'.DS.'Security'.DS.'recoverycode.php';
+        $serial = RecoveryCode::generateList();
+        $a['serial'] = $serial;
+        $a['user'] = $this->models->getInfosUser ();
+        $this->set($a);
+        self::htmlf2a($serial, $a['user']->user->username, $a['user']->user->mail);
+        $this->models->renewrecovery ($serial);
+        $this->render('renewrecovery');
+    }
+
+    public function Neg2fa ()
+    {
+        $this->models->removeTwoFactory ();
+        Notification::success('Votre authentification à double facteur est désormais désactivée.', 'Double Facteur (2FA)');
+        $this->redirect('user', 3);
+    }
+
+    private function htmlf2a ($serial, $username, $mail)
+    {
+        $render = null;
+        ob_start();
+        foreach (array_chunk($serial, 2) as $row): ?>
+            <tr>
+            <?php
+            foreach ($row as $code):
+            ?>
+            <td><?= htmlspecialchars($code) ?></td>
+            <?php endforeach; ?>
+            <?php if (count($row) < 2): ?>
+                <td></td>
+            <?php endif; ?>
+            </tr>
+            <?php
+            $render = ob_get_contents();
+        endforeach;
+        if (ob_get_length() != 0) {
+            ob_end_clean();
+        }
+
+        $body = '<!DOCTYPE html>
+            <html lang="fr"><head><meta charset="UTF-8"></head><body style="margin:0; padding:0; background-color:#f4f4f4;"><table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f4f4;"><tr><td colspan="2" align="center" style="padding-bottom:20px;"><h2 style="margin:0; color:#6c5ce7;">🔐 Authentification à deux facteurs<br>clé de secours</h2></td></tr><tr><td align="center"><table class="container" width="600" cellpadding="0" cellspacing="0" style="background-color:#ffffff; padding:40px; font-family:Arial, sans-serif; border-radius:8px;">'.$render.'<tr><td colspan="2" align="center" style="padding-top:30px; font-size:12px; color:#999999;">'.constant('MAIL_BY_BELCMS').'</td></tr></table></td></tr></table></body></html>';
+        $email = new eMail;
+        $email->addAdress($mail);
+        $email->subject('Code de secours 2FA');
+        $email->body($body);
+        $email->submit();
+    }
+
     public function forgot ()
     {
         if (UserCore::isLogged() === false) {

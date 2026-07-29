@@ -15,7 +15,9 @@ if (!defined('CHECK_INDEX')):
 endif;
 
 use BelCMS\PDO\BDD;
-
+##########  TABLE  ##########
+##### TABLE_BANISHMENT ######
+##### TABLE_BANISHMENT_LOGS'#
 final class BanModels
 {
     public function getUsers () : array
@@ -30,48 +32,40 @@ final class BanModels
 	public function getBan () : array
 	{
 		$sql = new BDD;
-		$sql->table('TABLE_BAN');
+		$sql->table('TABLE_BANISHMENT');
 		$sql->queryAll();
 		$return = $sql->data;
 		return $return;
 	}
 
-	public function deleteBan ($where = false)
+	public function delete ($id) : bool
 	{
-		$del = New BDD;
-		$del->table('TABLE_BAN');
-		$del->where($where);
-		$del->delete();
-	}
-
-	public function addBan ($author = null,$ip = null, $email = null, $date = null, $endban = null, $timeban = null, $reason = null
-	) {
-		$insert['who']      = $_SESSION['USER']->user->hash_key;
-		$insert['author']   = $author;
-		$insert['ip']       = $ip;
-		$insert['email']    = $email;
-		$insert['date']     = $date;
-		$insert['endban']   = $endban;
-		$insert['timeban']  = $timeban;
-		$insert['reason']   = $reason;
-		// BDD return count (0 or 1);
-		$sql = New BDD;
-		$sql->table('TABLE_BAN');
-		$sql->insert($insert);
-		// SQL RETURN NB INSERT
-		if ($sql->rowCount == true) {
-			$return = array(
-				'type' => 'success',
-				'text' => 'SUCCESS'
-			);
+		$sql = new BDD();
+		$sql->table('TABLE_BANISHMENT');
+		$sql->where(array('name' => 'ban_id', 'value' => $id));
+		$sql->delete();
+		debug($sql);
+		$return = $sql->data;
+		if ($return == 1) {
+			$return = true;
 		} else {
-			$return = array(
-				'type' => 'warning',
-				'text' => 'ERROR'
-			);
+			$return = false;
 		}
 		return $return;
 	}
 
-
+	public function getNameForIP ($ip) : string
+	{
+		$sql = new BDD();
+		$sql->table('TABLE_USERS');
+		$sql->where(array('name' => 'ip', 'value' => $ip));
+		$sql->queryOne();
+		$return = $sql->data;
+		if (empty($return)) {
+			$return = '';
+		} else {
+			$return = $sql->data->username;
+		}
+		return $return;
+	}
 }

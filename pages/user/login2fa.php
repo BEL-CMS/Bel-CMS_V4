@@ -1,12 +1,3 @@
-<?php
-    if (isset($_GET['token']) and strlen($_GET['token']) == 32) {
-        $token = $_GET['token'];
-        $false = '';
-    } else {
-        $token = null;
-        $false = 'false';
-    }
-?>
 <!DOCTYPE html>
 <html lang="fr">
     <!--
@@ -27,7 +18,7 @@
     -->
     <head>
         <meta charset="utf-8">
-        <title><?= $_SESSION['CONFIG']['CMS_NAME']; ?> - Mot de passe perdu</title>
+        <title><?= $_SESSION['CONFIG']['CMS_NAME']; ?> - Authentification à deux facteurs</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
         <link rel="stylesheet" href="/administration/assets/vendor/simplebar/simplebar.css">
         <link href="/pages/user/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css">
@@ -42,31 +33,25 @@
                     <img height="100" width="100" class="logo-dark" alt="Dark Logo" src="/assets/img/logo.png">
                 </a>
                 <div class="mb-12">
-                    <h5 class="mb-2">Vous rencontrez des difficultés pour vous authentifier ?</h5>
-                    <p class="text-muted mb-0">Nous vous ferons parvenir le token par e-mail privé à l'adresse que vous avez mentionnée lors de votre inscription.</p>
+                    <h5 class="mb-2">Authentification à deux facteurs</h5>
                 </div>
-                <form id="signinForm" action="/user/sendLostPassword" method="post">
+                <form id="signinForm" action="/user/sendLogin2fa" method="post">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="email" required name="mail">
-                        <label for="email">E-mail</label>
+                        <input type="number" class="form-control" id="2fa" name="serial">
+                        <label for="2fa">Authenticator 6 chiffres</label>
                     </div>
-                    <div class="text-center mb-3">
-                        <button type="button" id="requestTokenBt" class="btn btn-secondary w-100">Envoyer le token</button>
-                    </div>
-                    <div class="form-floating mb-10">
-                        <input type="text" class="form-control" id="" required name="token" minlength="32" maxlength="32" value="<?= $token; ?>">
-                        <label for="">Token</label>
+                    <p class="text-center text-muted fs-14 my-6">L'un ou l'autre.</p>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="" name="recovery_code" maxlength="14" autocomplete="one-time-code">
+                        <label for="">Clé perdu</label>
                     </div>
                     <div class="text-center">
-                        <button type="submit" id="newpassowrd" class="btn btn-primary w-100 <?= $false; ?>">Nouveau mot de passe</button>
+                        <button type="submit" class="btn btn-primary w-100">Se connecter</button>
                     </div>
                 </form>
-                <p id="no_member" class="text-center text-muted fs-14 my-6">Pas encore membre ? <a href="/user/register?echo" class="link link-primary">S'inscrire</a></p>
             </div>
         </div>
     </div>
-    <script src="/assets/plugins/jQuery/jquery-4.0.0.min.js"></script>
-    <script src="/pages/user/js/javascript.js"></script>
     <script src="/administration/assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
     <script src="/administration/assets/vendor/simplebar/simplebar.js"></script>
     </body>

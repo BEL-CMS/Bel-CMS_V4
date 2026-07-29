@@ -1,4 +1,6 @@
 <?php
+
+use BelCMS\Core\encrypt;
 /**
  * Bel-CMS [Content management system]
  *  * @version 4.1.1 [PHP8.5]
@@ -269,5 +271,22 @@ final class UsersModels
         $sql->table('TABLE_USERS_GAMES');
         $sql->where($where);
         $sql->delete();
+    }
+
+    public function updateGroups ($data)
+    {
+        $sql = New BDD();
+        $sql->table('TABLE_USERS_GROUPS');
+        $sql->update($data);
+    }
+
+    public function updatePassword ($mdp, $hash_key)
+    {
+        $passwordCrypt =  new encrypt($mdp, $_SESSION['CONFIG']['CMS_KEY_ADMIN']);
+        $d['password'] = $passwordCrypt->encrypt();
+        $sql = New BDD();
+        $sql->table('TABLE_USERS');
+        $sql->where(array('name' => 'hash_key', 'value' => $hash_key));
+        $sql->update($d);
     }
 }

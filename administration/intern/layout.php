@@ -187,7 +187,7 @@ $nameG = isset($nameG->name) ? constant($nameG->name) : $nameG->name;
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-9 col-12">
-                        <p class="footer-text f-w-600 mb-0">Copyright © 2015-<?= date('Y'); ?> Bel-CMS. All rights reserved 💖 V4.0.1</p>
+                        <p class="footer-text f-w-600 mb-0">Copyright © 2015-<?= date('Y'); ?> Bel-CMS. All rights reserved 💖 V4.1.1</p>
                     </div>
                     <div class="col-md-3">
                         <div class="footer-text text-end">

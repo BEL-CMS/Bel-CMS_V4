@@ -1,5 +1,6 @@
 <?php
 
+use BelCMS\Core\groups;
 use BelCMS\Requires\Common;
 
 include ROOT . DS . 'assets/country.php';
@@ -16,6 +17,7 @@ $password = Common::randomString(8);
                         <button class="nav-link text-start" id="main-security-tab" data-bs-toggle="pill" data-bs-target="#main-security" type="button" role="tab" aria-controls="main-security" aria-selected="false" tabindex="-1"><i class="ri-lock-2-line me-2 align-center d-inline-block"></i>Sécurité</button>
                         <button class="nav-link text-start" id="main-social-tab" data-bs-toggle="pill" data-bs-target="#main-social" type="button" role="tab" aria-controls="main-social" aria-selected="false" tabindex="-1"><i class="ri-contacts-book-2-line me-2 align-middle d-inline-block"></i>Plateforme de médias sociaux</button>
                         <button class="nav-link text-start" id="main-game-tab" data-bs-toggle="pill" data-bs-target="#main-game" type="button" role="tab" aria-controls="main-game" aria-selected="false" tabindex="-1"><i class="ri-game-line me-2 align-middle d-inline-block"></i>Teams</button>
+                        <button class="nav-link text-start" id="main-groups-tab" data-bs-toggle="pill" data-bs-target="#main-groups" type="button" role="tab" aria-controls="main-groups" aria-selected="false" tabindex="-1"><i class="ri-game-line me-2 align-middle d-inline-block"></i>Groups</button>
                         <button class="nav-link text-start" id="main-notifications-tab" data-bs-toggle="pill" data-bs-target="#main-notifications" type="button" role="tab" aria-controls="main-notifications" aria-selected="false" tabindex="-1"><i class="ri-notification-3-line me-2 align-center d-inline-block"></i>Notifications</button>
                     </div>
                 </div>
@@ -69,7 +71,7 @@ $password = Common::randomString(8);
                                 <div class="card-footer">
                                     <div class="btn-list">
                                         <input type="hidden" value="<?= $user->user->hash_key; ?>" name="id">
-                                        <button type="submit" class="btn btn-warning-gradient btn-wave">Enregistrer</button>
+                                        <button type="submit" class="btn btn-warning btn-wave">Enregistrer</button>
                                     </div>
                                 </div>
                             </form>
@@ -109,26 +111,31 @@ $password = Common::randomString(8);
                                 </div>
                                 <div class="card-footer">
                                     <div class="btn-list">
-                                        <button type="button" class="btn btn-secondary-gradient btn-wave">Enregistrer</button>
+                                        <button type="submit" class="btn btn-warning btn-wave">Enregistrer</button>
                                     </div>
                                 </div>
                             </form>
                         </div>
                         <div class="tab-pane" id="man-password" role="tabpanel" tabindex="0" aria-labelledby="man-password-tab">
-                            <div>
-                                <p class="fs-12 text-muted"><i class="ri-information-line me-2 align-middle d-inline-block text-info"></i>Le mot de passe doit être au minimum de&emsp;<b class="text-success">8 Caractères</b></p>
+                            <form action="registration/updatepassword?admin&option=users" method="post">
+                                <p class="fs-12 text-muted"><i class="ri-information-line me-2 align-middle d-inline-block text-info"></i>Le mot de passe doit être au minimum de&emsp;<b class="text-success">6 Caractères</b></p>
                                 <div class="mb-2">
                                     <label for="new-password" class="form-label">Nouveau mot de passe</label>
-                                    <input type="text" value="<?= $password; ?>" minlength="8" maxlength="16" class="form-control" id="new-password" placeholder="Nouveau mot de passe">
+                                    <input name="password" type="text" value="<?= $password; ?>" minlength="6" maxlength="32" class="form-control" id="new-password" placeholder="Nouveau mot de passe">
                                 </div>
                                 <div class="mb-4">
                                     <label for="confirm-password" class="form-label">Confirmez le mot de passe</label>
-                                    <input type="password" autocomplete="off" value="" minlength="8" maxlength="16" class="form-control" id="confirm-password" placeholder="Confirmez le mot de passe">
+                                    <input name="confirmpassword" type="password" autocomplete="off" value="" minlength="6" maxlength="32" class="form-control" id="confirm-password" placeholder="Confirmez le mot de passe">
                                 </div>
                                 <div class="btn-list">
                                     <button class="btn btn-primary">Change Password</button>
                                 </div>
-                            </div>
+                                <div class="alert alert-warning d-flex align-items-center mt-3" role="alert">
+                                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                                    <div>Le mot de passe sera aussi envoyé par e-mail au destinataire.</div>
+                                </div>
+                                <input type="hidden" name="hash_key" value="<?= $hash_key; ?>">
+                            </form>
                         </div>
                         <div class="tab-pane" id="main-security" role="tabpanel" aria-labelledby="main-security-tab" tabindex="0">
                             <div class="d-sm-flex d-block align-items-top mb-4 justify-content-between px-2">
@@ -148,7 +155,7 @@ $password = Common::randomString(8);
                                 <div class="d-sm-flex d-block align-items-center mb-4 justify-content-between px-2 gap-2">
                                     <div>
                                         <p class="fs-14 mb-1 fw-medium">Administrateur</p>
-                                        <p class="fs-12 text-muted mb-0">Autorisé l'authentification a l'administration</p>
+                                        <p class="fs-12 text-muted mb-0">Autoriser l'authentification à l'administration</p>
                                     </div>
                                     <?php
                                     $admin = ($user->user->admin == '1') ? 'Désactiver' : 'Activer';
@@ -183,7 +190,6 @@ $password = Common::randomString(8);
                             <div class="d-sm-flex d-block align-items-center mb-4 justify-content-between px-2 gap-2">
                                 <div>
                                     <p class="fs-14 mb-1 fw-medium">Supprimer le compte</p>
-                                    <p class="fs-12 text-muted mb-0">Si vous supprimez ceci, le compte ne sera plus visible. Et après 15j il sera supprimé completement de la base de données.</p>
                                 </div>
                                 <a class="btn btn-outline-danger fw-semibold fs-13" href="javascript:void(0);">
                                     Retirer
@@ -359,6 +365,69 @@ $password = Common::randomString(8);
                                 </div>
                                 <input type="hidden" name="hash_key" value="<?= $hash_key; ?>">
                                 <button type="submit" class="btn btn-primary">Sauvegarder</button>
+                            </form>
+                        </div>
+                        <div class="tab-pane" id="main-groups" role="tabpanel" aria-labelledby="main-groups-tab" tabindex="0">
+                            <form action="registration/updateGroups?admin&option=users" method="post">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card-body">
+                                            <label for="select_groups" class="form-label">Groupe principal :</label>
+                                            <?php
+                                                $groups = groups::getGroups();
+                                            ?>
+                                            <select class="form-control" name="group" data-trigger="" id="select_groups" required>
+                                                <?php
+                                                $nameMainGroup = defined(groups::getName($user->groups->user_group)->name) ? constant(groups::getName($user->groups->user_group)->name) : groups::getName($user->groups->user_group)->name;
+                                                ?>
+                                                <option value="<?= $user->groups->user_group; ?>"><?= $nameMainGroup; ?></option>
+                                                <?php
+                                                foreach ($groups as $key => $value):
+                                                    $name = defined($value->name) ? constant($value->name) : $value->name;
+                                                    echo '<option value="'.$value->id_group.'">'.$name.'</option>';
+                                                endforeach;
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="card-body">
+                                            <?php
+                                            foreach ($groups as $key => $value):
+                                                $name = defined($value->name) ? constant($value->name) : $value->name;
+                                                $groups = $user->groups->all_groups;
+                                                if (in_array($value->id_group, $groups)) {
+                                                    $groups = 'checked="checked"';
+                                                } else {
+                                                    $groups = '';
+                                                }
+                                                $groupsuser = $value->id_group == 2 ? 'checked="checked" readonly=""': '';
+                                            ?>
+                                            <div class="form-check d-flex align-items-center p-0">
+                                                <input id="iAgree_<?= $name; ?>" name="groups[]" <?=$groups?> <?=$groupsuser?> value="<?= $value->id_group; ?>" class="form-check-input m-1" type="checkbox">
+                                                <label class="form-check-label" for="iAgree_<?= $name; ?>"><?= $name; ?></label>
+                                            </div>
+                                            <?php
+                                            endforeach;
+                                            ?>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <input type="hidden" name="hash_key" value="<?= $hash_key; ?>">
+                                        <div class="btn-list">
+                                            <button type="submit" class="btn btn-warning btn-wave">Changer les groupes</button>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <div class="col-xl-12 mt-3">
+                                        <div class="alert svg-primary alert-primary alert-dismissible fade show custom-alert-icon shadow-sm" role="alert">
+                                            <svg xmlns="http://www.w3.org/2000/svg" height="1.5rem" viewBox="0 0 24 24" width="1.5rem" fill="#333333">
+                                                <path d="M0 0h24v24H0z" fill="none"></path>
+                                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path>
+                                            </svg>&emsp;&emsp;Le groupe « membres » est automatiquement mis et il est impossible de le retirer, même si vous le retirer.
+                                        </div>
+                                    </div>
+                                </div>
                             </form>
                         </div>
                     </div>

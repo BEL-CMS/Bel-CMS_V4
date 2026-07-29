@@ -29,21 +29,6 @@ endif;
                 </div>
                 <form action="banishment/sendadd/?management&option=users" enctype="multipart/form-data" method="post">
                     <div class="card-body">
-                        <div class="form-floating mb-3">
-                            <select name="author" class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                                <option selected>Ouvrir le menu - Nom d'utilisateurs</option>
-                                <?php
-                                foreach ($users as $k => $v):
-                                    if ($_SESSION['USER']->user->hash_key !== $v->hash_key):
-                                ?>
-                                    <option class="form-control" value="<?=$v->hash_key;?>"><?=$v->username;?></option>
-                                <?php
-                                    endif;
-                                endforeach;
-                                ?>
-                            </select>
-                            <label for="floatingSelect"><i style="color:var(--bs-yellow);">Pas obligatoire</i></label>
-                        </div>
                         <div class="col-md mb-3">
                             <div class="form-floating">
                                 <input name="email" type="email" class="form-control" id="floatingInputGrid" placeholder="name@example.com" value="">
@@ -55,26 +40,18 @@ endif;
                         </div>
                         
                         <div class="form-floating mb-3">
-                            <select name="date" class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                            <select name="tirme" class="form-select" id="floatingSelect" aria-label="Floating label select example">
                                 <option selected="">Ouvrir le menu - temps du ban</option>
-                                <option value="P99Y"><?=constant('LIFE');?></option>
+                                <option value="0"><?=constant('LIFE');?></option>
                                 <option value="PT1M"><?=constant('ONE_MINUTE');?></option>
                                 <option value="PT5M"><?=constant('FIVE_MINUTES');?></option>
                                 <option value="PT15M"><?=constant('FIFTEEN_MINUTES');?></option>
-                                <option value="PT30M"><?=constant('THIRTY_MINUTES');?></option>
                                 <option value="PT1H"><?=constant('ONE_O_CLOCK');?></option>
-                                <option value="PT3H"><?=constant('THREE_O_CLOCK');?></option>
-                                <option value="PT6H"><?=constant('SIX_O_CLOCK');?></option>
-                                <option value="PT12H"><?=constant('TWELVE_O_CLOCK');?></option>
                                 <option value="P1D"><?=constant('A_DAY');?></option>
                                 <option value="P7D"><?=constant('ONE_WEEK');?></option>
-                                <option value="P14D"><?=constant('TWO_WEEK');?></option>
                                 <option value="P1M"><?=constant('A_MONTH');?></option>
-                                <option value="P3M"><?=constant('THREE_MONTHS');?></option>
                                 <option value="P6M"><?=constant('SIX_MONTHS');?></option>
-                                <option value="P1Y"><?=constant('ONE_YEAR');?></option>
-                                <option value="P5Y"><?=constant('FIVE_YEARS');?></option>
-                                <option value="P10Y"><?=constant('TEN');?></option>
+                                <option value="P1Y"><?=constant('TEN');?></option>
                             </select>
                             <label for="floatingSelect"><?=constant('DATE_OF_BAN');?></label>
                         </div>

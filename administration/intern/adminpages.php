@@ -41,7 +41,7 @@ class AdminPages
             self::pageOff();
             Notification::error('Page fermer manuellement, via le fichier : controller.<br>Veuillez le réactiver via le FTP manuellement la variable $active sur true');
         } else if ($this->admin === true) {
-            if (!in_array(1, $_SESSION['USER']->groups->all_groups)) {
+            if (!in_array(1, $_SESSION['USER']->groups->all_groups) or !$_SESSION['USER']->groups->user_group == 1) {
                 self::superAdmin();
             }
         }

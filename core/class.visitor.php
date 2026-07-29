@@ -77,7 +77,7 @@ class Visitors
                 ?? null;
         }
 
-        $country = self::getCountryCode($ip);
+        $country = '';
 
         $time = time();
 
@@ -1070,7 +1070,7 @@ class Visitors
     /**
      * Pays IP
      */
-    private static function getCountryCode(string $ip): string
+    public static function getCountryCode(string $ip): string
     {
         if ($ip == '127.0.0.1' OR $ip == '::1') {
             return 'BE';

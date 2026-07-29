@@ -1,16 +1,20 @@
+
+
 function formSendLogin(n, e) {
     var o = n.attr("action"),
         t = $(n).serialize(),
-        a = $("#loader > span");
+        a = $("#submitText");
+        b = $("#submitTextAlert");
         setTimeout(function () {
             $.ajax({
                 type: e,
                 url: o,
                 data: t,
                 success: function (n) {
-                    n = $.parseJSON(n);
-                    console.log(n),
-                    a.empty().append(n.ajax);
+                    t = n.replace(/"/g, "");
+                    b.removeClass('alert-warning').addClass('alert-success');
+                    a.empty(t).append(t);
+                    console.log(t);
                 },
                 error: function () {
                     alert("Error function ajax");
@@ -18,15 +22,16 @@ function formSendLogin(n, e) {
                 complete: function () {
                     setTimeout(function () {
                         location.reload();
-                    }, 1000);
+                    }, 3250);
                 },
             });
-        }, 2500);
+        }, 1e3);
 }
+
 $(document).ready(function () {
-    $("#sendLogin").submit(function (n) {
+    $("#signinForm").submit(function (n) {
         n.preventDefault();
-        $('#submitText').val("Vérification en cours...");
+        $('#submitText').empty().append("Vérification en cours...");
         n.preventDefault(), formSendLogin($(this), "POST");
     });
 });

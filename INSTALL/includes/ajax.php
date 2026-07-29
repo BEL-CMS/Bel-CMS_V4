@@ -76,6 +76,7 @@
 		'users_page',
 		'users_profils',
 		'users_social',
+		'users_recovery',
 		'visitors',
 		'visitors_online',
 		'visitors_stats',

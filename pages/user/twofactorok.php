@@ -7,11 +7,54 @@
  * @license MIT License
  * @copyright 2015-2026 Bel-CMS
  * @author as Stive - stive@determe.be
- */
+*/
 
-use BelCMS\Core\Notification;
+use BelCMS\Requires\Common;
 
+if (!defined('CHECK_INDEX')):
+    header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
+    exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
+endif;
+
+/* utilisateur supprimé et toujours connecté = supprime la $_SESSION */
+if (empty($user)) {
+    unset($_SESSION['USER']);
+    Common::Redirect("index.php");
+}
+
+if (empty($user->profils->gender)) {
+    $gender = constant('NOSPEC');
+} else if ($user->profils->gender == 'male') {
+    $gender = constant('MALE');
+} else if ($user->profils->gender == 'female') {
+    $gender = constant('FEMALE');
+} else {
+    $gender = constant('NOSPEC');
+}
+
+if (!empty($user->profils->birthday)) {
+    $birthday = Common::TransformDate($user->profils->birthday, 'FULL', 'NONE');
+} else {
+    $birthday = date('Y-m-d');
+}
+if (empty($user->profils->avatar)) {
+    $user->profils->avatar = constant('DEFAULT_AVATAR');
+}
+if (empty($user->profils->hight_avatar) or !is_file($user->profils->hight_avatar)) {
+    $user->profils->hight_avatar = '/uploads/users/bg-profile.png';
+}
+if (empty($user->profils->country)) {
+    $country = constant('NONE_DEFINED');
+} else {
+    $country = $user->profils->country;
+}
+if (empty($user->profils->websites)) {
+    $websites = constant('NONE_DEFINED');
+} else {
+    $websites = Common::VarSecure($user->profils->websites);
+}
 ?>
+
 <section id="belcms_pages_user">
     <div class="row">
         <div class="col-12">
@@ -62,9 +105,15 @@ use BelCMS\Core\Notification;
                             <i class="fa-solid fa-circle-arrow-right fa-buzz" class="belcms_user_nav_hover"></i>
                         </a>
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="User/options">
-                            <i class="fa-solid fa-gears"></i> Options & sécurité
+                            <i class="fa-solid fa-computer"></i> Options & sécurité
+                            <i class="fa-solid fa-circle-arrow-right fa-buzz" class="belcms_user_nav_hover"></i>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="User/double2fa">
+                            <i class="fa-solid fa-user-shield"></i> 2FA
                             <i class="fa-solid fa-arrows-to-eye" id="belcms_user_nav_active_plus"></i>
                         </a>
                     </li>
@@ -79,33 +128,23 @@ use BelCMS\Core\Notification;
         <div class="col-9">
             <div id="belcms_pages_user_content">
                 <div id="belcms_pages_user_content_effect">
-                    <h1>Options & sécurité</h1>
-                    <form action="/user/submitPassword" method="post">
-                        <div class="card-body">
-                            <div class="input-group mb-2">
-                                <div class="form-floating">
-                                    <input type="password" name="old_password" required="required" class="form-control" id="input_pass">
-                                    <label for="input_pass">Il s'agit de votre ancien mot de passe</label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="text-muted">Utilisation des jeux de caractères a-z et A-Z et @#*/ <i style="color: red;">* 6 caractères min</i></label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" name="password_new" id="password_new" minlength="6" data-size="32" data-character-set="data-character-set=" a-z,A-Z,0-9,#" required="required">
-                                    <span class="input-group-btn">
-                                        <button onclick="javascript:generer_password('password_new');" type="button" class="btn btn-default getNewPass">
-                                            <span class="fa fa-refresh"></span>
-                                        </button>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <input type="submit" class="btn btn-success mt-3" value="Enregister">
-                    </form>
-                    <div class="alert alert-danger d-flex align-items-center mt-3 mb-2" role="alert">
-                        <div><i class="fa-solid fa-circle-exclamation"></i>  La suppression est irréversible, toutes les données seront effacées, sauf les messages, ça sera marqué « utilisateur effacé »</div>
-                    </div>
-                    <a href="User/deleteAccount" class="btn btn-danger">Supprimer mon compte</a>
+                    <h1>Code de secours</h1>
+                    <table class="table table-bordered" id="belcms_pages_user_content_table">
+                        <tbody>
+                        <?php foreach (array_chunk($serial, 2) as $row): ?>
+                            <tr>
+                                <?php foreach ($row as $code): ?>
+                                    <td><?= htmlspecialchars($code) ?></td>
+                                <?php endforeach; ?>
+
+                                <?php if (count($row) < 2): ?>
+                                    <td></td>
+                                <?php endif; ?>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                    <a href="User" class="btn btn-secondary">Retour au profils</a>
                 </div>
             </div>
         </div>

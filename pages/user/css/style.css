@@ -54,7 +54,7 @@ section#belcms_pages_user {
 #belcms_pages_user_nav ul li a {
     display: block;
     width: 100%;
-    color: var(--belcms-color-text);
+    color: var(--belcms-color-a);
     text-align: left;
     padding-left: 25px;
     font-size: 14px;

@@ -88,7 +88,7 @@ final class Dispatcher
     # return l'ID ex: numéro de la
     # https://bel-cms.dev/news/view/=>id<=
     #########################################
-    public static function id () : int
+    public static function id ()
     {
         $return = 0;
         $dispatcher = new Dispatcher;

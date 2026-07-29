@@ -363,4 +363,132 @@ class Registration extends AdminPages
             #########################################
         }
     }
+
+    public function updateGroups ()
+    {
+        $main_group = is_numeric($_POST['group']);
+        if ($main_group === true) {
+            $insertMainGroup = $_POST['group'];
+        }
+        if (!in_array(2, $_POST['groups'])) {
+            $_POST['groups'][] = 2;
+        }
+        $groups = (implode("|", $_POST['groups']));
+        $insert['user_group']  = $insertMainGroup;
+        $insert['user_groups'] = $groups;
+
+        $this->models->updateGroups($insert);
+
+        $array = array(
+            'type' => 'success',
+            'text' => constant('SEND_EDIT_SUCCESS')
+        );
+        $this->error(constant('USER'), $array['text'], $array['type']);
+        $this->redirect('registration?admin&option=users', 2);
+    }
+
+    public function updatepassword ()
+    {
+        if (empty($_POST['password']) || empty($_POST['confirmpassword'])) {
+            #########################################
+            $array = array(
+                'type' => 'warning',
+                'text' => 'les deux champs est obligatoires.'
+            );
+            $this->error(constant('USER'), $array['text'], $array['type']);
+            $this->redirect('registration?admin&option=users', 2);
+            #########################################
+            return;
+        }
+
+        if (strlen($_POST['confirmpassword']) < 6) {
+            #########################################
+            $array = array(
+                'type' => 'warning',
+                'text' => 'Mot de passe trop court, minimum 8 caractères.'
+            );
+            $this->error(constant('USER'), $array['text'], $array['type']);
+            $this->redirect('registration?admin&option=users', 2);
+            #########################################
+            return;
+        }
+
+        if (strlen($_POST['confirmpassword']) > 32) {
+            #########################################
+            $array = array(
+                'type' => 'warning',
+                'text' => 'Mot de passe trop long, maximum 32 caractères.'
+            );
+            $this->error(constant('USER'), $array['text'], $array['type']);
+            $this->redirect('registration?admin&option=users', 2);
+            #########################################
+            return;
+        }
+
+        if ($_POST['password'] !== $_POST['confirmpassword']) {
+            #########################################
+            $array = array(
+                'type' => 'warning',
+                'text' => 'Les deux mots de passe ne correspondent pas'
+            );
+            $this->error(constant('USER'), $array['text'], $array['type']);
+            $this->redirect('registration?admin&option=users', 2);
+            #########################################
+            return;
+        }
+
+        if (strlen($_POST['hash_key']) != 32) {
+            #########################################
+            $array = array(
+                'type' => 'danger',
+                'text' => 'Le hash_key doit être de 32 !'
+            );
+            $this->error(constant('USER'), $array['text'], $array['type']);
+            $this->redirect('user/logout', 3);
+            #########################################
+            return;
+        }
+
+        $true = $this->models->updatePassword ($_POST['confirmpassword'], $_POST['hash_key']);
+        $user = User::getInfosUserAll($_POST['hash_key']);
+        self::sendMailPass($user->user->mail, $_POST['confirmpassword']);
+
+        $array = array(
+            'type' => 'success',
+            'text' => constant('SEND_EDIT_SUCCESS')
+        );
+        $this->error(constant('USER'), $array['text'], $array['type']);
+        $this->redirect('registration?admin&option=users', 2);
+    }
+
+    public function sendMailPass ($mail, $password)
+    {
+        $body = '<!DOCTYPE html>
+                <html lang="fr">
+                <head>
+                <meta charset="UTF-8">
+                </head>
+                <body style="margin:0; padding:0; background-color:#f4f4f4;">
+                <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f4f4;">
+                    <tr><td align="center">
+                        <table class="container" width="600" cellpadding="0" cellspacing="0"
+                        style="background-color:#ffffff; padding:40px; font-family:Arial, sans-serif; border-radius:8px;">
+                        <tr><td align="center" style="padding-bottom:20px;"><h2 style="margin:0; color:#6c5ce7;">🔐 Modification de votre mot de passe</h2></td></tr>
+                        <tr><td style="color:#333333; font-size:16px; line-height:1.5;">Bonjour ' . $mail . ',<br><br>
+                            Vous avez demandé à changer votre mot de passe à un admin. Le voici, votre nouveau mot de passe :<br><br><strong
+                                style="display:block;text-align;center; background:#f1f1f1; padding:10px 20px; border-radius:6px; font-size:18px; letter-spacing:1px;">' . $password . '</strong><br><br>
+                            <br><br>Merci,<br>L’équipe de support</td></tr>
+                        <tr><td align="center" style="padding-top:30px; font-size:12px; color:#999999;">' . constant('MAIL_BY_BELCMS') . '</td></tr>
+                        </table>
+                    </td>
+                    </tr>
+                </table>
+                </body>
+                </html>';
+        $email = new eMail;
+        $email->addAdress($mail);
+        $email->subject(constant('GET_PASSWORD_TOKEN'));
+        $email->body($body);
+        $email->submit();
+    }
 }

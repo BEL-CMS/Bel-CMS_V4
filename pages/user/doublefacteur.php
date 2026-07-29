@@ -1,26 +1,43 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.1.1 [PHP8.5]
+ * @version 4.2.0 [PHP8.5]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
  * @copyright 2015-2026 Bel-CMS
  * @author as Stive - stive@determe.be
- */
+*/
 
 use BelCMS\Requires\Common;
+use BelCMS\Core\Security\QRCode\QRCode;
+use BelCMS\Core\Security\QRCode\ErrorCorrectionLevel;
+use BelCMS\Core\Security\TOTP\ProvisioningUri;
+use BelCMS\Core\Security\TOTP\TOTP;
 
 if (!defined('CHECK_INDEX')):
     header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
     exit('<!doctype html><html><head><meta charset="utf-8"><title>BEL-CMS : Error 403 Forbidden</title><style>h1{margin: 20px auto;text-align:center;color: red;}p{text-align:center;font-weight:bold;</style></head><body><h1>HTTP Error 403 : Forbidden</h1><p>You don\'t permission to access / on this server.</p></body></html>');
 endif;
 
+if (
+    empty($_SESSION['TOTP_PENDING_SECRET'])
+    || !is_string($_SESSION['TOTP_PENDING_SECRET'])
+) {
+    $_SESSION['TOTP_PENDING_SECRET'] = TOTP::generateSecret();
+}
+
 /* utilisateur supprimé et toujours connecté = supprime la $_SESSION */
 if (empty($user)) {
     unset($_SESSION['USER']);
     Common::Redirect("index.php");
 }
+
+$uri = ProvisioningUri::create(
+    secret: $_SESSION['TOTP_PENDING_SECRET'],
+    account: $_SESSION['USER']->user->username,
+    issuer: $_SESSION['CONFIG']['CMS_NAME']
+);
 
 if (empty($user->profils->gender)) {
     $gender = constant('NOSPEC');
@@ -75,10 +92,10 @@ if (empty($user->profils->websites)) {
         <div class="col-3">
             <nav id="belcms_pages_user_nav">
                 <ul>
-                    <li class="active">
+                    <li>
                         <a href="user">
                             <i class="fa-solid fa-user"></i> Mon profil
-                            <i class="fa-solid fa-arrows-to-eye" id="belcms_user_nav_active_plus"></i>
+                            <i class="fa-solid fa-circle-arrow-right fa-buzz" class="belcms_user_nav_hover"></i>
                         </a>
                     </li>
                     <li>
@@ -111,10 +128,10 @@ if (empty($user->profils->websites)) {
                             <i class="fa-solid fa-circle-arrow-right fa-buzz" class="belcms_user_nav_hover"></i>
                         </a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="User/double2fa">
                             <i class="fa-solid fa-user-shield"></i> 2FA
-                            <i class="fa-solid fa-circle-arrow-right fa-buzz" class="belcms_user_nav_hover"></i>
+                            <i class="fa-solid fa-arrows-to-eye" id="belcms_user_nav_active_plus"></i>
                         </a>
                     </li>
                     <li>
@@ -128,33 +145,52 @@ if (empty($user->profils->websites)) {
         <div class="col-9">
             <div id="belcms_pages_user_content">
                 <div id="belcms_pages_user_content_effect">
-                    <h1>Profils</h1>
-                    <table class="table" id="belcms_pages_user_content_table">
-                        <tr>
-                            <td>Votre nom utilisateur :</td>
-                            <td><?= $user->user->username; ?></td>
-                        </tr>
-                         <tr>
-                            <td>Quel est votre genre ?</td>
-                            <td><?= $gender; ?></td>
-                        </tr>
-                        <tr>
-                            <td>Votre e-mail privé <i style="color: red;">* jamais divulgué</i></td>
-                            <td><a href="mailto:<?= $user->user->mail; ?>>"><?= $user->user->mail; ?></a></td>
-                        </tr>
-                        <tr>
-                            <td>Vôtre date de naissance :</td>
-                            <td><?= $birthday; ?></td>
-                        </tr>
-                        <tr>
-                            <td>Le pays dans lequel vous résidez :</td>
-                            <td><?= $country; ?></td>
-                        </tr>
-                        <tr>
-                            <td>Lien vers votre site web :</td>
-                            <td><a href="<?= $websites; ?>"><?= $websites; ?></a></td>
-                        </tr>
+                    <?php
+                    if ($user->user->two_factor_enabled == 0):
+                    ?>
+                    <h1>Activer la double authentification</h1>
+                    <div id="doublaf2a">
+                        <?php 
+                        echo QRCode::make($uri)
+                            ->level(ErrorCorrectionLevel::L)
+                            ->size(250)
+                            ->margin(4)
+                            ->svg();
+                        ?>
+                    </div>
+                    <form action="/user/verifdouble2fa" method="post">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="number" class="form-control" name="two_factor_serial" id="two_factor_serial" minlength="6" maxlength="6" data-size="6" required="required" placeholder="Saisissez votre code d'authentification.">
+                            </div>
+                            <div class="input-group">
+                                <input type="hidden" value="<?= $_SESSION['TOTP_PENDING_SECRET']; ?>" name="serial">
+                                <input type="submit" class="btn btn-success mt-3" value="Valider">
+                            </div>
+                        </div>
+                    </form>
+                    <?php
+                    else:
+                    ?>
+                    <h1>Double authentification</h1>
+                    <div class="mb-3">
+                        <div class="alert alert-danger" role="alert">
+                            <p>Vous êtes sur le point de désactiver l'authentification à deux facteurs : <a href="User/Neg2fa" class="alert-link">Désactiver</a></p>
+                            <hr>
+                            <p class="mb-0">Les codes de secours seront, eux aussi, désactivés.</p>
+                        </div>
+                    </div>
+                    <table class="table table-bordered" id="belcms_pages_user_content_table">
+                        <tbody>
+                            <tr><td colspan="2">Il vous reste <?= $count; ?> codes de secours.</td></tr>
+                        </tbody>
                     </table>
+                    <div class="mb-3">
+                        <a href="User/renewrecovery" class="btn btn-secondary">Renouveler les codes</a>
+                    </divb>
+                    <?php
+                    endif;
+                    ?>
                 </div>
             </div>
         </div>

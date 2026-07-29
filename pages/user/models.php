@@ -1,13 +1,13 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.1.1 [PHP8.5]
+ * @version 4.2.0 [PHP8.5]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
  * @copyright 2015-2026 Bel-CMS
  * @author as Stive - stive@determe.be
-*/
+ */
 
 namespace Belcms\Pages\Models;
 
@@ -16,6 +16,7 @@ use BelCMS\Core\encrypt;
 use BelCMS\Core\User;
 use BelCMS\PDO\BDD;
 use BelCMS\Requires\Common;
+use RecoveryCode;
 
 if (!defined('CHECK_INDEX')):
     header($_SERVER['SERVER_PROTOCOL'] . ' 403 Direct access forbidden');
@@ -148,17 +149,18 @@ final class ModelsUser
             $test->count();
             
             $insertUser = array(
-                'id'                => null,
-                'username'          => $data['username'],
-                'hash_key'          => $hash_key,
-                'password'          => $password,
-                'mail'              => $data['mail'],
-                'ip'                => Common::getIp(),
-                'expire'            => (int) 0,
-                'token'             => '',
-                'number_valid'      => '',
-                '2FA'               => 0,
-                'admin'             => 0
+                'id'                 => null,
+                'username'           => $data['username'],
+                'hash_key'           => $hash_key,
+                'password'           => $password,
+                'mail'               => $data['mail'],
+                'ip'                 => Common::getIp(),
+                'expire'             => (int) 0,
+                'token'              => '',
+                'admin'              => 0,
+                'two_factor_enabled' => 0,
+                'two_factor_secret'  => '',
+                'login_2fa'
             );
 
             if ($test->data == 0) {
@@ -385,5 +387,130 @@ final class ModelsUser
         $return['msg']  = constant('USER_DELETE_OK');
         $return['type'] = 'success';
         return $return;
+    }
+
+    public function double2fUser ($update)
+    {
+        $sql = New BDD();
+        $sql->table('TABLE_USERS');
+        $sql->where(array('name' => 'hash_key', 'value' => $_SESSION['USER']->user->hash_key));
+        $sql->update($update);
+    }
+
+    public function remove2fza ()
+    {
+        $del = new BDD();
+        $del->table('TABLE_USERS_RECOVERY');
+        $del->where(array('name' => 'hash_key', 'value' => $_SESSION['USER']->user->hash_key));
+        $del->delete();
+
+        $serial = RecoveryCode::generateList();
+        foreach ($serial as $f2a_code) {
+            self::renewf2a($f2a_code);
+        }
+    }
+
+    private function renewf2a ($code)
+    {
+        $passwordCrypt =  new encrypt($code, $_SESSION['CONFIG']['CMS_KEY_ADMIN']);
+        $code = $passwordCrypt->encrypt();
+        $sql = new BDD();
+        $sql->table('TABLE_USERS_RECOVERY');
+        $sql->insert([
+            'hash_key'  => $_SESSION['USER']->user->hash_key,
+            'code_hash' => $code,
+            'created_at'=> date('Y-m-d H:i:s'),
+        ]);
+    }
+
+    public function getNbrecovery ()
+    {
+        $where[] = array('name' => 'active' , 'value' => 1);
+        $where[] = array('name' => 'hash_key', 'value' => $_SESSION['USER']->user->hash_key);
+        $sql = new BDD();
+        $sql->table('TABLE_USERS_RECOVERY');
+        $sql->where($where);
+        $sql->count();
+        return $sql->data;
+    }
+
+    public function renewrecovery ($serial)
+    {
+        $del = new BDD();
+        $del->table('TABLE_USERS_RECOVERY');
+        $del->where(array('name' => 'hash_key', 'value' => $_SESSION['USER']->user->hash_key));
+        $del->delete();
+
+        foreach ($serial as $f2a_code) {
+            self::recoveryCode($f2a_code);
+        }
+    }
+
+    public function removeTwoFactory ()
+    {
+        $del = new BDD();
+        $del->table('TABLE_USERS_RECOVERY');
+        $del->where(array('name' => 'hash_key', 'value' => $_SESSION['USER']->user->hash_key));
+        $del->delete();
+
+        $update['two_factor_enabled'] = 0;
+        $update['two_factor_secret']  = null;
+        $update['login_2fa']          = 0;
+
+        $sql = New BDD();
+        $sql->table('TABLE_USERS');
+        $sql->where(array('name' => 'hash_key', 'value' => $_SESSION['USER']->user->hash_key));
+        $sql->update($update); 
+    }
+
+    public function updateF2A($hash_key)
+    {
+        $updateUser = array('login_2fa' => 1);
+        $sql = new BDD();
+        $sql->table('TABLE_USERS');
+        $sql->where(array('name'=>'hash_key','value'=>$hash_key));
+        $sql->update($updateUser);
+    }
+
+    public function getCodeRecovery () : array
+    {
+        $where[] = array('name' => 'hash_key', 'value' => $_SESSION['TEMP_USER']->user->hash_key);
+        $where[] = array('name' => 'active', 'value' => 1);
+        $sql = new BDD();
+        $sql->table('TABLE_USERS_RECOVERY');
+        $sql->where($where);
+        $sql->queryAll();
+        $return = $sql->data;
+        return $return;
+    }
+
+    public function updateCodeRecovery ($id)
+    {
+        $updateUser = array('login_2fa' => 1);
+        $sql = new BDD();
+        $sql->table('TABLE_USERS');
+        $sql->where(array('name'=>'hash_key', 'value'=> $_SESSION['TEMP_USER']->user->hash_key));
+        $sql->update($updateUser); unset($sql);
+
+        $updateRecovery = array('used_at' => date('Y-m-d H:i:s'));
+        $updateRecovery = array('active' => 0);
+        $sql = new BDD();
+        $sql->table('TABLE_USERS_RECOVERY');
+        $sql->where(array('name'=>'id','value'=> $id));
+        $sql->update($updateRecovery);
+    }
+
+    public function recoveryCode (string $code)
+    {
+        $passwordCrypt =  new encrypt($code, $_SESSION['CONFIG']['CMS_KEY_ADMIN']);
+        $code = $passwordCrypt->encrypt();
+
+        $sql = new BDD();
+        $sql->table('TABLE_USERS_RECOVERY');
+        $sql->insert([
+            'hash_key'  => $_SESSION['USER']->user->hash_key,
+            'code_hash' => $code,
+            'created_at'=> date('Y-m-d H:i:s'),
+        ]);
     }
 }

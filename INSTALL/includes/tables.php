@@ -77,6 +77,56 @@ switch ($_POST['table']) {
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 	break;
 
+	case 'banishment':
+		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
+		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
+			`id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+			`ip` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
+			`author` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+			`number` tinyint UNSIGNED NOT NULL DEFAULT '9',
+			`reason` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+			`created_at` datetime NOT NULL,
+			`last_attempt` datetime NOT NULL,
+			`expires_at` datetime DEFAULT NULL,
+			`attempts` int UNSIGNED NOT NULL DEFAULT '1',
+			`user_agent` varchar(512) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+			`active` tinyint(1) NOT NULL DEFAULT '1',
+			`ban_id` varchar(16) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+			PRIMARY KEY (`id`),
+			UNIQUE KEY `unique_ban_id` (`ban_id`),
+			KEY `idx_author` (`author`),
+			KEY `idx_active` (`active`),
+			KEY `idx_expires` (`expires_at`),
+			KEY `ip` (`ip`),
+			KEY `author` (`author`),
+			KEY `idx_ip_active` (`ip`,`active`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
+	break;
+
+	case 'banishment_logs':
+		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
+		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
+			`id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+			`ban_id` varchar(16) DEFAULT NULL,
+			`ip` varchar(45) NOT NULL,
+			`author` varchar(255) DEFAULT NULL,
+			`level` tinyint UNSIGNED NOT NULL,
+			`reason` varchar(255) DEFAULT NULL,
+			`created_at` datetime NOT NULL,
+			`user_agent` varchar(512) DEFAULT NULL,
+			`method` int DEFAULT NULL,
+			`url` text,
+			`action` varchar(50) DEFAULT NULL,
+			`unban_by` varchar(32) DEFAULT NULL,
+			`unban_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			PRIMARY KEY (`id`),
+			KEY `idx_ban_id` (`ban_id`),
+			KEY `idx_ip` (`ip`),
+			KEY `idx_date` (`created_at`),
+			KEY `idx_logs_search` (`ip`,`action`,`created_at`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
+	break;
+
 	case 'bbsa_bssa':
 		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
 		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
@@ -1014,11 +1064,14 @@ switch ($_POST['table']) {
 			`valid` float NOT NULL DEFAULT '1',
 			`expire` float NOT NULL DEFAULT '0',
 			`token` varchar(50) DEFAULT NULL,
-			`gold` int NOT NULL DEFAULT '0',
 			`number_valid` varchar(32) DEFAULT NULL,
-			`2FA` tinyint(1) DEFAULT '0',
+			`LOG2FA` tinyint(1) DEFAULT '0',
 			`admin` tinyint(1) NOT NULL DEFAULT '0',
 			`root` tinyint(1) NOT NULL DEFAULT '0',
+			`two_factor_enabled` tinyint(1) NOT NULL DEFAULT '0',
+			`two_factor_secret` varchar(64) DEFAULT NULL,
+			`serial_secure` text,
+			`login_2fa` int NOT NULL DEFAULT '0',
 			PRIMARY KEY (`id`),
 			KEY `hash_key` (`hash_key`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
@@ -1144,6 +1197,21 @@ switch ($_POST['table']) {
 			PRIMARY KEY (`id`),
 			KEY `hash_key` (`hash_key`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
+	break;
+
+	case 'users_recovery':
+		$drop = 'DROP TABLE IF EXISTS `'.$_SESSION['prefix'].$table.'`';
+		$sql  = "CREATE TABLE IF NOT EXISTS `".$_SESSION['prefix'].$table."` (
+			`id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+			`hash_key` varchar(32) NOT NULL,
+			`code_hash` varchar(255) NOT NULL,
+			`created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			`used_at` datetime DEFAULT NULL,
+			`active` tinyint(1) NOT NULL DEFAULT '1',
+			PRIMARY KEY (`id`),
+			KEY `idx_hash_key` (`hash_key`),
+			KEY `idx_active` (`active`)
+			) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 	break;
 
 	case 'visitors':

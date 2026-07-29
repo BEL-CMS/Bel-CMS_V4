@@ -31,8 +31,17 @@ class osez_sauver extends Pages
     public function index ()
     {
         $return = $this->models->getActif();
+        $dateActivite = new \DateTime($return->date_activite);
+        $today        = new \DateTime('today');
+
+        if ($today > $dateActivite) {
+            Notification::infos('Il n\'y a pas d\'entraînement « Osez sauver » à disposition pour l\'instant.', '« Osez sauver »');
+            return;
+        }
+
         if ($return === false) {
             Notification::infos('Il n\'y a pas d\'entraînement « Osez sauver » à disposition pour l\'instant.', '« Osez sauver »');
+            return;
         } else {
             $data['id']           = $return->id;
             $data['heure_debut']  = \DateTime::createFromFormat('H:i:s', $return->heure_debut);

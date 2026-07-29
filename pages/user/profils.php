@@ -1,13 +1,13 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.1.1 [PHP8.5]
+ * @version 4.2.0 [PHP8.5]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
  * @copyright 2015-2026 Bel-CMS
  * @author as Stive - stive@determe.be
-*/
+ */
 
 use BelCMS\Requires\Common;
 

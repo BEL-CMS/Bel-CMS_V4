@@ -6,7 +6,7 @@
     ###################################################################
     ##                                                               ##
     ##                           Bel-CMS                             ##
-    ##                      Bel-CMS Version 4.1.1                    ##
+    ##                      Bel-CMS Version 4.2.0                    ##
     ##                  Systeme de gestion de contenue               ##
     ##                            PHP 8.5                            ##
     ##                  Copyright 2014-2026 by Bel-CMS               ##

@@ -61,6 +61,12 @@ class User
 		if (isset($_SESSION['LOGIN_MANAGEMENT'])) {
 			unset($_SESSION['LOGIN_MANAGEMENT']);
 		}
+
+        $updateUser = array('login_2fa' => 0);
+        $sql = new BDD();
+        $sql->table('TABLE_USERS');
+        $sql->where(array('name'=>'hash_key','value'=>$_SESSION['USER']->user->hash_key));
+        $sql->update($updateUser);
 		
 		$domain = ($_SERVER['HTTP_HOST']);
 		setcookie('BELCMS_HASH_KEY_'.$_SESSION['CONFIG']['CMS_COOKIES'], 'data', time()-60*60*24*365, '/', $domain, false);
@@ -126,38 +132,46 @@ class User
             $decryptPass = $decrypt->decrypt();
 
             if ($password == $decryptPass) {
-                setcookie(
-                    'BELCMS_HASH_KEY_'.$_SESSION['CONFIG']['CMS_COOKIES'],
-                    $results->hash_key,
-                    time()+60*60*24*30*3,
-                    "/",
-                    $_SERVER['HTTP_HOST'],
-                    true,
-                    true
-                );
-                setcookie(
-                    'BELCMS_NAME_'.$_SESSION['CONFIG']['CMS_COOKIES'],
-                    $results->username,
-                    time()+60*60*24*30*3,
-                    "/",
-                    $_SERVER['HTTP_HOST'],
-                    true,
-                    true
-                );
-                setcookie(
-                    'BELCMS_PASS_'.$_SESSION['CONFIG']['CMS_COOKIES'],
-                    $results->password,
-                    time()+60*60*24*30*3,
-                    "/",
-                    $_SERVER['HTTP_HOST'],
-                    true,
-                    true
-                );
 
-                $_SESSION['USER'] = self::getInfosUserAll($results->hash_key);
-                $return['msg']  = constant('CONNECTION_SUCCESSFULLY');
-                $return['type'] = 'success';
-                return $return;
+				$user = self::getInfosUserAll($results->hash_key);
+
+				if ($user->user->two_factor_enabled == 1 and !empty($user->user->two_factor_secret and $user->user->login_2fa == 0)) {
+					$_SESSION['TEMP_USER'] = $user;
+					Common::Redirect('User/secure2FA?echo', 0);
+				} else {
+					setcookie(
+						'BELCMS_HASH_KEY_'.$_SESSION['CONFIG']['CMS_COOKIES'],
+						$results->hash_key,
+						time()+60*60*24*30*3,
+						"/",
+						$_SERVER['HTTP_HOST'],
+						true,
+						true
+					);
+					setcookie(
+						'BELCMS_NAME_'.$_SESSION['CONFIG']['CMS_COOKIES'],
+						$results->username,
+						time()+60*60*24*30*3,
+						"/",
+						$_SERVER['HTTP_HOST'],
+						true,
+						true
+					);
+					setcookie(
+						'BELCMS_PASS_'.$_SESSION['CONFIG']['CMS_COOKIES'],
+						$results->password,
+						time()+60*60*24*30*3,
+						"/",
+						$_SERVER['HTTP_HOST'],
+						true,
+						true
+					);
+
+					$_SESSION['USER'] = self::getInfosUserAll($results->hash_key);
+					$return['msg']  = constant('CONNECTION_SUCCESSFULLY');
+					$return['type'] = 'success';
+					return $return;
+				}
             } else {
                 $return['msg']  = constant('WRONG_USER_PASS');
                 $return['type'] = 'error';
@@ -331,12 +345,19 @@ class User
 	#########################################
 	public static function isLogged () : bool
 	{
-		if (!empty($_SESSION['USER'])) {
-				$return = true;
-		} else {
-			$return = false;
+		if (!isset($_SESSION['USER'])) {
+			return false;
 		}
-		return $return;
+
+		if (isset($_SESSION['USER']) and $_SESSION['USER']->user->login_2fa == 1 and $_SESSION['USER']->user->two_factor_enabled == 1 ) {
+			return true;
+		} elseif (isset($_SESSION['USER']) and $_SESSION['USER']->user->login_2fa == 1 and $_SESSION['USER']->user->two_factor_enabled == 0) {
+			return false;
+		} else if (isset($_SESSION['USER']) and $_SESSION['USER']->user->login_2fa == 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	#########################################
     # Delete all user configuration.
@@ -374,6 +395,7 @@ class User
             $delPages->where(array('name' => 'hash_key', 'value' => $hash_key));
             $delPages->delete();
 
+
             self::logout();
         }
     }
@@ -391,7 +413,7 @@ class User
 				'name'  => 'hash_key',
 				'value' => $hash_key
 			));
-			$user->fields(array('username','hash_key', 'password', 'mail', 'ip', 'valid', 'expire', 'token', 'number_valid', '2FA', 'admin', 'root'));
+			$user->fields(array('username','hash_key', 'password', 'mail', 'ip', 'valid', 'expire', 'token', 'number_valid', 'admin', 'root','two_factor_enabled', 'two_factor_secret', 'login_2fa'));
 			$user->isObject(false);
 			$user->queryOne();
 			if (!empty($user->data)) {
