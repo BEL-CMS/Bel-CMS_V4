@@ -13,6 +13,8 @@
 		'articles',
 		'articles_content',
 		'ban',
+		'banishment',
+		'banishment_logs',
 		'bbsa_bssa',
 		'buy_mails',
 		'buy_ndd',

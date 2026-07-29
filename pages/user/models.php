@@ -160,7 +160,7 @@ final class ModelsUser
                 'admin'              => 0,
                 'two_factor_enabled' => 0,
                 'two_factor_secret'  => '',
-                'login_2fa'
+                'login_2fa'          => ''
             );
 
             if ($test->data == 0) {
