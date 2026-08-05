@@ -226,100 +226,201 @@ class Pages
 		header("Content-Type: application/force-download");
 		readfile($url);
 	}
-	#########################################
-	# Pagination count nb ligne
-	#########################################
-	function paginationCount ($nb, $table, $where = false)
-	{
-		$return = 0;
+    #########################################
+    # Nombre total d'éléments
+    #########################################
+    public static function paginationCount(string $table, array|false $where = false): int
+    {
+        $sql = new BDD();
+        $sql->table($table);
 
-		$sql = New BDD();
-		$sql->table($table);
-		if ($where !== false) {
-			$sql->where($where);
-		}
-		$sql->count();
-		$return = $sql->data;
+        if ($where !== false) {
+            $sql->where($where);
+        }
 
-		return $return;
-	}
-	#########################################
-	# Pagination
-	#########################################
-	function pagination ($nbpp = '5', $page = null, $table = null, $where = false)
-	{
-		$nbpp        = $nbpp == 0 ? 5 : $nbpp;
-		$current     = (int) Dispatcher::RequestPages();
-		$page_url    = $page.'?';
-		$total       = self::paginationCount($nbpp, $table, $where);
-		$adjacents   = 1;
-		$current     = ($current == 0 ? 1 : $current);
-		$start       = ($current - 1) * $nbpp;
-		$prev        = $current - 1;
-		$next        = $current + 1;
-		$setLastpage = ceil($total/$nbpp);
-		$lpm1        = $setLastpage - 1;
-		$setPaginate = null;
+        $sql->count();
 
-		if ($setLastpage > 1) {
-			$setPaginate .= '<nav id="belcms_pagination"><ul>';
-			if ($setLastpage < 7 + ($adjacents * 2)) {
-				for ($counter = 1; $counter <= $setLastpage; $counter++) {
-					if ($counter == $current) {
-						$setPaginate.= '<li class="belcms_pagination_item active"><a href="#">'.$counter.'</a></li>';
-					} else {
-						$setPaginate.= '<li class="belcms_pagination_item"><a href="'.$page_url.'page='.$counter.'">'.$counter.'</a></li>';
-					}
-				}
-			} else if($setLastpage > 5 + ($adjacents * 2)) {
-				if ($current < 1 + ($adjacents * 2)) {
-					for ($counter = 1; $counter < 4 + ($adjacents * 2); $counter++) {
-						if ($counter == $current) {
-							$setPaginate.= '<li class="belcms_pagination_item active"><a href="#">'.$counter.'</a></li>';
-						} else {
-							$setPaginate.= '<li class="belcms_pagination_item"><a href="'.$page_url.'page='.$counter.'">'.$counter.'</a></li>';
-						}
-					}
-					$setPaginate .= '<li class="belcms_pagination_item"><a href="'.$page_url.'page='.$lpm1.'">'.$lpm1.'</a></li>';
-					$setPaginate .= '<li class="belcms_pagination_item"><a href="'.$page_url.'page='.$setLastpage.'">'.$setLastpage.'  </a></li>';
-				}
-				else if($setLastpage - ($adjacents * 2) > $current && $current > ($adjacents * 2)) {
-					$setPaginate.= '<li class="belcms_pagination_item"><a href="'.$page_url.'page=1">1</a></li>';
-					$setPaginate.= '<li class="belcms_pagination_item"><a href="'.$page_url.'page=2">2</a></li>';
-					for ($counter = $current - $adjacents; $counter <= $current + $adjacents; $counter++) {
-						if ($counter == $current) {
-							$setPaginate.= '<li class="belcms_pagination_item active"><a href="#">'.$counter.'</a></li>';
-						}
-						else {
-							$setPaginate.= '<li class="belcms_pagination_item"><a href="'.$page_url.'page='.$counter.'">'.$counter.'</a></li>';
-						}
-					}
-					$setPaginate.= '<li class="belcms_pagination_item"><a href="'.$page_url.'page='.$lpm1.'">'.$lpm1.'</a></li>';
-					$setPaginate.= '<li class="belcms_pagination_item"><a href="'.$page_url.'page='.$setLastpage.'">'.$setLastpage.'</a></li>';
-				} else {
-					$setPaginate.= '<li class="belcms_pagination_item"><a href="'.$page_url.'page=1">1</a></li>';
-					$setPaginate.= '<li class="belcms_pagination_item"><a href="'.$page_url.'page=2">2</a></li>';
-					for ($counter = $setLastpage - (2 + ($adjacents * 2)); $counter <= $setLastpage; $counter++) {
-						if ($counter == $current) {
-							$setPaginate.= '<li class="belcms_pagination_item active"><a href="#">'.$counter.'</a></li>';
-						} else {
-							$setPaginate.= '<li class="belcms_pagination_item"><a href="'.$page_url.'page='.$counter.'">'.$counter.'</a></li>';
-						}
-					}
-				}
-			}
+        return (int) $sql->data;
+    }
+    #########################################
+    # Pagination Bootstrap 5
+    #########################################
+    public static function pagination(int $nbpp = 5, ?string $page = null, ?string $table = null, array|false $where = false): string 
+    {
+        /* Vérifications */
+        if ($table === null || $table === '') {
+            return '';
+        }
+        $nbpp = $nbpp > 0 ? $nbpp : 5;
+        /* Nombre total d'éléments */
+        $total = self::paginationCount($table, $where);
+        if ($total <= 0) {
+            return '';
+        }
+        /* Calcul des pages */
+        $lastPage   = (int) ceil($total / $nbpp);
+        $currentPage = max(1, (int) Dispatcher::RequestPages());
 
-			if ($current < $counter - 1) {
-				$setPaginate .= '<li class="belcms_pagination_item"><a href="'.$page_url.'page='.$next.'"><i class="fa-solid fa-forward"></i></a></li>';
-				$setPaginate .= '<li class="belcms_pagination_item"><a href="'.$page_url.'page='.$setLastpage.'"><i class="fa-solid fa-slash"></i></a></li>';
-			} else {
-				$setPaginate .= '<li class="belcms_pagination_item disabled"><a href="#"><i class="fa-solid fa-forward"></i></a></li>';
-				$setPaginate .= '<li class="belcms_pagination_item disabled"><a href="#"><i class="fa-solid fa-slash"></i></a></li>';
-			}
-		}
+        /* Empêche d'aller au-delà de la dernière page */
+        if ($currentPage > $lastPage) {
+            $currentPage = $lastPage;
+        }
 
-		return $setPaginate;
-	}
+        /* Une seule page : aucune pagination nécessaire */
+        if ($lastPage <= 1) {
+            return '';
+        }
+
+        /* URL de base */
+        $baseUrl = $page ?? '';
+        /*
+        * Conservation des paramètres GET existants,
+        * sauf le paramètre page qui sera remplacé.
+        */
+        $queryParams = $_GET;
+        unset($queryParams['page']);
+
+        /* Création d'une URL de pagination */
+        $createUrl = static function (int $pageNumber) use ($baseUrl, $queryParams): string 
+        {
+            $params = array_merge(
+                $queryParams,
+                ['page' => $pageNumber]
+            );
+
+            $separator = str_contains($baseUrl, '?') ? '&' : '?';
+
+            return htmlspecialchars(
+                $baseUrl . $separator . http_build_query($params),
+                ENT_QUOTES,
+                'UTF-8'
+            );
+        };
+
+        /* Création d'un bouton normal */
+        $createPageItem = static function (int $pageNumber, string $content, bool $active = false, bool $disabled = false, ?string $label = null ) use ($createUrl): string 
+        {
+            $classes = ['page-item'];
+
+            if ($active) {
+                $classes[] = 'active';
+            }
+            if ($disabled) {
+                $classes[] = 'disabled';
+            }
+            $ariaCurrent = $active
+                ? ' aria-current="page"'
+                : '';
+            $ariaLabel = $label !== null
+                ? ' aria-label="' . htmlspecialchars(
+                    $label,
+                    ENT_QUOTES,
+                    'UTF-8'
+                ) . '"'
+                : '';
+            if ($active || $disabled) {
+                return sprintf(
+                    '<li class="%s"%s>
+                        <span class="page-link"%s>%s</span>
+                    </li>',
+                    implode(' ', $classes),
+                    $ariaCurrent,
+                    $ariaLabel,
+                    $content
+                );
+            }
+            return sprintf(
+                '<li class="%s">
+                    <a class="page-link" href="%s"%s>%s</a>
+                </li>',
+                implode(' ', $classes),
+                $createUrl($pageNumber),
+                $ariaLabel,
+                $content
+            );
+        };
+
+        /* Création des numéros à afficher */
+        $visiblePages = [];
+
+        for ($number = 1; $number <= $lastPage; $number++) {
+            $isFirstPages = $number <= 2;
+            $isLastPages  = $number >= $lastPage - 1;
+            $isNearCurrent = abs($number - $currentPage) <= 1;
+
+            if ($isFirstPages || $isLastPages || $isNearCurrent) {
+                $visiblePages[] = $number;
+            }
+        }
+        /* Construction HTML*/
+        $html = '<div class=""container><div class="row"><nav id="belcms_pagination" aria-label="Navigation des pages">';
+        $html .= '<ul class="pagination justify-content-center flex-wrap">';
+        /* Première page */
+        $html .= $createPageItem(
+            1,
+            '<i class="fa-solid fa-angles-left"></i>',
+            false,
+            $currentPage === 1,
+            'Première page'
+        );
+        /* Page précédente */
+        $html .= $createPageItem(
+            max(1, $currentPage - 1),
+            '<i class="fa-solid fa-angle-left"></i>',
+            false,
+            $currentPage === 1,
+            'Page précédente'
+        );
+        /* Pages numérotées et séparateurs */
+        $previousPage = null;
+
+        foreach ($visiblePages as $pageNumber) {
+            /*
+            * Ajout des points de suspension
+            */
+            if (
+                $previousPage !== null
+                && $pageNumber > $previousPage + 1
+            ) {
+                $html .= '
+                    <li class="page-item disabled">
+                        <span class="page-link">…</span>
+                    </li>
+                ';
+            }
+
+            $html .= $createPageItem(
+                $pageNumber,
+                (string) $pageNumber,
+                $pageNumber === $currentPage
+            );
+
+            $previousPage = $pageNumber;
+        }
+
+        /* Page suivante */
+        $html .= $createPageItem(
+            min($lastPage, $currentPage + 1),
+            '<i class="fa-solid fa-angle-right"></i>',
+            false,
+            $currentPage === $lastPage,
+            'Page suivante'
+        );
+
+        /* Dernière page */
+        $html .= $createPageItem(
+            $lastPage,
+            '<i class="fa-solid fa-angles-right"></i>',
+            false,
+            $currentPage === $lastPage,
+            'Dernière page'
+        );
+
+        $html .= '</ul>';
+        $html .= '</nav></div></div>';
+
+        return $html;
+    }
     #########################################
     # Retourn un message d'information de type
     # error - success - warning - infos
