@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- * @version 4.2.0 [PHP8.5]
+ * @version 4.2.1 [PHP8.5]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -66,7 +66,7 @@ if (!empty($user->profils->gender)) {
                     <li>
                         <a href="user">
                             <i class="fa-solid fa-user"></i> Mon profil
-                            <i class="fa-solid fa-circle-arrow-right fa-buzz" class="belcms_user_nav_hover"></i>
+                            <i class="fa-solid fa-circle-arrow-right belcms_user_nav_hover"></i>
                         </a>
                     </li>
                     <li class="active">
@@ -78,25 +78,31 @@ if (!empty($user->profils->gender)) {
                     <li>
                         <a href="User/social">
                             <i class="fa-solid fa-share-nodes"></i> Éditer Social
-                            <i class="fa-solid fa-circle-arrow-right fa-buzz" class="belcms_user_nav_hover"></i>
+                            <i class="fa-solid fa-circle-arrow-right belcms_user_nav_hover"></i>
                         </a>
                     </li>
                     <li>
                         <a href="User/avatar">
                             <i class="fa-solid fa-image-portrait"></i> Fond & avatar
-                            <i class="fa-solid fa-circle-arrow-right fa-buzz" class="belcms_user_nav_hover"></i>
+                            <i class="fa-solid fa-circle-arrow-right belcms_user_nav_hover"></i>
                         </a>
                     </li>
                     <li>
                         <a href="User/Material">
                             <i class="fa-solid fa-computer"></i> Éditer matériels
-                            <i class="fa-solid fa-circle-arrow-right fa-buzz" class="belcms_user_nav_hover"></i>
+                            <i class="fa-solid fa-circle-arrow-right belcms_user_nav_hover"></i>
                         </a>
                     </li>
                     <li>
                         <a href="User/options">
-                            <i class="fa-solid fa-gears"></i> Options & sécurité
-                            <i class="fa-solid fa-circle-arrow-right fa-buzz" class="belcms_user_nav_hover"></i>
+                            <i class="fa-solid fa-computer"></i> Options & sécurité
+                            <i class="fa-solid fa-circle-arrow-right belcms_user_nav_hover"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="User/double2fa">
+                            <i class="fa-solid fa-user-shield"></i> 2FA
+                            <i class="fa-solid fa-circle-arrow-right belcms_user_nav_hover"></i>
                         </a>
                     </li>
                     <li>
@@ -141,7 +147,7 @@ if (!empty($user->profils->gender)) {
                                 <select class="form-select" name="country">
                                     <option selected value="<?= htmlspecialchars($user->profils->country); ?>"><?= $user->profils->country; ?></option>
                                 <?php
-                                foreach ($contryList as $key => $country):
+                                foreach (contryList() as $key => $country):
                                     echo '<option value="'.htmlspecialchars($country).'">'.$country.'</option>';
                                 endforeach;
                                 ?>
@@ -152,9 +158,9 @@ if (!empty($user->profils->gender)) {
                         <div class="input-group mb-2">
                             <div class="form-floating">
                                 <select name="gender" class="form-select" id="input_inputgenre">
-                                    <option <?= $genderM ?> value="male"><?= constant('MALE') ?></option>
-                                    <option <?= $genderF ?> value="female"><?= constant('FEMALE') ?></option>
-                                    <option <?= $genderU ?> value="nospec"><?= constant('NO_SPEC') ?></option>
+                                    <option <?= $genderM ?> value="male"><?= constant('MALE'); ?></option>
+                                    <option <?= $genderF ?> value="female"><?= constant('FEMALE'); ?></option>
+                                    <option <?= $genderU ?> value="nospec"><?= constant('NO_SPEC'); ?></option>
                                 </select>
                                 <label for="input_inputgenre">Quel est votre genre masculin ou féminin ?</label>
                             </div>

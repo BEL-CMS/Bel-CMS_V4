@@ -78,37 +78,37 @@ if (empty($user->profils->websites)) {
                     <li>
                         <a href="user">
                             <i class="fa-solid fa-user"></i> Mon profil
-                            <i class="fa-solid fa-circle-arrow-right fa-buzz" class="belcms_user_nav_hover"></i>
+                            <i class="fa-solid fa-circle-arrow-right belcms_user_nav_hover"></i>
                         </a>
                     </li>
                     <li>
                         <a href="User/profils">
                             <i class="fa-solid fa-user-pen"></i> Éditer mon profil
-                            <i class="fa-solid fa-circle-arrow-right fa-buzz" class="belcms_user_nav_hover"></i>
+                            <i class="fa-solid fa-circle-arrow-right belcms_user_nav_hover"></i>
                         </a>
                     </li>
                     <li>
                         <a href="User/social">
                             <i class="fa-solid fa-share-nodes"></i> Éditer Social
-                            <i class="fa-solid fa-circle-arrow-right fa-buzz" class="belcms_user_nav_hover"></i>
+                            <i class="fa-solid fa-circle-arrow-right belcms_user_nav_hover"></i>
                         </a>
                     </li>
                     <li>
                         <a href="User/avatar">
                             <i class="fa-solid fa-image-portrait"></i> Fond & avatar
-                            <i class="fa-solid fa-circle-arrow-right fa-buzz" class="belcms_user_nav_hover"></i>
+                            <i class="fa-solid fa-circle-arrow-right belcms_user_nav_hover"></i>
                         </a>
                     </li>
                     <li>
                         <a href="User/Material">
                             <i class="fa-solid fa-computer"></i> Éditer matériels
-                            <i class="fa-solid fa-circle-arrow-right fa-buzz" class="belcms_user_nav_hover"></i>
+                            <i class="fa-solid fa-circle-arrow-right belcms_user_nav_hover"></i>
                         </a>
                     </li>
                     <li>
                         <a href="User/options">
                             <i class="fa-solid fa-computer"></i> Options & sécurité
-                            <i class="fa-solid fa-circle-arrow-right fa-buzz" class="belcms_user_nav_hover"></i>
+                            <i class="fa-solid fa-circle-arrow-right belcms_user_nav_hover"></i>
                         </a>
                     </li>
                     <li class="active">

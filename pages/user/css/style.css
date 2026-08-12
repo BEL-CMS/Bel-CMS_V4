@@ -79,22 +79,15 @@ section#belcms_pages_user {
 #belcms_pages_user_nav ul li:last-child a {
     color: var(--bs-white);
 }
+.belcms_user_nav_hover,
 #belcms_user_nav_active_plus {
     float: right;
     padding-right: 15px;
     line-height: 45px;
-    margin-top: 15px;
     color: var(--belcms-color-a);
 }
-#belcms_pages_user_nav ul li a .svg-inline--fa.fa-circle-arrow-right,
-#belcms_pages_user_nav ul li a .belcms_user_nav_hover {
-float: right;
-    line-height: 45px;
-    padding-right: 15px;
-    margin-top: 15px;
-    visibility: hidden;
-    transition: all 250ms linear;
-    color: var(--bs-yellow);
+.belcms_user_nav_hover {
+    line-height: 45px !important;
 }
 #belcms_pages_user_nav ul li:hover .svg-inline--fa.fa-circle-arrow-right {
     transition: all 250ms linear;
