@@ -11,6 +11,8 @@
 
 
 namespace BelCMS\Requires;
+
+use BelCMS\Core\Dispatcher;
 use \DateTime as DateTime;
 use BelCMS\Core\GetHost;
 use BelCMS\Core\Interaction;
@@ -210,47 +212,28 @@ final class Common
     #########################################
     public static function GetIp ()
     {
-        if (isset($_SERVER['HTTP_CLIENT_IP']) and !empty($_SERVER['HTTP_CLIENT_IP'])) {
-            $return = $_SERVER['HTTP_CLIENT_IP'];
-        } else if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) and !empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            $return = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } else {
-            $return = (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : $_SERVER['HTTP_CLIENT_IP']);
+        if (!empty($_SERVER['HTTP_CF_CONNECTING_IP'])) {
+            return $_SERVER['HTTP_CF_CONNECTING_IP'];
         }
-        if (isset($_SERVER['SERVER_ADDR']) != empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            $return = $_SERVER['SERVER_ADDR'];
-        }
-        // IP Local
-        if ($return == '::1') {
-            $return = '127.0.0.1';
-        }
-        return $return;
-    }
-    #########################################
-    # Localisation géographique par IP
-    #########################################
 
-    public static function GeoIP ($ip)
-    {
-        if (function_exists('\geoip_country_name_by_name')) {
-            $country = \geoip_country_name_by_name($ip);
-            debug($country);
-                if ($country) {
-                    $return = $country;
-                } else {
-                $return = (bool) false;
+        if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $ip_list = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+            $client_ip = trim($ip_list[0]);
+            
+            if (filter_var($client_ip, FILTER_VALIDATE_IP)) {
+                return $client_ip;
             }
-            $return = false;
-        } else {
-            return false;
         }
-        return $return;
+
+        if (!empty($_SERVER['HTTP_X_REAL_IP']) && filter_var($_SERVER['HTTP_X_REAL_IP'], FILTER_VALIDATE_IP)) {
+            return $_SERVER['HTTP_X_REAL_IP'];
+        }
+        return $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
     }
     #########################################
     # Module [...] Apache disponible ou non
     # Return true or false
     #########################################
-    /*
     public static function getModuleApache ($name)
     {
         if (!empty($name)) {
@@ -265,7 +248,6 @@ final class Common
         }
         return $return;
     }
-    */
     #########################################
     # Date & DATETIME SQL
     #########################################
@@ -736,7 +718,7 @@ final class Common
             $a['date']    = $date;
             $a['endban']  = $endban;
             $a['timeban'] = 'P99Y';
-            $a['reason']  = 'Bannissements automatiques par le système : ID incorrecte';
+            $a['reason']  = 'Bannissements automatiques par le système : ID incorrecte ['.Dispatcher::page().']['.Dispatcher::view().']';
             $a['number']  = 4;
             #############################################
             $sql = New BDD;
@@ -809,6 +791,28 @@ final class Common
 
         return $return;
     }
+    public static function remainingTime(string $date): string
+    {
+        $expire = new DateTime($date);
+        $now    = new DateTime();
+
+        if ($now >= $expire) {
+            return 'Expiré';
+        }
+
+        $diff = $now->diff($expire);
+
+        if ($diff->d > 0) {
+            return $diff->format('%a jour(s) %H heure(s) %I minute(s) %S seconde(s)');
+        }
+
+        if ($diff->h > 0) {
+            return $diff->format('%H heure(s) %I minute(s) %S seconde(s)');
+        }
+
+        return $diff->format('%I minute(s) %S seconde(s)');
+    }
+
     #########################################
     # Request ID hash_key
     #########################################
@@ -1520,6 +1524,29 @@ final class Common
         $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8'); // decode &nbsp; etc
         $text = preg_replace('/\s+/u', ' ', $text); // nettoie espaces
         return trim($text);
+    }
+
+    public static function genererCodeFormatte() {
+        // Configuration de la longueur
+        $nbLettres = 4;
+        $nbChiffres = 4;
+
+        // Jeux de caractères (Lettres uniquement en MAJUSCULES)
+        $lettres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $chiffres = '0123456789';
+
+        // Génération des deux blocs de manière aléatoire
+        $blocLettres = substr(str_shuffle(str_repeat($lettres, 5)), 0, $nbLettres);
+        $blocChiffres = substr(str_shuffle(str_repeat($chiffres, 5)), 0, $nbChiffres);
+
+        // Assemblage final avec le tiret de séparation
+        return $blocLettres . '-' . $blocChiffres;
+    }
+    public static function normalizeRecoveryCode(string $code): string
+    {
+        return strtoupper(
+            preg_replace('/[^A-Z0-9]/i', '', trim($code))
+        );
     }
 }
 if (!function_exists('esc_html')) {

@@ -35,6 +35,7 @@ final class BelCMS
         self::getLangs();
         Visitors::register();
 		$this->link      = Dispatcher::page($_SESSION['CONFIG']['CMS_DEFAULT_PAGE']);
+        $this->link = preg_replace('/[^a-zA-Z0-9_-]/', '', $this->link);
         $this->widgets   = self::getWidgets ();
         $this->page      = self::PageContent();
         $this->templates = self::Templates ();
@@ -46,8 +47,6 @@ final class BelCMS
 public function PageContent()
 {
     ob_start();
-
-    $this->link = preg_replace('/[^a-zA-Z0-9_-]/', '', $this->link);
 
     $require = ucfirst($this->link);
     $view    = Dispatcher::view();
@@ -83,11 +82,7 @@ public function PageContent()
 
     if (!file_exists($dir)) {
 
-        self::error404(
-            'ERREUR 404',
-            'La page que vous souhaitez consulter est introuvable.',
-            true
-        );
+        self::error404('ERREUR 404', 'La page que vous souhaitez consulter est introuvable.', true);
 
         return ob_get_clean();
     }
@@ -98,11 +93,7 @@ public function PageContent()
 
     if (!class_exists($require)) {
 
-        self::error404(
-            'ERREUR 404',
-            'Controller introuvable.',
-            true
-        );
+        self::error404('ERREUR 404', 'Controller introuvable.', true);
 
         return ob_get_clean();
     }
@@ -240,7 +231,7 @@ public function PageContent()
             $type = constant('INFO');
         }
         ob_start();
-        echo Notification::$type($text, $title, $full);
+        Notification::$type($text, $title, $full);
         $return =  ob_get_contents();
         ob_end_clean();
         echo $return;
@@ -251,7 +242,7 @@ public function PageContent()
     private function error404 ($title, $text)
     {
         ob_start();
-        echo Notification::error($text, $title, true);
+        Notification::error($text, $title, true);
         $return =  ob_get_contents();
         ob_end_clean();
         echo $return;
@@ -269,7 +260,16 @@ public function PageContent()
             'value' => $this->link
         ));
         $sql->queryOne();
-        if (!empty($sql->data)) {
+        if ($sql->data === false) {
+            $a['data']['nb_view'] = $this->link;
+            $a['data']['page'] = 1;
+            $new = new BDD;
+            $new->table('TABLE_STATS');
+            $new->insert([
+                'nb_view'   => 1,
+                'page'      =>  $this->link
+            ]);
+        } else {
             $update['nb_view'] = $sql->data->nb_view +1;
             $insert = new BDD;
             $insert->table('TABLE_STATS');

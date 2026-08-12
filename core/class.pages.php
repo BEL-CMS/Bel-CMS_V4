@@ -1,7 +1,7 @@
 <?php
 /**
  * Bel-CMS [Content management system]
- *  * @version 4.1.1 [PHP8.5]
+ *  * @version 4.2.1 [PHP8.5]
  * @link https://bel-cms.dev
  * @link https://determe.be
  * @license MIT License
@@ -245,7 +245,7 @@ class Pages
     #########################################
     # Pagination Bootstrap 5
     #########################################
-    public static function pagination(int $nbpp = 5, ?string $page = null, ?string $table = null, array|false $where = false): string 
+    public static function pagination(int $nbpp = 5, ?string $page = null, ?string $table = null, array|false $where = false, string|bool $custom = false): string 
     {
         /* Vérifications */
         if ($table === null || $table === '') {
@@ -298,7 +298,7 @@ class Pages
         };
 
         /* Création d'un bouton normal */
-        $createPageItem = static function (int $pageNumber, string $content, bool $active = false, bool $disabled = false, ?string $label = null ) use ($createUrl): string 
+        $createPageItem = static function (int $pageNumber, string $content, bool $active = false, bool $disabled = false, ?string $label = null) use ($createUrl): string 
         {
             $classes = ['page-item'];
 
@@ -353,71 +353,75 @@ class Pages
             }
         }
         /* Construction HTML*/
-        $html = '<div class=""container><div class="row"><nav id="belcms_pagination" aria-label="Navigation des pages">';
-        $html .= '<ul class="pagination justify-content-center flex-wrap">';
-        /* Première page */
-        $html .= $createPageItem(
-            1,
-            '<i class="fa-solid fa-angles-left"></i>',
-            false,
-            $currentPage === 1,
-            'Première page'
-        );
-        /* Page précédente */
-        $html .= $createPageItem(
-            max(1, $currentPage - 1),
-            '<i class="fa-solid fa-angle-left"></i>',
-            false,
-            $currentPage === 1,
-            'Page précédente'
-        );
-        /* Pages numérotées et séparateurs */
-        $previousPage = null;
+        if ($custom === false) {
+            $html = '<div class=""container><div class="row"><nav id="belcms_pagination" aria-label="Navigation des pages">';
+            $html .= '<ul class="pagination justify-content-center flex-wrap">';
+            /* Première page */
+            $html .= $createPageItem(
+                1,
+                '<i class="fa-solid fa-angles-left"></i>',
+                false,
+                $currentPage === 1,
+                'Première page'
+            );
+            /* Page précédente */
+            $html .= $createPageItem(
+                max(1, $currentPage - 1),
+                '<i class="fa-solid fa-angle-left"></i>',
+                false,
+                $currentPage === 1,
+                'Page précédente'
+            );
+            /* Pages numérotées et séparateurs */
+            $previousPage = null;
 
-        foreach ($visiblePages as $pageNumber) {
-            /*
-            * Ajout des points de suspension
-            */
-            if (
-                $previousPage !== null
-                && $pageNumber > $previousPage + 1
-            ) {
-                $html .= '
-                    <li class="page-item disabled">
-                        <span class="page-link">…</span>
-                    </li>
-                ';
+            foreach ($visiblePages as $pageNumber) {
+                /*
+                * Ajout des points de suspension
+                */
+                if (
+                    $previousPage !== null
+                    && $pageNumber > $previousPage + 1
+                ) {
+                    $html .= '
+                        <li class="page-item disabled">
+                            <span class="page-link">…</span>
+                        </li>
+                    ';
+                }
+
+                $html .= $createPageItem(
+                    $pageNumber,
+                    (string) $pageNumber,
+                    $pageNumber === $currentPage
+                );
+
+                $previousPage = $pageNumber;
             }
 
+            /* Page suivante */
             $html .= $createPageItem(
-                $pageNumber,
-                (string) $pageNumber,
-                $pageNumber === $currentPage
+                min($lastPage, $currentPage + 1),
+                '<i class="fa-solid fa-angle-right"></i>',
+                false,
+                $currentPage === $lastPage,
+                'Page suivante'
             );
 
-            $previousPage = $pageNumber;
+            /* Dernière page */
+            $html .= $createPageItem(
+                $lastPage,
+                '<i class="fa-solid fa-angles-right"></i>',
+                false,
+                $currentPage === $lastPage,
+                'Dernière page'
+            );
+
+            $html .= '</ul>';
+            $html .= '</nav></div></div>';
+        } else {
+            $html = $custom;
         }
-
-        /* Page suivante */
-        $html .= $createPageItem(
-            min($lastPage, $currentPage + 1),
-            '<i class="fa-solid fa-angle-right"></i>',
-            false,
-            $currentPage === $lastPage,
-            'Page suivante'
-        );
-
-        /* Dernière page */
-        $html .= $createPageItem(
-            $lastPage,
-            '<i class="fa-solid fa-angles-right"></i>',
-            false,
-            $currentPage === $lastPage,
-            'Dernière page'
-        );
-
-        $html .= '</ul>';
-        $html .= '</nav></div></div>';
 
         return $html;
     }

@@ -42,7 +42,7 @@ class encrypt
 		$ciphertext = base64_encode($iv . $hmac . $ciphertext_raw);
 		return $ciphertext;
 	}
-			
+
 	function decrypt() {
 		$key = $this->key;
 		$c = base64_decode($this->string);

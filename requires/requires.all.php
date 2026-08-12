@@ -21,12 +21,17 @@ $files = array (
 	ROOT.DS.'core'.DS.'class.uploads_files.php',
 	ROOT.DS.'core'.DS.'class.error.php',
 	ROOT.DS.'core'.DS.'class.dispatcher.php',
+	ROOT.DS.'core'.DS.'class.ip.php',
 	ROOT.DS.'core'.DS.'class.visitor.php',
 	ROOT.DS.'spdo'.DS.'config.pdo.php',
 	ROOT.DS.'spdo'.DS.'tables.php',
 	ROOT.DS.'spdo'.DS.'connect.php',
+	ROOT.DS.'core'.DS.'Security'.DS.'TOTP'.DS.'ProvisioningUri.php',
+	ROOT.DS.'core'.DS.'Security'.DS.'TOTP'.DS.'TOTP.php',
+	ROOT.DS.'core'.DS.'Security'.DS.'autoload.php',
 	ROOT.DS.'core'.DS.'class.constant.php',
 	ROOT.DS.'spdo'.DS.'spdo.class.php',
+	ROOT.DS.'core'.DS.'class.banishment.php',
 	ROOT.DS.'assets'.DS.'templates'.DS.'maintenance'.DS.'index.php',
 	ROOT.DS.'core'.DS.'class.encrypt.php',
 	ROOT.DS.'core'.DS.'class.mail.php',
@@ -52,7 +57,7 @@ $files = array (
 );
 foreach ($files as $include) {
 	try {
-		require $include;
+		require_once $include;
 	} catch (\Throwable $e) {
 		throw var_dump($e);
 	}
