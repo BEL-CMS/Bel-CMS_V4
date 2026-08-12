@@ -183,10 +183,12 @@ class Templates
         if ($_SESSION['CONFIG']['CMS_BOOTSTRAP'] != 0) {
             $files[] = 'assets/plugins/bootstrap-5.3.3/css/bootstrap.min.css';
         }
-        /* FONTAWASOME 7.2.0 ALL Min */
-        $files[] = 'assets/plugins/fontawesome/css/7.2.0.all.min.css';
+        /* FONTAWASOME 7.3.1 ALL Min */
+        $files[] = 'assets/plugins/fontawesome/css/7.3.1.all.min.css';
 
         $files[] = 'assets/plugins/lightbox/lightbox.css';
+
+        $files[] = 'assets/plugins/tooltip/scale.css';
 
         if ($link == 'articles') {
             $files[] = 'assets/plugins/prism/prism.css';
@@ -230,10 +232,12 @@ class Templates
         }
 
         $files[] = 'assets/plugins/dataTables-2.2.9/jquery.dataTables.min.js';
-        /* FONTAWASOME 7.0.1 ALL */
-        $files[] = 'assets/plugins/fontawesome/js/fontawesome.7.2.0.all.min.js';
+        /* FONTAWASOME 7.3.1 ALL */
+        $files[] = 'assets/plugins/fontawesome/js/fontawesome.7.3.1all.min.js';
 
         $files[] = 'assets/plugins/lightbox/lightbox.js';
+        $files[] = 'assets/plugins/tooltip/tippy-bundle.umd.min.js';
+
         /* Tinymce */
         $files[] = 'assets/plugins/tinymce/tinymce.min.js';
         /* Tooltip */

@@ -271,8 +271,7 @@ tippy('.belcms_tooltip_right', {
 	interactive: true,
 	allowHTML: true,
 	inlinePositioning: true,
-	maxWidth: 'none',
-	followCursor: true,
+	maxWidth: 150,
 });
 tippy('.belcms_tooltip_left', {
 	content: (reference) => reference.getAttribute('data'),
@@ -283,8 +282,7 @@ tippy('.belcms_tooltip_left', {
 	interactive: true,
 	allowHTML: true,
 	inlinePositioning: true,
-	maxWidth: 'none',
-	followCursor: true,
+	maxWidth: 150,
 });
 tippy('.belcms_tooltip_top', {
 	content: (reference) => reference.getAttribute('data'),
@@ -295,8 +293,7 @@ tippy('.belcms_tooltip_top', {
 	interactive: true,
 	allowHTML: true,
 	inlinePositioning: true,
-	maxWidth: 'none',
-	followCursor: true,
+	maxWidth: 150,
 });
 tippy('.belcms_tooltip_bottom', {
 	content: (reference) => reference.getAttribute('data'),
@@ -307,6 +304,5 @@ tippy('.belcms_tooltip_bottom', {
 	interactive: true,
 	allowHTML: true,
 	inlinePositioning: true,
-	maxWidth: 'none',
-	followCursor: true,
+	maxWidth: 150,
 });
