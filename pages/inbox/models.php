@@ -19,24 +19,32 @@ if (!defined('CHECK_INDEX')):
 endif;
 
 ############################################
-#  TABLE_INBOX'                            #
-#  TABLE_INBOX_MSG'                        #
+#   TABLE_INBOX                            #
+#   TABLE_INBOX_STATUS                     #
 ############################################
 final class Inbox
 {
-     public function getMsgForUSer ()
+     public function getMsgForUSer () : array
      {
-         $hash_key = $_SESSION['USER']->user->hash_key;
-         $array = " WHERE `sendto` = '".$hash_key."' AND `read_msg_send` = '1' OR `read_msg_receive` = 1 AND `close` = '0'";
-         $sql = new BDD;
-         $sql->table ('TABLE_INBOX');
-         $sql->where($array);
-         $sql->queryAll();
-         $return = $sql->data;
-         return $return;
+        $sql = new BDD();
+        $sql->table('TABLE_INBOX');
+        $sql->where(array('name' => 'recipient_id', 'value' => $_SESSION['USER']->user->hash_key));
+        $sql->queryAll();
+        $return = $sql->data;
+        return $return;
      }
 
-     public function searchUser ($user)
+     public function getMsgInfos (string $id) : array
+     {
+        $sql = new BDD();
+        $sql->table('TABLE_INBOX_STATUS');
+        $sql->where(array('name'=> 'message_id', 'value' => $id));
+        $sql->queryAll();
+        $return = $sql->data;
+        return $return;
+     }
+
+     public function searchUser (string $user)
      {
          $return = array();
          $where = array(
@@ -58,14 +66,36 @@ final class Inbox
          return $return;
      }
 
-     public function addMail ($data, $content)
+     public function addMail (array $inbox, array $status)
      {
         $sql = new BDD();
         $sql->table('TABLE_INBOX');
-        $sql->insert($data);
+        $sql->insert($inbox);
 
         $sql2 = new BDD();
-        $sql2->table('TABLE_INBOX_MSG');
-        $sql2->insert($content);
+        $sql2->table('TABLE_INBOX_STATUS');
+        $sql2->insert($status);
+     }
+
+     public function getMsgUnique (string $id) : array
+     {
+        $sql = new BDD();
+        $sql->table('TABLE_INBOX');
+        $sql->where(array('name' => 'message_id', 'value' => $id));
+        $sql->queryAll();
+        $return = $sql->data;
+        return $return;
+     }
+
+     public function sendReply (array $data) : bool
+     {
+         $sql = new BDD();
+         $sql->table('TABLE_INBOX');
+         $sql->insert($data);
+         if ($sql->rowCount == 1) {
+            return true;
+         } else {
+            return false;
+         }
      }
 }
